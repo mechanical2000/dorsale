@@ -12,3 +12,9 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+
+group :test do 
+  gem 'guard-rspec'
+  gem 'faker'
+  gem 'shoulda-matchers'
+end

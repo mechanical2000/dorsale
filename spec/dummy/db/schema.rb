@@ -11,6 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141010140200) do
+
+  create_table "dorsale_addresses", force: true do |t|
+    t.string   "street"
+    t.string   "street_bis"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

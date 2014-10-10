@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Street:
+  = @address.street
+p
+  strong Street bis:
+  = @address.street_bis
+p
+  strong City:
+  = @address.city
+p
+  strong Zip:
+  = @address.zip
+p
+  strong Country:
+  = @address.country
+
+= link_to 'Edit', edit_address_path(@address)
+'|
+= link_to 'Back', addresses_path
