@@ -36,7 +36,7 @@ module Dorsale
     # PATCH/PUT /addresses/1
     def update
       if @address.update(address_params)
-        redirect_to @address, notice: 'Address was successfully updated.'
+        redirect_to [dorsale, @address], notice: 'Address was successfully updated.'
       else
         render action: 'edit'
       end
@@ -45,7 +45,7 @@ module Dorsale
     # DELETE /addresses/1
     def destroy
       @address.destroy
-      redirect_to addresses_url, notice: 'Address was successfully destroyed.'
+      redirect_to dorsale.addresses_url, notice: 'Address was successfully destroyed.'
     end
 
     private

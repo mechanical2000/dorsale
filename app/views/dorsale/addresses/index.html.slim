@@ -20,10 +20,10 @@ table
         td = address.city
         td = address.zip
         td = address.country
-        td = link_to 'Show', address
-        td = link_to 'Edit', edit_address_path(address)
-        td = link_to 'Destroy', address, data: {:confirm => 'Are you sure?'}, :method => :delete
+        td = link_to 'Show', [dorsale, address]
+        td = link_to 'Edit', dorsale.edit_address_path(address)
+        td = link_to 'Destroy', [dorsale, address], data: {:confirm => 'Are you sure?'}, :method => :delete
 
 br
 
-= link_to 'New Address', new_address_path
+= link_to 'New Address', dorsale.new_address_path

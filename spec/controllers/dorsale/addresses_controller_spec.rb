@@ -20,16 +20,17 @@ require 'rails_helper'
 
 module Dorsale
   RSpec.describe AddressesController, :type => :controller do
+    routes { Dorsale::Engine.routes }
 
     # This should return the minimal set of attributes required to create a valid
     # Address. As you add validations to Address, be sure to
     # adjust the attributes here as well.
     let(:valid_attributes) {
-      skip("Add a hash of attributes valid for your model")
+      FactoryGirl.attributes_for(:dorsale_address)
     }
 
     let(:invalid_attributes) {
-      skip("Add a hash of attributes invalid for your model")
+      {city: ''}
     }
 
     # This should return the minimal set of values that should be in the session
@@ -104,14 +105,14 @@ module Dorsale
     describe "PUT update" do
       describe "with valid params" do
         let(:new_attributes) {
-          skip("Add a hash of attributes valid for your model")
+          {city: 'new city'}
         }
 
         it "updates the requested address" do
           address = Address.create! valid_attributes
           put :update, {:id => address.to_param, :address => new_attributes}, valid_session
           address.reload
-          skip("Add assertions for updated state")
+          expect(address.city).to eq('new city')
         end
 
         it "assigns the requested address as @address" do
