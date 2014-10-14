@@ -5,20 +5,7 @@
       ul
         - @address.errors.full_messages.each do |message|
           li = message
-
-  .field
-    = f.label :street
-    = f.text_field :street
-  .field
-    = f.label :street_bis
-    = f.text_field :street_bis
-  .field
-    = f.label :city
-    = f.text_field :city
-  .field
-    = f.label :zip
-    = f.text_field :zip
-  .field
-    = f.label :country
-    = f.text_field :country
+  
+  = render partial: 'dorsale/addresses/nested_form', :locals => {:f => f}
+ 
   .actions = f.submit 'Save'
