@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010140200) do
+ActiveRecord::Schema.define(version: 20141014072756) do
 
   create_table "dorsale_addresses", force: true do |t|
     t.string   "street"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20141010140200) do
     t.string   "country"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "addressable_id"
+    t.string   "addressable_type"
   end
 
 end
