@@ -13,6 +13,8 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+gem "thor"
+
 group :test do 
   gem 'guard-rspec'
   gem 'faker'
