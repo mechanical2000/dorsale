@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014072756) do
+ActiveRecord::Schema.define(version: 20150312083147) do
 
   create_table "dorsale_addresses", force: true do |t|
     t.string   "street"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20141014072756) do
     t.datetime "updated_at"
     t.integer  "addressable_id"
     t.string   "addressable_type"
+  end
+
+  create_table "dorsale_comments", force: true do |t|
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.text     "text"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
 end

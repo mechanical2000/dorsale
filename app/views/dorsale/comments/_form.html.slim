@@ -1,0 +1,8 @@
+= simple_form_for [dorsale, Dorsale::Comment.new] do |f|
+  = f.hidden_field :commentable_id,   value: commentable.id.to_s
+  = f.hidden_field :commentable_type, value: commentable.class.to_s
+  
+  = f.input :text, label: false
+  
+  .center
+    input.btn.btn-success type="submit" value="Envoyer"
