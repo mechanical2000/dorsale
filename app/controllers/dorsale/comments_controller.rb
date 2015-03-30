@@ -15,7 +15,7 @@ module Dorsale
         flash[:danger] = "Error : comment not saved."
       end
       
-      redirect_to request.referrer || main_app.root_path
+      redirect_to params[:back_url] || request.referer || main_app.root_path
     end
     
     private

@@ -2,6 +2,12 @@
   = f.hidden_field :commentable_id,   value: commentable.id.to_s
   = f.hidden_field :commentable_type, value: commentable.class.to_s
   
+  input.back_url type="hidden" name="back_url"
+  javascript:
+    $(document).ready(function(){
+      $("input.back_url").val(location.href)
+    })
+  
   = f.input :text, label: false
   
   .center
