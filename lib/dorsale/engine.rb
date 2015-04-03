@@ -1,6 +1,7 @@
 require "slim-rails"
 require "sass-rails"
 require "bootstrap-sass"
+require "bh"
 require "font-awesome-sass"
 require "simple_form"
 require "coffee-rails"
@@ -8,7 +9,7 @@ require "jquery-rails"
 require "kaminari"
 require "turbolinks"
 require "bootstrap-kaminari-views"
-require "bh"
+
 require "rails-i18n"
 require "cancan"
 
