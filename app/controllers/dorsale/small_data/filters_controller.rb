@@ -13,8 +13,8 @@ module Dorsale
 
         urls = [
           params[:back_url],
-          request.referrer,
-          main_app.root_path
+          request.referer,
+          (main_app.root_path rescue nil)
         ]
 
         redirect_to urls.select(&:present?).first
