@@ -9,7 +9,7 @@ PATH
       font-awesome-sass
       jquery-rails
       kaminari
-      rails (~> 4.0.10)
+      rails (>= 4.0.0)
       rails-i18n
       sass-rails
       simple_form
