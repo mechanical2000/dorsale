@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (1.1.1)
+    dorsale (1.1.2)
       bh
       bootstrap-kaminari-views
       bootstrap-sass
