@@ -1,7 +1,8 @@
 module Dorsale
   module ContextHelper
     def context_icon(id)
-      icon(id)
+      id = id.to_s.gsub("_", "-")
+      content_tag(:span, class: "icon fa fa-#{id}"){}
     end
 
     def context_title(title)
