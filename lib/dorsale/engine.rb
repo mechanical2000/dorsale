@@ -10,6 +10,7 @@ require "turbolinks"
 require "bootstrap-kaminari-views"
 require "bh"
 require "rails-i18n"
+require "cancan"
 
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
