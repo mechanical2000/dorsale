@@ -11,6 +11,9 @@ require "bootstrap-kaminari-views"
 require "bh"
 require "rails-i18n"
 
+require "dorsale/simple_form"
+require "dorsale/simple_form_bootstrap"
+
 module Dorsale
   class Engine < ::Rails::Engine
     isolate_namespace Dorsale
