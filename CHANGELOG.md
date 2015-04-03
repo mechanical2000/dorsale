@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix icon helper (font-awesome icon helper should override bh icon helper)
+
 ## 1.1.0
 
 - Import agilidee_commons :
