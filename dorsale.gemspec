@@ -31,17 +31,4 @@ Gem::Specification.new do |s|
   s.add_dependency "bh"
   s.add_dependency "rails-i18n"
 
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "capybara"
-  s.add_development_dependency "factory_girl_rails"
-  s.add_development_dependency "pry"
-  s.add_development_dependency "faker"
-  s.add_development_dependency "shoulda-matchers"
-  s.add_development_dependency "guard"
-  s.add_development_dependency "zeus"
-  s.add_development_dependency "database_cleaner"
-  s.add_development_dependency "cucumber-rails"
-  s.add_development_dependency "guard-rspec"
-
 end
