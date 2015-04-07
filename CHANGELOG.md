@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.3
+
+- Add button_helper
+
 ## 1.1.2
 
 - Fix sprockets/font-awesome error
