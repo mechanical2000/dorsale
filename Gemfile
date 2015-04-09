@@ -2,19 +2,21 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "thor"
-
-group :test do
-  gem "sqlite3"
-  gem "rspec-rails"
-  gem "capybara"
-  gem "factory_girl_rails"
+group :development, :test do
+  gem "thor"
   gem "pry"
-  gem "faker"
-  gem "shoulda-matchers"
-  gem "guard"
+  gem "sqlite3"
   gem "zeus"
-  gem "database_cleaner"
+  gem "rspec-rails"
+  gem "shoulda-matchers"
+  gem "faker"
   gem "cucumber-rails", require: false
+  gem "capybara"
+  gem "poltergeist"
+  gem "database_cleaner"
+  gem "factory_girl_rails"
+  gem "guard"
+  gem "guard-cucumber"
   gem "guard-rspec"
+  gem "guard-rubocop"
 end
