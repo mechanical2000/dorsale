@@ -1,22 +1,22 @@
 source "https://rubygems.org"
 
-# Declare your gem's dependencies in dorsale.gemspec.
-# Bundler will treat runtime dependencies like base dependencies, and
-# development dependencies will be added by default to the :development group.
 gemspec
 
-# Declare any dependencies that are still in development here instead of in
-# your gemspec. These might include edge Rails or gems from your path or
-# Git. Remember to move these dependencies to your gemspec before releasing
-# your gem to rubygems.org.
-
-# To use debugger
-# gem 'debugger'
-
-gem "thor"
-
-group :test do 
-  gem 'guard-rspec'
-  gem 'faker'
-  gem 'shoulda-matchers'
+group :development, :test do
+  gem "thor"
+  gem "pry"
+  gem "sqlite3"
+  gem "zeus"
+  gem "rspec-rails"
+  gem "shoulda-matchers"
+  gem "faker"
+  gem "cucumber-rails", require: false
+  gem "capybara"
+  gem "poltergeist"
+  gem "database_cleaner"
+  gem "factory_girl_rails"
+  gem "guard"
+  gem "guard-cucumber"
+  gem "guard-rspec"
+  gem "guard-rubocop"
 end

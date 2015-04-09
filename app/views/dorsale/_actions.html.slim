@@ -1,0 +1,22 @@
+.btn-group
+  button.btn.btn-default.btn-sm.dropdown-toggle.actions data-toggle="dropdown"
+    = "Actions "
+    = icon :"caret-down"
+  ul.dropdown-menu
+    - if url && url != request.path_info
+      li
+        a.link_edit href=url
+          = icon :"file-o"
+          = " Afficher"
+    
+    - if edit_url && edit_url != request.path_info
+      li
+        a.link_edit href=edit_url
+          = icon :pencil
+          = " Editer"
+    
+    - if delete_url
+      li
+        a.link_delete href=delete_url data-method="delete" data-confirm="Confirmer ?"
+          = icon :trash
+          = " Supprimer"
