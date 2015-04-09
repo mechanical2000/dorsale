@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (1.1.3)
+    dorsale (1.1.4)
       awesome_print
       bh
       bootstrap-kaminari-views

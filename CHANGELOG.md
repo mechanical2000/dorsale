@@ -1,6 +1,14 @@
 # Changelog
 
-# 1.1.3
+## 1.1.4
+
+- Add filters buttons helper
+- Add link_helper
+- Add all_helpers
+- Add flash partial
+- Add common i18n actions, labels, ...
+
+## 1.1.3
 
 - Add button_helper
 
