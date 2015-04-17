@@ -1,6 +1,6 @@
 module Dorsale
   class Address < ActiveRecord::Base
-    belongs_to :addressable, polymorphic: true
+    belongs_to :addressable, polymorphic: true, inverse_of: :address
 
     validates :addressable, presence: true
 
