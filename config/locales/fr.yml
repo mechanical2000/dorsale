@@ -38,6 +38,7 @@ fr:
     created_at            : "Créé le"
     updated_at            : "Modifié le"
     name                  : "Nom"
+    title                 : "Titre"
     first_name            : "Prénom"
     last_name             : "Nom"
     email                 : "E-mail"
