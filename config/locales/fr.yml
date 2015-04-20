@@ -28,6 +28,8 @@ fr:
     upload   : "Envoyer"
     preview  : "Aperçu"
     confirm  : "Confirmer cette action ?"
+    cancel   : "Annuler"
+    search   : "Rechercher"
 
   labels: &labels
     id                    : "Id"
