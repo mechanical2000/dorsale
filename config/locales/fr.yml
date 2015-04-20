@@ -42,6 +42,9 @@ fr:
     last_name             : "Nom"
     email                 : "E-mail"
     www                   : "Site web"
+    phone                 : "Téléphone"
+    mobile                : "Mobile"
+    fax                   : "Fax"
     password              : "Mot de passe"
     password_confirmation : "Mot de passe (confirmer)"
     description           : "Description"
@@ -58,6 +61,8 @@ fr:
     zip                   : "Code postal"
     city                  : "Ville"
     country               : "Pays"
+    tags                  : "Tags"
+    tag_list              : "Tags"
 
   attributes:
     <<: *labels
