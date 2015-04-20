@@ -27,6 +27,12 @@ module Dorsale
         action
         expect(response.cookies["filters"]).to eq(filters.to_json)
       end
+
+      it "should merge filters with previous filters" do
+        action
+        post :create, filters: {other_key: "value2"}
+        expect(response.cookies["filters"]).to eq({key: "value", other_key: "value2"}.to_json)
+      end
     end
   end
 end
