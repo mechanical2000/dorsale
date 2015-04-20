@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.2.0
+
+- Filters
+  - Merge instead of replace
+  - Import spec
+  - Add classes to helper buttons
+- I18n
+  - Add actions
+  - Add attributes
+- form_button
+  - Add icons
+  - Add i18n
+- Rewrite context_info helper and add "br" support
+- Address
+  - Add inverse_of
+  - City is now optional
+  - Remove controllers and views
+- Comments
+  - i18n dates
+  - Split view
+
 ## 1.1.4
 
 - Add filters buttons helper
