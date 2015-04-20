@@ -1,6 +1,6 @@
 module Dorsale
   module SmallData
-    class FiltersController < ApplicationController
+    class FiltersController < ::Dorsale::ApplicationController
 
       def create
         filters = params[:filters] || {}
