@@ -1,10 +1,12 @@
 module Dorsale
   class Address < ActiveRecord::Base
-    validates_presence_of :city
-    belongs_to :addressable, polymorphic: true
+    belongs_to :addressable, polymorphic: true, inverse_of: :address
+
+    validates :addressable, presence: true
 
     def one_line
-      result = [street, street_bis, [zip, city].delete_if {|e| e.blank?}.join(' '), country].delete_if {|e| e.blank?}.join(', ')
+      zip_city = [zip, city].select(&:present?).join(' ')
+      [street, street_bis, zip_city, country].select(&:present?).join(', ')
     end
   end
 end

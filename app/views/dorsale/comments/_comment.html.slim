@@ -1,0 +1,20 @@
+.comment.well id="comment#{comment.id}"
+  - if comment.user.try(:avatar).present?
+    = image_tag comment.user.avatar.url, class: "avatar"
+  - else
+    = image_tag "dorsale/avatar.png", class: "avatar"
+
+  p.infos
+    - if comment.user.present?
+      strong
+        = comment.user.name
+
+      br
+
+    small.text-muted.right
+      = "écrit le "
+      = l(comment.created_at)
+
+  p.text = text2html(comment.text)
+
+  .clearfix

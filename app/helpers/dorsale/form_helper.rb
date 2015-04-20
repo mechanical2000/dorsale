@@ -4,10 +4,27 @@ module Dorsale
      back_url = opts[:back_url]
      back_url = url_for(:back).html_safe if back_url.nil?
 
+      if opts[:obj].present?
+        if opts[:obj].new_record?
+          submit_action = :create
+        else
+          submit_action = :update
+        end
+      else
+        submit_action = :save
+      end
+
       content_tag("div", class: "actions cdiv") do
-        submit = tag("input", type: "submit", class: "btn btn-success btn-sm", value: "Valider", id: "submit")
-        cancel = content_tag("a", href: back_url, class: "btn btn-primary btn-sm"){ "Annuler" }
+        submit = content_tag(:button, type: :submit, class: "btn btn-sm btn-success") do
+          icon(:save) + " " + t("actions.#{submit_action}")
+        end
+
+        cancel = content_tag("a", href: back_url, class: "btn btn-primary btn-sm") do
+          icon(:times) + " " + t("actions.cancel")
+        end
+
         cancel = "" if back_url == false
+
         submit + cancel
       end
     end

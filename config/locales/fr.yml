@@ -28,6 +28,8 @@ fr:
     upload   : "Envoyer"
     preview  : "Aperçu"
     confirm  : "Confirmer cette action ?"
+    cancel   : "Annuler"
+    search   : "Rechercher"
 
   labels: &labels
     id                    : "Id"
@@ -36,10 +38,14 @@ fr:
     created_at            : "Créé le"
     updated_at            : "Modifié le"
     name                  : "Nom"
+    title                 : "Titre"
     first_name            : "Prénom"
     last_name             : "Nom"
     email                 : "E-mail"
     www                   : "Site web"
+    phone                 : "Téléphone"
+    mobile                : "Mobile"
+    fax                   : "Fax"
     password              : "Mot de passe"
     password_confirmation : "Mot de passe (confirmer)"
     description           : "Description"
@@ -56,6 +62,8 @@ fr:
     zip                   : "Code postal"
     city                  : "Ville"
     country               : "Pays"
+    tags                  : "Tags"
+    tag_list              : "Tags"
 
   attributes:
     <<: *labels

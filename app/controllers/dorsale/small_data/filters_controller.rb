@@ -1,15 +1,17 @@
 module Dorsale
   module SmallData
-    class FiltersController < ApplicationController
+    class FiltersController < ::Dorsale::ApplicationController
 
       def create
-        filters = params[:filters] || {}
+        new_filters = params[:filters] || {}
 
-        filters.each do |key, value|
-          filters[key] = "" if value == "0"
+        new_filters.each do |key, value|
+          new_filters[key] = "" if value == "0"
         end
 
-        Filter.new(cookies).store(filters)
+        filters = Filter.new(cookies)
+        new_filters = filters.read.merge(new_filters)
+        filters.store(new_filters)
 
         urls = [
           params[:back_url],

@@ -9,9 +9,14 @@ module Dorsale
       content_tag(:h2){ title }
     end
 
-    def context_info(name, info)
+    def context_info(name, info, br = false)
       return if info.blank?
-      %(<p class="infos"><strong>#{name} : </strong>#{info}</p>).html_safe
+
+      content_tag(:p, class: "infos"){
+        label = content_tag(:strong) { "#{name} :" }
+        sep   = br ? tag(:br) : " "
+        label + sep + info
+      }
     end
 
     def actions_for(obj, opts={})
