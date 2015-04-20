@@ -9,3 +9,6 @@ $ ->
       this.value = "" unless this.type.match(/submit|hidden|button/)
 
     form.find("textarea").val("")
+
+    form.find("select").map ->
+      this.selectize.clear() if this.selectize
