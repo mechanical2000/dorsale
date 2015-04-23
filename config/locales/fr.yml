@@ -30,6 +30,16 @@ fr:
     confirm  : "Confirmer cette action ?"
     cancel   : "Annuler"
     search   : "Rechercher"
+    sign_in  : "Connexion"
+    signin   : "Connexion"
+    log_in   : "Connexion"
+    login    : "Connexion"
+    sign_out : "Déconnexion"
+    signout  : "Déconnexion"
+    log_out  : "Déconnexion"
+    logout   : "Déconnexion"
+    sign_up  : "S'enregistrer"
+    signup   : "S'enregistrer"
 
   labels: &labels
     id                    : "Id"

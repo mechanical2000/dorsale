@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+- Ready for ruby 2.2.2
+- Pagination style + helper + i18n
+- Move filters button in separate helper
+
 ## 1.2.0
 
 - Filters

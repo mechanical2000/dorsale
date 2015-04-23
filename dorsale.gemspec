@@ -32,5 +32,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails-i18n"
   s.add_dependency "cancan"
   s.add_dependency "awesome_print"
+  s.add_dependency "kaminari-i18n"
 
 end
