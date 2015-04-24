@@ -9,6 +9,7 @@ require "jquery-rails"
 require "kaminari"
 require "turbolinks"
 require "bootstrap-kaminari-views"
+require "bootstrap-datepicker-rails"
 
 require "rails-i18n"
 require "cancan"
