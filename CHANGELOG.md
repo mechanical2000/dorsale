@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- Add bootstrap-datepicker
+
 ## 1.2.1
 
 - Ready for ruby 2.2.2
