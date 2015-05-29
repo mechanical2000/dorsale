@@ -11,7 +11,7 @@ module Dorsale
       href = text
       href = "http://#{text}" unless text.include?("://")
 
-      link_to(tex, href, opts)
+      link_to(text, href, opts)
     end
 
     def email_link(text, opts = {})
