@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3
+
+- Add helpers : email_link, web_link, tel_link, twitter_link
+- Add i18n actions sort and sort_by
+- Fix i18n address key
+
 ## 1.2.2
 
 - Add bootstrap-datepicker
