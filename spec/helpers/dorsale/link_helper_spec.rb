@@ -19,4 +19,12 @@ describe Dorsale::LinkHelper, type: :helper do
     expect(email_link(nil)).to be nil
     expect(email_link("aaa@bbb.com")).to eq %(<a href="mailto:aaa@bbb.com">aaa@bbb.com</a>)
   end
+
+  it "twitter_link" do
+    expect(twitter_link("")).to be nil
+    expect(twitter_link(nil)).to be nil
+    expect(twitter_link("BenoitMC")).to eq %(<a href="https://twitter.com/BenoitMC">BenoitMC</a>)
+    expect(twitter_link("twitter.com/BenoitMC")).to eq %(<a href="https://twitter.com/BenoitMC">twitter.com/BenoitMC</a>)
+    expect(twitter_link("http://twitter.com/BenoitMC")).to eq %(<a href="http://twitter.com/BenoitMC">http://twitter.com/BenoitMC</a>)
+  end
 end

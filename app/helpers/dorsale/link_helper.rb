@@ -30,5 +30,15 @@ module Dorsale
       link_to(text, href, opts)
     end
 
+    def twitter_link(text, opts = {})
+      return if text.to_s.blank?
+
+      href = text
+      href = "https://twitter.com/#{text}" unless text.include?("twitter.com")
+      href = "https://#{text}" unless href.include?("://")
+
+      link_to(text, href, opts)
+    end
+
   end
 end
