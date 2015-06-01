@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (1.2.3)
+    dorsale (1.2.4)
       awesome_print
       bh
       bootstrap-datepicker-rails

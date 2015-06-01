@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+- JS to add "back_url" to forms
+
 ## 1.2.3
 
 - Add helpers : email_link, web_link, tel_link, twitter_link
