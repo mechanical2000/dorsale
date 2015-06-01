@@ -1,4 +1,4 @@
-$ ->
+$(document).on "ready page:load", ->
   $("button.reset").click ->
     form = $(this).parents("form")
 
@@ -12,3 +12,11 @@ $ ->
 
     form.find("select").map ->
       this.selectize.clear() if this.selectize
+
+  # Referer with anchor
+  $("form").submit ->
+    input       = document.createElement("input")
+    input.type  = "hidden"
+    input.name  = "back_url"
+    input.value = location.href
+    $(this).append(input)
