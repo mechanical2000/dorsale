@@ -15,8 +15,9 @@ $(document).on "ready page:load", ->
 
   # Referer with anchor
   $("form").submit ->
-    input       = document.createElement("input")
-    input.type  = "hidden"
-    input.name  = "back_url"
-    input.value = location.href
-    $(this).append(input)
+    if $(this).find("[name=back_url]").length == 0
+      input       = document.createElement("input")
+      input.type  = "hidden"
+      input.name  = "back_url"
+      input.value = location.href
+      $(this).append(input)

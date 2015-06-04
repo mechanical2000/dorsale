@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5
+
+- Fix JS back_url
+
 ## 1.2.4
 
 - JS to add "back_url" to forms
