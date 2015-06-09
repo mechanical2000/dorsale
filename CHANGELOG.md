@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.6
+
+- Add `engine_polymorphic_path()` helper
+- Add number helpers
+- Add i18n attributes
+
 ## 1.2.5
 
 - Fix JS back_url
