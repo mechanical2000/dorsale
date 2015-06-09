@@ -1,15 +1,21 @@
 module Dorsale
   module TextHelper
     def euros(n)
-      number_to_currency(n)
+      return if n.nil?
+
+      number(n) + " €"
     end
 
     def percentage(n)
-      number_to_percentage(n, precision: 2, format: "%n %")
+      return if n.nil?
+
+      number(n) + " %"
     end
 
     def number(n)
-      if n.is_a?(Float)
+      return if n.nil?
+
+      if n.class.to_s.match(/Float|Decimal/i)
         number_with_precision(n, precision: 2)
       else
         n.to_s
@@ -17,6 +23,8 @@ module Dorsale
     end
 
     def hours(n)
+      return if n.nil?
+
       number = number_with_precision(n, precision: 2)
       text   = I18n.t("datetime.prompts.hour").downcase
       text   = text.pluralize if n > 1
