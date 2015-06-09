@@ -14,6 +14,7 @@ describe Dorsale::TextHelper, type: :helper do
     expect(number(1)).to eq "1"
     expect(number(1.2)).to eq "1.20"
     expect(number(1.234)).to eq "1.23"
+    expect(number(123456.789)).to eq "123,456.79"
   end
 
   it "percentage" do

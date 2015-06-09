@@ -15,11 +15,18 @@ module Dorsale
     def number(n)
       return if n.nil?
 
+      opts = {}
+
       if n.class.to_s.match(/Float|Decimal/i)
-        number_with_precision(n, precision: 2)
+        opts[:precision] = 2
       else
-        n.to_s
+        opts[:precision] = 0
       end
+
+      opts[:delimiter] = I18n.t("number.format.delimiter")
+      opts[:separator] = I18n.t("number.format.separator")
+
+      number_with_precision(n, opts)
     end
 
     def hours(n)
