@@ -1,5 +1,6 @@
 fr:
   actions: &actions
+    actions  : "Actions"
     index    : "Liste"
     list     : "Liste"
     new      : "Nouveau"
@@ -44,7 +45,7 @@ fr:
     sign_up  : "S'enregistrer"
     signup   : "S'enregistrer"
 
-  labels: &labels
+  attributes: &attributes
     id                    : "Id"
     code                  : "Code"
     reference             : "Référence"
@@ -77,6 +78,11 @@ fr:
     country               : "Pays"
     tags                  : "Tags"
     tag_list              : "Tags"
+    budget                : "Budget"
+    probability           : "Probabilité"
+    access                : "Accès"
+    color                 : "Couleur"
+    data                  : "Informations"
 
-  attributes:
-    <<: *labels
+  labels:
+    <<: *attributes
