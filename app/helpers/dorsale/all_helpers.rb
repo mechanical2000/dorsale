@@ -7,6 +7,7 @@ module Dorsale
     include FormHelper
     include LinkHelper
     include PaginationHelper
+    include RoutesHelper
     include TextHelper
   end
 end
