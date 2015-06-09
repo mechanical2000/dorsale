@@ -8,6 +8,14 @@ module Dorsale
       number_to_percentage(n, precision: 2, format: "%n %")
     end
 
+    def number(n)
+      if n.is_a?(Float)
+        number_with_precision(n, precision: 2)
+      else
+        n.to_s
+      end
+    end
+
     def hours(n)
       number = number_with_precision(n, precision: 2)
       text   = I18n.t("datetime.prompts.hour").downcase
