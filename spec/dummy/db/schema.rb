@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312083147) do
+ActiveRecord::Schema.define(version: 20150616082916) do
 
-  create_table "dorsale_addresses", force: true do |t|
+  create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
     t.string   "street_bis"
     t.string   "city"
@@ -25,7 +25,13 @@ ActiveRecord::Schema.define(version: 20150312083147) do
     t.string   "addressable_type"
   end
 
-  create_table "dorsale_comments", force: true do |t|
+  create_table "dorsale_alexandrie_attachments", force: :cascade do |t|
+    t.integer "attachable_id"
+    t.string  "attachable_type"
+    t.string  "file"
+  end
+
+  create_table "dorsale_comments", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "user_type"
     t.integer  "commentable_id"
@@ -33,6 +39,12 @@ ActiveRecord::Schema.define(version: 20150312083147) do
     t.text     "text"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "dummy_models", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

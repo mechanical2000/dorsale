@@ -1,0 +1,13 @@
+= simple_form_for [dorsale, Dorsale::Alexandrie::Attachment.new], as: :attachment, multipart: true do |f|
+  = f.hidden_field :attachable_id,   value: attachable.id.to_s
+  = f.hidden_field :attachable_type, value: attachable.class.to_s
+
+  .form-group.upload
+    .input-group
+      .form-control
+        = f.file_field :file
+        label = t("actions.browse")
+
+      span.input-group-btn
+        button.btn.btn-success type="submit"
+          = t("actions.upload")
