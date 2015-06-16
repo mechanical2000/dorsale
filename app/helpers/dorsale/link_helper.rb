@@ -25,7 +25,8 @@ module Dorsale
     def tel_link(text, opts = {})
       return if text.to_s.blank?
 
-      href = "tel:#{text}"
+      value = text.gsub(" ", "")
+      href  = "tel:#{value}"
 
       link_to(text, href, opts)
     end
