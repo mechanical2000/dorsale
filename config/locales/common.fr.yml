@@ -44,6 +44,7 @@ fr:
     logout   : "Déconnexion"
     sign_up  : "S'enregistrer"
     signup   : "S'enregistrer"
+    browse   : "Parcourir"
 
   attributes: &attributes
     id                    : "Id"

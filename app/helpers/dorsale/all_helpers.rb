@@ -9,5 +9,7 @@ module Dorsale
     include PaginationHelper
     include RoutesHelper
     include TextHelper
+
+    include Alexandrie::AttachmentsHelper
   end
 end

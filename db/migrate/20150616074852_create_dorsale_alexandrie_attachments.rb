@@ -3,7 +3,7 @@ class CreateDorsaleAlexandrieAttachments < ActiveRecord::Migration
     create_table :dorsale_alexandrie_attachments do |t|
       t.integer :attachable_id
       t.string :attachable_type
-      t.integer :file
+      t.string :file
     end
   end
 end
