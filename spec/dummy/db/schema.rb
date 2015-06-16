@@ -11,28 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312083147) do
+ActiveRecord::Schema.define(version: 20150616082916) do
 
-  create_table "dorsale_addresses", force: true do |t|
-    t.string   "street"
-    t.string   "street_bis"
-    t.string   "city"
-    t.string   "zip"
-    t.string   "country"
+  create_table "dorsale_addresses", force: :cascade do |t|
+    t.string   "street",           limit: 255
+    t.string   "street_bis",       limit: 255
+    t.string   "city",             limit: 255
+    t.string   "zip",              limit: 255
+    t.string   "country",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "addressable_id"
-    t.string   "addressable_type"
+    t.string   "addressable_type", limit: 255
   end
 
-  create_table "dorsale_comments", force: true do |t|
+  create_table "dorsale_alexandrie_attachments", force: :cascade do |t|
+    t.integer "attachable_id"
+    t.string  "attachable_type"
+    t.integer "file"
+  end
+
+  create_table "dorsale_comments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "user_type"
+    t.string   "user_type",        limit: 255
     t.integer  "commentable_id"
-    t.string   "commentable_type"
+    t.string   "commentable_type", limit: 255
     t.text     "text"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "dummy_models", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

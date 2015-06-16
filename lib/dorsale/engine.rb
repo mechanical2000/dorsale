@@ -15,6 +15,7 @@ require "rails-i18n"
 require "cancan"
 require "awesome_print"
 require "kaminari-i18n"
+require "carrierwave"
 
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
