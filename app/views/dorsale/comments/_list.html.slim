@@ -1,3 +1,2 @@
-- commentable.comments.map do |comment|
+- ::Dorsale::Comment.where(commentable: commentable).map do |comment|
   = render "dorsale/comments/comment", comment: comment
-`
