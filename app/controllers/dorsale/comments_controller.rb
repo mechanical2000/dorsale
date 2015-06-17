@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Dorsale
   class CommentsController < ApplicationController
     def create
@@ -20,33 +18,41 @@ module Dorsale
       redirect_to_back_url
     end
 
+    def edit
+      @comment = ::Dorsale::Comment.find params[:id]
+
+      authorize! :update, @comment
+
+      render layout: false
+    end
+
     def update
-        @comment = ::Dorsale::Comment.find params[:id]
+      @comment = ::Dorsale::Comment.find params[:id]
 
-        authorize! :update, @comment
+      authorize! :update, @comment
 
-        if @comment.update_attributes(comment_params)
-          flash[:notice] = t("messages.comment.update_ok")
-        else
-          flash[:alert] = t("messages.comment.update_error")
-        end
-
-        redirect_to_back_url
+      if @comment.update_attributes(comment_params)
+        flash[:notice] = t("messages.comment.update_ok")
+      else
+        flash[:alert] = t("messages.comment.update_error")
       end
 
-      def destroy
-        @comment = ::Dorsale::Comment.find params[:id]
+      redirect_to_back_url
+    end
 
-        authorize! :delete, @comment
+    def destroy
+      @comment = ::Dorsale::Comment.find params[:id]
 
-        if @comment.destroy
-          flash[:notice] = t("messages.comment.delete_ok")
-        else
-          flash[:alert] = t("messages.comment.delete_error")
-        end
+      authorize! :delete, @comment
 
-        redirect_to_back_url
+      if @comment.destroy
+        flash[:notice] = t("messages.comment.delete_ok")
+      else
+        flash[:alert] = t("messages.comment.delete_error")
       end
+
+      redirect_to_back_url
+    end
 
     private
 

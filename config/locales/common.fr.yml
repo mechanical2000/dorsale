@@ -62,6 +62,8 @@ fr:
     import_csv : "Import CSV"
     import_xls : "Import XLS"
     import_pdf : "Import PDF"
+    send       : "Envoyer"
+    comment    : "Commenter"
 
   attributes: &attributes
     id                    : "Id"
@@ -102,6 +104,7 @@ fr:
     color                 : "Couleur"
     data                  : "Informations"
     comment               : "Commentaire"
+    written_by            : "écrit par"
 
   labels:
     <<: *attributes
