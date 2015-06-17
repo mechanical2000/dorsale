@@ -1,11 +1,8 @@
 module Dorsale
   class CommentsController < ApplicationController
     def create
-      if defined?(current_user) && current_user.present?
-        @comment = current_user.comments.new(comment_params)
-      else
-        @comment = Comment.new(comment_params)
-      end
+      @comment = Comment.new(comment_params)
+      @comment.user = try(:current_user)
 
       authorize! :create, @comment
 
