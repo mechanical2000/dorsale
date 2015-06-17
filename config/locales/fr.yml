@@ -8,7 +8,7 @@ fr:
     comment:
       create_ok    : "Le commentaire a été créé."
       create_error : "Impossible de créer le commentaire."
-      update_ok    : "Le fichier a été modifié."
-      update_error : "Impossible de modifier le commentaire"
-      delete_ok    : "Le fichier a été supprimé."
-      delete_error : "Impossible de supprimer le commentaire"
+      update_ok    : "Le commentaire a été modifié."
+      update_error : "Impossible de modifier le commentaire."
+      delete_ok    : "Le commentaire a été supprimé."
+      delete_error : "Impossible de supprimer le commentaire."
