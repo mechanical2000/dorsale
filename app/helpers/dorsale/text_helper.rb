@@ -1,5 +1,8 @@
 module Dorsale
   module TextHelper
+    include ::ActionView::Helpers::TextHelper
+    include ::ActionView::Helpers::SanitizeHelper
+
     def euros(n)
       return if n.nil?
 
@@ -39,7 +42,8 @@ module Dorsale
     end
 
     def text2html(str)
-      h(str).gsub("\r", "").gsub("\n", "<br />").html_safe
+      str = str.gsub("\r", "").strip
+      strip_tags(str).gsub("\n", "<br />").html_safe
     end
   end
 end
