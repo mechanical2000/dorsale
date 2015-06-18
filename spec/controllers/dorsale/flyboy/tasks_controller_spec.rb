@@ -22,24 +22,24 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     it "should mark the task as done" do
       patch :complete, {id: task.id}
-      task.reload.done.should be true
+      expect(task.reload.done).to be true
     end
 
     it "should set progress to 100" do
       patch :complete, {id: task.id}
-      task.reload.progress.should eq(100)
+      expect(task.reload.progress).to eq(100)
     end
 
     it "should add a task_comment" do
       count = task.comments.count
       patch :complete, {id: task.id}
-      task.reload.comments.count.should eq(count+1)
-      task.comments.last.progress.should eq(100)
+      expect(task.reload.comments.count).to eq(count+1)
+      expect(task.comments.last.progress).to eq(100)
     end
 
     it "should redirect to the referer page" do
       patch :complete, {id: task.id}
-      response.should redirect_to "where_i_came_from"
+      expect(response).to redirect_to "where_i_came_from"
     end
   end
 
@@ -58,19 +58,19 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       it 'should display both when not filtered' do
         get :index
-        assigns(:tasks).should eq [@task1, @task2]
+        expect(assigns(:tasks)).to eq [@task1, @task2]
       end
 
       it 'should filter by status closed' do
         Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'status' => "closed"})
         get :index
-        assigns(:tasks).should eq [@task1]
+        expect(assigns(:tasks)).to eq [@task1]
       end
 
       it 'should filter by status opened' do
         Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'status' => "opened"})
         get :index
-        assigns(:tasks).should eq [@task2]
+        expect(assigns(:tasks)).to eq [@task2]
       end
     end
 
@@ -132,21 +132,21 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   describe "GET show" do
     it "assigns the requested task as @task" do
       get :show, {:id => task.to_param}
-      assigns(:task).should eq(task)
+      expect(assigns(:task)).to eq(task)
     end
   end
 
   describe "GET new" do
     it "assigns a new task as @task" do
       get :new, {:goal_id => task.taskable.id}
-      assigns(:task).should be_a_new(Dorsale::Flyboy::Task)
+      expect(assigns(:task)).to be_a_new(Dorsale::Flyboy::Task)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested task as @task" do
       get :edit, {:id => task.to_param}
-      assigns(:task).should eq(task)
+      expect(assigns(:task)).to eq(task)
     end
   end
 
@@ -160,20 +160,20 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       it "assigns a newly created task as @task" do
         post :create, {:task => valid_attributes}
-        assigns(:task).should be_a(Dorsale::Flyboy::Task)
-        assigns(:task).should be_persisted
+        expect(assigns(:task)).to be_a(Dorsale::Flyboy::Task)
+        expect(assigns(:task)).to be_persisted
       end
 
       it "redirects to the created task" do
         post :create, {:task => valid_attributes}
-        response.should redirect_to Dorsale::Flyboy::Task.order("id ASC").last
+        expect(response).to redirect_to Dorsale::Flyboy::Task.order("id ASC").last
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved task as @task" do
         post :create, task: {name: nil, taskable_id: task.taskable.id, taskable_type: task.taskable.class}
-        assigns(:task).should be_a_new(Dorsale::Flyboy::Task)
+        expect(assigns(:task)).to be_a_new(Dorsale::Flyboy::Task)
       end
     end
 
@@ -184,13 +184,13 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "assigns the requested task as @task" do
         task = Dorsale::Flyboy::Task.create! valid_attributes
         patch :update, {:id => task.to_param, :task => valid_attributes}
-        assigns(:task).should eq(task)
+        expect(assigns(:task)).to eq(task)
       end
 
       it "redirects to the task" do
         task = Dorsale::Flyboy::Task.create! valid_attributes
         patch :update, {:id => task.to_param, :task => valid_attributes}
-        response.should redirect_to(task)
+        expect(response).to redirect_to(task)
       end
     end
 
@@ -203,7 +203,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
           :task => {:name => nil}
         }
 
-        assigns(:task).should eq(task)
+        expect(assigns(:task)).to eq(task)
       end
     end
   end
@@ -219,7 +219,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     it "redirects to the tasks list" do
       task = Dorsale::Flyboy::Task.create! valid_attributes
       delete :destroy, {:id => task.to_param}
-      response.should redirect_to(flyboy_tasks_path)
+      expect(response).to redirect_to(flyboy_tasks_path)
     end
   end
 
@@ -227,7 +227,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     it "should redirect to the task list to refresh it" do
       task = Dorsale::Flyboy::Task.create! valid_attributes
       patch :snooze, {:id => task.to_param}
-      response.should redirect_to(flyboy_tasks_path)
+      expect(response).to redirect_to(flyboy_tasks_path)
     end
   end
 

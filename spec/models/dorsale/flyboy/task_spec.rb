@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe Dorsale::Flyboy::Task do
-  it { should belong_to(:taskable) }
-  it { should have_many(:comments).dependent(:destroy) }
+  it { is_expected.to belong_to(:taskable) }
+  it { is_expected.to have_many(:comments).dependent(:destroy) }
 
-  it { should validate_presence_of :taskable}
-  it { should validate_presence_of :name}
-  it { should validate_presence_of :term}
-  it { should validate_presence_of :reminder}
+  it { is_expected.to validate_presence_of :taskable}
+  it { is_expected.to validate_presence_of :name}
+  it { is_expected.to validate_presence_of :term}
+  it { is_expected.to validate_presence_of :reminder}
 
   describe "default values" do
     before do
@@ -39,7 +39,7 @@ describe Dorsale::Flyboy::Task do
     it 'should ensure that term >= reminder' do
       date = Date.today
       task = FactoryGirl.build(:flyboy_task, reminder: date+1.day, term: date)
-      task.should_not be_valid
+      expect(task).to_not be_valid
     end
   end
 
@@ -52,8 +52,8 @@ describe Dorsale::Flyboy::Task do
     context 'term not passed' do
       it "should snooze the reminder and term with default value" do
         @task.snooze
-        @task.reminder.should eq Date.today + 2
-        @task.term.should eq Date.today + 35
+        expect(@task.reminder).to eq Date.today + 2
+        expect(@task.term).to eq Date.today + 35
       end
 
       context 'reminder too far is the past' do
@@ -61,8 +61,8 @@ describe Dorsale::Flyboy::Task do
           @task.reminder = @today - 30
           @task.term = @today + 1
           @task.snooze
-          @task.reminder.should eq Date.today + 1
-          @task.term.should eq Date.today + 1
+          expect(@task.reminder).to eq Date.today + 1
+          expect(@task.term).to eq Date.today + 1
         end
       end
     end
@@ -74,8 +74,8 @@ describe Dorsale::Flyboy::Task do
 
       it "should snooze the reminder and term with default value from current date" do
         @task.snooze
-        @task.reminder.should eq @today + 7
-        @task.term.should eq @today + 30
+        expect(@task.reminder).to eq @today + 7
+        expect(@task.term).to eq @today + 30
       end
     end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Dorsale::Flyboy::Goal do
-  it { should have_many(:tasks).dependent(:destroy) }
+  it { is_expected.to have_many(:tasks).dependent(:destroy) }
 
   describe '#validation' do
     it { should validate_presence_of :name }
@@ -13,7 +13,7 @@ describe Dorsale::Flyboy::Goal do
 
     it "should ensure that status has a valid value" do
       goal = FactoryGirl.build(:flyboy_goal, status: 999)
-      goal.should_not be_valid
+      expect(goal).to_not be_valid
     end
   end
 

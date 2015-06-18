@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Dorsale::Flyboy::TaskComment do
-  it { should belong_to(:task) }
+  it { is_expected.to belong_to(:task) }
 
-  it { should validate_presence_of :task }
-  it { should validate_presence_of :date }
-  it { should validate_presence_of :description }
+  it { is_expected.to validate_presence_of :task }
+  it { is_expected.to validate_presence_of :date }
+  it { is_expected.to validate_presence_of :description }
 
   it 'should have a valid factory' do
     expect(FactoryGirl.build(:flyboy_task_comment)).to be_valid
