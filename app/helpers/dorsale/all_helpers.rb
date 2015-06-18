@@ -1,15 +1,15 @@
 module Dorsale
   module AllHelpers
-    include ButtonHelper
-    include CommentsHelper
-    include ContextHelper
-    include FiltersHelper
-    include FormHelper
-    include LinkHelper
-    include PaginationHelper
-    include RoutesHelper
-    include TextHelper
+    include ::Dorsale::ButtonHelper
+    include ::Dorsale::CommentsHelper
+    include ::Dorsale::ContextHelper
+    include ::Dorsale::FiltersHelper
+    include ::Dorsale::FormHelper
+    include ::Dorsale::LinkHelper
+    include ::Dorsale::PaginationHelper
+    include ::Dorsale::RoutesHelper
+    include ::Dorsale::TextHelper
 
-    include Alexandrie::AttachmentsHelper
+    include ::Dorsale::Alexandrie::AttachmentsHelper
   end
 end
