@@ -8,7 +8,7 @@ module Dorsale
       end
 
       opts = {
-        :controller => obj.class.model_name.collection,
+        :controller => "/#{obj.class.to_s.tableize}",
         :action     => :show,
         :id         => obj.to_param,
         :only_path  => true
