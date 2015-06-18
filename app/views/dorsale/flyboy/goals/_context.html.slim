@@ -1,0 +1,18 @@
+- goal = goal || taskable
+
+.goal-context: .context
+  = context_icon :tasks
+  = context_title goal.name
+  = render "dorsale/flyboy/goals/actions", goal: goal
+
+  .infos
+    strong
+      = Dorsale::Flyboy::Task.human_attribute_name(:progress)
+      = " : "
+    = progress_bar(percentage: goal.progress, label: true)
+
+  = context_info Dorsale::Flyboy::Goal.human_attribute_name(:revision), goal.revision
+  = context_info Dorsale::Flyboy::Goal.human_attribute_name(:status), t("messages.goals.status.#{goal.status}")
+
+  - if request.path == dorsale.flyboy_goal_path(goal)
+    = context_info Dorsale::Flyboy::Goal.human_attribute_name(:description), text2html("\n" +goal.description)

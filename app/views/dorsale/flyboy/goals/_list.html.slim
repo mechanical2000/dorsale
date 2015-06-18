@@ -1,0 +1,30 @@
+table
+  thead
+    tr
+      th
+        = sortable_column Dorsale::Flyboy::Goal.model_name.human, column: "name"
+      th.hidden-xs
+        = sortable_column Dorsale::Flyboy::Goal.human_attribute_name(:progress), column: "progress"
+      th.hidden-xs
+        = sortable_column Dorsale::Flyboy::Goal.human_attribute_name(:status), column: "status"
+      th
+        = t ".actions", default: t("helpers.actions")
+
+  tbody
+    - goals.each do |goal|
+      tr.goal class=goal_color(goal)
+        td.name
+          - if can? :read, goal
+            = link_to goal.name, dorsale.flyboy_goal_path(goal)
+          - else
+            = goal.name
+
+        td.goal_progress.hidden-xs
+          = progress_bar percentage: goal.progress, label: true
+
+        td.status.hidden-xs
+          = t("messages.goals.status.#{goal.status}")
+
+        td.actions
+          - if can? :create, Dorsale::Flyboy::Task.new(taskable: goal)
+            = create_button dorsale.new_flyboy_task_path(taskable_guid: goal.guid), text: t("actions.goals.new_task")

@@ -1,0 +1,14 @@
+.flyboy
+  .row
+    .col-md-4
+      h1 Dossiers en cours
+
+    .col-md-4.right
+      .actions
+        = create_button dorsale.new_flyboy_goal_path, class: "btn btn-success"
+    .col-md-4
+      = render "dorsale/flyboy/searchbar"
+
+  = render "dorsale/flyboy/filters"
+  = render "dorsale/flyboy/goals/list", goals: @goals
+  = paginate @goals

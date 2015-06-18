@@ -1,0 +1,15 @@
+.actions
+  - if dorsale.flyboy_goal_path(goal) != request.path
+    = read_button dorsale.flyboy_goal_path(goal)
+
+  - if can?(:create, goal.tasks.new)
+    = create_button dorsale.new_flyboy_task_path(taskable_guid: goal.guid), text: t("actions.goals.new_task")
+
+  - if can?(:update, goal)
+    = update_button dorsale.edit_flyboy_goal_path(goal)
+
+  - if can?(:close, goal)
+    = lock_button dorsale.close_flyboy_goal_path(goal), text: t("actions.close")
+
+  - if can?(:open, goal)
+    = unlock_button dorsale.open_flyboy_goal_path(goal), text: t("actions.open")

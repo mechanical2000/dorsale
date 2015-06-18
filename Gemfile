@@ -22,4 +22,5 @@ group :development, :test do
   gem "guard-cucumber"
   gem "guard-rspec"
   gem "guard-rubocop"
+  gem "timecop"
 end

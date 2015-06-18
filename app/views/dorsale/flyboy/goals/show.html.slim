@@ -1,0 +1,9 @@
+.flyboy
+  - content_for :context do
+    = render "dorsale/flyboy/goals/context", goal: @goal
+
+  - content_for :main do
+    .tasks
+      = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: true
+
+  = render_contextual

@@ -1,0 +1,173 @@
+module Dorsale
+  module Flyboy
+    class TasksController < ::Dorsale::Flyboy::ApplicationController
+      handles_sortable_columns
+
+      before_action :set_objects, only: [
+        :show,
+        :edit,
+        :update,
+        :destroy,
+        :complete,
+        :snooze
+      ]
+
+      def index
+        authorize! :list, Task
+
+        @tasks ||= Task.all.includes(:taskable)
+
+        @order ||= sortable_column_order do |column, direction|
+          case column
+          when "name", "status"
+            %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
+          when "progress", "term"
+            %(dorsale_flyboy_tasks.#{column} #{direction})
+          when "taskable"
+            if direction == :asc
+              proc { |a, b| a.taskable.name.downcase <=> b.taskable.name.downcase }
+            else
+              proc { |a, b| b.taskable.name.downcase <=> a.taskable.name.downcase }
+            end
+          else
+            params["sort"] = "term"
+            "term ASC"
+          end
+        end
+
+        @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
+
+        @tasks = @filters.apply(@tasks)
+        @tasks = @tasks.search(params[:q])
+
+        if @order.is_a?(Proc)
+          @tasks = @tasks.sort(&@order)
+          @tasks = Kaminari.paginate_array(@tasks).page(params[:page])
+        else
+          @tasks = @tasks.order(@order)
+          @tasks = @tasks.page(params[:page])
+        end
+
+        respond_to do |format|
+          format.html
+
+          format.csv do
+            send_data @tasks.to_csv,
+              filename:    "feuille_de_route_#{Date.today}.csv",
+              disposition: "attachment"
+          end
+
+          format.xls
+
+          format.pdf do
+            pdf = Roadmap.new(@tasks)
+            pdf.build
+            send_data pdf.render,
+              filename:    "feuille_de_route_#{Date.today}.pdf",
+              disposition: "inline"
+          end
+        end
+
+      end
+
+      def show
+        @task = Task.find(params[:id])
+
+        authorize! :read, @task
+      end
+
+      def new
+        @task = Task.new
+        @task.taskable_guid = params[:taskable_guid]
+
+        authorize! :create, @task
+      end
+
+      def edit
+        authorize! :update, @task
+       end
+
+      def create
+        @task ||= Task.new(task_params)
+
+        authorize! :create, @task
+
+        if @task.save
+          flash[:success] = t("messages.tasks.create_ok")
+          redirect_to @task
+        else
+          render :new
+        end
+      end
+
+      def update
+        authorize! :update, @task
+
+        if @task.update_attributes(task_params)
+          flash[:success] = t("messages.tasks.update_ok")
+          redirect_to @task
+        else
+          render :edit
+        end
+      end
+
+      def destroy
+        authorize! :delete, @task
+
+        if @task.destroy
+          flash[:success] = t("messages.tasks.delete_ok")
+        else
+          flash[:danger] = t("messages.tasks.delete_error")
+        end
+
+        redirect_to dorsale.flyboy_tasks_path
+      end
+
+      def complete
+        authorize! :complete, @task
+
+        @task_comment ||= @task.comments.new(
+          :progress    => 100,
+          :description => t("messages.tasks.complete_ok"),
+          :date        => DateTime.now
+        )
+
+        if @task_comment.save
+          flash[:success] = t("messages.tasks.complete_ok")
+        else
+          flash[:danger] = t("messages.tasks.complete_error")
+        end
+
+        redirect_to request.referer
+      end
+
+      def snooze
+        @task.snooze
+
+        if @task.save
+          flash[:success] = t("messages.tasks.snooze_ok")
+        else
+          flash[:danger] = t("messages.tasks.snooze_error")
+        end
+
+        redirect_to dorsale.flyboy_tasks_path
+      end
+
+      private
+
+      def set_objects
+        @task = Task.find params[:id]
+        @taskable = @task.taskable
+      end
+
+      def permitted_params
+        [:taskable_id, :taskable_type, :name, :description, :progress, :term, :reminder]
+      end
+
+      def task_params
+        params.require(:task).permit(permitted_params)
+      end
+
+    end
+  end
+end

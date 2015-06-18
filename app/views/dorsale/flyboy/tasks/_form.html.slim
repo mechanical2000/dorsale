@@ -1,0 +1,29 @@
+- content_for :context do
+  .task-context: .context
+    = context_icon :check_square_o
+
+    - if @task.persisted?
+      = context_title "Modifier #{@task.name}"
+      - if can?(:delete, @task)
+        = delete_button dorsale.flyboy_task_path(@task)
+
+    - else
+      = context_title "Nouvelle tâche"
+
+  - if can?(:read, @task.taskable)
+    = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
+
+- content_for :main do
+  .well
+    = horizontal_form_for @task, as: :task do |f|
+      = f.input :name
+      = f.input :description
+      = f.input :reminder, html5: true
+      = f.input :term,     html5: true
+
+      = f.hidden_field :taskable_id
+      = f.hidden_field :taskable_type
+
+      = form_buttons
+
+= render_contextual
