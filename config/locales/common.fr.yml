@@ -105,6 +105,7 @@ fr:
     data                  : "Informations"
     comment               : "Commentaire"
     written_by            : "écrit par"
+    details               : "Détails"
 
   labels:
     <<: *attributes
