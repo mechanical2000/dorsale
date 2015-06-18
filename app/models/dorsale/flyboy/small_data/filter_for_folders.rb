@@ -1,9 +1,9 @@
 module Dorsale
   module Flyboy
     module SmallData
-      class FilterForGoals < ::Dorsale::SmallData::Filter
+      class FilterForFolders < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          'status' => FilterStrategyByStatus.new("goals")
+          'status' => FilterStrategyByStatus.new("folders")
         }
 
         def strategy key
@@ -11,7 +11,7 @@ module Dorsale
         end
 
         def target
-          "goals"
+          "folders"
         end
       end
     end

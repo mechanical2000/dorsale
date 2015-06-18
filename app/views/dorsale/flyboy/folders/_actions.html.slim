@@ -1,0 +1,15 @@
+.actions
+  - if dorsale.flyboy_folder_path(folder) != request.path
+    = read_button dorsale.flyboy_folder_path(folder)
+
+  - if can?(:create, folder.tasks.new)
+    = create_button dorsale.new_flyboy_task_path(taskable_guid: folder.guid), text: t("actions.folders.new_task")
+
+  - if can?(:update, folder)
+    = update_button dorsale.edit_flyboy_folder_path(folder)
+
+  - if can?(:close, folder)
+    = lock_button dorsale.close_flyboy_folder_path(folder), text: t("actions.close")
+
+  - if can?(:open, folder)
+    = unlock_button dorsale.open_flyboy_folder_path(folder), text: t("actions.open")

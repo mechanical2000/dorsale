@@ -3,21 +3,21 @@ module Dorsale
     module AbilityHelper
       def define_dorsale_flyboy_abilities
         # Allowed actions (all by default)
-        can [:list, :create, :read, :update, :delete, :open, :close], ::Dorsale::Flyboy::Goal
+        can [:list, :create, :read, :update, :delete, :open, :close], ::Dorsale::Flyboy::Folder
         can [:list, :create, :read, :update, :delete, :complete, :snooze], ::Dorsale::Flyboy::Task
 
         # Restricted actions
 
-        cannot [:update, :delete], ::Dorsale::Flyboy::Goal do |goal|
-          goal.closed?
+        cannot [:update, :delete], ::Dorsale::Flyboy::Folder do |folder|
+          folder.closed?
         end
 
-        cannot :close, ::Dorsale::Flyboy::Goal do |goal|
-          not goal.may_close?
+        cannot :close, ::Dorsale::Flyboy::Folder do |folder|
+          not folder.may_close?
         end
 
-        cannot :open, ::Dorsale::Flyboy::Goal do |goal|
-          not goal.may_open?
+        cannot :open, ::Dorsale::Flyboy::Folder do |folder|
+          not folder.may_open?
         end
 
         cannot :create, ::Dorsale::Flyboy::Task do |task|
@@ -25,7 +25,7 @@ module Dorsale
         end
 
         cannot [:create, :update, :delete], ::Dorsale::Flyboy::Task do |task|
-          task.taskable.is_a?(::Dorsale::Flyboy::Goal) && task.taskable.closed?
+          task.taskable.is_a?(::Dorsale::Flyboy::Folder) && task.taskable.closed?
         end
 
         cannot :complete, ::Dorsale::Flyboy::Task do |task|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616082916) do
+ActiveRecord::Schema.define(version: 20150618142536) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150616082916) do
     t.datetime "updated_at",       null: false
   end
 
-  create_table "dorsale_flyboy_goals", force: :cascade do |t|
+  create_table "dorsale_flyboy_folders", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.string   "status"

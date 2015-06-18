@@ -10,6 +10,13 @@ Dorsale::Engine.routes.draw do
   end
 
   namespace :flyboy do
+    resources :folders do
+      member do
+        patch :open
+        patch :close
+      end
+    end
+
     resources :tasks do
       member do
         patch :complete
@@ -18,12 +25,5 @@ Dorsale::Engine.routes.draw do
     end
 
     resources :task_comments, only: [:create]
-
-    resources :goals do
-      member do
-        patch :open
-        patch :close
-      end
-    end
   end
 end

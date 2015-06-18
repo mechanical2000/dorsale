@@ -3,8 +3,8 @@ require "dorsale/polymorphic_id"
 
 module Dorsale
   module Flyboy
-    class Goal < ActiveRecord::Base
-      self.table_name = "dorsale_flyboy_goals"
+    class Folder < ActiveRecord::Base
+      self.table_name = "dorsale_flyboy_folders"
 
       include AASM
       include ::Dorsale::Search
@@ -29,7 +29,7 @@ module Dorsale
 
       validates :name, presence: true
       validates :status, inclusion: {
-        in: proc { ::Dorsale::Flyboy::Goal.aasm.states.map(&:to_s) }
+        in: proc { ::Dorsale::Flyboy::Folder.aasm.states.map(&:to_s) }
       }
 
       def initialize(*args)
@@ -48,7 +48,7 @@ module Dorsale
       before_create :create_tracking
 
       def create_tracking
-        dailycounter  = Goal.where("DATE(created_at) = ?", Date.today).count + 1
+        dailycounter  = Folder.where("DATE(created_at) = ?", Date.today).count + 1
         self.tracking = "#{Time.now.strftime("%y%m%d")}-#{dailycounter}"
       end
 

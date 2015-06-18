@@ -2,10 +2,10 @@ module Dorsale
   module Flyboy
     module ApplicationHelper
 
-      def goal_color(goal)
-        return "onalert"   if Dorsale::Flyboy::Task.where(taskable: goal).where('done = ? AND term < ?', false, Date.today).count > 0
-        return "onwarning" if Dorsale::Flyboy::Task.where(taskable: goal).where('done = ? AND term > ? AND reminder < ?', false, Date.today, Date.today).count > 0
-        return "finished"  if goal.closed?
+      def folder_color(folder)
+        return "onalert"   if Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term < ?', false, Date.today).count > 0
+        return "onwarning" if Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term > ? AND reminder < ?', false, Date.today, Date.today).count > 0
+        return "finished"  if folder.closed?
         return "ontime"
       end
 

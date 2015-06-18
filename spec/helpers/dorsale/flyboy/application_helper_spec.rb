@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Dorsale::Flyboy::ApplicationHelper, type: :helper do
 
-  describe '#goal_color' do
-    let!(:goal) {
-      FactoryGirl.create(:flyboy_goal)
+  describe '#folder_color' do
+    let!(:folder) {
+      FactoryGirl.create(:flyboy_folder)
     }
 
     # ensure that tasks are filtered by group
@@ -16,50 +16,50 @@ describe Dorsale::Flyboy::ApplicationHelper, type: :helper do
       FactoryGirl.create(:flyboy_task, reminder: Date.today - 3.days, term: Date.today + 1.day, done: false)
     }
 
-    #ensure tasks are filtered by goal
-    let!(:other_goal) {
-      FactoryGirl.create(:flyboy_goal)
+    #ensure tasks are filtered by folder
+    let!(:other_folder) {
+      FactoryGirl.create(:flyboy_folder)
     }
-    let!(:task_onalert_for_other_goal) {
-      FactoryGirl.create(:flyboy_task, taskable: other_goal, reminder: Date.today - 3.days, term: Date.today - 1.day, done: false)
+    let!(:task_onalert_for_other_folder) {
+      FactoryGirl.create(:flyboy_task, taskable: other_folder, reminder: Date.today - 3.days, term: Date.today - 1.day, done: false)
     }
-    let!(:task_onwarning_for_other_goal) {
-      FactoryGirl.create(:flyboy_task, taskable: other_goal, reminder: Date.today - 3.days, term: Date.today + 1.day, done: false)
+    let!(:task_onwarning_for_other_folder) {
+      FactoryGirl.create(:flyboy_task, taskable: other_folder, reminder: Date.today - 3.days, term: Date.today + 1.day, done: false)
     }
 
     let!(:task_ontime) {
-      FactoryGirl.create(:flyboy_task, taskable: goal, reminder: Date.today + 1.day, term: Date.today + 3.days, done: false)
+      FactoryGirl.create(:flyboy_task, taskable: folder, reminder: Date.today + 1.day, term: Date.today + 3.days, done: false)
     }
     let!(:task_finished) {
-      FactoryGirl.create(:flyboy_task, taskable: goal, reminder: Date.today - 3.days, term: Date.today - 1.day, done: true)
+      FactoryGirl.create(:flyboy_task, taskable: folder, reminder: Date.today - 3.days, term: Date.today - 1.day, done: true)
     }
 
     context 'when all tasks are ontime or finished' do
       it 'should return ontime' do
-        expect(goal_color(goal)).to eq('ontime')
+        expect(folder_color(folder)).to eq('ontime')
       end
 
     end
 
-    context 'when the goal is closed' do
+    context 'when the folder is closed' do
       it 'should return finished' do
-        goal_finished = FactoryGirl.create(:flyboy_goal, :status => "closed")
-        expect(goal_color(goal_finished)).to eq('finished')
+        folder_finished = FactoryGirl.create(:flyboy_folder, :status => "closed")
+        expect(folder_color(folder_finished)).to eq('finished')
       end
     end
 
     context 'when at least one task is on warning' do
-      let!(:task_onwarning) {FactoryGirl.create(:flyboy_task, taskable: goal, reminder: Date.today - 3.days, term: Date.today + 1.day, done: false)}
+      let!(:task_onwarning) {FactoryGirl.create(:flyboy_task, taskable: folder, reminder: Date.today - 3.days, term: Date.today + 1.day, done: false)}
       it 'should return onwarning' do
-        expect(goal_color(goal)).to eq('onwarning')
+        expect(folder_color(folder)).to eq('onwarning')
       end
     end
 
     context 'when at least one task is on alert' do
-      let!(:task_onwarning) {FactoryGirl.create(:flyboy_task, taskable: goal, reminder: Date.today - 3.days, term: Date.today - 1.day, done: false)}
+      let!(:task_onwarning) {FactoryGirl.create(:flyboy_task, taskable: folder, reminder: Date.today - 3.days, term: Date.today - 1.day, done: false)}
 
       it 'should return onalert' do
-        expect(goal_color(goal)).to eq('onalert')
+        expect(folder_color(folder)).to eq('onalert')
       end
     end
   end

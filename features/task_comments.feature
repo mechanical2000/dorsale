@@ -1,5 +1,5 @@
 @javascript
-Feature: Manage goal comments
+Feature: Manage folder comments
   Scenario: Create a comment
     Given an existing task
     When I go to the tasks section

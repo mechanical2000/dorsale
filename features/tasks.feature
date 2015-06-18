@@ -1,8 +1,8 @@
 @javascript
 Feature: Manage tasks
   Scenario: Create a task
-    Given an existing goal
-    When I consult this goal
+    Given an existing folder
+    When I consult this folder
     And I create a task
     Then I am on the created task
     And the task is created

@@ -5,10 +5,10 @@
 
     .col-md-4.right
       .actions
-        = create_button dorsale.new_flyboy_goal_path, class: "btn btn-success"
+        = create_button dorsale.new_flyboy_folder_path, class: "btn btn-success"
     .col-md-4
       = render "dorsale/flyboy/searchbar"
 
   = render "dorsale/flyboy/filters"
-  = render "dorsale/flyboy/goals/list", goals: @goals
-  = paginate @goals
+  = render "dorsale/flyboy/folders/list", folders: @folders
+  = paginate @folders

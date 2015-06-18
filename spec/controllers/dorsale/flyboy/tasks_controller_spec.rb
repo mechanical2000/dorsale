@@ -76,15 +76,15 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     context "when sorting" do
       before do
-        Dorsale::Flyboy::Goal.destroy_all
+        Dorsale::Flyboy::Folder.destroy_all
         Dorsale::Flyboy::Task.destroy_all
-        @goal1 = FactoryGirl.create(:flyboy_goal, name: "Abc")
-        @goal2 = FactoryGirl.create(:flyboy_goal, name: "dEF")
-        @goal3 = FactoryGirl.create(:flyboy_goal, name: "xyz")
+        @folder1 = FactoryGirl.create(:flyboy_folder, name: "Abc")
+        @folder2 = FactoryGirl.create(:flyboy_folder, name: "dEF")
+        @folder3 = FactoryGirl.create(:flyboy_folder, name: "xyz")
 
-        @task1 = FactoryGirl.create(:flyboy_task, taskable: @goal1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = FactoryGirl.create(:flyboy_task, taskable: @goal2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = FactoryGirl.create(:flyboy_task, taskable: @goal3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
+        @task1 = FactoryGirl.create(:flyboy_task, taskable: @folder1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
+        @task2 = FactoryGirl.create(:flyboy_task, taskable: @folder2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
+        @task3 = FactoryGirl.create(:flyboy_task, taskable: @folder3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
       end
 
       it "sorting by taskable asc" do
@@ -138,7 +138,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "GET new" do
     it "assigns a new task as @task" do
-      get :new, {:goal_id => task.taskable.id}
+      get :new, {:folder_id => task.taskable.id}
       expect(assigns(:task)).to be_a_new(Dorsale::Flyboy::Task)
     end
   end

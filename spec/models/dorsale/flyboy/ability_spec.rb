@@ -5,63 +5,63 @@ describe ::Ability do
     ::Ability.new
   }
 
-  describe Dorsale::Flyboy::Goal do
-    it "can list goals" do
-      expect(ability.can?(:list, Dorsale::Flyboy::Goal)).to be true
+  describe Dorsale::Flyboy::Folder do
+    it "can list folders" do
+      expect(ability.can?(:list, Dorsale::Flyboy::Folder)).to be true
     end
 
-    it "can create goals" do
-      expect(ability.can?(:create, Dorsale::Flyboy::Goal.new)).to be true
+    it "can create folders" do
+      expect(ability.can?(:create, Dorsale::Flyboy::Folder.new)).to be true
     end
 
-    it "can read goals" do
-      expect(ability.can?(:read, Dorsale::Flyboy::Goal.new)).to be true
+    it "can read folders" do
+      expect(ability.can?(:read, Dorsale::Flyboy::Folder.new)).to be true
     end
 
-    it "can update open goals" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      expect(ability.can?(:update, goal)).to be true
+    it "can update open folders" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      expect(ability.can?(:update, folder)).to be true
     end
 
-    it "can't update closed goals" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      expect(ability.can?(:update, goal)).to be false
+    it "can't update closed folders" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      expect(ability.can?(:update, folder)).to be false
     end
 
-    it "can delete open goals" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      expect(ability.can?(:delete, goal)).to be true
+    it "can delete open folders" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      expect(ability.can?(:delete, folder)).to be true
     end
 
-    it "can't delete closed goals" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      expect(ability.can?(:delete, goal)).to be false
+    it "can't delete closed folders" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      expect(ability.can?(:delete, folder)).to be false
     end
 
-    it "can close open goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      expect(ability.can?(:close, goal)).to be true
+    it "can close open folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      expect(ability.can?(:close, folder)).to be true
     end
 
-    it "can't close already closed goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      expect(ability.can?(:close, goal)).to be false
+    it "can't close already closed folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      expect(ability.can?(:close, folder)).to be false
     end
 
-    it "can open closed goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      expect(ability.can?(:open, goal)).to be true
+    it "can open closed folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      expect(ability.can?(:open, folder)).to be true
     end
 
-    it "can't close goals with undone tasks" do
+    it "can't close folders with undone tasks" do
       task = FactoryGirl.create(:flyboy_task, done: false)
-      goal = task.taskable
-      expect(ability.can?(:close, goal)).to be false
+      folder = task.taskable
+      expect(ability.can?(:close, folder)).to be false
     end
 
-    it "can't open already open goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      expect(ability.can?(:open, goal)).to be false
+    it "can't open already open folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      expect(ability.can?(:open, folder)).to be false
     end
   end
 
@@ -70,15 +70,15 @@ describe ::Ability do
       expect(ability.can?(:list, Dorsale::Flyboy::Task)).to be true
     end
 
-    it "can create task in an open goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      task = goal.tasks.new
+    it "can create task in an open folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      task = folder.tasks.new
       expect(ability.can?(:create, task)).to be true
     end
 
-    it "can't create task in a closed goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      task = goal.tasks.new
+    it "can't create task in a closed folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      task = folder.tasks.new
       expect(ability.can?(:create, task)).to be false
     end
 
@@ -87,27 +87,27 @@ describe ::Ability do
       expect(ability.can?(:read, task)).to be true
     end
 
-    it "can update task in an open goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      task = FactoryGirl.create(:flyboy_task, taskable: goal)
+    it "can update task in an open folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      task = FactoryGirl.create(:flyboy_task, taskable: folder)
       expect(ability.can?(:update, task)).to be true
     end
 
-    it "can't update task in an closed goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      task = FactoryGirl.create(:flyboy_task, taskable: goal)
+    it "can't update task in an closed folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      task = FactoryGirl.create(:flyboy_task, taskable: folder)
       expect(ability.can?(:update, task)).to be false
     end
 
-    it "can delete task in an open goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "open")
-      task = FactoryGirl.create(:flyboy_task, taskable: goal)
+    it "can delete task in an open folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      task = FactoryGirl.create(:flyboy_task, taskable: folder)
       expect(ability.can?(:delete, task)).to be true
     end
 
-    it "can't delete task in an closed goal" do
-      goal = FactoryGirl.create(:flyboy_goal, status: "closed")
-      task = FactoryGirl.create(:flyboy_task, taskable: goal)
+    it "can't delete task in an closed folder" do
+      folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      task = FactoryGirl.create(:flyboy_task, taskable: folder)
       expect(ability.can?(:delete, task)).to be false
     end
 
