@@ -25,6 +25,7 @@ module Dorsale
         end
       end
 
+      belongs_to :folderable, polymorphic: true
       has_many :tasks, dependent: :destroy, as: :taskable
 
       validates :name, presence: true

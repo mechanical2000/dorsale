@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618142536) do
+ActiveRecord::Schema.define(version: 20150619082813) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -47,9 +47,11 @@ ActiveRecord::Schema.define(version: 20150618142536) do
     t.string   "status"
     t.string   "tracking"
     t.integer  "version"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "progress"
+    t.integer  "folderable_id"
+    t.string   "folderable_type"
   end
 
   create_table "dorsale_flyboy_task_comments", force: :cascade do |t|

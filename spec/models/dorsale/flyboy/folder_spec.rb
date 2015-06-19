@@ -2,19 +2,18 @@ require 'spec_helper'
 
 describe Dorsale::Flyboy::Folder do
   it { is_expected.to have_many(:tasks).dependent(:destroy) }
+  it { is_expected.to belong_to(:folderable) }
 
-  describe '#validation' do
-    it { should validate_presence_of :name }
+  it { should validate_presence_of :name }
 
-    it "should validate the folder when not step is assigned" do
-      folder = FactoryGirl.build(:flyboy_folder)
-      expect(folder).to be_valid
-    end
+  it "should validate the folder when not step is assigned" do
+    folder = FactoryGirl.build(:flyboy_folder)
+    expect(folder).to be_valid
+  end
 
-    it "should ensure that status has a valid value" do
-      folder = FactoryGirl.build(:flyboy_folder, status: 999)
-      expect(folder).to_not be_valid
-    end
+  it "should ensure that status has a valid value" do
+    folder = FactoryGirl.build(:flyboy_folder, status: 999)
+    expect(folder).to_not be_valid
   end
 
   it "should increase the version number" do
