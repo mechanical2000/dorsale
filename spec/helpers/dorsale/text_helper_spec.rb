@@ -30,6 +30,8 @@ describe Dorsale::TextHelper, type: :helper do
   end
 
   it "text2html" do
+    expect(text2html(nil)).to be nil
+    expect(text2html(" \n")).to be nil
     expect(text2html("hello\nworld")).to eq "hello<br />world"
     expect(text2html("hello\r\nworld")).to eq "hello<br />world"
     expect(text2html("\n\nhello\nworld\n\n\n")).to eq "hello<br />world"

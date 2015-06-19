@@ -42,6 +42,8 @@ module Dorsale
     end
 
     def text2html(str)
+      return if str.to_s.blank?
+
       str = str.gsub("\r", "").strip
       strip_tags(str).gsub("\n", "<br />").html_safe
     end
