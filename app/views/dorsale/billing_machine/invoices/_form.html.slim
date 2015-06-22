@@ -1,0 +1,44 @@
+#invoice.edit
+  = simple_form_for @invoice, html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f|
+    .well
+      - if @invoice.persisted?
+        .form-group
+          label for='invoice-unique-index' class='col-sm-3 control-label' Index unique
+          .col-sm-9
+            .form-control-static.invoice-unique-index= @invoice.tracking_id
+      = f.input :label
+      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @invoice.date, symbol: :date}
+      = f.association :payment_term, collection: current_user.entity.payment_terms
+      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @invoice.due_date, symbol: :due_date}
+      = f.input :paid, as: :select, include_blank: false
+      = f.input :customer_guid, collection: current_user.entity.people.map{ |e| [e.name, e.guid] }
+      = f.input :vat_rate, as: :string
+      = f.input :advance, as: :string
+
+    .form-group#invoice-lines
+      = f.simple_fields_for :lines do |l|
+        = render 'line_fields', :f => l
+      .links.col-sm-offset-3.col-sm-9
+        = link_to_add_association 'Add line', f, :lines, class: 'btn btn-primary', id: 'add-new-line'
+
+    .total.well
+      .form-group
+        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:total_duty)}
+        .col-sm-9
+          .form-control-static#invoice-total-duty
+      .form-group
+        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:vat_rate)}:
+        .col-sm-9
+          .form-control-static#invoice-vat_amount
+      .form-group
+        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:total_all_taxes)}
+        .col-sm-9
+          .form-control-static#invoice-total-taxes
+      .form-group
+        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:balance)}
+        .col-sm-9
+          .form-control-static#invoice-balance
+
+    .form-group
+      .col-sm-offset-3.col-sm-9
+        = f.button :submit, Invoice.human_attribute_name(:save), class: 'btn btn-success', id: "invoice-submit"

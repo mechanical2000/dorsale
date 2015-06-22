@@ -20,6 +20,7 @@ require "aasm"
 require "handles_sortable_columns"
 require "csv"
 
+require "dorsale/polymorphic_id"
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
 

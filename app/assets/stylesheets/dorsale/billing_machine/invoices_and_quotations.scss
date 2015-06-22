@@ -1,0 +1,135 @@
+.invoice-details, .quotation-details {
+  .action {
+    text-align: right;
+    margin: 0 0 10px 0;
+    a {
+      margin-left: 10px;
+    }
+  }
+
+}
+  
+.nested-fields::after {
+  clear: both;  
+}
+.nested-fields {
+  margin: 15px;
+  label.line-total-label {margin-right: 5px;}
+  
+}
+.remove-line {
+  text-align: right;
+}
+
+.invoices, .quotations {
+  .row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #dddddd;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-align: center;
+  }
+
+  .row:nth-child(odd) {background: #FFF}
+  .row:nth-child(even) {background: #f9f9f9}
+
+  .row.header {
+    font-weight: bold;
+    border-bottom: 1px solid #dddddd;
+    border-top: 0px;
+    text-align: center;
+  }
+  .head {
+    margin-bottom: 30px;
+    h1 {
+      float: left;
+    }
+    .actions {
+      float: right;
+      margin-top: 22px;
+      .btn {
+        margin-left: 10px;
+      }
+    }
+  }
+  .head:after, .customer:after {
+    clear: both;
+    display: block;
+    height: 0;
+    content: '';
+  }
+
+  .invoice, .quotation{
+    .date {
+      font-size: 12px
+    }
+    .infos {
+      float: left;
+      width: 50%;
+    }
+    .customer {
+      float: right;
+      width: 50%;
+    }
+    .total {
+      float: right;
+      width: 50%;
+      margin-top: 30px;
+    }
+    .body {
+      border-bottom: 1px solid #ddd;
+    }
+    .actions {
+      a.btn {
+        margin-right: 10px;
+      }
+    }
+    &.paid {
+      background-color: #C8FFC8;
+    }
+    &.late {
+      background-color: #F5E5C6;
+    }
+    &.on_alert {
+      background-color: #FFC8C8;
+    }
+  }
+
+  // remove red border when input field not valid, until we find a way to use it
+  // without being active on firefox even before the user tries to submit
+  :invalid {
+    box-shadow: none;
+  }
+
+  // hide action when not in large mode
+  @media (max-width: 1200px) {
+    .row.header .action {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .row.header {
+      .action, .line-unit, .line-unit-price, .line-total, .line-quantity {
+        display: none;
+      }
+    }
+    .invoice, .quotation {
+      .infos {
+        width: 100%;
+      }
+      .customer {
+        float: left;
+        width: 100%;
+      }
+      label.customer-address2 {
+        display: none;
+      }
+      .total {
+        width: 100%;
+      }
+    }
+  }
+}
+

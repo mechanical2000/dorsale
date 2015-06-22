@@ -1,0 +1,49 @@
+#quotation.edit
+  = simple_form_for @quotation, html: { class: 'form-horizontal' }, wrapper: :horizontal_form, multipart: true  do |f|
+    .well
+      - if @quotation.persisted?
+        .form-group
+          label for='quotation-unique-index' class='col-sm-3 control-label' Index unique
+          .col-sm-9
+            .form-control-static.quotation-unique-index= @quotation.tracking_id
+      = f.input :label
+      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @quotation.date, symbol: :date}
+      = f.association :payment_term, collection: current_user.entity.payment_terms
+      = f.input :customer_guid, collection: current_user.entity.people.map{ |e| [e.name, e.guid] }
+      = f.input :vat_rate, as: :string
+      = f.input :comments
+      = f.input :documents, as: :file, input_html: {multiple: true}
+      - if @quotation.documents
+            - @quotation.documents.each_with_index do |document, index|
+              .row
+              a href="/documents/documents/#{document.id}/#{document.document_file_name}" '#{document.document_file_name}'
+              label
+                input type="hidden"   name="quotation[documents_attributes][#{index}][id]"       value=document.id
+                input type="hidden"   name="quotation[documents_attributes][#{index}][_destroy]" value=0
+                input type="checkbox" name="quotation[documents_attributes][#{index}][_destroy]" value=1
+                = " Supprimer"
+
+
+    .form-group#quotation-lines
+      = f.simple_fields_for :lines do |l|
+        = render 'line_fields', :f => l
+      .links.col-sm-offset-3.col-sm-9
+        = link_to_add_association 'Add line', f, :lines, class: 'btn btn-primary', id: 'add-new-line'
+
+    .total.well
+      .form-group
+        label class='col-sm-3 control-label' Montant HT
+        .col-sm-9
+          .form-control-static#quotation-total_duty
+      .form-group
+        label class='col-sm-3 control-label' TVA(%):
+        .col-sm-9
+          .form-control-static#quotation-vat_amount
+      .form-group
+        label class='col-sm-3 control-label' Montant TTC
+        .col-sm-9
+          .form-control-static#quotation-total_all_taxes
+
+    .form-group
+      .col-sm-offset-3.col-sm-9
+        = f.button :submit, 'Sauver', class: 'btn btn-success', id: "quotation-submit"

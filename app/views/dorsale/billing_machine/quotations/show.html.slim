@@ -1,0 +1,72 @@
+.quotation-details
+  .action
+    = link_to 'Editer', edit_quotation_path(@quotation), class: 'btn btn-primary'
+    = link_to 'Télécharger', quotation_path(@quotation, format: :pdf), :target => "_blank", class: 'btn btn-success'
+
+  - if @quotation.customer
+    .row
+      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-6
+        .well
+          .customer-name     = @quotation.customer.name
+          .customer-address1 = @quotation.customer.address.street
+          .customer-address2 = @quotation.customer.address.street_bis
+          .customer-zip      = @quotation.customer.address.zip
+          .customer-city     = @quotation.customer.address.city
+          .customer-country  = @quotation.customer.address.country
+
+  .well
+    .info
+      strong ID:
+      span= @quotation.tracking_id
+    .info
+      strong Label:
+      span.quotation-label= @quotation.label
+    .info
+      strong Date:
+      span= @quotation.date ? I18n.l(@quotation.date) : ''
+    .info
+      strong Condition de paiement:
+      span= @quotation.payment_term.try(:label)
+    .info
+      strong Taux de TVA (%):
+      span= @quotation.vat_rate
+    .info
+      strong Total HT:
+      span= euros @quotation.total_duty
+    .info
+      strong TVA:
+      span= euros(@quotation.vat_amount)
+    .info
+      strong Total TTC:
+      span= euros @quotation.total_all_taxes
+
+  - @quotation.lines.each do |line|
+    .well
+      .info
+        strong Label:
+        span= line.label
+      .info
+        strong Quantité:
+        span= line.quantity
+      .info
+        strong Unit:
+        span= line.unit
+      .info
+        strong Prix unitaire:
+        span= euros line.unit_price
+      .info
+        strong Total:
+        span= euros line.total
+
+  - if @quotation.comments.present?
+    .well
+      strong.info Commentaires
+      .comments = text2html(@quotation.comments)
+
+  - if @quotation.documents.any?
+    .well
+      strong.info Documents associés:
+      ul
+        - @quotation.documents.each do |document|
+          li: a href=document.public_file_path '#{document.document_file_name}'

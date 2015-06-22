@@ -1,0 +1,50 @@
+- content_for :sub_header do
+  = render "filters"
+  .actions
+    = icon_button_link_to "plus_blue", new_quotation_path, action: :create
+
+- content_for :context do
+  .quotation-context: .context
+    = context_title Quotation.human_attribute_name(:data)
+
+    - total_duty = @datas.map(&:total_duty).delete_if {|e| e.blank?}.inject(:+) || 0
+    - vat_amount = @datas.map(&:vat_amount).delete_if {|e| e.blank?}.inject(:+) || 0
+    - total_all_taxes = @datas.map(&:total_all_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
+    .row
+      .col-xs-6.col-sm-12.col-md-6
+        p Total HT
+      .col-xs-6.col-sm-12.col-md-6
+        p= euros total_duty
+    .row
+      .col-xs-6.col-sm-12.col-md-6
+        p Total TVA
+      .col-xs-6.col-sm-12.col-md-6
+        p= euros vat_amount
+    .row
+      .col-xs-6.col-sm-12.col-md-6
+        p Total TTC
+      .col-xs-6.col-sm-12.col-md-6
+        p= euros total_all_taxes
+
+- content_for :main do
+  .quotations
+    .row.header
+      .col-md-1.hidden-sm.hidden-xs.date Date
+      .col-lg-1.hidden-sm.hidden-md.hidden-xs.tracking-id Numéro
+      .col-sm-4.col-xs-5.customer Client
+      .col-md-2.col-sm-3.col-xs-4.total-duty Montant HT
+      .col-md-2.col-sm-3.hidden-xs.all-taxes Montant TTC
+      .col-sm-2.col-xs-3.action Action
+    - @quotations.each do |quotation|
+      .row.quotation
+        .col-md-1.hidden-sm.hidden-xs.date= quotation.date ? I18n.l(quotation.date) : ''
+        .col-lg-1.hidden-sm.hidden-md.hidden-xs.tracking-id= quotation.tracking_id
+        .col-sm-4.col-xs-5.customer-name= quotation.customer.try(:name)
+        .col-md-2.col-sm-3.col-xs-4.total-duty= euros(quotation.total_duty)
+        .col-md-2.col-sm-3.hidden-xs.all-taxes= euros(quotation.total_all_taxes)
+        .col-sm-2.col-xs-3.actions
+          = link_to 'Détails', quotation_path(quotation), class: 'btn btn-default btn-xs', id: 'quotation-details'
+
+    = paginate @quotations
+
+= render_contextual

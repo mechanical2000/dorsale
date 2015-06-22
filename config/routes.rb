@@ -26,4 +26,15 @@ Dorsale::Engine.routes.draw do
 
     resources :task_comments, only: [:create]
   end
+
+  namespace :billing_machine do
+    resources :invoices, except: [:destroy] do
+      member do
+        get :copy
+        patch :pay
+      end
+    end
+
+    resources :quotations
+  end
 end
