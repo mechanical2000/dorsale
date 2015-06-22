@@ -18,20 +18,17 @@ module Dorsale
 
       before_create :assign_unique_index
 
-      before_save :update_total
-
       def assign_unique_index
-        entity.quotation_index ? entity.quotation_index += 1 : entity.quotation_index = 1
-        entity.save
-        self.unique_index = entity.quotation_index
+        if unique_index.nil?
+          self.unique_index = self.class.all.pluck(:unique_index).max.to_i.next
+        end
       end
 
       def tracking_id
-        id_generator_class_name = (self.entity.customization_prefix + "_tracking_id").camelize
-        id_generator_class = id_generator_class_name.constantize
-        tracking_id = id_generator_class.get_quotation_tracking_id(self.date, self.unique_index)
-        return tracking_id
+        date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
+
+      before_save :update_total
 
       def update_total
         self.vat_rate ||= 0

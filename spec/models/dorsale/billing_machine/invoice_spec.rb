@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ::Dorsale::BillingMachine::Invoice, type: :model do
   it { is_expected.to belong_to :customer }
@@ -12,63 +12,63 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
     expect(create(:billing_machine_invoice)).to be_valid
   end
 
-  describe 'unique_index' do
-    context 'when unique index is 69' do
-      it 'should be assigned upon creation' do
-        invoice1 = create(:billing_machine_invoice, date: '2014-02-01', unique_index: 69)
-        invoice2 = create(:billing_machine_invoice, date: '2014-02-01')
-        invoice2.unique_index.should eq(70)
+  describe "unique_index" do
+    context "when unique index is 69" do
+      it "should be assigned upon creation" do
+        invoice1 = create(:billing_machine_invoice, date: "2014-02-01", unique_index: 69)
+        invoice2 = create(:billing_machine_invoice, date: "2014-02-01")
+        expect(invoice2.unique_index).to eq(70)
       end
     end
 
-    context 'when unique index is nil' do
-      it 'should be assigned upon creation' do
+    context "when unique index is nil" do
+      it "should be assigned upon creation" do
         ::Dorsale::BillingMachine::Invoice.destroy_all
-        invoice1 = create(:billing_machine_invoice, date: '2014-02-01')
-        invoice1.unique_index.should eq(1)
+        invoice1 = create(:billing_machine_invoice, date: "2014-02-01")
+        expect(invoice1.unique_index).to eq(1)
       end
     end
   end
 
-  describe 'tracking_id' do
-    it 'should return correct tracking_id' do
-      invoice = FactoryGirl.create(:billing_machine_invoice, date: '2014-02-01')
-      invoice.tracking_id.should eq('2014-01')
+  describe "tracking_id" do
+    it "should return correct tracking_id" do
+      invoice = create(:billing_machine_invoice, date: "2014-02-01")
+      expect(invoice.tracking_id).to eq("2014-01")
     end
   end
 
-  describe 'payment_status' do
-    it 'should be pending if nothing special' do
+  describe "payment_status" do
+    it "should be pending if nothing special" do
       invoice = create(:billing_machine_invoice, due_date: Date.today, date: Date.today, paid: false)
       expect(invoice.payment_status).to eq(:pending)
     end
 
-    it 'should be late if a bit late' do
+    it "should be late if a bit late" do
         invoice = create(:billing_machine_invoice, due_date: Date.today-1, date: Date.today-1, paid: false)
         expect(invoice.payment_status).to eq(:late)
     end
 
-    it 'should be on_alert if a too late' do
+    it "should be on_alert if a too late" do
         invoice = create(:billing_machine_invoice, due_date: Date.today-16, date: Date.today-16, paid: false)
         expect(invoice.payment_status).to eq(:on_alert)
     end
 
-    it 'should be paid if paid' do
+    it "should be paid if paid" do
         invoice = create(:billing_machine_invoice, due_date: Date.today-16, date: Date.today-16, paid: true)
         expect(invoice.payment_status).to eq(:paid)
     end
 
-    it 'should be on_alert if no due date is defined' do
+    it "should be on_alert if no due date is defined" do
         invoice = create(:billing_machine_invoice, due_date: nil, date: Date.today, paid: false)
         expect(invoice.payment_status).to eq(:on_alert)
     end
 
-    it 'should be on_alert if no due date is defined' do
+    it "should be on_alert if no due date is defined" do
         invoice = create(:billing_machine_invoice, due_date: nil, date: Date.today, paid: true)
         expect(invoice.payment_status).to eq(:paid)
     end
 
-    it 'should work fine upon creation' do
+    it "should work fine upon creation" do
       invoice = build(:billing_machine_invoice)
       invoice.lines << ::Dorsale::BillingMachine::InvoiceLine.new(quantity: 1, unit_price: 10)
       invoice.lines << ::Dorsale::BillingMachine::InvoiceLine.new(quantity: 1, unit_price: 10)
@@ -76,15 +76,15 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
     end
   end
 
-  describe 'paid' do
-    it 'should be false by default' do
+  describe "paid" do
+    it "should be false by default" do
       invoice = create(:billing_machine_invoice)
-      invoice.paid.should eq(false)
+      expect(invoice.paid).to eq(false)
     end
   end
 
-  describe 'totals' do
-    it 'should be calculated upon saving' do
+  describe "totals" do
+    it "should be calculated upon saving" do
       invoice = create(:billing_machine_invoice, vat_rate: 20, total_duty: 0, vat_amount: 0, total_all_taxes: 0, advance: 40, balance: 0)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
@@ -93,7 +93,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       expect(invoice.total_all_taxes).to eq(120.0)
       expect(invoice.balance).to eq(80.0)
     end
-    it 'should be calculated upon saving' do
+    it "should be calculated upon saving" do
       invoice = create(:billing_machine_invoice, vat_rate: nil, total_duty: nil, vat_amount: nil, total_all_taxes: nil, advance: nil, balance: nil)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
@@ -104,7 +104,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       expect(invoice.balance).to eq(100.0)
     end
 
-    it 'should work fine even with empty lines' do
+    it "should work fine even with empty lines" do
       invoice = create(:billing_machine_invoice, vat_rate: nil, total_duty: nil, vat_amount: nil, total_all_taxes: nil, advance: nil, balance: nil)
       create(:billing_machine_invoice_line, quantity: nil, unit_price: nil, invoice: invoice)
       expect(invoice.total_duty).to eq(0.0)
@@ -112,9 +112,9 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
   end
 
   describe 'to_csv' do
-    let(:id_card) { FactoryGirl.create(:billing_machine_id_card) }
+    let(:id_card) { create(:billing_machine_id_card) }
     let(:customer) {
-      FactoryGirl.create(:customer_vault_corporation,
+      create(:customer_vault_corporation,
         :name => "cutomerName",
         :address_attributes => {
           :street     => "address1",
@@ -135,7 +135,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       invoice1.lines.create(quantity: 1, unit_price: 13.0)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 
-      csv_output.should be ==
+      expect(csv_output).to be ==
         columns_names +
         '"2014-07-31";"2014-01";"invoiceLabel";"cutomerName";"address1";"address2";'\
         '"13005";"Marseille";"country";"9,99";"19,60";"1,96";"11,95";"3,50";"8,45"' + "\n"\
@@ -148,7 +148,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
         customer: nil, payment_term: nil)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 
-      csv_output.should be ==
+      expect(csv_output).to be ==
         columns_names +
         '"2014-02-19";"2014-01";"";"";"";"";"";"";"";"0,00";"0,00";"0,00";"0,00";"0,00";"0,00"' + "\n"
     end

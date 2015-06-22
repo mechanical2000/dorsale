@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :billing_machine_quotation_line, class: ::Dorsale::BillingMachine::QuotationLine do
-    invoice    { create(:billing_machine_quotation) }
+    quotation  { create(:billing_machine_quotation) }
 
     label      { "Quotation line" + Faker::Lorem.words.join(" ") }
     quantity   { 10 }
