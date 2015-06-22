@@ -12,3 +12,8 @@ fr:
       update_error : "Impossible de modifier le commentaire."
       delete_ok    : "Le commentaire a été supprimé."
       delete_error : "Impossible de supprimer le commentaire."
+    invoices:
+      create_ok : "La facture a été créée."
+      update_ok : "La facture a été modifiée."
+      pay_ok    : "La facture a été marquée comme payée."
+      pay_error : "Impossible de marquer la facture comme payée."

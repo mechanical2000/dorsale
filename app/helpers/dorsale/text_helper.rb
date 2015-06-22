@@ -47,5 +47,19 @@ module Dorsale
       str = str.gsub("\r", "").strip
       strip_tags(str).gsub("\n", "<br />").html_safe
     end
+
+    def info(object, attribute, text = nil)
+      label = content_tag(:strong) do
+        object.class.human_attribute_name(attribute)
+      end
+
+      text ||= content_tag(:span) do
+        object.send(attribute)
+      end
+
+      content_tag(:div, class: "info") do
+        "#{label} : #{text}".html_safe
+      end
+    end
   end
 end

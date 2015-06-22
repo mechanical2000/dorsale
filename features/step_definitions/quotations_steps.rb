@@ -27,7 +27,7 @@ When(/^he changes the quotation VAT rate to "(.*?)"$/) do |arg1|
 end
 
 When(/^the user goes to the quotations page$/) do
-  visit(quotations_path)
+  visit dorsale.billing_machine_quotations_path
 end
 
 When(/^the quotation line shows the right date$/) do
@@ -51,7 +51,7 @@ When(/^the quotation line shows the right all taxes value$/) do
 end
 
 When(/^the user goes to the quotation details$/) do
-  visit(quotation_path(@quotation))
+  visit dorsale.billing_machine_quotation_path(@quotation)
 end
 
 When(/^he fills an quotation line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |arg1, arg2, arg3, arg4|
@@ -79,7 +79,7 @@ When(/^he saves the quotation$/) do
 end
 
 When(/^he goes on the edit page of the quotation$/) do
-  visit edit_quotation_path(@quotation)
+  visit dorsale.billing_machine_edit_quotation_path(@quotation)
 end
 
 When(/^changes the quotation label$/) do
@@ -92,7 +92,7 @@ When(/^he check one of the documents checkbox$/) do
 end
 
 Then(/^the document is not in the quotation details$/) do
-  visit(quotation_path(@quotation))
+  visit dorsale.billing_machine_quotation_path(@quotation)
   page.should have_content 'Documents associés:'
   page.should have_link 'document2'
 end
@@ -111,7 +111,7 @@ Then(/^a message signals the success of the quotation update$/) do
 end
 
 Then(/^the quotation's label has changed$/) do
-  visit edit_quotation_path(@quotation)
+  visit dorsale.billing_machine_edit_quotation_path(@quotation)
   page.should have_field('quotation_label', with: @new_label)
 end
 
@@ -172,7 +172,7 @@ end
 
 Then(/^the quotation informations are visible on the quotation details$/) do
   @quotation = Quotation.order(:id).last
-  visit quotation_path(@quotation)
+  visit dorsale.billing_machine_quotation_path(@quotation)
   expect(page).to have_content @payment_term.label
   expect(page).to have_content "I-am-a-comment"
 end

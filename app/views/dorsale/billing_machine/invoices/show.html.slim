@@ -1,78 +1,53 @@
-.invoice-details class="#{@invoice.payment_status}"
-  .action
-    = link_to 'Copier', copy_invoice_path(@invoice), class: 'btn btn-default', id: 'copy-invoice'
-    = link_to 'Editer', edit_invoice_path(@invoice), class: 'btn btn-primary'
-    = link_to 'Télécharger', invoice_path(@invoice, format: :pdf), :target => "_blank", class: 'btn btn-success'
-    - unless @invoice.paid
-      = link_to Invoice.human_attribute_name(:paid), pay_invoice_path(@invoice), class: 'btn btn-success paid-invoice', method: :put
-  .row
-    .col-xs-12.col-sm-6
-    .col-xs-12.col-sm-6.well
-      - if @invoice.customer
-        .customer-name     = @invoice.customer.name
-        .customer-address1 = @invoice.customer.address.street
-        .customer-address2 = @invoice.customer.address.street_bis
-        .customer-zip      = @invoice.customer.address.zip
-        .customer-city     = @invoice.customer.address.city
-        .customer-country  = @invoice.customer.address.country
+.billing_machine
+  .invoice-details class="#{@invoice.payment_status}"
+    .actions
+      = copy_button dorsale.copy_billing_machine_invoice_path(@invoice)
+      = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
+      = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
+      = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay
 
-  .row.well
-    .col-xs-12.col-sm-6
-      .info
-        strong ID:
-        span= @invoice.tracking_id
-      .info
-        strong #{Invoice.human_attribute_name(:label)}:
-        span.invoice-label= @invoice.label
-      .info
-        strong #{Invoice.human_attribute_name(:date)}::
-        span= @invoice.date ? I18n.l(@invoice.date) : ''
-      .info
-        strong #{Invoice.human_attribute_name(:due_date)}:
-        span= @invoice.due_date ? I18n.l(@invoice.due_date) : ''
-      .info
-        strong #{Invoice.human_attribute_name(:payment_term)}:
-        span= @invoice.payment_term.try(:label)
-      .info
-        strong #{Invoice.human_attribute_name(:vat_rate)}:
-        span= @invoice.vat_rate
-      .info
-        strong #{Invoice.human_attribute_name(:status)}:
-        span= @invoice.payment_status
-      .info
-        strong #{Invoice.human_attribute_name(:total_duty)}:
-        span= euros @invoice.total_duty
-      .info
-        strong #{Invoice.human_attribute_name(:vat_amount)}:
-        span= euros(@invoice.vat_amount)
-      .info
-        strong #{Invoice.human_attribute_name(:advance)}:
-        span= euros @invoice.advance
-      .info
-        strong #{Invoice.human_attribute_name(:total_all_taxes)}:
-        span= euros @invoice.total_all_taxes
-      .info
-        strong #{Invoice.human_attribute_name(:balance)}:
-        span= euros @invoice.balance
-  - @invoice.lines.each do |line|
-    .row.well
-      .col-xs-12.col-sm-12
-        .info
-          strong #{InvoiceLine.human_attribute_name(:label)}:
-          span= line.label
-      .col-xs-12.col-sm-4
-        .info
-          strong #{InvoiceLine.human_attribute_name(:quantity)}:
-          span= line.quantity
-      .col-xs-12.col-sm-4
-        .info
-          strong #{InvoiceLine.human_attribute_name(:unit)}:
-          span= line.unit
-      .col-xs-12.col-sm-4
-        .info
-          strong #{InvoiceLine.human_attribute_name(:unit_price)}:
-          span= euros line.unit_price
-      .col-xs-12.col-sm-12
-        .info
-          strong #{InvoiceLine.human_attribute_name(:total)}:
-          span= euros line.total
+    .row
+      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-6
+        .well
+          - if @invoice.customer
+            .customer-name     = @invoice.customer.name
+            .customer-address1 = @invoice.customer.address.street
+            .customer-address2 = @invoice.customer.address.street_bis
+            .customer-zip      = @invoice.customer.address.zip
+            .customer-city     = @invoice.customer.address.city
+            .customer-country  = @invoice.customer.address.country
+
+    .well: .row
+      .col-xs-12.col-sm-6
+        = info @invoice, :tracking_id
+        = info @invoice, :label
+        = info @invoice, :date
+        = info @invoice, :due_date
+        = info @invoice, :payment_term, @invoice.payment_term.try(:label)
+        = info @invoice, :vat_rate
+        = info @invoice, :payment_status
+        = info @invoice, :total_duty
+        = info @invoice, :vat_amount
+        = info @invoice, :advance,         euros(@invoice.advance)
+        = info @invoice, :total_all_taxes, euros(@invoice.total_all_taxes)
+        = info @invoice, :balance,         euros(@invoice.balance)
+
+    - @invoice.lines.each do |line|
+      .panel.panel-default
+        .panel-heading
+          .panel-title
+            = line.label
+
+        .panel-body
+          .col-xs-12.col-sm-4
+            = info line, :quantity
+
+          .col-xs-12.col-sm-4
+            = info line, :unit_price, euros(line.unit_price)
+
+          .col-xs-12.col-sm-4
+            = info line, :unit
+
+        .panel-footer
+          = info line, :total, euros(line.total)

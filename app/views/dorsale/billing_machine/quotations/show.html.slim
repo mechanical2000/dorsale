@@ -1,7 +1,7 @@
 .quotation-details
   .action
-    = link_to 'Editer', edit_quotation_path(@quotation), class: 'btn btn-primary'
-    = link_to 'Télécharger', quotation_path(@quotation, format: :pdf), :target => "_blank", class: 'btn btn-success'
+    = link_to 'Editer', dorsale.billing_machine_edit_quotation_path(@quotation), class: 'btn btn-primary'
+    = link_to 'Télécharger', dorsale.billing_machine_quotation_path(@quotation, format: :pdf), :target => "_blank", class: 'btn btn-success'
 
   - if @quotation.customer
     .row

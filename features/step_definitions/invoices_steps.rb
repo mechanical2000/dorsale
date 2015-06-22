@@ -25,7 +25,7 @@ Given(/^an existing paid invoice$/) do
 end
 
 When(/^(the user|he) goes to the invoices page$/) do |arg1|
-  visit(invoices_path)
+  visit dorsale.billing_machine_invoices_path
 end
 
 When(/^he creates a new invoice$/) do
@@ -43,7 +43,7 @@ When(/^he chooses the customer$/) do
 end
 
 When(/^the user goes to the invoice details$/) do
-  visit(invoice_path(@invoice))
+  visit dorsale.billing_machine_invoice_path(@invoice)
 end
 
 When(/^wants to copy it$/) do
@@ -110,7 +110,7 @@ Then(/^it's added to the invoice list$/) do
 end
 
 When(/^he goes on the edit page of the invoice$/) do
-  visit edit_invoice_path(@invoice)
+  visit dorsale.billing_machine_edit_invoice_path(@invoice)
 end
 
 When(/^changes the label$/) do
@@ -119,7 +119,7 @@ When(/^changes the label$/) do
 end
 
 Then(/^the invoices's label has changed$/) do
-  visit edit_invoice_path(@invoice)
+  visit dorsale.billing_machine_edit_invoice_path(@invoice)
   page.should have_field('invoice_label', with: @new_label)
 end
 
@@ -201,7 +201,7 @@ When(/^he changes the advance to "(.*?)"€$/) do |value|
 end
 
 When(/^he goes to the newly created invoice page$/) do
-  visit edit_invoice_path(Invoice.last)
+  visit dorsale.billing_machine_edit_invoice_path(Invoice.last)
 end
 
 Then(/^the invoice line shows the right date$/) do

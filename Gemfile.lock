@@ -10,6 +10,7 @@ PATH
       bootstrap-sass
       cancancan
       carrierwave
+      cocoon
       coffee-rails
       font-awesome-sass
       handles_sortable_columns
@@ -111,6 +112,7 @@ GEM
     celluloid (0.16.0)
       timers (~> 4.0.0)
     cliver (0.3.2)
+    cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)

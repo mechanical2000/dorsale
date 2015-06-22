@@ -7,6 +7,10 @@ module Dorsale
       has_many :quotations
 
       validates :id_card_name, presence: true
+
+      def name
+        id_card_name
+      end
     end
   end
 end

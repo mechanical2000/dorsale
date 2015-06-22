@@ -80,7 +80,7 @@ module Dorsale
 
         if @quotation.update(safe_params)
           flash[:notice] = t("messages.quotations.update_ok")
-          redirect_to quotations_path
+          redirect_to dorsale.billing_machine_quotations_path
         else
           render :edit
         end

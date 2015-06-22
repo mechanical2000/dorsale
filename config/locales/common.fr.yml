@@ -64,6 +64,10 @@ fr:
     import_pdf : "Import PDF"
     send       : "Envoyer"
     comment    : "Commenter"
+    add_line   : "Ajoute une ligne"
+    remove_line: "Supprimer la ligne"
+
+    pay        : "Payer"
 
   attributes: &attributes
     id                    : "Id"
@@ -73,6 +77,7 @@ fr:
     updated_at            : "Modifié le"
     name                  : "Nom"
     title                 : "Titre"
+    label                 : "Libellé"
     first_name            : "Prénom"
     last_name             : "Nom"
     email                 : "E-mail"
@@ -106,6 +111,24 @@ fr:
     comment               : "Commentaire"
     written_by            : "écrit par"
     details               : "Détails"
+    quantity              : "Quantité"
+    due_date              : "Échéance"
+    paid                  : "Payé ?"
+    customer              : "Client"
+    customer_guid         : "Client"
+    tracking_id           : "Numéro"
+
+    # BillingMachine
+    unit                  : "Unité"
+    unit_price            : "Prix unitaire"
+    payment_term          : "Conditions de paiement"
+    payment_term_id       : "Conditions de paiement"
+    vat_rate              : "Taux TVA"
+    vat_amount            : "Montant TVA"
+    advance               : "Avance"
+    total_duty            : "Total HT"
+    total_all_taxes       : "Total TTC"
+    balance               : "Total à payer"
 
   labels:
     <<: *attributes

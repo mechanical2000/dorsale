@@ -1,50 +1,15 @@
-- content_for :sub_header do
-  = render "filters"
-  .actions
-    = icon_button_link_to "plus_blue", new_invoice_path, action: :create
-    = icon_button_link_to "download_blue", invoices_path(format: :csv), action: :csv
+.billing_machine
+  - content_for :sub_header do
+    = render "filters"
+    .actions
+      = create_button dorsale.new_billing_machine_invoice_path
+      = download_button dorsale.billing_machine_invoices_path(format: :csv), action: :export_csv
 
-- content_for :context do
-  #small-data.well.well-sm
-    h3 Datas
-    - total_duty = @datas.map(&:total_duty).delete_if {|e| e.blank?}.inject(:+) || 0
-    - vat_amount = @datas.map(&:vat_amount).delete_if {|e| e.blank?}.inject(:+) || 0
-    - total_all_taxes = @datas.map(&:total_all_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
-    .row
-      .col-xs-6.col-sm-12.col-md-6
-        p Total HT
-      .col-xs-6.col-sm-12.col-md-6
-        p= euros total_duty
-    .row
-      .col-xs-6.col-sm-12.col-md-6
-        p Total TVA
-      .col-xs-6.col-sm-12.col-md-6
-        p= euros vat_amount
-    .row
-      .col-xs-6.col-sm-12.col-md-6
-        p Total TTC
-      .col-xs-6.col-sm-12.col-md-6
-        p= euros total_all_taxes
+  - content_for :context do
+    = render "dorsale/billing_machine/invoices/data_context"
 
-- content_for :main do
-  .invoices
-    .row.header
-      .col-md-1.hidden-sm.hidden-xs.date Date
-      .col-lg-1.hidden-sm.hidden-md.hidden-xs.tracking-id Numéro
-      .col-sm-4.col-xs-5.customer Client
-      .col-md-2.col-sm-3.col-xs-4.total-duty Montant HT
-      .col-md-2.col-sm-3.hidden-xs.all-taxes Montant TTC
-      .col-sm-2.col-xs-3.action Action
-    - @invoices.each do |invoice|
-      .row.invoice class="#{invoice.payment_status}"
-        .col-md-1.hidden-sm.hidden-xs.date= invoice.date ? I18n.l(invoice.date) : ''
-        .col-lg-1.hidden-sm.hidden-md.hidden-xs.tracking-id= invoice.tracking_id
-        .col-sm-4.col-xs-5.customer-name= invoice.customer.try(:name)
-        .col-md-2.col-sm-3.col-xs-4.total-duty= euros(invoice.total_duty)
-        .col-md-2.col-sm-3.hidden-xs.all-taxes= euros(invoice.total_all_taxes)
-        .col-sm-2.col-xs-3.actions
-          = link_to 'Détails', invoice_path(invoice), class: 'btn btn-default btn-xs', id: 'invoice-details'
-    .pagination-wrapper
-      = paginate @invoices
+  - content_for :main do
+    = render "dorsale/billing_machine/invoices/list"
+    = paginate @invoices
 
-= render_contextual
+  = render_contextual

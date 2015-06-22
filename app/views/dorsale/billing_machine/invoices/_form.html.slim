@@ -1,44 +1,54 @@
 #invoice.edit
-  = simple_form_for @invoice, html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f|
+  = horizontal_form_for @invoice, as: :invoice do |f|
     .well
       - if @invoice.persisted?
         .form-group
-          label for='invoice-unique-index' class='col-sm-3 control-label' Index unique
+          label.control-label.col-sm-3
+            = Dorsale::BillingMachine::Invoice.human_attribute_name(:tracking_id)
           .col-sm-9
-            .form-control-static.invoice-unique-index= @invoice.tracking_id
+            .form-control-static.invoice-unique-index
+              = @invoice.tracking_id
+
       = f.input :label
-      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @invoice.date, symbol: :date}
-      = f.association :payment_term, collection: current_user.entity.payment_terms
-      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @invoice.due_date, symbol: :due_date}
+      = f.input :date, html5: true
+      = f.input :payment_term_id, collection: @payment_terms
+      = f.input :due_date, html5: true
       = f.input :paid, as: :select, include_blank: false
-      = f.input :customer_guid, collection: current_user.entity.people.map{ |e| [e.name, e.guid] }
+      = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
       = f.input :vat_rate, as: :string
       = f.input :advance, as: :string
+      = f.input :id_card_id, collection: @id_cards
 
-    .form-group#invoice-lines
+    #invoice-lines
       = f.simple_fields_for :lines do |l|
-        = render 'line_fields', :f => l
-      .links.col-sm-offset-3.col-sm-9
-        = link_to_add_association 'Add line', f, :lines, class: 'btn btn-primary', id: 'add-new-line'
+        = render "line_fields", :f => l
+
+    .center
+      = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
 
     .total.well
-      .form-group
-        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:total_duty)}
+      .row
+        label.col-sm-3.control-label
+          = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_duty)
         .col-sm-9
           .form-control-static#invoice-total-duty
-      .form-group
-        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:vat_rate)}:
+
+      .row
+        label.col-sm-3.control-label
+          = Dorsale::BillingMachine::Invoice.human_attribute_name(:vat_rate)
         .col-sm-9
           .form-control-static#invoice-vat_amount
-      .form-group
-        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:total_all_taxes)}
+
+      .row
+        label.col-sm-3.control-label
+          = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_all_taxes)
         .col-sm-9
           .form-control-static#invoice-total-taxes
-      .form-group
-        label class='col-sm-3 control-label' #{Invoice.human_attribute_name(:balance)}
+
+      .row
+        label.col-sm-3.control-label
+          = Dorsale::BillingMachine::Invoice.human_attribute_name(:balance)
         .col-sm-9
           .form-control-static#invoice-balance
 
-    .form-group
-      .col-sm-offset-3.col-sm-9
-        = f.button :submit, Invoice.human_attribute_name(:save), class: 'btn btn-success', id: "invoice-submit"
+    = form_buttons

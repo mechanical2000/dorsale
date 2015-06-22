@@ -16,6 +16,9 @@ module Dorsale
       validates :id_card, presence: true
       validates :date,    presence: true
 
+      # simple_form
+      validates :id_card_id, presence: true
+
       def initialize(*args)
         super
         self.date     = Date.today       if date.nil?

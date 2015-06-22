@@ -5,12 +5,23 @@ module Dorsale
         :show,
         :edit,
         :update,
+        :copy,
+        :pay,
+      ]
+
+      before_filter :set_form_variables, only: [
+        :new,
+        :create,
+        :edit,
+        :update,
+        :copy,
       ]
 
       def index
         authorize! :list, ::Dorsale::BillingMachine::Invoice
 
         @invoices ||= ::Dorsale::BillingMachine::Invoice.all
+        @people   ||= ::CustomerVault::Person.list
         @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
         @order    ||= {unique_index: :desc}
 
@@ -32,15 +43,14 @@ module Dorsale
       end
 
       def new
-        # TODO : Déplacer dans modèle
-        @invoice          = ::Dorsale::BillingMachine::Invoice.new
+        @invoice ||= ::Dorsale::BillingMachine::Invoice.new
         @invoice.lines.build
 
         authorize! :create, @invoice
       end
 
       def create
-        @invoice = ::Dorsale::BillingMachine::Invoice.new(invoice_params)
+        @invoice ||= ::Dorsale::BillingMachine::Invoice.new(invoice_params)
 
         authorize! :create, Invoice
 
@@ -66,6 +76,7 @@ module Dorsale
       end
 
       def copy
+        @original = @invoice
         authorize! :read, @original
 
         @invoice = @original.dup
@@ -84,15 +95,13 @@ module Dorsale
 
       def edit
         authorize! :update, @invoice
-
-        @id_cards ||= ::Dorsale::BillingMachine::IdCard.all
       end
 
       def update
         authorize! :update, @invoice
 
         if @invoice.update(invoice_params)
-          flash[:notice] = t("messages.invoices.create_ok")
+          flash[:notice] = t("messages.invoices.update_ok")
           redirect_to dorsale.billing_machine_invoices_path
         else
           render :edit
@@ -115,6 +124,12 @@ module Dorsale
 
       def set_objects
         @invoice = ::Dorsale::BillingMachine::Invoice.find params[:id]
+      end
+
+      def set_form_variables
+        @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
+        @id_cards      ||= ::Dorsale::BillingMachine::IdCard.all
+        @people        ||= ::CustomerVault::Person.list
       end
 
       def permitted_params
