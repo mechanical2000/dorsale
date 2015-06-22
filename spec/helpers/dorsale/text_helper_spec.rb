@@ -29,6 +29,11 @@ describe Dorsale::TextHelper, type: :helper do
     expect(euros(1.123)).to eq "1,12 €"
   end
 
+  it "date" do
+    expect(date(nil)).to be nil
+    expect(date(Date.parse("2012-12-21"))).to eq "21/12/2012"
+  end
+
   it "text2html" do
     expect(text2html(nil)).to be nil
     expect(text2html(" \n")).to be nil

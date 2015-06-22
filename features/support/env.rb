@@ -10,11 +10,11 @@ require 'cucumber/rails'
 require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, debug: false)
+  Capybara::Poltergeist::Driver.new(app, debug: false, window_size: [1440, 2048], js_errors: false)
 end
 
 Capybara.javascript_driver = :poltergeist
-Capybara.current_driver    = :poltergeist
+Capybara.current_driver = :poltergeist
 
 require "factory_girl_rails"
 FactoryGirl.definition_file_paths = [File.expand_path('../../../spec/factories', __FILE__)]
@@ -73,3 +73,5 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 Before do
   DatabaseCleaner.clean
 end
+
+World(FactoryGirl::Syntax::Methods)

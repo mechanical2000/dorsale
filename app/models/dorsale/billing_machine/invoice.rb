@@ -43,12 +43,12 @@ module Dorsale
       before_save :update_balance
 
       def update_balance
-        self.vat_rate = 0 if vat_rate.nil?
-        self.advance  = 0 if advance.nil?
-        self.total_duty = lines.map(&:total).delete_if {|e| e.blank?}.inject(:+) || 0
-        self.vat_amount = self.total_duty * self.vat_rate / 100.0
-        self.total_all_taxes = self.total_duty + self.vat_amount
-        self.balance = self.total_all_taxes - self.advance
+        self.vat_rate        = 0 if vat_rate.nil?
+        self.advance         = 0 if advance.nil?
+        self.total_duty      = lines.pluck(:total).sum
+        self.vat_amount      = total_duty * vat_rate / 100.0
+        self.total_all_taxes = total_duty + vat_amount
+        self.balance         = total_all_taxes - advance
       end
 
       def pdf

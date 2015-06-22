@@ -29,12 +29,12 @@ Then(/^the folder is opened$/) do
 end
 
 Given(/^an existing folder$/) do
-  @folder = FactoryGirl.create(:flyboy_folder)
+  @folder = create(:flyboy_folder)
 end
 
 Given(/^(\d+) tasks in this folder$/) do |n|
   n.to_i.times do
-    FactoryGirl.create(:flyboy_task, taskable: @folder)
+    create(:flyboy_task, taskable: @folder)
   end
 end
 
@@ -95,7 +95,7 @@ Then(/^the folder is closed$/) do
 end
 
 Given(/^an existing closed folder$/) do
-  @closed_folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+  @closed_folder = create(:flyboy_folder, status: "closed")
   @folder = @closed_folder
 end
 
@@ -105,7 +105,7 @@ When(/^I reopen this folder$/) do
 end
 
 Given(/^an existing open folder$/) do
-  @open_folder = FactoryGirl.create(:flyboy_folder, status: "open")
+  @open_folder = create(:flyboy_folder, status: "open")
   @folder = @open_folder
 end
 
@@ -135,7 +135,7 @@ Then(/^all folders appear$/) do
 end
 
 Given(/^an existing folder named "(.*?)"$/) do |name|
-  FactoryGirl.create(:flyboy_folder, name: name)
+  create(:flyboy_folder, name: name)
 end
 
 Then(/^only the "Hello" folder appear$/) do
@@ -145,7 +145,7 @@ end
 
 Given(/^(\d+) existing folders$/) do |n|
   n.to_i.times do
-    FactoryGirl.create(:flyboy_folder)
+    create(:flyboy_folder)
   end
 end
 

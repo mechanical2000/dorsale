@@ -17,14 +17,18 @@
       = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
       = f.input :vat_rate, as: :string
       = f.input :advance, as: :string
-      = f.input :id_card_id, collection: @id_cards
+
+      - if @id_cards.one?
+        = f.hidden_field :id_card_id
+      - else
+        = f.input :id_card_id, collection: @id_cards
 
     #invoice-lines
       = f.simple_fields_for :lines do |l|
-        = render "line_fields", :f => l
+        = render "line_fields", f: l
 
-    .center
-      = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
+      p.center
+        = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
 
     .total.well
       .row

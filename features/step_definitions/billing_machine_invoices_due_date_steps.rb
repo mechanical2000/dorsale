@@ -9,8 +9,7 @@
 # end
 
 Given(/^an existing unpaid invoice$/) do
-  @invoice = FactoryGirl.create(:invoice, id_card: @user.entity.current_id_card,
-                                paid: false)
+  @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: false)
 end
 
 Given(/^its due date is not yet passed$/) do

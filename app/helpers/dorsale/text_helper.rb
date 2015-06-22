@@ -32,6 +32,11 @@ module Dorsale
       number_with_precision(n, opts)
     end
 
+    def date(d)
+      return if d.nil?
+      I18n.l(d)
+    end
+
     def hours(n)
       return if n.nil?
 
@@ -53,7 +58,9 @@ module Dorsale
         object.class.human_attribute_name(attribute)
       end
 
-      text ||= content_tag(:span) do
+      span_css_class = "#{object.class.model_name.element}-#{attribute}"
+
+      text ||= content_tag(:span, class: span_css_class) do
         object.send(attribute)
       end
 

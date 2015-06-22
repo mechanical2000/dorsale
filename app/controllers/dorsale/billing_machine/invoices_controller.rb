@@ -46,6 +46,8 @@ module Dorsale
         @invoice ||= ::Dorsale::BillingMachine::Invoice.new
         @invoice.lines.build
 
+        @invoice.id_card = @id_cards.first if @id_cards.one?
+
         authorize! :create, @invoice
       end
 

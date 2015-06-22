@@ -10,20 +10,20 @@ table.default.invoices
 
   tbody
     - @invoices.each do |invoice|
-      tr class="#{invoice.payment_status}"
+      tr class="invoice #{invoice.payment_status}"
         td.hidden-sm.hidden-xs.date
-          = l(invoice.date) if invoice.date
+          = date(invoice.date)
 
-        td.hidden-sm.hidden-md.hidden-xs.tracking-id
+        td.hidden-sm.hidden-md.hidden-xs.tracking_id
           = invoice.tracking_id
 
-        td.customer-name
+        td.customer_name
           = invoice.customer.try(:name)
 
-        td.total-duty
+        td.total_duty
           = euros(invoice.total_duty)
 
-        td.hidden-xs.all-taxes
+        td.hidden-xs.total_all_taxes
           = euros(invoice.total_all_taxes)
 
         td.actions

@@ -2,15 +2,15 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
   routes { Dorsale::Engine.routes }
 
   let(:folder){
-    FactoryGirl.create(:flyboy_folder)
+    create(:flyboy_folder)
   }
 
   describe '#index' do
     context 'when applying filter' do
       before(:each) do
         Dorsale::Flyboy::Folder.destroy_all
-        @folder1 = FactoryGirl.create(:flyboy_folder, status: "open")
-        @folder2 = FactoryGirl.create(:flyboy_folder, status: "closed")
+        @folder1 = create(:flyboy_folder, status: "open")
+        @folder2 = create(:flyboy_folder, status: "closed")
       end
 
       it 'should display both when not filtered' do
@@ -38,9 +38,9 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
     context "when sorting" do
       before do
         Dorsale::Flyboy::Folder.destroy_all
-        @folder1 = FactoryGirl.create(:flyboy_folder, name: "Abc", progress: 100, status: "open")
-        @folder2 = FactoryGirl.create(:flyboy_folder, name: "dEF", progress: 0,   status: "closed")
-        @folder3 = FactoryGirl.create(:flyboy_folder, name: "xyz", progress: 35,  status: "closed")
+        @folder1 = create(:flyboy_folder, name: "Abc", progress: 100, status: "open")
+        @folder2 = create(:flyboy_folder, name: "dEF", progress: 0,   status: "closed")
+        @folder3 = create(:flyboy_folder, name: "xyz", progress: 35,  status: "closed")
       end
 
       it "sorting by name asc" do
@@ -81,13 +81,13 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
         Dorsale::Flyboy::Folder.destroy_all
         Dorsale::Flyboy::Task.destroy_all
 
-        @folder = FactoryGirl.create(:flyboy_folder)
+        @folder = create(:flyboy_folder)
 
-        @task1 = FactoryGirl.create(:flyboy_task,
+        @task1 = create(:flyboy_task,
           taskable: @folder, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = FactoryGirl.create(:flyboy_task,
+        @task2 = create(:flyboy_task,
           taskable: @folder, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = FactoryGirl.create(:flyboy_task,
+        @task3 = create(:flyboy_task,
           taskable: @folder, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
       end
 
@@ -125,7 +125,7 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
 
   describe "#close" do
     before(:each) do
-      @folder = FactoryGirl.create(:flyboy_folder, status: "open")
+      @folder = create(:flyboy_folder, status: "open")
     end
 
     it "should close folder" do
@@ -141,7 +141,7 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
 
   describe "#open" do
     before(:each) do
-      @folder = FactoryGirl.create(:flyboy_folder, status: "closed")
+      @folder = create(:flyboy_folder, status: "closed")
     end
 
     it "should open folder" do

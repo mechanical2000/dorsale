@@ -18,7 +18,7 @@ Then(/^the task is created$/) do
 end
 
 Given(/^an existing task$/) do
-  @task = FactoryGirl.create(:flyboy_task)
+  @task = create(:flyboy_task)
 end
 
 When(/^I go to the tasks section$/) do
@@ -71,7 +71,7 @@ Then(/^the task is completed$/) do
 end
 
 Given(/^an existing snoozable task$/) do
-  FactoryGirl.create(:flyboy_task,
+  create(:flyboy_task,
     :reminder => Date.yesterday,
     :term     => Date.today
   )
@@ -87,7 +87,7 @@ end
 
 Given(/^(\d+) existing tasks$/) do |n|
   n.to_i.times do
-    FactoryGirl.create(:flyboy_task)
+    create(:flyboy_task)
   end
 end
 
@@ -123,11 +123,11 @@ Then(/^I am on this task$/) do
 end
 
 Given(/^an existing done task$/) do
-  @done_task = FactoryGirl.create(:flyboy_task, done: true)
+  @done_task = create(:flyboy_task, done: true)
 end
 
 Given(/^an existing undone task$/) do
-  @undone_task = FactoryGirl.create(:flyboy_task, done: false)
+  @undone_task = create(:flyboy_task, done: false)
 end
 
 When(/^I filter tasks by done$/) do
@@ -160,7 +160,7 @@ Then(/^all tasks appear$/) do
 end
 
 Given(/^an existing task named "(.*?)"$/) do |name|
-  FactoryGirl.create(:flyboy_task, name: name)
+  create(:flyboy_task, name: name)
 end
 
 Then(/^only the "Hello" task appear$/) do

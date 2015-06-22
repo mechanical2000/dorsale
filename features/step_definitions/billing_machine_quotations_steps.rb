@@ -1,25 +1,25 @@
 Given(/^an existing quotation$/) do
-  @quotation = FactoryGirl.create(:quotation, id_card: @user.entity.current_id_card, customer: @customer)
+  @quotation = create(:quotation, id_card: @id_card, customer: @customer)
   @quotation.lines.create(quantity: 1, unit_price: 9.99)
 end
 
 Given(/^(\d+) existing quotations$/) do |arg1|
-  FactoryGirl.create_list(:quotation, Integer(arg1), id_card: @user.entity.current_id_card)
+  create_list(:quotation, Integer(arg1), id_card: @id_card)
 end
 
 Given(/^an existing emtpy quotation$/) do
-  @quotation = FactoryGirl.create(:quotation, label: nil, customer: nil, id_card: @user.entity.current_id_card)
+  @quotation = create(:billing_machine_quotation, label: nil, customer: nil, id_card: @id_card)
   @quotation.date = nil
   @quotation.save(validate: false)
 end
 
 Given(/^an existing quotation with a "(.*?)"% VAT rate$/) do |arg1|
-  @quotation = FactoryGirl.create(:quotation, id_card: @user.entity.current_id_card, vat_rate: arg1)
+  @quotation = create(:quotation, id_card: @id_card, vat_rate: arg1)
 end
 
 Given(/^(\d+) associated documents to this quotation$/) do |arg1|
-  @document1 = FactoryGirl.create(:document, quotation: @quotation, document_file_name: 'document1.pdf')
-  @document2 = FactoryGirl.create(:document, quotation: @quotation, document_file_name: 'document2.pdf')
+  @document1 = create(:document, quotation: @quotation, document_file_name: 'document1.pdf')
+  @document2 = create(:document, quotation: @quotation, document_file_name: 'document2.pdf')
 end
 
 When(/^he changes the quotation VAT rate to "(.*?)"$/) do |arg1|

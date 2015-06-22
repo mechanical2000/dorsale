@@ -3,11 +3,11 @@ Feature: Invoices filter
   I want to filter invoice
   In order to understand what it going on
 
-  Background: 
-    Given an existing user
+  Background:
+    Given an existing id card
     And a bunch of existing invoices
     When the user goes to the invoices page
-    
+
   Scenario: Filter by customer
     When he filters by one customer
     Then only the invoices of this customer do appear

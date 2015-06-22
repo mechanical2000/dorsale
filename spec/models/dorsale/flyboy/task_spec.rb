@@ -33,12 +33,12 @@ describe Dorsale::Flyboy::Task do
 
   describe '#validation' do
     it 'factory should be #valid?' do
-      expect(FactoryGirl.create(:flyboy_task)).to be_valid
+      expect(create(:flyboy_task)).to be_valid
     end
 
     it 'should ensure that term >= reminder' do
       date = Date.today
-      task = FactoryGirl.build(:flyboy_task, reminder: date+1.day, term: date)
+      task = build(:flyboy_task, reminder: date+1.day, term: date)
       expect(task).to_not be_valid
     end
   end
@@ -46,7 +46,7 @@ describe Dorsale::Flyboy::Task do
   describe '#snooze' do
     before do
       @today = Date.today
-      @task = FactoryGirl.build(:flyboy_task, reminder: @today - 5 , term: @today + 5)
+      @task = build(:flyboy_task, reminder: @today - 5 , term: @today + 5)
     end
 
     context 'term not passed' do

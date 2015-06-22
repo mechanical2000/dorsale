@@ -8,7 +8,7 @@ describe CommonQuotation, pdfs: true do
       text.strings.should include string
     end
   end
-  
+
   def self.it_should_not_write(string)
     it "should write '#{string}'" do
       text.strings.should_not include string
@@ -16,10 +16,10 @@ describe CommonQuotation, pdfs: true do
   end
 
   let(:customer) {
-    FactoryGirl.create(:person)
+    create(:person)
   }
 
-  let(:id_card) { FactoryGirl.create(:id_card,
+  let(:id_card) { create(:id_card,
     entity_name: "HEYHO",
     registration_city: 'RCS MARSEILLE',
     registration_number: '000 000 000',
@@ -41,7 +41,7 @@ describe CommonQuotation, pdfs: true do
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:quotation) { FactoryGirl.create(:quotation,
+  let(:quotation) { create(:quotation,
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
@@ -51,14 +51,14 @@ describe CommonQuotation, pdfs: true do
       vat_rate: 19.6,
       comments: 'this is the quotation comment') }
 
-  let(:quotation_line) { FactoryGirl.create(:quotation_line,
+  let(:quotation_line) { create(:quotation_line,
     quotation_id: quotation.id,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
     total: 7.98) }
 
-  let(:quotation_line_2) { FactoryGirl.create(:quotation_line,
+  let(:quotation_line_2) { create(:quotation_line,
     quotation_id: quotation.id,
     label: 'Truc',
     quantity: 42.42,
@@ -66,7 +66,7 @@ describe CommonQuotation, pdfs: true do
     unit_price: 42.54,
     total: 1804.55) }
 
-  let(:pdf) { FactoryGirl.build(:common_quotation, quotation: quotation) }
+  let(:pdf) { build(:common_quotation, quotation: quotation) }
 
   describe "#initialize" do
     it 'inherits from Prawn::Document' do
@@ -76,7 +76,7 @@ describe CommonQuotation, pdfs: true do
     it 'inherits from CommonQuotation' do
       pdf.should be_kind_of(CommonQuotation)
     end
-    
+
     it 'should assign @main_document' do
       pdf.main_document.should eq(quotation)
     end
@@ -86,7 +86,7 @@ describe CommonQuotation, pdfs: true do
     let(:text) { PDF::Inspector::Text.analyze(pdf.render) }
 
     context 'when the id card is empty' do
-      let(:id_card) { IdCard.create(id_card_name: 'default', entity: FactoryGirl.create(:entity))}
+      let(:id_card) { IdCard.create(id_card_name: 'default', entity: create(:entity))}
       it 'should not crash' do
       end
     end
@@ -216,7 +216,7 @@ describe CommonQuotation, pdfs: true do
     it_should_not_write 'Coordonnées bancaires :'
     it_should_not_write 'IBAN : FR76 0000 0000 0000 0000 0000 000'
     it_should_not_write 'BIC / SWIFT : PSSTTHEGAME'
-    
+
     context 'in Comments - Bas de page' do
       it_should_write 'this is the quotation comment'
     end
@@ -231,7 +231,7 @@ describe CommonQuotation, pdfs: true do
 
   describe "missing data" do
     it "missing payment_term should be OK" do
-      quotation = FactoryGirl.create(:quotation, payment_term: nil)
+      quotation = create(:quotation, payment_term: nil)
       pdf     = CommonQuotation.new(quotation)
       pdf.build
       PDF::Inspector::Text.analyze(pdf.render)

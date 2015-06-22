@@ -4,7 +4,7 @@
       = copy_button dorsale.copy_billing_machine_invoice_path(@invoice)
       = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
       = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
-      = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay
+      = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay, method: :patch
 
     .row
       .col-xs-12.col-sm-6

@@ -10,10 +10,10 @@ describe CommonInvoice, pdfs: true do
   end
 
   let(:customer) {
-    FactoryGirl.create(:person)
+    create(:person)
   }
 
-  let(:id_card) { FactoryGirl.create(:id_card,
+  let(:id_card) { create(:id_card,
     entity_name: "HEYHO",
     registration_city: 'RCS MARSEILLE',
     registration_number: '000 000 000',
@@ -35,7 +35,7 @@ describe CommonInvoice, pdfs: true do
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:invoice) { FactoryGirl.create(:invoice,
+  let(:invoice) { create(:billing_machine_invoice,
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
@@ -46,14 +46,14 @@ describe CommonInvoice, pdfs: true do
       vat_rate: 19.6,
       balance: 2166.0) }
 
-  let(:invoice_line) { FactoryGirl.create(:invoice_line,
+  let(:invoice_line) { create(:billing_machine_invoice_line,
     invoice_id: invoice.id,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
     total: 7.98) }
 
-  let(:invoice_line_2) { FactoryGirl.create(:invoice_line,
+  let(:invoice_line_2) { create(:billing_machine_invoice_line,
     invoice_id: invoice.id,
     label: 'Truc',
     quantity: 42.42,
@@ -61,7 +61,7 @@ describe CommonInvoice, pdfs: true do
     unit_price: 42.54,
     total: 1804.55) }
 
-  let(:pdf) { FactoryGirl.build(:common_invoice, invoice: invoice) }
+  let(:pdf) { build(:common_invoice, invoice: invoice) }
 
   describe "#initialize" do
     it 'inherits from Prawn::Document' do
@@ -77,7 +77,7 @@ describe CommonInvoice, pdfs: true do
     let(:text) { PDF::Inspector::Text.analyze(pdf.render) }
 
     context 'when the id card is empty' do
-      let(:id_card) { IdCard.create(id_card_name: 'default', entity: FactoryGirl.create(:entity))}
+      let(:id_card) { IdCard.create(id_card_name: 'default', entity: create(:entity))}
       it 'should not crash' do
       end
     end
@@ -200,10 +200,10 @@ describe CommonInvoice, pdfs: true do
         context 'without advance' do
 
           before(:each) do
-            invoice_incomplete=FactoryGirl.create(:invoice, total_duty: 1000, vat_amount: 196,
+            invoice_incomplete=create(:billing_machine_invoice, total_duty: 1000, vat_amount: 196,
               total_all_taxes: 1196, advance: 0, balance: 1146 , customer: customer,
               date: '2014-04-16', vat_rate: 19.6, id_card: id_card)
-            pdf_incomplete=FactoryGirl.build(:common_invoice, invoice: invoice_incomplete)
+            pdf_incomplete=build(:common_invoice, invoice: invoice_incomplete)
             pdf_incomplete.build
             @text_incomplete = PDF::Inspector::Text.analyze(pdf_incomplete.render)
           end
@@ -239,7 +239,7 @@ describe CommonInvoice, pdfs: true do
 
   describe "missing data" do
     it "missing payment_term should be OK" do
-      invoice = FactoryGirl.create(:invoice, payment_term: nil)
+      invoice = create(:billing_machine_invoice, payment_term: nil)
       pdf     = CommonInvoice.new(invoice)
       pdf.build
       PDF::Inspector::Text.analyze(pdf.render)

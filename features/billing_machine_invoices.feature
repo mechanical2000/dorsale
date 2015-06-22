@@ -5,7 +5,7 @@ Feature: Invoice Management
   In order to get paid!
 
   Background:
-    Given an existing user
+    Given an existing id card
 
   Scenario: Existing invoice displayed in invoices page
     And an existing customer
@@ -17,12 +17,12 @@ Feature: Invoice Management
     And the invoice line shows the right total-duty value
     And the invoice line shows the right all taxes value
 
-  Scenario: Paginate by 10 time slices
-    Given 15 existing invoices
+  Scenario: Paginate by 50 invoices
+    Given 75 existing invoices
     When the user goes to the invoices page
-    Then he should see 10 invoices
+    Then he should see 50 invoices
     When he goes to the next page
-    Then he should see 5 invoices
+    Then he should see 25 invoices
 
   Scenario: Copy invoice
     And an existing invoice
@@ -82,7 +82,7 @@ Feature: Invoice Management
     When he saves the invoice
     Then a message signals the success of the creation
     When he goes to the newly created invoice page
-    Then the advance is "30"€
+    Then the advance is "30.0"€
     Then the balance included is "90,00€"
 
   Scenario: New invoice with default date
