@@ -1,0 +1,15 @@
+.task-context: .context
+  = context_icon :check_square_o
+  = context_title task.name
+  = render "dorsale/flyboy/tasks/actions", task: task
+
+  .infos
+    strong
+      = Dorsale::Flyboy::Task.human_attribute_name(:progress)
+      = " : "
+    = progress_bar(percentage: task.progress, label: true)
+
+  = context_info Dorsale::Flyboy::Task.human_attribute_name(:created_at), l(task.created_at)
+  = context_info Dorsale::Flyboy::Task.human_attribute_name(:reminder), l(task.reminder)
+  = context_info Dorsale::Flyboy::Task.human_attribute_name(:term), l(task.term)
+  = context_info Dorsale::Flyboy::Task.human_attribute_name(:done), task.done ? 'Oui' : 'Non'

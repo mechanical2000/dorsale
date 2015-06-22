@@ -1,0 +1,64 @@
+fr:
+  messages:
+    forbidden: "Cette page ne peut être trouvée"
+
+    folders:
+      title_create: "Nouveau dossier"
+      create_ok: "Le dossier a bien été créé"
+      update_ok: "Le dossier a bien été modifié"
+      open_ok: "Le dossier a été réouvert"
+      open_error: "Impossible de réouvrir le dossier"
+      close_ok: "Le dossier a été fermé"
+      close_error: "Impossible de fermer le dossier"
+      status:
+        open: "Ouvert"
+        pending: "En attente"
+        closed: "Fermé"
+        unknown: "Inconnu"
+
+    tasks:
+      create_ok: "La tâche a bien été créée"
+      update_ok: "La tâche a bien été modifiée"
+      delete_ok: "La tâche a bien été supprimée"
+      delete_eror: "Impossible de supprimer la tâche"
+      snooze_ok: "La tâche a bien été reportée"
+      snooze_eror: "Impossible de reporter la tâche"
+      complete_ok: "La tâche a été marquée comme terminée"
+      complete_eror: "Impossible de terminer la tâche"
+
+  actions:
+    complete: "Fait"
+    label: "Actions"
+    search: "Rechercher"
+
+    folders:
+      new_task: "Nouvelle tâche"
+
+  activerecord:
+    models:
+      dorsale/flyboy/folder:
+        one: "Dossier"
+        other: "Dossiers"
+      dorsale/flyboy/task:
+        one: "Tâche"
+        other: "Tâches"
+    attributes:
+      dorsale/flyboy/folder:
+        name: "Titre"
+        status: "Status"
+        description: "Description"
+        revision: "Révision"
+        status: "Etat"
+        progress: "Progression"
+      dorsale/flyboy/task:
+        taskable: "Taskable"
+        created_at: "Créée le"
+        name: "Titre"
+        reminder: "Rappel"
+        term: "Echéance"
+        done: "Fait ?"
+        description: "Description"
+        progress: "Progression"
+      dorsale/flyboy/task_comment:
+        progress: "Progression"
+        description: "Description"

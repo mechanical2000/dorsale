@@ -16,6 +16,9 @@ require "cancan"
 require "awesome_print"
 require "kaminari-i18n"
 require "carrierwave"
+require "aasm"
+require "handles_sortable_columns"
+require "csv"
 
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
@@ -30,5 +33,6 @@ module Dorsale
       g.template_engine :slim
     end
 
+    Mime::Type.register "application/vnd.ms-excel", :xls
   end
 end

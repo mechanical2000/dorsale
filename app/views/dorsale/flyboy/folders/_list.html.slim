@@ -1,0 +1,30 @@
+table
+  thead
+    tr
+      th
+        = sortable_column Dorsale::Flyboy::Folder.model_name.human, column: "name"
+      th.hidden-xs
+        = sortable_column Dorsale::Flyboy::Folder.human_attribute_name(:progress), column: "progress"
+      th.hidden-xs
+        = sortable_column Dorsale::Flyboy::Folder.human_attribute_name(:status), column: "status"
+      th
+        = t ".actions", default: t("helpers.actions")
+
+  tbody
+    - folders.each do |folder|
+      tr.folder class=folder_color(folder)
+        td.name
+          - if can? :read, folder
+            = link_to folder.name, dorsale.flyboy_folder_path(folder)
+          - else
+            = folder.name
+
+        td.folder_progress.hidden-xs
+          = progress_bar percentage: folder.progress, label: true
+
+        td.status.hidden-xs
+          = t("messages.folders.status.#{folder.status}")
+
+        td.actions
+          - if can? :create, Dorsale::Flyboy::Task.new(taskable: folder)
+            = create_button dorsale.new_flyboy_task_path(taskable_guid: folder.guid), text: t("actions.folders.new_task")

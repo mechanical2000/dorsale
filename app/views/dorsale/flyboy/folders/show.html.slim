@@ -1,0 +1,9 @@
+.flyboy
+  - content_for :context do
+    = render "dorsale/flyboy/folders/context", folder: @folder
+
+  - content_for :main do
+    .tasks
+      = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: true
+
+  = render_contextual

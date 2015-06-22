@@ -7,7 +7,6 @@ require 'cancan/matchers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require "factory_girl_rails"
-
 FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
 FactoryGirl.find_definitions
 

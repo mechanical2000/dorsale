@@ -1,0 +1,22 @@
+- content_for :context do
+  .folder-context: .context
+    = context_icon :tasks
+
+    - if @folder.persisted?
+      = context_title "Modifier #{@folder.name}"
+      - if can?(:delete, @folder)
+        = delete_button dorsale.flyboy_folder_path(@folder)
+
+    - else
+      = context_title "Nouveau dossier"
+
+
+- content_for :main do
+  .well
+    = horizontal_form_for @folder, as: :folder do |f|
+      = f.input :name
+      = f.input :description
+
+      = form_buttons
+
+= render_contextual
