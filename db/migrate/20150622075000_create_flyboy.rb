@@ -6,6 +6,7 @@ class CreateFlyboy < ActiveRecord::Migration
 
       t.string   :name
       t.text     :description
+      t.integer  :progress
       t.string   :status
       t.string   :tracking
       t.integer  :version

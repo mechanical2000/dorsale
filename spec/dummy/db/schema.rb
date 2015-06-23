@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20150623093218) do
     t.string   "folderable_type"
     t.string   "name"
     t.text     "description"
+    t.integer  "progress"
     t.string   "status"
     t.string   "tracking"
     t.integer  "version"
