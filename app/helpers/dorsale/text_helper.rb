@@ -32,6 +32,11 @@ module Dorsale
       number_with_precision(n, opts)
     end
 
+    def date(d)
+      return if d.nil?
+      I18n.l(d)
+    end
+
     def hours(n)
       return if n.nil?
 
@@ -46,6 +51,22 @@ module Dorsale
 
       str = str.gsub("\r", "").strip
       strip_tags(str).gsub("\n", "<br />").html_safe
+    end
+
+    def info(object, attribute, text = nil)
+      label = content_tag(:strong) do
+        object.class.human_attribute_name(attribute)
+      end
+
+      span_css_class = "#{object.class.model_name.element}-#{attribute}"
+
+      text ||= content_tag(:span, class: span_css_class) do
+        object.send(attribute)
+      end
+
+      content_tag(:div, class: "info") do
+        "#{label} : #{text}".html_safe
+      end
     end
   end
 end

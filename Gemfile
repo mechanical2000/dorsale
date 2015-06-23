@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 gem "rails", "~> 4.2.1"
 
+gem "customer_vault", path: "/www/agilidee/customer_vault"
+
 gemspec
 
 group :development, :test do
@@ -23,4 +25,5 @@ group :development, :test do
   gem "guard-rspec"
   gem "guard-rubocop"
   gem "timecop"
+  gem 'pdf-inspector'
 end

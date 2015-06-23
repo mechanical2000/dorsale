@@ -3,8 +3,8 @@ require "spec_helper"
 describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
   routes { Dorsale::Engine.routes }
 
-  let(:task)         { FactoryGirl.create(:flyboy_task) }
-  let(:task_comment) { FactoryGirl.create(:flyboy_task_comment, task: task) }
+  let(:task)         { create(:flyboy_task) }
+  let(:task_comment) { create(:flyboy_task_comment, task: task) }
 
   describe "#create" do
     it "should create the task_comment" do

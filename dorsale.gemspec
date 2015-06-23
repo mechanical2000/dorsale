@@ -39,4 +39,6 @@ Gem::Specification.new do |s|
   s.add_dependency "handles_sortable_columns"
   s.add_dependency "prawn"
   s.add_dependency "prawn-table"
+  s.add_dependency "combine_pdf"
+  s.add_dependency "cocoon"
 end

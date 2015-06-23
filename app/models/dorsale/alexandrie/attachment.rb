@@ -9,6 +9,10 @@ module Dorsale
       validates :file,       presence: true
 
       mount_uploader :file, ::Dorsale::Alexandrie::FileUploader
+
+      def to_s
+        file_identifier
+      end
     end
   end
 end

@@ -4,11 +4,11 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   routes { Dorsale::Engine.routes }
 
   let!(:task) {
-    FactoryGirl.create(:flyboy_task, done: false)
+    create(:flyboy_task, done: false)
   }
 
   let!(:task2) {
-    FactoryGirl.create(:flyboy_task, taskable: task.taskable, done: true)
+    create(:flyboy_task, taskable: task.taskable, done: true)
   }
 
   let(:valid_attributes) {
@@ -52,8 +52,8 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     context "when applying filter" do
       before do
         Dorsale::Flyboy::Task.destroy_all
-        @task1 = FactoryGirl.create(:flyboy_task, done: true)
-        @task2 = FactoryGirl.create(:flyboy_task, done: false)
+        @task1 = create(:flyboy_task, done: true)
+        @task2 = create(:flyboy_task, done: false)
       end
 
       it 'should display both when not filtered' do
@@ -78,13 +78,13 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       before do
         Dorsale::Flyboy::Folder.destroy_all
         Dorsale::Flyboy::Task.destroy_all
-        @folder1 = FactoryGirl.create(:flyboy_folder, name: "Abc")
-        @folder2 = FactoryGirl.create(:flyboy_folder, name: "dEF")
-        @folder3 = FactoryGirl.create(:flyboy_folder, name: "xyz")
+        @folder1 = create(:flyboy_folder, name: "Abc")
+        @folder2 = create(:flyboy_folder, name: "dEF")
+        @folder3 = create(:flyboy_folder, name: "xyz")
 
-        @task1 = FactoryGirl.create(:flyboy_task, taskable: @folder1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = FactoryGirl.create(:flyboy_task, taskable: @folder2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = FactoryGirl.create(:flyboy_task, taskable: @folder3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
+        @task1 = create(:flyboy_task, taskable: @folder1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
+        @task2 = create(:flyboy_task, taskable: @folder2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
+        @task3 = create(:flyboy_task, taskable: @folder3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
       end
 
       it "sorting by taskable asc" do

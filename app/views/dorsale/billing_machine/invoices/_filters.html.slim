@@ -1,0 +1,16 @@
+.filters
+  = form_tag dorsale.small_data_filters_path, class: "form-inline", role: "form"
+    input type="hidden" name="call_back" value="#{dorsale.billing_machine_invoices_path}"
+
+    .form-group
+      label.sr-only for="customer_guid" Client
+      = select 'filters', 'customer_guid', @people.map { |p| [p.name, p.guid] }, {include_blank: 'Tous les clients', selected: @filters.get('customer_guid')}, class: "form-control"
+
+    .form-group
+      = select 'filters', 'time_period',[['Aujourd\'hui', 'today'],['Cette semaine', 'week'], ['Ce mois-ci', 'month']], {include_blank: 'Depuis toujours', selected: @filters.get('time_period')}, class: "form-control"
+
+    .form-group
+      = select 'filters', 'payment_status',[['Non payées', 'unpaid'], ['En attente', 'pending'],['En retard', 'late'],['Payées', 'paid']], {include_blank: 'Toutes', selected: @filters.get('payment_status')}, class: "form-control"
+
+    = filter_reset_button
+    = filter_submit_button

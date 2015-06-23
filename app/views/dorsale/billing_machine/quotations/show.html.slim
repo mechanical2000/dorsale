@@ -1,0 +1,60 @@
+.billing_machine
+  .quotation-details
+    .actions
+      = update_button dorsale.edit_billing_machine_quotation_path(@quotation)
+      = download_button dorsale.billing_machine_quotation_path(@quotation, format: :pdf)
+
+
+      - if @quotation.customer
+        .row
+          .col-xs-12.col-sm-6
+          .col-xs-12.col-sm-6
+            .well
+              .customer-name     = @quotation.customer.name
+              .customer-address1 = @quotation.customer.address.street
+              .customer-address2 = @quotation.customer.address.street_bis
+              .customer-zip      = @quotation.customer.address.zip
+              .customer-city     = @quotation.customer.address.city
+              .customer-country  = @quotation.customer.address.country
+
+
+    .well: .row
+      .col-xs-12.col-sm-6
+        = info @quotation, :tracking_id
+        = info @quotation, :label
+        = info @quotation, :date,            date(@quotation.date)
+        = info @quotation, :payment_term,    @quotation.payment_term.try(:label)
+        = info @quotation, :vat_rate,        percentage(@quotation.vat_rate)
+        = info @quotation, :total_duty,      euros(@quotation.total_duty)
+        = info @quotation, :vat_amount,      euros(@quotation.vat_amount)
+        = info @quotation, :total_all_taxes, euros(@quotation.total_all_taxes)
+
+    - @quotation.lines.each do |line|
+      .panel.panel-default
+        .panel-heading
+          .panel-title
+            = line.label
+
+        .panel-body
+          .col-xs-12.col-sm-4
+            = info line, :quantity
+
+          .col-xs-12.col-sm-4
+            = info line, :unit_price, euros(line.unit_price)
+
+          .col-xs-12.col-sm-4
+            = info line, :unit
+
+        .panel-footer
+          = info line, :total, euros(line.total)
+
+    - if @quotation.comments.present?
+      .well
+        strong.info
+          = @quotation.t(:comment)
+        .comments
+          = text2html(@quotation.comments)
+
+    = panel title: @quotation.t(:documents)
+      .panel-body
+        = attachments_for @quotation

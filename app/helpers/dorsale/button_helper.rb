@@ -3,12 +3,14 @@ module Dorsale
     def dorsale_button(url, options = {})
       action = options.delete(:action)
       icon   = options.delete(:icon)
+      text   = options.delete(:text) || t("actions.#{action}")
+      title  = options.delete(:title) || text
 
-      text = options.delete(:text) || t("actions.#{action}")
-      text = "#{icon icon} #{text}"
+      text   = "#{icon icon} <span>#{text}</span>"
 
       options = {
-        :class => "btn btn-xs link_#{action}"
+        :class => "btn btn-xs link_#{action}",
+        :title => title,
       }.deep_merge(options)
 
       if confirm = options.delete(:confirm)
@@ -43,6 +45,15 @@ module Dorsale
       dorsale_button(url, options)
     end
 
+    def download_button(url, options = {})
+      options = {
+        :icon   => "cloud-download",
+        :action => :download
+      }.merge(options)
+
+      dorsale_button(url, options)
+    end
+
     def update_button(url, options = {})
       options = {
         :icon   => :pencil,
@@ -59,6 +70,15 @@ module Dorsale
         :class   => "btn btn-xs btn-danger link_delete",
         :confirm => true,
         :method  => :delete,
+      }.merge(options)
+
+      dorsale_button(url, options)
+    end
+
+    def copy_button(url, options = {})
+      options = {
+        :icon    => :copy,
+        :action  => :copy,
       }.merge(options)
 
       dorsale_button(url, options)

@@ -12,3 +12,19 @@ fr:
       update_error : "Impossible de modifier le commentaire."
       delete_ok    : "Le commentaire a été supprimé."
       delete_error : "Impossible de supprimer le commentaire."
+    invoices:
+      create_ok : "La facture a été créée."
+      update_ok : "La facture a été modifiée."
+      pay_ok    : "La facture a été marquée comme payée."
+      pay_error : "Impossible de marquer la facture comme payée."
+    quotations:
+      create_ok : "Le devis a été créée."
+      update_ok : "Le devis a été modifiée."
+      pay_ok    : "Le devis a été marquée comme payée."
+      pay_error : "Impossible de marquer le devis comme payée."
+
+  activerecord:
+    models:
+      dorsale/billing_machine/invoice: "Facture"
+      dorsale/billing_machine/quotation: "Devis"
+      dorsale/billing_machine/id_card: "Carte d'identité"
