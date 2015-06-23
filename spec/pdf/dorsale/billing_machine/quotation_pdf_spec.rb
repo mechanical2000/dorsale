@@ -15,10 +15,10 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
   end
 
   let(:customer) {
-    create(:person)
+    create(:customer_vault_corporation)
   }
 
-  let(:id_card) { create(:id_card,
+  let(:id_card) { create(:billing_machine_id_card,
     entity_name: "HEYHO",
     registration_city: 'RCS MARSEILLE',
     registration_number: '000 000 000',
@@ -40,7 +40,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:quotation) { create(:quotation,
+  let(:quotation) { create(:billing_machine_quotation,
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
@@ -50,14 +50,14 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       vat_rate: 19.6,
       comments: 'this is the quotation comment') }
 
-  let(:quotation_line) { create(:quotation_line,
+  let(:quotation_line) { create(:billing_machine_quotation_line,
     quotation_id: quotation.id,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
     total: 7.98) }
 
-  let(:quotation_line_2) { create(:quotation_line,
+  let(:quotation_line_2) { create(:billing_machine_quotation_line,
     quotation_id: quotation.id,
     label: 'Truc',
     quantity: 42.42,
@@ -65,7 +65,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     unit_price: 42.54,
     total: 1804.55) }
 
-  let(:pdf) { build(:common_quotation, quotation: quotation) }
+  let(:pdf) { quotation.pdf }
 
   describe "#initialize" do
     it 'inherits from Prawn::Document' do
@@ -73,7 +73,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     end
 
     it 'inherits from CommonQuotation' do
-      pdf.should be_kind_of(CommonQuotation)
+      pdf.should be_kind_of(::Dorsale::BillingMachine::QuotationPdf)
     end
 
     it 'should assign @main_document' do
@@ -85,8 +85,9 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     let(:text) { PDF::Inspector::Text.analyze(pdf.render) }
 
     context 'when the id card is empty' do
-      let(:id_card) { IdCard.create(id_card_name: 'default', entity: create(:entity))}
+      let(:id_card) { ::Dorsale::BillingMachine::IdCard.create(id_card_name: 'default')}
       it 'should not crash' do
+        pdf.build
       end
     end
 
@@ -230,8 +231,8 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
   describe "missing data" do
     it "missing payment_term should be OK" do
-      quotation = create(:quotation, payment_term: nil)
-      pdf     = CommonQuotation.new(quotation)
+      quotation = create(:billing_machine_quotation, payment_term: nil)
+      pdf     = ::Dorsale::BillingMachine::QuotationPdf.new(quotation)
       pdf.build
       PDF::Inspector::Text.analyze(pdf.render)
     end
