@@ -208,6 +208,7 @@ Feature: Invoice Management
     Then the invoice status should be "on_alert"
 
   Scenario: Invoice Pdf with valid name
+    Given an existing customer
     Given an existing invoice
     When the user download the pdf
-    Then the PDF should have the filename "Facture_1401_AC.pdf"
+    Then the PDF should have the filename "Facture_2014-01_SN.pdf"

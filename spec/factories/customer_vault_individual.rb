@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :customer_vault_individual, class: CustomerVault::Individual do
     first_name { Faker::Name.first_name                              }
     last_name  { Faker::Name.last_name                               }
+    short_name { "SN"                                                }
     email      { Faker::Internet.email("#{first_name} #{last_name}") }
     title      { "Individual-Title"                                  }
     twitter    { "#{first_name}#{last_name}"                         }

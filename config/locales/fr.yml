@@ -17,3 +17,9 @@ fr:
       update_ok : "La facture a été modifiée."
       pay_ok    : "La facture a été marquée comme payée."
       pay_error : "Impossible de marquer la facture comme payée."
+
+  activerecord:
+    models:
+      dorsale/billing_machine/invoice: "Facture"
+      dorsale/billing_machine/quotation: "Devis"
+      dorsale/billing_machine/id_card: "Carte d'identité"

@@ -4,7 +4,6 @@ Feature: Quotations filter
   In order to understand what it going on
 
   Background:
-    Given an existing user
     And a bunch of existing quotations
     When the user goes to the quotations page
 

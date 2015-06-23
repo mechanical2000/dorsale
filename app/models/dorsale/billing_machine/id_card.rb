@@ -11,6 +11,8 @@ module Dorsale
       def name
         id_card_name
       end
+
+      mount_uploader :logo, ::Dorsale::ImageUploader
     end
   end
 end

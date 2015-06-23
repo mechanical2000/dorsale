@@ -7,6 +7,6 @@ describe ::Dorsale::BillingMachine::IdCard do
 
   it { is_expected.to have_many :invoices }
 
-  xit "should have a logo"
+  it { is_expected.to respond_to :logo }
 
 end

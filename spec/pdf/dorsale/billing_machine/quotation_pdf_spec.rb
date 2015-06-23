@@ -1,11 +1,16 @@
-# encoding: utf-8
-require 'spec_helper'
+require "rails_helper"
 
-describe CommonInvoice, pdfs: true do
+describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
   def self.it_should_write(string)
     it "should write '#{string}'" do
       text.strings.should include string
+    end
+  end
+
+  def self.it_should_not_write(string)
+    it "should write '#{string}'" do
+      text.strings.should_not include string
     end
   end
 
@@ -35,41 +40,44 @@ describe CommonInvoice, pdfs: true do
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:invoice) { create(:billing_machine_invoice,
+  let(:quotation) { create(:quotation,
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
       total_duty: 1812.53,
       vat_amount: 355.26,
       total_all_taxes: 2167.79,
-      advance: 1.79,
       vat_rate: 19.6,
-      balance: 2166.0) }
+      comments: 'this is the quotation comment') }
 
-  let(:invoice_line) { create(:billing_machine_invoice_line,
-    invoice_id: invoice.id,
+  let(:quotation_line) { create(:quotation_line,
+    quotation_id: quotation.id,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
     total: 7.98) }
 
-  let(:invoice_line_2) { create(:billing_machine_invoice_line,
-    invoice_id: invoice.id,
+  let(:quotation_line_2) { create(:quotation_line,
+    quotation_id: quotation.id,
     label: 'Truc',
     quantity: 42.42,
     unit: 'nuts',
     unit_price: 42.54,
     total: 1804.55) }
 
-  let(:pdf) { build(:common_invoice, invoice: invoice) }
+  let(:pdf) { build(:common_quotation, quotation: quotation) }
 
   describe "#initialize" do
     it 'inherits from Prawn::Document' do
       pdf.should be_kind_of(Prawn::Document)
     end
 
+    it 'inherits from CommonQuotation' do
+      pdf.should be_kind_of(CommonQuotation)
+    end
+
     it 'should assign @main_document' do
-      pdf.main_document.should eq(invoice)
+      pdf.main_document.should eq(quotation)
     end
   end
 
@@ -83,8 +91,8 @@ describe CommonInvoice, pdfs: true do
     end
 
     before do
-      invoice.lines << invoice_line
-      invoice.lines << invoice_line_2
+      quotation.lines << quotation_line
+      quotation.lines << quotation_line_2
       pdf.build
     end
     context 'in Mentions légales - Coin supérieur droit' do
@@ -99,10 +107,10 @@ describe CommonInvoice, pdfs: true do
 
     context 'in Entete de facturation' do
 
-    it_should_write 'Facture'
+    it_should_write 'Devis'
 
     it "should write invoice tracking id" do
-      text.strings.should include ' N°' + invoice.tracking_id
+      text.strings.should include ' N°' + quotation.tracking_id
     end
     it "should write 'Marseille le ' and invoice date" do
       text.strings.should include 'Marseille le ' + '16 avril 2014'
@@ -123,28 +131,28 @@ describe CommonInvoice, pdfs: true do
         it_should_write 'A l’attention de :'
 
         it "should write customer name" do
-          text.strings.should include invoice.customer.name
+          text.strings.should include quotation.customer.name
         end
 
         it "should write customer address" do
-          text.strings.should include invoice.customer.address.street
-          text.strings.should include invoice.customer.address.street_bis
+          text.strings.should include quotation.customer.address.street
+          text.strings.should include quotation.customer.address.street_bis
         end
 
         it "should write customer zip and city" do
-          text.strings.should include invoice.customer.address.zip.to_s +
-           ' ' + invoice.customer.address.city.to_s
+          text.strings.should include quotation.customer.address.zip.to_s +
+           ' ' + quotation.customer.address.city.to_s
         end
 
         it "should write customer country" do
-          text.strings.should include invoice.customer.address.country
+          text.strings.should include quotation.customer.address.country
         end
       end # context in Informations client
     end # context in Entete de facturation
 
     it "shoud write 'Objet :' and invoice label" do
       text.strings.should include 'Objet :'
-      text.strings.should include ' ' + invoice.label
+      text.strings.should include ' ' + quotation.label
     end
 
     context "in Tableau" do
@@ -157,7 +165,7 @@ describe CommonInvoice, pdfs: true do
 
       context "in Lignes de facturation" do
         it 'should write invoice line label of each invoice line' do
-          invoice.lines.each do |line|
+          quotation.lines.each do |line|
             text.strings.should include line.label
           end
         end
@@ -188,46 +196,29 @@ describe CommonInvoice, pdfs: true do
         it_should_write 'Total TTC'
         it_should_write '2.167,78 €'
 
-        it_should_write 'Acompte reçu sur commande'
-        it_should_write '1,79 €'
+        it_should_not_write 'Acompte reçu sur commande'
+        it_should_not_write '1,79 €'
 
-        it_should_write 'Solde à payer'
+        it_should_not_write 'Solde à payer'
         it 'should write balance calculated using total_all_taxes - advance' do
-          text.strings.should include '2.165,99 €'
+          text.strings.should_not include '2.165,99 €'
         end
 
-
-        context 'without advance' do
-
-          before(:each) do
-            invoice_incomplete=create(:billing_machine_invoice, total_duty: 1000, vat_amount: 196,
-              total_all_taxes: 1196, advance: 0, balance: 1146 , customer: customer,
-              date: '2014-04-16', vat_rate: 19.6, id_card: id_card)
-            pdf_incomplete=build(:common_invoice, invoice: invoice_incomplete)
-            pdf_incomplete.build
-            @text_incomplete = PDF::Inspector::Text.analyze(pdf_incomplete.render)
-          end
-
-          it 'should not write Acompte reçu sur commande' do
-            @text_incomplete.strings.should_not include 'Acompte reçu sur commande'
-          end
-
-          it 'should not write Solde à payer' do
-            @text_incomplete.strings.should_not include 'Solde à payer'
-          end
-
-        end
       end
     end # context in Tableau
     it_should_write 'Conditions de paiement :'
 
     it 'should write invoice payment term' do
-      text.strings.should include invoice.payment_term.label
+      text.strings.should include quotation.payment_term.label
     end
 
-    it_should_write 'Coordonnées bancaires :'
-    it_should_write 'IBAN : FR76 0000 0000 0000 0000 0000 000'
-    it_should_write 'BIC / SWIFT : PSSTTHEGAME'
+    it_should_not_write 'Coordonnées bancaires :'
+    it_should_not_write 'IBAN : FR76 0000 0000 0000 0000 0000 000'
+    it_should_not_write 'BIC / SWIFT : PSSTTHEGAME'
+
+    context 'in Comments - Bas de page' do
+      it_should_write 'this is the quotation comment'
+    end
 
     context 'in Mentions légales - Bas de page' do
       it_should_write 'Mention légale'
@@ -239,8 +230,8 @@ describe CommonInvoice, pdfs: true do
 
   describe "missing data" do
     it "missing payment_term should be OK" do
-      invoice = create(:billing_machine_invoice, payment_term: nil)
-      pdf     = CommonInvoice.new(invoice)
+      quotation = create(:quotation, payment_term: nil)
+      pdf     = CommonQuotation.new(quotation)
       pdf.build
       PDF::Inspector::Text.analyze(pdf.render)
     end

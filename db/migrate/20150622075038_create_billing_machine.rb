@@ -29,10 +29,7 @@ class CreateBillingMachine < ActiveRecord::Migration
       t.text     :custom_info_3
       t.string   :contact_fax
       t.string   :contact_email
-      t.string   :logo_file_name
-      t.string   :logo_content_type
-      t.integer  :logo_file_size
-      t.datetime :logo_updated_at
+      t.string   :logo
       t.string   :registration_city
 
       t.timestamps null: false

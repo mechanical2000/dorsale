@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622105217) do
+ActiveRecord::Schema.define(version: 20150623093218) do
 
   create_table "customer_vault_corporations", force: :cascade do |t|
     t.string   "name"
+    t.string   "short_name"
     t.string   "email"
     t.string   "phone"
     t.string   "fax"
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150622105217) do
   create_table "customer_vault_individuals", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "short_name"
     t.string   "email"
     t.string   "title"
     t.string   "twitter"
@@ -104,10 +106,7 @@ ActiveRecord::Schema.define(version: 20150622105217) do
     t.text     "custom_info_3"
     t.string   "contact_fax"
     t.string   "contact_email"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
+    t.string   "logo"
     t.string   "registration_city"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false

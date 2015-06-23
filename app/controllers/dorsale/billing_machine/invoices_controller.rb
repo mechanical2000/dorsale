@@ -60,6 +60,7 @@ module Dorsale
           flash[:notice] = t("messages.invoices.create_ok")
           redirect_to dorsale.billing_machine_invoices_path
         else
+          ap @invoice.errors
           render :edit
         end
       end
@@ -69,10 +70,20 @@ module Dorsale
 
         respond_to do |format|
           format.pdf {
-              pdf = @invoice.pdf
-              send_data pdf.render, type: 'application/pdf',
-              filename: "Facture_#{@invoice.tracking_id}_#{@invoice.customer.short_name}.pdf", disposition: 'inline'
+              pdf_data  = @invoice.pdf.render
+
+              file_name = [
+                ::Dorsale::BillingMachine::Invoice.model_name.human,
+                @invoice.tracking_id,
+                @invoice.customer.try(:short_name),
+              ].join("_").concat(".pdf")
+
+              send_data pdf_data,
+                :type        => "application/pdf",
+                :filename    => file_name,
+                :disposition => "inline"
           }
+
           format.html
         end
       end

@@ -4,9 +4,6 @@ Feature: Quotation Management
   I want to create quotations
   In order to give them to my future customers
 
-  Background:
-    Given an existing user
-
   Scenario: Existing quotation displayed in quotations page
     And an existing customer
     And an existing quotation

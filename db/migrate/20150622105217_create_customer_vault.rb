@@ -2,6 +2,7 @@ class CreateCustomerVault < ActiveRecord::Migration
   def change
     create_table :customer_vault_corporations do |t|
       t.string   :name
+      t.string   :short_name
       t.string   :email
       t.string   :phone
       t.string   :fax
@@ -16,6 +17,7 @@ class CreateCustomerVault < ActiveRecord::Migration
     create_table :customer_vault_individuals do |t|
       t.string   :first_name
       t.string   :last_name
+      t.string   :short_name
       t.string   :email
       t.string   :title
       t.string   :twitter
