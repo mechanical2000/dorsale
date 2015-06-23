@@ -9,13 +9,13 @@ module Dorsale
             field = :date
           end
 
-          criteria = "#{@target}.#{field}"
+          criteria = "#{query.model.table_name}.#{field}"
 
-          if (@value == 'today')
+          if @value == "today"
             return query.where("#{criteria} >= ?", Date.today)
-          elsif (@value == 'week')
+          elsif @value == "week"
             return query.where("#{criteria} >= ?", Date.today.at_beginning_of_week)
-          elsif (@value == 'month')
+          elsif @value == "month"
             return query.where("#{criteria} >= ?", Date.today.at_beginning_of_month)
           else
             return query

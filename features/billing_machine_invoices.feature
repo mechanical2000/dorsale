@@ -69,7 +69,6 @@ Feature: Invoice Management
     Then a message signals the success of the update
     Then the invoices's label has changed
 
-  @ignore_semaphore
   Scenario: New invoice with advance
     When the user goes to the invoices page
     And he creates a new invoice
@@ -149,3 +148,66 @@ Feature: Invoice Management
     And he saves the invoice
     Then a message signals the success of the update
     And the invoice status is set to unpaid
+
+  Scenario: Filter by customer
+    Given a bunch of existing invoices
+    When the user goes to the invoices page
+    When he filters by one customer
+    Then only the invoices of this customer do appear
+
+  Scenario: Filter by date
+    Given a bunch of existing invoices
+    When the user goes to the invoices page
+    When he filters by date on today
+    Then only the invoices of today do appear
+
+  Scenario: Filter by status
+    Given a bunch of existing invoices
+    When the user goes to the invoices page
+    When he filters by status on paid
+    Then only the invoices paid do appear
+
+  Scenario: Existing invoice displayed in invoices page
+    Given an existing invoice
+    When the user goes to the invoices page
+    Then the invoice line shows the right date
+
+  Scenario: Paid invoice green in list
+    Given an existing paid invoice
+    When the user goes to the invoices page
+    Then the invoice status should be "paid"
+
+  Scenario: Unpaid invoice with due date not passed have no color in list
+    Given an existing unpaid invoice
+    And its due date is not yet passed
+    When the user goes to the invoices page
+    Then the invoice paid status should not have a color
+
+  Scenario: Unpaid invoice with due date the same day have no color in list
+    Given an existing unpaid invoice
+    And its due date is the same day
+    When the user goes to the invoices page
+    Then the invoice paid status should not have a color
+
+  Scenario: Unpaid invoice with due date just passed appears orange in list
+    Given an existing unpaid invoice
+    And its due date is yesterday
+    When the user goes to the invoices page
+    Then the invoice status should be "late"
+
+  Scenario: Unpaid invoice with due date passed by 15 days appears orange in list
+    Given an existing unpaid invoice
+    And its due date is 14 days ago
+    When the user goes to the invoices page
+    Then the invoice status should be "late"
+
+  Scenario: Unpaid invoice with due date passed by 16 days appears red in list
+    Given an existing unpaid invoice
+    And its due date is 15 days ago
+    When the user goes to the invoices page
+    Then the invoice status should be "on_alert"
+
+  Scenario: Invoice Pdf with valid name
+    Given an existing invoice
+    When the user download the pdf
+    Then the PDF should have the filename "Facture_1401_AC.pdf"

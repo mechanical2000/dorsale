@@ -71,7 +71,7 @@ end
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Before do
-  DatabaseCleaner.clean
+  DatabaseCleaner.clean_with :truncation
 end
 
 World(FactoryGirl::Syntax::Methods)
