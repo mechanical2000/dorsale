@@ -1,15 +1,15 @@
 table.default.invoices
   thread
     tr
-      th = ::Dorsale::BillingMachine::Invoice.human_attribute_name(:date)
-      th = ::Dorsale::BillingMachine::Invoice.human_attribute_name(:tracking_id)
-      th = ::Dorsale::BillingMachine::Invoice.human_attribute_name(:customer)
-      th = ::Dorsale::BillingMachine::Invoice.human_attribute_name(:total_duty)
-      th = ::Dorsale::BillingMachine::Invoice.human_attribute_name(:total_all_taxes)
+      th = ::Dorsale::BillingMachine::Invoice.t(:date)
+      th = ::Dorsale::BillingMachine::Invoice.t(:tracking_id)
+      th = ::Dorsale::BillingMachine::Invoice.t(:customer)
+      th = ::Dorsale::BillingMachine::Invoice.t(:total_duty)
+      th = ::Dorsale::BillingMachine::Invoice.t(:total_all_taxes)
       th = t("actions.actions")
 
   tbody
-    - @invoices.each do |invoice|
+    - invoices.each do |invoice|
       tr class="invoice #{invoice.payment_status}"
         td.hidden-sm.hidden-xs.date
           = date(invoice.date)

@@ -81,7 +81,7 @@ When(/^he adds a new line$/) do
 end
 
 Then(/^the total duty is "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-total-duty', text: arg1
+  expect(page).to have_selector '.total #invoice-total_duty', text: arg1
 end
 
 Then(/^the VAT due is "(.*?)"$/) do |arg1|
@@ -89,7 +89,7 @@ Then(/^the VAT due is "(.*?)"$/) do |arg1|
 end
 
 Then(/^the total all taxes included is "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-total-taxes', text: arg1
+  expect(page).to have_selector '.total #invoice-total_all_taxes', text: arg1
 end
 
 When(/^he saves the invoice$/) do

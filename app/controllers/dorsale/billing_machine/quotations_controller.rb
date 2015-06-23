@@ -8,10 +8,19 @@ module Dorsale
         :destroy,
       ]
 
+      before_filter :set_form_variables, only: [
+        :new,
+        :create,
+        :edit,
+        :update,
+        :copy,
+      ]
+
       def index
         authorize! :list, ::Dorsale::BillingMachine::Quotation
 
         @quotations ||= ::Dorsale::BillingMachine::Quotation.all
+        @people     ||= ::CustomerVault::Person.list
         @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
         @order      ||= {unique_index: :desc}
 
@@ -33,25 +42,25 @@ module Dorsale
       end
 
       def new
-        # TODO : Déplacer dans modèle
-        @quotation          = ::Dorsale::BillingMachine::Quotation.new
-        @quotation.date     = Date.today
-        @quotation.vat_rate = 20
+        @quotation = ::Dorsale::BillingMachine::Quotation.new
+
         @quotation.lines.build
+
+        @quotation.id_card = @id_cards.first if @id_cards.one?
 
         authorize! :create, @quotation
       end
 
       def create
-        @quotation = ::Dorsale::BillingMachine::Quotation.new(safe_params)
+        @quotation = ::Dorsale::BillingMachine::Quotation.new(quotation_params)
 
         authorize! :create, @quotation
 
         if @quotation.save
-          save_documents(params)
-          flash[:notice] = t("messages.quotations.craete_ok")
+          flash[:notice] = t("messages.quotations.create_ok")
           redirect_to dorsale.billing_machine_quotations_path
         else
+          ap @quotation.errors
           render :edit
         end
       end
@@ -61,15 +70,23 @@ module Dorsale
 
         respond_to do |format|
           format.pdf {
-              pdf = @quotation.pdf
-              send_data pdf.render, type: 'application/pdf',
-              filename: "Devis_#{@quotation.tracking_id}_#{@quotation.customer.try(:short_name).to_s}.pdf", disposition: 'inline'
+              pdf_data  = @quotation.pdf.render
+
+              file_name = [
+                ::Dorsale::BillingMachine::Quotation.model_name.human,
+                @quotation.tracking_id,
+                @quotation.customer.try(:short_name),
+              ].join("_").concat(".pdf")
+
+              send_data pdf_data,
+                :type        => "application/pdf",
+                :filename    => file_name,
+                :disposition => "inline"
           }
 
           format.html
         end
       end
-
 
       def edit
         authorize! :update, Quotation
@@ -78,7 +95,7 @@ module Dorsale
       def update
         authorize! :update, @quotation
 
-        if @quotation.update(safe_params)
+        if @quotation.update(quotation_params)
           flash[:notice] = t("messages.quotations.update_ok")
           redirect_to dorsale.billing_machine_quotations_path
         else
@@ -104,12 +121,19 @@ module Dorsale
         @quotation = ::Dorsale::BillingMachine::Quotation.find params[:id]
       end
 
+      def set_form_variables
+        @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
+        @id_cards      ||= ::Dorsale::BillingMachine::IdCard.all
+        @people        ||= ::CustomerVault::Person.list
+      end
+
       def permitted_params
         [
           :label,
           :customer_guid,
-          :date,
           :payment_term_id,
+          :id_card_id,
+          :date,
           :comments,
           :vat_amount,
           :vat_rate,
@@ -120,10 +144,6 @@ module Dorsale
             :quantity,
             :unit,
             :unit_price,
-          ],
-          :documents_attributes => [
-            :id,
-            :_destroy,
           ],
         ]
       end

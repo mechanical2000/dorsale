@@ -9,7 +9,7 @@
     = render "dorsale/billing_machine/invoices/data_context"
 
   - content_for :main do
-    = render "dorsale/billing_machine/invoices/list"
+    = render "dorsale/billing_machine/invoices/list", invoices: @invoices
     = paginate @invoices
 
   = render_contextual

@@ -6,11 +6,11 @@
       = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
       = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay, method: :patch
 
-    .row
-      .col-xs-12.col-sm-6
-      .col-xs-12.col-sm-6
-        .well
-          - if @invoice.customer
+    - if @invoice.customer
+      .row
+        .col-xs-12.col-sm-6
+        .col-xs-12.col-sm-6
+          .well
             .customer-name     = @invoice.customer.name
             .customer-address1 = @invoice.customer.address.street
             .customer-address2 = @invoice.customer.address.street_bis
@@ -22,13 +22,13 @@
       .col-xs-12.col-sm-6
         = info @invoice, :tracking_id
         = info @invoice, :label
-        = info @invoice, :date
-        = info @invoice, :due_date
-        = info @invoice, :payment_term, @invoice.payment_term.try(:label)
-        = info @invoice, :vat_rate
+        = info @invoice, :date,            date(@invoice.date)
+        = info @invoice, :due_date,        date(@invoice.due_date)
+        = info @invoice, :payment_term,    @invoice.payment_term.try(:label)
+        = info @invoice, :vat_rate,        percentage(@invoice.vat_rate)
         = info @invoice, :payment_status
-        = info @invoice, :total_duty
-        = info @invoice, :vat_amount
+        = info @invoice, :total_duty,      euros(@invoice.total_duty)
+        = info @invoice, :vat_amount,      euros(@invoice.vat_amount)
         = info @invoice, :advance,         euros(@invoice.advance)
         = info @invoice, :total_all_taxes, euros(@invoice.total_all_taxes)
         = info @invoice, :balance,         euros(@invoice.balance)

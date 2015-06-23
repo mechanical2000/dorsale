@@ -1,49 +1,57 @@
 #quotation.edit
-  = simple_form_for @quotation, html: { class: 'form-horizontal' }, wrapper: :horizontal_form, multipart: true  do |f|
+  = horizontal_form_for @quotation, as: :quotation do |f|
     .well
       - if @quotation.persisted?
         .form-group
-          label for='quotation-unique-index' class='col-sm-3 control-label' Index unique
+          label.control-label.col-sm-3
+            = @quotation.t(:tracking_id)
           .col-sm-9
-            .form-control-static.quotation-unique-index= @quotation.tracking_id
+            .form-control-static.quotation-unique-index
+              = @quotation.tracking_id
+
       = f.input :label
-      = render partial: 'componants/simple_form_date_picker', locals: { form: f, date: @quotation.date, symbol: :date}
-      = f.association :payment_term, collection: current_user.entity.payment_terms
-      = f.input :customer_guid, collection: current_user.entity.people.map{ |e| [e.name, e.guid] }
+      = f.input :date, html5: true
+      = f.association :payment_term, collection: @payment_terms
+      = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
       = f.input :vat_rate, as: :string
+
+      - if @id_cards.one?
+        = f.hidden_field :id_card_id
+      - else
+        = f.input :id_card_id, collection: @id_cards
+
       = f.input :comments
-      = f.input :documents, as: :file, input_html: {multiple: true}
-      - if @quotation.documents
-            - @quotation.documents.each_with_index do |document, index|
-              .row
-              a href="/documents/documents/#{document.id}/#{document.document_file_name}" '#{document.document_file_name}'
-              label
-                input type="hidden"   name="quotation[documents_attributes][#{index}][id]"       value=document.id
-                input type="hidden"   name="quotation[documents_attributes][#{index}][_destroy]" value=0
-                input type="checkbox" name="quotation[documents_attributes][#{index}][_destroy]" value=1
-                = " Supprimer"
 
-
-    .form-group#quotation-lines
+    #quotation-lines
       = f.simple_fields_for :lines do |l|
-        = render 'line_fields', :f => l
-      .links.col-sm-offset-3.col-sm-9
-        = link_to_add_association 'Add line', f, :lines, class: 'btn btn-primary', id: 'add-new-line'
+        = render "line_fields", f: l
+
+      p.center
+        = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
 
     .total.well
-      .form-group
-        label class='col-sm-3 control-label' Montant HT
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:total_duty)
         .col-sm-9
           .form-control-static#quotation-total_duty
-      .form-group
-        label class='col-sm-3 control-label' TVA(%):
+
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:vat_rate)
         .col-sm-9
           .form-control-static#quotation-vat_amount
-      .form-group
-        label class='col-sm-3 control-label' Montant TTC
+
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:total_all_taxes)
         .col-sm-9
           .form-control-static#quotation-total_all_taxes
 
-    .form-group
-      .col-sm-offset-3.col-sm-9
-        = f.button :submit, 'Sauver', class: 'btn btn-success', id: "quotation-submit"
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:balance)
+        .col-sm-9
+          .form-control-static#quotation-balance
+
+    = form_buttons

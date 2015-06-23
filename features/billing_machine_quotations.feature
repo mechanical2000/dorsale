@@ -4,6 +4,9 @@ Feature: Quotation Management
   I want to create quotations
   In order to give them to my future customers
 
+  Background:
+    Given an existing id card
+
   Scenario: Existing quotation displayed in quotations page
     And an existing customer
     And an existing quotation
@@ -14,12 +17,12 @@ Feature: Quotation Management
     And the quotation line shows the right total-duty value
     And the quotation line shows the right all taxes value
 
-  Scenario: Paginate by 10 quotations
-    Given 15 existing quotations
+  Scenario: Paginate by 50 quotations
+    Given 75 existing quotations
     When the user goes to the quotations page
-    Then he should see 10 quotations
+    Then he should see 50 quotations
     When he goes to the next page
-    Then he should see 5 quotations
+    Then he should see 25 quotations
 
   Scenario: Empty quotation
     And an existing emtpy quotation
@@ -104,17 +107,22 @@ Feature: Quotation Management
     When the user goes to the quotation details
     Then he will see links to the documents
 
-  Scenario: Quotation without documents dont have documents section in his details
-    And an existing quotation
-    When the user goes to the quotation details
-    Then he dont see the documents section
-
   Scenario: Delete a document
     And an existing quotation
     And 2 associated documents to this quotation
-    When he goes on the edit page of the quotation
-    And he check one of the documents checkbox
-    When he saves the quotation
+    When the user goes to the quotation details
+    And he delete a document
     Then a message signals the success of the quotation update
     And the document is not in the quotation details
 
+  Scenario: Filter by customer
+    Given a bunch of existing quotations
+    When the user goes to the quotations page
+    When he filters by one customer
+    Then only the quotations of this customer do appear
+
+  Scenario: Filter by date
+    Given a bunch of existing quotations
+    When the user goes to the quotations page
+    When he filters by date on today
+    Then only the quotations of today do appear

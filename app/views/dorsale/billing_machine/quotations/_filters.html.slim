@@ -1,9 +1,11 @@
 .filters
   = form_tag dorsale.small_data_filters_path, class: "form-inline", role: "form"
-    input type="hidden" name="call_back_url" value="#{dorsale.billing_machine_quotations_path}"
+    input type="hidden" name="call_back" value="#{dorsale.billing_machine_quotations_path}"
+
     .form-group
       label.sr-only for="customer_guid" Client
-      = select 'filters', 'customer_guid', current_user.entity.people.map { |p| [p.name, p.guid] }, {include_blank: 'Tous les clients', selected: @filters.get('customer_guid')}, class: "form-control"
+      = select 'filters', 'customer_guid', @people.map { |p| [p.name, p.guid] }, {include_blank: 'Tous les clients', selected: @filters.get('customer_guid')}, class: "form-control"
+
     .form-group
       = select 'filters', 'time_period',[['Aujourd\'hui', 'today'],['Cette semaine', 'week'], ['Ce mois-ci', 'month']], {include_blank: 'Depuis toujours', selected: @filters.get('time_period')}, class: "form-control"
 

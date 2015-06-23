@@ -1,0 +1,30 @@
+table.default.quotations
+  thread
+    tr
+      th = ::Dorsale::BillingMachine::Quotation.t(:date)
+      th = ::Dorsale::BillingMachine::Quotation.t(:tracking_id)
+      th = ::Dorsale::BillingMachine::Quotation.t(:customer)
+      th = ::Dorsale::BillingMachine::Quotation.t(:total_duty)
+      th = ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes)
+      th = t("actions.actions")
+
+  tbody
+    - quotations.each do |quotation|
+      tr.quotation
+        td.hidden-sm.hidden-xs.date
+          = date(quotation.date)
+
+        td.hidden-sm.hidden-md.hidden-xs.tracking_id
+          = quotation.tracking_id
+
+        td.customer_name
+          = quotation.customer.try(:name)
+
+        td.total_duty
+          = euros(quotation.total_duty)
+
+        td.hidden-xs.total_all_taxes
+          = euros(quotation.total_all_taxes)
+
+        td.actions
+          = read_button dorsale.billing_machine_quotation_path(quotation)

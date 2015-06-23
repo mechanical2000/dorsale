@@ -1,6 +1,6 @@
 .filters
   = form_tag dorsale.small_data_filters_path, class: "form-inline", role: "form"
-    input type="hidden" name="call_back_url" value="#{dorsale.billing_machine_invoices_path}"
+    input type="hidden" name="call_back" value="#{dorsale.billing_machine_invoices_path}"
 
     .form-group
       label.sr-only for="customer_guid" Client

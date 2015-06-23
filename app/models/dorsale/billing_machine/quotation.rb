@@ -6,7 +6,15 @@ module Dorsale
       belongs_to :customer, polymorphic: true
       belongs_to :id_card
       belongs_to :payment_term
-      has_many :lines,  inverse_of: :quotation, dependent: :destroy, class_name: ::Dorsale::BillingMachine::QuotationLine
+      has_many :lines,
+        :inverse_of => :quotation,
+        :dependent  => :destroy,
+        :class_name => ::Dorsale::BillingMachine::QuotationLine
+
+      has_many :attachments,
+        :as         => :attachable,
+        :dependent  => :destroy,
+        :class_name => ::Dorsale::Alexandrie::Attachment
 
       accepts_nested_attributes_for :lines, allow_destroy: true
 
@@ -14,6 +22,15 @@ module Dorsale
 
       validates :id_card, presence: true
       validates :date,    presence: true
+
+      # simple_form
+      validates :id_card_id, presence: true
+
+      def initialize(*args)
+        super
+        self.date     = Date.today if date.nil?
+        self.vat_rate = 20         if vat_rate.nil?
+      end
 
       before_create :assign_unique_index
 
@@ -37,7 +54,7 @@ module Dorsale
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::CommonQuotation.new(self)
+        pdf = ::Dorsale::BillingMachine::QuotationPdf.new(self)
         pdf.build
         pdf
       end

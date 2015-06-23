@@ -38,9 +38,9 @@ jQuery ->
           total_duty += sum_line $(element) if remove_me == 'false'
       vat_amount = vat_rate * total_duty / 100.0
 
-      display_euros(total_duty, $('#invoice-total-duty'))
+      display_euros(total_duty, $('#invoice-total_duty'))
       display_euros(vat_amount, $('#invoice-vat_amount'))
-      display_euros(vat_amount+total_duty, $('#invoice-total-taxes'))
+      display_euros(vat_amount+total_duty, $('#invoice-total_all_taxes'))
       display_euros(vat_amount+total_duty-advance, $('#invoice-balance'))
 
     # Set listener on inputs

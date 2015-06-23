@@ -17,6 +17,11 @@ fr:
       update_ok : "La facture a été modifiée."
       pay_ok    : "La facture a été marquée comme payée."
       pay_error : "Impossible de marquer la facture comme payée."
+    quotations:
+      create_ok : "Le devis a été créée."
+      update_ok : "Le devis a été modifiée."
+      pay_ok    : "Le devis a été marquée comme payée."
+      pay_error : "Impossible de marquer le devis comme payée."
 
   activerecord:
     models:
