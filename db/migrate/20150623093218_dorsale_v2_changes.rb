@@ -9,11 +9,12 @@ class DorsaleV2Changes < ActiveRecord::Migration
     # Rename Flyboy tables
     rename_table :flyboy_goals, :dorsale_flyboy_folders
     rename_table :flyboy_tasks, :dorsale_flyboy_tasks
-    rename_table :flyboy_task_commentss, :dorsale_flyboy_task_comments
+    rename_table :flyboy_task_comments, :dorsale_flyboy_task_comments
 
     # Add Flyboy folderable
     add_column :dorsale_flyboy_folders, :folderable_id, :integer
     add_column :dorsale_flyboy_folders, :folderable_type, :string
+    Dorsale::Flyboy::Task.where(taskable_type: "Flyboy::Goal").update_all(taskable_type: "Dorsale::Flyboy::Folder")
 
     # Rename BillingMachine tables
     rename_table :invoices, :dorsale_billing_machine_invoices

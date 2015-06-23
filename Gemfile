@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "~> 4.2.1"
 
-gem "customer_vault", path: "/www/agilidee/customer_vault"
+gem "customer_vault", github: "agilidee/customer_vault", branch: "v2"
 
 gemspec
 
