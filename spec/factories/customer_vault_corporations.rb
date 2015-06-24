@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :customer_vault_corporation, class: CustomerVault::Corporation do
+  factory :customer_vault_corporation, class: ::Dorsale::CustomerVault::Corporation do
     name       { "#{Faker::Company.name} #{Faker::Company.suffix}" }
     short_name { "SN"                                              }
     email      { Faker::Internet.email                             }

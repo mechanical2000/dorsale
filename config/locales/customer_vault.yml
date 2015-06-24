@@ -1,0 +1,69 @@
+fr:
+  customer_vault: "Annuaire"
+
+  sections:
+    activity: "Activité"
+    links: "Liens"
+    tasks: "Tâches"
+    people: "Personnes"
+
+  messages:
+    no_people: "Aucune personne trouvée."
+    no_activity: "Aucune activité récente."
+
+    corporations:
+      create_ok    : "La personne a été créée."
+      update_ok    : "La personne a été modifiée."
+      delete_ok    : "La personne a été supprimée."
+      delete_error : "Impossible de supprimer cette personne."
+
+    individuals:
+      create_ok    : "La personne a été créée."
+      update_ok    : "La personne a été modifiée."
+      delete_ok    : "La personne a été supprimée."
+      delete_error : "Impossible de supprimer cette personne."
+
+    links:
+      create_ok    : "Le lien a été créé."
+      update_ok    : "Le lien a été modifié."
+      delete_ok    : "Le lien a été supprimé."
+      delete_error : "Impossible de supprimer ce lien."
+
+  actions:
+    activity: "Activité"
+    new_individual: "Nouvel individu"
+    new_corporation: "Nouvelle entreprise"
+    new_link: "Nouveau lien"
+    new_comment: "Nouveau commentaire"
+    new_task: "Nouvelle tâche"
+
+  activerecord:
+    models:
+      dorsale/customer_vault/person:
+        one: "Personne"
+        other: "Personnes"
+      dorsale/customer_vault/corporation:
+        one: "Entreprise"
+        other: "Entreprise"
+      dorsale/customer_vault/individual:
+        one: "Individu"
+        other: "Individus"
+      dorsale/customer_vault/link:
+        one: "Lien"
+        other: "Liens"
+
+    attributes:
+      dorsale/customer_vault/person: &customer_vault_person_attributes
+        context: "Contexte"
+        all_tags: "Tous les tags"
+        capital: "Capital"
+        immatriculation_number_1: "SIREN"
+        immatriculation_number_2: "RCS"
+        legal_form: "Forme juridique"
+      dorsale/customer_vault/individual:
+        <<: *customer_vault_person_attributes
+      dorsale/customer_vault/corporation:
+        <<: *customer_vault_person_attributes
+      dorsale/customer_vault/link:
+        alice: "Personne"
+        bob: "Personne"

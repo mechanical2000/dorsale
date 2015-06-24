@@ -11,6 +11,7 @@ require "turbolinks"
 require "bootstrap-kaminari-views"
 require "bootstrap-datepicker-rails"
 require "cocoon"
+require "selectize-rails"
 
 require "rails-i18n"
 require "cancan"
@@ -31,6 +32,8 @@ require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
 require "dorsale/model_i18n"
 require "dorsale/model_to_s"
+
+require "acts-as-taggable-on"
 
 module Dorsale
   class Engine < ::Rails::Engine

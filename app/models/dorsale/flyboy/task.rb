@@ -7,7 +7,6 @@ module Dorsale
       self.table_name = "dorsale_flyboy_tasks"
 
       include ::Dorsale::Search
-      include ::Dorsale::PolymorphicId
 
       paginates_per 50
 

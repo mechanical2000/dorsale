@@ -1,0 +1,27 @@
+.customer_vault
+  - content_for :sub_header do
+    = render "dorsale/customer_vault/breadcrumb"
+
+  - content_for :context do
+    = render "dorsale/customer_vault/people/new_people_contexts"
+
+  - content_for :main do
+    = render "dorsale/customer_vault/people/index_tabs"
+
+    = render "dorsale/customer_vault/people/filters"
+
+    - if @people.empty?
+      p = t("messages.no_people")
+
+    - else
+      .people
+        - @people.each do |person|
+          - if person.instance_of? ::Dorsale::CustomerVault::Individual
+              = render "dorsale/customer_vault/individuals/list_details", i: person
+
+          - if person.instance_of? ::Dorsale::CustomerVault::Corporation
+              = render "dorsale/customer_vault/corporations/list_details", c: person
+
+      = paginate @people
+
+  = render_contextual

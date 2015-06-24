@@ -2,8 +2,6 @@ source "https://rubygems.org"
 
 gem "rails", "~> 4.2.1"
 
-gem "customer_vault", github: "agilidee/customer_vault", branch: "v2"
-
 gemspec
 
 group :development, :test do

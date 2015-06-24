@@ -1,0 +1,16 @@
+fr:
+  activerecord:
+    models:
+      dorsale/billing_machine/invoice: "Facture"
+      dorsale/billing_machine/quotation: "Devis"
+      dorsale/billing_machine/id_card: "Carte d'identité"
+
+  messages:
+    invoices:
+      create_ok : "La facture a été créée."
+      update_ok : "La facture a été modifiée."
+      pay_ok    : "La facture a été marquée comme payée."
+      pay_error : "Impossible de marquer la facture comme payée."
+    quotations:
+      create_ok : "Le devis a été créé."
+      update_ok : "Le devis a été modifié."

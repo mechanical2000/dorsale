@@ -1,0 +1,14 @@
+.customer_vault
+  - content_for :sub_header do
+    = render "dorsale/customer_vault/breadcrumb"
+
+  - content_for :context do
+    .individual-context: .context
+      = context_icon :user
+      = context_title t("actions.new_individual")
+
+  - content_for :main do
+    .well
+      = render "form"
+
+  = render_contextual

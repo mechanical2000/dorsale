@@ -1,8 +1,6 @@
 module Dorsale
   module Flyboy
     class FoldersController < ::Dorsale::Flyboy::ApplicationController
-      handles_sortable_columns
-
       before_action :set_objects, only: [
         :show,
         :edit,

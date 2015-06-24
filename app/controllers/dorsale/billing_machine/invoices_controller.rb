@@ -9,19 +9,11 @@ module Dorsale
         :pay,
       ]
 
-      before_filter :set_form_variables, only: [
-        :new,
-        :create,
-        :edit,
-        :update,
-        :copy,
-      ]
-
       def index
         authorize! :list, ::Dorsale::BillingMachine::Invoice
 
         @invoices ||= ::Dorsale::BillingMachine::Invoice.all
-        @people   ||= ::CustomerVault::Person.list
+        @people   ||= ::Dorsale::CustomerVault::Person.list
         @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
         @order    ||= {unique_index: :desc}
 
@@ -137,12 +129,6 @@ module Dorsale
 
       def set_objects
         @invoice = ::Dorsale::BillingMachine::Invoice.find params[:id]
-      end
-
-      def set_form_variables
-        @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
-        @id_cards      ||= ::Dorsale::BillingMachine::IdCard.all
-        @people        ||= ::CustomerVault::Person.list
       end
 
       def permitted_params

@@ -1,0 +1,6 @@
+.flyboy
+  = render "dorsale/flyboy/filters"
+  = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: true
+
+  p.center
+    = link_to t("actions.new_task"), dorsale.new_flyboy_task_path(taskable_guid: person.guid), class: "btn btn-success"

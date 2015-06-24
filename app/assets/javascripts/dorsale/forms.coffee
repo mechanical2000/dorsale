@@ -16,7 +16,7 @@ $(document).on "ready page:load", ->
   # Referer with anchor
   $("form").submit ->
     return if this.method.toUpperCase() == "GET"
-    return if $(this).find("[name=back_url]").length == 0
+    return if $(this).find("[name=back_url]").length > 0
 
     input       = document.createElement("input")
     input.type  = "hidden"

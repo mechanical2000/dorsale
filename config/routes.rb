@@ -37,4 +37,20 @@ Dorsale::Engine.routes.draw do
 
     resources :quotations
   end
+
+  namespace :customer_vault do
+    resources :corporations, except: [:index] do
+      resources :links, except: [:index]
+    end
+
+    resources :individuals, :except => [:index] do
+      resources :links, except: [:index]
+    end
+
+    namespace :people do
+      get "/", action: "index"
+      get :activity
+      get :list
+    end
+  end
 end
