@@ -6,7 +6,7 @@ module Dorsale
       text   = options.delete(:text) || t("actions.#{action}")
       title  = options.delete(:title) || text
 
-      text   = "#{icon icon} <span>#{text}</span>"
+      text   = "#{icon icon} <span>#{text}</span>".html_safe
 
       options = {
         :class => "btn btn-xs link_#{action}",
