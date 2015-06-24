@@ -65,7 +65,7 @@ module Dorsale
               pdf_data  = @invoice.pdf.render
 
               file_name = [
-                ::Dorsale::BillingMachine::Invoice.model_name.human,
+                ::Dorsale::BillingMachine::Invoice.t,
                 @invoice.tracking_id,
                 @invoice.customer.try(:short_name),
               ].join("_").concat(".pdf")

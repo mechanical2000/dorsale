@@ -1,10 +1,10 @@
 .invoice-context: .context
-  = context_title ::Dorsale::BillingMachine::Invoice.human_attribute_name(:data)
+  = context_title ::Dorsale::BillingMachine::Invoice.t(:data)
 
   - total_duty = @invoices.map(&:total_duty).delete_if {|e| e.blank?}.inject(:+) || 0
   - vat_amount = @invoices.map(&:vat_amount).delete_if {|e| e.blank?}.inject(:+) || 0
   - total_all_taxes = @invoices.map(&:total_all_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
 
-  = context_info ::Dorsale::BillingMachine::Invoice.human_attribute_name(:total_duty), euros(total_duty)
-  = context_info ::Dorsale::BillingMachine::Invoice.human_attribute_name(:vat_amount), euros(vat_amount)
-  = context_info ::Dorsale::BillingMachine::Invoice.human_attribute_name(:total_all_taxes), euros(total_all_taxes)
+  = context_info ::Dorsale::BillingMachine::Invoice.t(:total_duty), euros(total_duty)
+  = context_info ::Dorsale::BillingMachine::Invoice.t(:vat_amount), euros(vat_amount)
+  = context_info ::Dorsale::BillingMachine::Invoice.t(:total_all_taxes), euros(total_all_taxes)

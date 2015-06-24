@@ -17,7 +17,7 @@
     <% @tasks.each do |task| %>
       <Row>
         <Cell><Data ss:Type="String"><%= task.taskable.name %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= task.taskable.class.model_name.human %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= task.taskable.class.t %></Data></Cell>
         <Cell><Data ss:Type="String"><%= percentage(task.taskable.try(:progress)) %></Data></Cell>
         <Cell><Data ss:Type="String"><%= task.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= percentage(task.progress) %></Data></Cell>

@@ -12,7 +12,7 @@ module Dorsale
         breadcrumb << link_to(person.name, person) if person.present? && person.persisted?
 
         if params[:controller].to_s.include?("links")
-          breadcrumb << ::Dorsale::CustomerVault::Link.model_name.human.pluralize
+          breadcrumb << ::Dorsale::CustomerVault::Link.t.pluralize
           breadcrumb << @link.title if @link.try(:title).present?
         end
 

@@ -2,11 +2,11 @@ table
   thead
     tr
       th
-        = sortable_column Dorsale::Flyboy::Folder.model_name.human, column: "name"
+        = sortable_column Dorsale::Flyboy::Folder.t, column: "name"
       th.hidden-xs
-        = sortable_column Dorsale::Flyboy::Folder.human_attribute_name(:progress), column: "progress"
+        = sortable_column Dorsale::Flyboy::Folder.t(:progress), column: "progress"
       th.hidden-xs
-        = sortable_column Dorsale::Flyboy::Folder.human_attribute_name(:status), column: "status"
+        = sortable_column Dorsale::Flyboy::Folder.t(:status), column: "status"
       th
         = t ".actions", default: t("helpers.actions")
 

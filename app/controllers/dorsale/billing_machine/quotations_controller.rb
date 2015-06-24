@@ -65,7 +65,7 @@ module Dorsale
               pdf_data  = @quotation.pdf.render
 
               file_name = [
-                ::Dorsale::BillingMachine::Quotation.model_name.human,
+                ::Dorsale::BillingMachine::Quotation.t,
                 @quotation.tracking_id,
                 @quotation.customer.try(:short_name),
               ].join("_").concat(".pdf")

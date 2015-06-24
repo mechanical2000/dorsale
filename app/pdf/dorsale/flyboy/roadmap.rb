@@ -34,7 +34,7 @@ module Dorsale
         tasks.each do |task|
           display << [
             task.taskable.name,
-            task.taskable.class.model_name.human,
+            task.taskable.class.t,
             percentage(task.taskable.try(:progress)),
             task.name,
             percentage(task.progress),

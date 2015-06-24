@@ -79,7 +79,7 @@ module Dorsale
           all.each do |task|
             csv << [
               task.taskable.name,
-              task.taskable.class.model_name.human,
+              task.taskable.class.t,
               "#{task.taskable.try(:progress)} %",
               task.name,
               "#{task.progress} %",

@@ -7,12 +7,12 @@
 
   .infos
     strong
-      = Dorsale::Flyboy::Task.human_attribute_name(:progress)
+      = folder.t(:progress)
       = " : "
     = progress_bar(percentage: folder.progress, label: true)
 
-  = context_info Dorsale::Flyboy::Folder.human_attribute_name(:revision), folder.revision
-  = context_info Dorsale::Flyboy::Folder.human_attribute_name(:status), t("messages.folders.status.#{folder.status}")
+  = context_info folder.t(:revision), folder.revision
+  = context_info folder.t(:status), t("messages.folders.status.#{folder.status}")
 
   - if request.path == dorsale.flyboy_folder_path(folder)
-    = context_info Dorsale::Flyboy::Folder.human_attribute_name(:description), text2html("\n" +folder.description)
+    = context_info folder.t(:description), text2html("\n" +folder.description)

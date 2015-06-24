@@ -4,7 +4,7 @@
       - if @invoice.persisted?
         .form-group
           label.control-label.col-sm-3
-            = Dorsale::BillingMachine::Invoice.human_attribute_name(:tracking_id)
+            = Dorsale::BillingMachine::Invoice.t(:tracking_id)
           .col-sm-9
             .form-control-static.invoice-unique-index
               = @invoice.tracking_id
@@ -33,28 +33,28 @@
     .total.well
       .row
         label.col-sm-3.control-label
-          = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_duty)
+          = @invoice.t(:total_duty)
           = " : "
         .col-sm-9
           .form-control-static#invoice-total_duty
 
       .row
         label.col-sm-3.control-label
-          = Dorsale::BillingMachine::Invoice.human_attribute_name(:vat_rate)
+          = @invoice.t(:vat_rate)
           = " : "
         .col-sm-9
           .form-control-static#invoice-vat_amount
 
       .row
         label.col-sm-3.control-label
-          = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_all_taxes)
+          = @invoice.t(:total_all_taxes)
           = " : "
         .col-sm-9
           .form-control-static#invoice-total_all_taxes
 
       .row
         label.col-sm-3.control-label
-          = Dorsale::BillingMachine::Invoice.human_attribute_name(:balance)
+          = @invoice.t(:balance)
           = " : "
         .col-sm-9
           .form-control-static#invoice-balance

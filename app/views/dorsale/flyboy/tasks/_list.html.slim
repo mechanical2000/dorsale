@@ -3,13 +3,13 @@ table
     tr
       - unless nested
         th.hidden-xs
-          = sortable_column Dorsale::Flyboy::Task.human_attribute_name(:taskable), column: "taskable"
+          = sortable_column Dorsale::Flyboy::Task.t(:taskable), column: "taskable"
       th
-        = sortable_column Dorsale::Flyboy::Task.model_name.human, column: "name"
+        = sortable_column Dorsale::Flyboy::Task.t, column: "name"
       th.hidden-xs
-        = sortable_column Dorsale::Flyboy::Task.human_attribute_name(:progress), column: "progress"
+        = sortable_column Dorsale::Flyboy::Task.t(:progress), column: "progress"
       th.hidden-xs
-        = sortable_column Dorsale::Flyboy::Task.human_attribute_name(:term),  column: "term"
+        = sortable_column Dorsale::Flyboy::Task.t(:term),  column: "term"
 
       th = t("actions.label")
 

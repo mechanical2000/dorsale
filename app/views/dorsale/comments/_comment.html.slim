@@ -24,7 +24,7 @@
 
       - if comment.user.present?
         = " "
-        = ::Dorsale::Comment.human_attribute_name(:written_by)
+        = ::Dorsale::Comment.t(:written_by)
         = " "
         span.author
           = comment.user.name

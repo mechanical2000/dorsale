@@ -5,11 +5,11 @@
 
   .infos
     strong
-      = Dorsale::Flyboy::Task.human_attribute_name(:progress)
+      = Dorsale::Flyboy::Task.t(:progress)
       = " : "
     = progress_bar(percentage: task.progress, label: true)
 
-  = context_info Dorsale::Flyboy::Task.human_attribute_name(:created_at), l(task.created_at)
-  = context_info Dorsale::Flyboy::Task.human_attribute_name(:reminder), l(task.reminder)
-  = context_info Dorsale::Flyboy::Task.human_attribute_name(:term), l(task.term)
-  = context_info Dorsale::Flyboy::Task.human_attribute_name(:done), task.done ? 'Oui' : 'Non'
+  = context_info task.t(:created_at), l(task.created_at)
+  = context_info task.t(:reminder), l(task.reminder)
+  = context_info task.t(:term), l(task.term)
+  = context_info task.t(:done), task.done ? 'Oui' : 'Non'

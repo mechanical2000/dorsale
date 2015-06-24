@@ -55,7 +55,7 @@ module Dorsale
 
     def info(object, attribute, text = nil)
       label = content_tag(:strong) do
-        object.class.human_attribute_name(attribute)
+        object.t(attribute)
       end
 
       span_css_class = "#{object.class.model_name.element}-#{attribute}"
