@@ -1,10 +1,4 @@
-h3 = t("actions.new_comment")
-= comment_form_for(person)
-
-hr
-
-- person.comments.map do |comment|
-  = render "dorsale/customer_vault/people/comment", comment: comment
+= comments_for person
 
 - if person.try(:context).present?
   .well
