@@ -27,6 +27,7 @@ require "prawn/table"
 require "prawn/templates"
 require "combine_pdf"
 
+require "dorsale/file_loader"
 require "dorsale/polymorphic_id"
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
