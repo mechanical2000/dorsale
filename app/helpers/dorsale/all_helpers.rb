@@ -11,6 +11,6 @@ module Dorsale
     include ::Dorsale::TextHelper
 
     include ::Dorsale::Alexandrie::AttachmentsHelper
-    include ::Dorsale::Flyboy::TasksHelper
+    include ::Dorsale::Flyboy::ApplicationHelper
   end
 end
