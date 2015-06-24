@@ -38,7 +38,7 @@ describe Dorsale::Flyboy::Folder do
   end
 
   it "revision should contain tracking and version" do
-    Timecop.freeze Date.parse("2012-12-21")
+    Timecop.freeze Time.parse("2012-12-21 12:00:00")
     folder = create(:flyboy_folder)
     expect(folder.revision).to eq "121221-1 1"
   end
