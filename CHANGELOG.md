@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0
+
+- Import CustomerVault
+- Import BillingMachine
+- Import Flyboy
+- Create Alexandrie
+- More translations
+- More helpers and partials
+- I18n refactoring
+- Filters cookie expiry
+
 ## 1.2.6
 
 - Add `engine_polymorphic_path()` helper
