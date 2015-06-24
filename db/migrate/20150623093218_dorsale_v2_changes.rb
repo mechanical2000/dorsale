@@ -18,7 +18,6 @@ class DorsaleV2Changes < ActiveRecord::Migration
     # Add Flyboy folderable
     add_column :dorsale_flyboy_folders, :folderable_id, :integer
     add_column :dorsale_flyboy_folders, :folderable_type, :string
-    Dorsale::Flyboy::Task.where(taskable_type: "Flyboy::Goal").update_all(taskable_type: "Dorsale::Flyboy::Folder")
 
     # Rename BillingMachine tables
     rename_table :invoices, :dorsale_billing_machine_invoices
@@ -34,5 +33,37 @@ class DorsaleV2Changes < ActiveRecord::Migration
 
     # TODO : Migration old quotation documents to Alexandrie
     remove_table :documents
+
+    Dorsale::Flyboy::Task
+      .where(taskable_type: "Flyboy::Goal")
+      .update_all(taskable_type: "Dorsale::Flyboy::Folder")
+
+    Dorsale::CustomerVault::Link
+      .where(alice_type: "CustomerVault::Corporation")
+      .update_all(alice_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::CustomerVault::Link
+      .where(alice_type: "CustomerVault::Individual")
+      .update_all(alice_type: "Dorsale::CustomerVault::Individual")
+    Dorsale::CustomerVault::Link
+      .where(bob_type: "CustomerVault::Corporation")
+      .update_all(bob_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::CustomerVault::Link
+      .where(bob_type: "CustomerVault::Individual")
+      .update_all(bob_type: "Dorsale::CustomerVault::Individual")
+
+    Dorsale::BillingMachine::Invoice
+      .where(customer_type: "CustomerVault::Corporation")
+      .update_all(customer_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::BillingMachine::Invoice
+      .where(customer_type: "CustomerVault::Individual")
+      .update_all(customer_type: "Dorsale::CustomerVault::Individual")
+
+    Dorsale::BillingMachine::Quotation
+      .where(customer_type: "CustomerVault::Corporation")
+      .update_all(customer_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::BillingMachine::Quotation
+      .where(customer_type: "CustomerVault::Individual")
+      .update_all(customer_type: "Dorsale::CustomerVault::Individual")
+
   end
 end
