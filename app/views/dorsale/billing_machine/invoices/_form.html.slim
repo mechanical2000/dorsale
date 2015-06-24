@@ -34,24 +34,28 @@
       .row
         label.col-sm-3.control-label
           = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_duty)
+          = " : "
         .col-sm-9
           .form-control-static#invoice-total_duty
 
       .row
         label.col-sm-3.control-label
           = Dorsale::BillingMachine::Invoice.human_attribute_name(:vat_rate)
+          = " : "
         .col-sm-9
           .form-control-static#invoice-vat_amount
 
       .row
         label.col-sm-3.control-label
           = Dorsale::BillingMachine::Invoice.human_attribute_name(:total_all_taxes)
+          = " : "
         .col-sm-9
           .form-control-static#invoice-total_all_taxes
 
       .row
         label.col-sm-3.control-label
           = Dorsale::BillingMachine::Invoice.human_attribute_name(:balance)
+          = " : "
         .col-sm-9
           .form-control-static#invoice-balance
 
