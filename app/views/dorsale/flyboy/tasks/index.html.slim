@@ -1,15 +1,9 @@
 .flyboy
-  .row
-    .col-md-4
-      h1 Feuille de route
-
-    .col-md-4.right
-      .actions
-        = link_to "Export csv",   url_for(format: :csv), class: "btn"
-        = link_to "Export excel", url_for(format: :xls), class: "btn"
-        = link_to "Export pdf",   url_for(format: :pdf), class: "btn"
-    .col-md-4
-      = render "dorsale/flyboy/searchbar"
+  .actions.top
+    = download_button url_for(format: :csv), action: :export_csv
+    = download_button url_for(format: :xls), action: :export_xls
+    = download_button url_for(format: :pdf), action: :export_pdf
+    = search_form
 
   = render "dorsale/flyboy/filters"
   = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false

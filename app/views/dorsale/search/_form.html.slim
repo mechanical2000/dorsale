@@ -1,6 +1,6 @@
-form.search
-  p.input-group
+form.search method="get" action=action
+  p.input-group.search
     input.form-control name="q" placeholder=t("actions.search") size=25 value=params[:q]
     span.input-group-addon
-      button.nostyle type="submit"
+      button.nostyle.search-submit type="submit"
         = icon :search

@@ -3,9 +3,5 @@
     = link_to t("sections.activity"), dorsale.customer_vault_people_activity_path
     = link_to t("sections.people"), dorsale.customer_vault_people_list_path
 
-  form action=dorsale.customer_vault_people_list_path
-    p.input-group.search
-      input.form-control name="q" placeholder=t("actions.search") size=25 value=params[:q]
-      span.input-group-addon
-        button.nostyle type="submit"
-          = icon :search
+  = search_form action: dorsale.customer_vault_people_list_path
+
