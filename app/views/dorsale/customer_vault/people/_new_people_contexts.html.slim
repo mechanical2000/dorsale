@@ -1,0 +1,7 @@
+.individual-context: .context
+  = context_icon :user
+  = link_to t("actions.new_individual"), dorsale.new_customer_vault_individual_path, class: "btn btn-success"
+
+.corporation-context: .context
+  = context_icon :users
+  = link_to t("actions.new_corporation"), dorsale.new_customer_vault_corporation_path, class: "btn btn-success"

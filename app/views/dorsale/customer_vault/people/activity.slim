@@ -1,0 +1,20 @@
+.customer_vault
+  - content_for :sub_header do
+    = render "dorsale/customer_vault/breadcrumb"
+
+  - content_for :context do
+    = render "dorsale/customer_vault/people/new_people_contexts"
+
+  - content_for :main do
+    = render "dorsale/customer_vault/people/index_tabs"
+
+    - if @comments.empty?
+      p = t("messages.no_activity")
+
+    - else
+      - @comments.map do |comment|
+        = render "dorsale/customer_vault/people/comment", comment: comment
+
+      = paginate @comments
+
+  = render_contextual

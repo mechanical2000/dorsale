@@ -11,53 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623093218) do
-
-  create_table "customer_vault_corporations", force: :cascade do |t|
-    t.string   "name"
-    t.string   "short_name"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "www"
-    t.string   "legal_form"
-    t.integer  "capital"
-    t.string   "immatriculation_number_1"
-    t.string   "immatriculation_number_2"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  create_table "customer_vault_individuals", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "short_name"
-    t.string   "email"
-    t.string   "title"
-    t.string   "twitter"
-    t.string   "www"
-    t.text     "context"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "mobile"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "customer_vault_links", force: :cascade do |t|
-    t.string   "title"
-    t.integer  "alice_id"
-    t.string   "alice_type"
-    t.integer  "bob_id"
-    t.string   "bob_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "customer_vault_links", ["alice_id"], name: "index_customer_vault_links_on_alice_id"
-  add_index "customer_vault_links", ["alice_type"], name: "index_customer_vault_links_on_alice_type"
-  add_index "customer_vault_links", ["bob_id"], name: "index_customer_vault_links_on_bob_id"
-  add_index "customer_vault_links", ["bob_type"], name: "index_customer_vault_links_on_bob_type"
+ActiveRecord::Schema.define(version: 20150624081208) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -201,6 +155,52 @@ ActiveRecord::Schema.define(version: 20150623093218) do
     t.datetime "updated_at",       null: false
   end
 
+  create_table "dorsale_customer_vault_corporations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "www"
+    t.string   "legal_form"
+    t.integer  "capital"
+    t.string   "immatriculation_number_1"
+    t.string   "immatriculation_number_2"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "dorsale_customer_vault_individuals", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "short_name"
+    t.string   "email"
+    t.string   "title"
+    t.string   "twitter"
+    t.string   "www"
+    t.text     "context"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "mobile"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dorsale_customer_vault_links", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "alice_id"
+    t.string   "alice_type"
+    t.integer  "bob_id"
+    t.string   "bob_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "dorsale_customer_vault_links", ["alice_id"], name: "index_dorsale_customer_vault_links_on_alice_id"
+  add_index "dorsale_customer_vault_links", ["alice_type"], name: "index_dorsale_customer_vault_links_on_alice_type"
+  add_index "dorsale_customer_vault_links", ["bob_id"], name: "index_dorsale_customer_vault_links_on_bob_id"
+  add_index "dorsale_customer_vault_links", ["bob_type"], name: "index_dorsale_customer_vault_links_on_bob_type"
+
   create_table "dorsale_flyboy_folders", force: :cascade do |t|
     t.integer  "folderable_id"
     t.string   "folderable_type"
@@ -249,5 +249,25 @@ ActiveRecord::Schema.define(version: 20150623093218) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
 end

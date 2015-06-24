@@ -1,0 +1,16 @@
+.linkable
+  - person.links.each do |link|
+    - target = link[:person]
+
+    - if target.is_a?(::Dorsale::CustomerVault::Individual)
+        = render "dorsale/customer_vault/individuals/list_details", i: target, person: person, link: link[:origin]
+
+    - if target.is_a?(::Dorsale::CustomerVault::Corporation)
+        = render "dorsale/customer_vault/corporations/list_details", c: target, person: person, link: link[:origin]
+
+.center
+  - if person.is_a?(::Dorsale::CustomerVault::Individual)
+    = link_to t("actions.new_link"), dorsale.new_customer_vault_individual_link_path(person), class: "btn btn-success", id: 'new-link'
+
+  - if person.is_a?(::Dorsale::CustomerVault::Corporation)
+    = link_to t("actions.new_link"), dorsale.new_customer_vault_corporation_link_path(person), class: "btn btn-success", id: 'new-link'

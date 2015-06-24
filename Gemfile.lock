@@ -1,19 +1,9 @@
-GIT
-  remote: git://github.com/agilidee/customer_vault.git
-  revision: 7e9a2bc585c3f19351e7faa0757e46d407383548
-  branch: v2
-  specs:
-    customer_vault (1.3.2)
-      acts-as-taggable-on
-      handles_sortable_columns
-      rails (>= 4.0.0)
-      selectize-rails
-
 PATH
   remote: .
   specs:
     dorsale (1.2.6)
       aasm
+      acts-as-taggable-on
       awesome_print
       bh
       bootstrap-datepicker-rails
@@ -35,6 +25,7 @@ PATH
       rails (>= 4.0.0)
       rails-i18n
       sass-rails
+      selectize-rails
       simple_form
       slim-rails
       turbolinks
@@ -353,7 +344,6 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber-rails
-  customer_vault!
   database_cleaner
   dorsale!
   factory_girl_rails

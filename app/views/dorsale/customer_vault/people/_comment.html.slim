@@ -1,0 +1,20 @@
+.comment.well id="comment#{comment.id}"
+  - if comment.user.try(:avatar).present?
+    = image_tag comment.user.avatar.url, class: "avatar", height: 50, width: 50
+  - else
+    = image_tag "dorsale/avatar.png", class: "avatar", height: 50, width: 50
+
+  p
+    - unless [@person, @individual, @corporation].include?(comment.commentable)
+      strong = link_to comment.commentable.name, comment.commentable
+      small.text-muted = " - "
+
+    small.text-muted
+      = l(comment.created_at)
+      - if comment.user.present?
+          = " by "
+          = comment.user.name
+
+  p.text = text2html(comment.text)
+
+  .clearfix

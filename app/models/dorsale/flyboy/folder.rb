@@ -8,7 +8,6 @@ module Dorsale
 
       include AASM
       include ::Dorsale::Search
-      include ::Dorsale::PolymorphicId
 
       paginates_per 50
 

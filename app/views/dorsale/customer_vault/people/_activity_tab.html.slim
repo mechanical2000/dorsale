@@ -1,0 +1,11 @@
+h3 = t("actions.new_comment")
+= comment_form_for(person)
+
+hr
+
+- person.comments.map do |comment|
+  = render "dorsale/customer_vault/people/comment", comment: comment
+
+- if person.try(:context).present?
+  .well
+    = text2html(person.context)

@@ -1,0 +1,19 @@
+.customer_vault
+  - content_for :sub_header do
+    = render "dorsale/customer_vault/breadcrumb"
+
+  - content_for :context do
+    = render "dorsale/customer_vault/people/context", person: @person
+
+  - content_for :main do
+    .well
+      = horizontal_form_for [@person, @link], as: :link do |f|
+        - if @person == @link.bob
+          = f.input :alice, input_html: {value: @link.alice.name}, disabled: true
+        - else
+          = f.input :bob, input_html: {value: @link.bob.name}, disabled: true
+
+        = f.input :title
+        = form_buttons
+
+  = render_contextual

@@ -8,19 +8,11 @@ module Dorsale
         :destroy,
       ]
 
-      before_filter :set_form_variables, only: [
-        :new,
-        :create,
-        :edit,
-        :update,
-        :copy,
-      ]
-
       def index
         authorize! :list, ::Dorsale::BillingMachine::Quotation
 
         @quotations ||= ::Dorsale::BillingMachine::Quotation.all
-        @people     ||= ::CustomerVault::Person.list
+        @people     ||= ::Dorsale::CustomerVault::Person.list
         @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
         @order      ||= {unique_index: :desc}
 
@@ -42,7 +34,7 @@ module Dorsale
       end
 
       def new
-        @quotation = ::Dorsale::BillingMachine::Quotation.new
+        @quotation ||= ::Dorsale::BillingMachine::Quotation.new
 
         @quotation.lines.build
 
@@ -52,7 +44,7 @@ module Dorsale
       end
 
       def create
-        @quotation = ::Dorsale::BillingMachine::Quotation.new(quotation_params)
+        @quotation ||= ::Dorsale::BillingMachine::Quotation.new(quotation_params)
 
         authorize! :create, @quotation
 
@@ -119,12 +111,6 @@ module Dorsale
 
       def set_objects
         @quotation = ::Dorsale::BillingMachine::Quotation.find params[:id]
-      end
-
-      def set_form_variables
-        @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
-        @id_cards      ||= ::Dorsale::BillingMachine::IdCard.all
-        @people        ||= ::CustomerVault::Person.list
       end
 
       def permitted_params

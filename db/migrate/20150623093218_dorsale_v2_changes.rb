@@ -2,9 +2,13 @@ class DorsaleV2Changes < ActiveRecord::Migration
   def change
     return # Remove return and comment inutile migrations
 
+    rename_table :customer_vault_corporations, :dorsale_customer_vault_corporations
+    rename_table :customer_vault_individuals, :dorsale_customer_vault_individuals
+    rename_table :customer_vault_links, :dorsale_customer_vault_links
+
     # Short name needed by billing machine
-    add_column :customer_vault_individuals, :short_name, :string
-    add_column :customer_vault_corporations, :short_name, :string
+    add_column :dorsale_customer_vault_individuals, :short_name, :string
+    add_column :dorsale_customer_vault_corporations, :short_name, :string
 
     # Rename Flyboy tables
     rename_table :flyboy_goals, :dorsale_flyboy_folders
