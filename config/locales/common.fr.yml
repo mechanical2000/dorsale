@@ -117,6 +117,9 @@ fr:
     customer              : "Client"
     customer_guid         : "Client"
     tracking_id           : "Numéro"
+    count                 : "Nombre"
+    length                : "Nombre"
+    numer                 : "Nombre"
 
     # BillingMachine
     unit                  : "Unité"
