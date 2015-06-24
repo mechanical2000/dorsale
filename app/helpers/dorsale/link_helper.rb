@@ -1,7 +1,7 @@
 module Dorsale
   module LinkHelper
     def icon_link_to(icon, name, options = nil, html_options = nil, &block)
-      name = "#{icon(icon)} #{name}"
+      name = "#{icon(icon)} #{name}".html_safe
       link_to(name, options, html_options, &block)
     end
 
