@@ -10,10 +10,6 @@ module Dorsale
 
       def show
         authorize! :read, @individual
-
-        @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
-        @tasks = @individual.tasks
-        @tasks = @filters.apply(@tasks)
       end
 
       def new
