@@ -132,6 +132,7 @@ fr:
     total_duty            : "Total HT"
     total_all_taxes       : "Total TTC"
     balance               : "Total à payer"
+    expires_at            : "Date d'expiration"
 
   labels:
     <<: *attributes

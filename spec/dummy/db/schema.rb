@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624081208) do
+ActiveRecord::Schema.define(version: 20150625093326) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20150624081208) do
     t.text     "comments"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.date     "expires_at"
   end
 
   add_index "dorsale_billing_machine_quotations", ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id"

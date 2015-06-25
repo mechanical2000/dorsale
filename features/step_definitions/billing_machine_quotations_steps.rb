@@ -121,6 +121,8 @@ end
 
 Then(/^he can see all the quotation informations$/) do
   expect(page).to have_selector '.quotation-label', @quotation.label
+
+  expect(page).to have_selector ".quotation-expires_at", "21/12/2012"
 end
 
 Then(/^the quotation default date is set to today's date\.$/) do
@@ -191,4 +193,8 @@ end
 
 Then(/^only the quotations of today do appear$/) do
   expect(page).to have_selector(".quotation", count: 3)
+end
+
+When(/^he fill the quotation expiry$/) do
+  fill_in :quotation_expires_at, with: "21/12/2012"
 end

@@ -42,6 +42,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
   let(:quotation) { create(:billing_machine_quotation,
       date: '16/04/2014',
+      expires_at: '10/06/2014',
       id_card: id_card,
       customer: customer,
       total_duty: 1812.53,
@@ -207,6 +208,8 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
       end
     end # context in Tableau
+    it_should_write "Date d'expiration : 10/06/2014"
+
     it_should_write 'Conditions de paiement :'
 
     it 'should write invoice payment term' do

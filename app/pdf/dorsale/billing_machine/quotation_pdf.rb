@@ -20,8 +20,8 @@ module Dorsale
         end
 
       def main_document_type
-          "Devis"
-        end
+        "Devis"
+      end
 
       def build_bank_infos
       end
@@ -33,6 +33,12 @@ module Dorsale
           @table_matrix.push ["TVA #{vat_rate} %", '', '', euros(@main_document.vat_amount)]
           @table_matrix.push ['Total TTC', '', '', euros(@main_document.total_all_taxes)]
           write_table_from_matrix(@table_matrix)
+      end
+
+      def build_expiry
+        return if @main_document.expires_at.nil?
+        move_down 15
+        text "Date d'expiration : " + I18n.l(@main_document.expires_at)
       end
 
       def build_comments

@@ -40,6 +40,7 @@ Feature: Quotation Management
     When the user goes to the quotations page
     And he creates a new quotation
     And he fills the reference and the date
+    And he fill the quotation expiry
     And he chooses the customer
     And he fills an quotation line with "Bidule", "4", "€", "10"
     Then the new line's total should be "40,00€"
