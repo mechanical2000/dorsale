@@ -28,8 +28,9 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date     = Date.today if date.nil?
-        self.vat_rate = 20         if vat_rate.nil?
+        self.date       = Date.today     if date.nil?
+        self.expires_at = date + 1.month if expires_at.nil?
+        self.vat_rate   = 20             if vat_rate.nil?
       end
 
       before_create :assign_unique_index

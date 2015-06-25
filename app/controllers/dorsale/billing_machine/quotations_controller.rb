@@ -120,6 +120,7 @@ module Dorsale
           :payment_term_id,
           :id_card_id,
           :date,
+          :expires_at,
           :comments,
           :vat_amount,
           :vat_rate,

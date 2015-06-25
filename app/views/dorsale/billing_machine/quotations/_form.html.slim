@@ -11,6 +11,7 @@
 
       = f.input :label
       = f.input :date, html5: true
+      = f.input :expires_at, html5: true
       = f.association :payment_term, collection: @payment_terms
       = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
       = f.input :vat_rate, as: :string

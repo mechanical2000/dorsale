@@ -22,12 +22,21 @@ describe ::Dorsale::BillingMachine::Quotation do
     expect(create(:billing_machine_quotation)).to be_valid
   end
 
+  it "default date should be today" do
+    expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Date.today
+  end
+
+  it "default expires_at should be date + 1 month" do
+    quotation = ::Dorsale::BillingMachine::Quotation.new(date: "21/12/2012")
+    expect(quotation.expires_at).to eq Date.parse("21/01/2013")
+  end
+
   it "should work fine upon creation" do
-      quotation = build(:billing_machine_quotation)
-      quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
-      quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
-      quotation.save
-    end
+    quotation = build(:billing_machine_quotation)
+    quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
+    quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
+    quotation.save
+  end
 
   describe 'unique_index' do
     context 'when unique index is 69' do

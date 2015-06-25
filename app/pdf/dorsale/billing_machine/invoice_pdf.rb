@@ -104,6 +104,7 @@ module Dorsale
         @table_matrix = [['Prestation', 'Prix unitaire', 'Quantité', 'Total HT']]
         build_lines
         build_synthesis
+        build_expiry
         build_payment_terms
         build_bank_infos
         end
@@ -141,6 +142,9 @@ module Dorsale
         text 'Coordonnées bancaires :'
         text 'IBAN : ' + @id_card.iban.to_s
         text 'BIC / SWIFT : ' + @id_card.bic_swift.to_s
+      end
+
+      def build_expiry
       end
 
       def build_comments

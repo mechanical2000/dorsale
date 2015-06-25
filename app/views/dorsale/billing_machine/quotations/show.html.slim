@@ -23,6 +23,7 @@
         = info @quotation, :tracking_id
         = info @quotation, :label
         = info @quotation, :date,            date(@quotation.date)
+        = info @quotation, :expires_at,      date(@quotation.expires_at)
         = info @quotation, :payment_term,    @quotation.payment_term.try(:label)
         = info @quotation, :vat_rate,        percentage(@quotation.vat_rate)
         = info @quotation, :total_duty,      euros(@quotation.total_duty)
