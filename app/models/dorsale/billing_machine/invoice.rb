@@ -29,6 +29,7 @@ module Dorsale
       end
 
       before_create :assign_unique_index
+      before_create :assign_tracking_id
 
       def assign_unique_index
         if unique_index.nil?
@@ -36,8 +37,8 @@ module Dorsale
         end
       end
 
-      def tracking_id
-        date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
+      def assign_tracking_id
+        self.tracking_id = date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
 
       before_save :update_balance
