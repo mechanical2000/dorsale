@@ -16,8 +16,8 @@ Given(/^an existing quotation with a "(.*?)"% VAT rate$/) do |arg1|
 end
 
 Given(/^(\d+) associated documents to this quotation$/) do |arg1|
-  @document1 = create(:dorsale_alexandrie_attachment, attachable: @quotation)
-  @document2 = create(:dorsale_alexandrie_attachment, attachable: @quotation)
+  @document1 = create(:alexandrie_attachment, attachable: @quotation)
+  @document2 = create(:alexandrie_attachment, attachable: @quotation)
 end
 
 When(/^he changes the quotation VAT rate to "(.*?)"$/) do |arg1|

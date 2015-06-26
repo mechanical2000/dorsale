@@ -7,6 +7,6 @@ describe ::Dorsale::Alexandrie::Attachment, type: :model do
   it { is_expected.to validate_presence_of :file }
 
   it "factory should be valid" do
-    expect(create(:dorsale_alexandrie_attachment)).to be_valid
+    expect(create(:alexandrie_attachment)).to be_valid
   end
 end
