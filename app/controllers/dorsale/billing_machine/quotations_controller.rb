@@ -81,7 +81,7 @@ module Dorsale
       end
 
       def edit
-        authorize! :update, Quotation
+        authorize! :update, @quotation
       end
 
       def update
