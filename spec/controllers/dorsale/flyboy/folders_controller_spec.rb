@@ -1,4 +1,5 @@
 describe Dorsale::Flyboy::FoldersController, type: :controller do
+  render_views
   routes { Dorsale::Engine.routes }
 
   let(:folder){
@@ -71,54 +72,6 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
       it "sorting by status desc" do
         get :index, sort: "-status"
         expect(assigns(:folders).to_a).to eq [@folder1, @folder2, @folder3]
-      end
-    end
-  end
-
-  describe "#show" do
-    context "when sorting" do
-      before do
-        Dorsale::Flyboy::Folder.destroy_all
-        Dorsale::Flyboy::Task.destroy_all
-
-        @folder = create(:flyboy_folder)
-
-        @task1 = create(:flyboy_task,
-          taskable: @folder, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = create(:flyboy_task,
-          taskable: @folder, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = create(:flyboy_task,
-          taskable: @folder, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
-      end
-
-      it "sorting by name asc" do
-        get :show, id: @folder, sort: "name"
-        expect(assigns(:tasks).to_a).to eq [@task1, @task2, @task3]
-      end
-
-      it "sorting by name desc" do
-        get :show, id: @folder, sort: "-name"
-        expect(assigns(:tasks).to_a).to eq [@task3, @task2, @task1]
-      end
-
-      it "sorting by progress asc" do
-        get :show, id: @folder, sort: "progress"
-        expect(assigns(:tasks).to_a).to eq [@task2, @task3, @task1]
-      end
-
-      it "sorting by progress desc" do
-        get :show, id: @folder, sort: "-progress"
-        expect(assigns(:tasks).to_a).to eq [@task1, @task3, @task2]
-      end
-
-      it "sorting by term asc" do
-        get :show, id: @folder, sort: "term"
-        expect(assigns(:tasks).to_a).to eq [@task1, @task3, @task2]
-      end
-
-      it "sorting by term desc" do
-        get :show, id: @folder, sort: "-term"
-        expect(assigns(:tasks).to_a).to eq [@task2, @task3, @task1]
       end
     end
   end

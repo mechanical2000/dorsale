@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 When(/^I create a task$/) do
-  find("a[href*='tasks/new']").click
+  all("a[href*='tasks/new']").first.click
   fill_in "task_name", with: "I-am-the-task-title"
   fill_in "task_description", with: "I-am-the-task-description"
   find("form[id*=task] [type=submit]").click

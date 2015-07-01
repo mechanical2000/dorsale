@@ -62,3 +62,45 @@ Feature: Manage folders
     Given 100 existing folders
     When I go to the folders section
     Then folders are paginated
+
+  Scenario: Filter by name asc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "name" "asc"
+    Then tasks are sorted by "name" "asc"
+
+  Scenario: Filter by name desc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "name" "desc"
+    Then tasks are sorted by "name" "desc"
+
+  Scenario: Filter by progress asc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "progress" "asc"
+    Then tasks are sorted by "progress" "asc"
+
+  Scenario: Filter by progress desc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "progress" "desc"
+    Then tasks are sorted by "progress" "desc"
+
+  Scenario: Filter by term asc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "term" "asc"
+    Then tasks are sorted by "term" "asc"
+
+  Scenario: Filter by term desc
+    Given an existing folder
+    Given 3 tasks to sort in this folder
+    When I consult this folder
+    And I sort tasks by "term" "desc"
+    Then tasks are sorted by "term" "desc"

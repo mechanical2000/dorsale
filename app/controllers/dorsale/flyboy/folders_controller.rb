@@ -37,20 +37,6 @@ module Dorsale
 
       def show
         authorize! :read, @folder
-
-        @order ||= sortable_column_order do |column, direction|
-          case column
-          when "name", "status"
-            %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-          when "progress", "term"
-            %(dorsale_flyboy_tasks.#{column} #{direction})
-          else
-            params["sort"] = "term"
-            "term ASC"
-          end
-        end
-
-        @tasks = @folder.tasks.order(@order)
       end
 
       def new

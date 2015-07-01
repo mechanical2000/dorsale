@@ -58,19 +58,19 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       it 'should display both when not filtered' do
         get :index
-        expect(assigns(:tasks)).to eq [@task1, @task2]
+        expect(assigns(:tasks).to_a.sort).to eq [@task1, @task2].sort
       end
 
       it 'should filter by status closed' do
         Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'status' => "closed"})
         get :index
-        expect(assigns(:tasks)).to eq [@task1]
+        expect(assigns(:tasks).to_a).to eq [@task1]
       end
 
       it 'should filter by status opened' do
         Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'status' => "opened"})
         get :index
-        expect(assigns(:tasks)).to eq [@task2]
+        expect(assigns(:tasks).to_a).to eq [@task2]
       end
     end
 
