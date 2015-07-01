@@ -20,6 +20,8 @@ module Dorsale
   end
 end
 
+ActiveRecord::Base.send(:include, Dorsale::PolymorphicId)
+
 # __END__
 
 Module.new do

@@ -1,0 +1,7 @@
+ul.list-group
+  - ::Dorsale::Alexandrie::Attachment.where(attachable: attachable).each do |a|
+    li.list-group-item
+      = link_to a, a.file.url, download: a.file_identifier
+
+      .pull-right
+        = delete_button dorsale.alexandrie_attachment_path(a)

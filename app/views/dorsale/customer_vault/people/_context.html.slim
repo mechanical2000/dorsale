@@ -1,0 +1,4 @@
+- if person.instance_of? ::Dorsale::CustomerVault::Individual
+    = render "dorsale/customer_vault/individuals/context", individual: person
+- if person.instance_of? ::Dorsale::CustomerVault::Corporation
+    = render "dorsale/customer_vault/corporations/context", corporation: person

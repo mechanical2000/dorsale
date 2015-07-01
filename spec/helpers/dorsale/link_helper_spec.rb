@@ -12,6 +12,7 @@ describe Dorsale::LinkHelper, type: :helper do
     expect(tel_link("")).to be nil
     expect(tel_link(nil)).to be nil
     expect(tel_link("123")).to eq %(<a href="tel:123">123</a>)
+    expect(tel_link("+ 33 6")).to eq %(<a href="tel:+336">+ 33 6</a>)
   end
 
   it "email_link" do

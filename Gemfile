@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 4.1"
+gem "rails", "~> 4.2.1"
 
 gemspec
 
@@ -10,7 +10,8 @@ group :development, :test do
   gem "sqlite3"
   gem "zeus"
   gem "rspec-rails"
-  gem "shoulda-matchers"
+  gem "minitest"
+  gem "shoulda-matchers", "2.5.0"
   gem "faker"
   gem "cucumber-rails", require: false
   gem "capybara"
@@ -21,4 +22,6 @@ group :development, :test do
   gem "guard-cucumber"
   gem "guard-rspec"
   gem "guard-rubocop"
+  gem "timecop"
+  gem 'pdf-inspector'
 end

@@ -1,0 +1,14 @@
+.billing_machine
+  - content_for :sub_header do
+    = render "filters"
+    .actions
+      = create_button dorsale.new_billing_machine_quotation_path
+
+  - content_for :context do
+    = render "dorsale/billing_machine/quotations/data_context"
+
+  - content_for :main do
+    = render "dorsale/billing_machine/quotations/list", quotations: @quotations
+    = paginate @quotations
+
+  = render_contextual

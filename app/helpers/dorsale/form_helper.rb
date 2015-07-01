@@ -39,5 +39,12 @@ module Dorsale
 
       simple_form_for(obj, opts, &block)
     end
+
+    def search_form(opts = {})
+      action = opts.delete(:action) || request.fullpath
+
+      render "dorsale/search/form", action: action
+    end
+
   end
 end

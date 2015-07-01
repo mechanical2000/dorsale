@@ -13,6 +13,13 @@ module Dorsale
         new_filters = filters.read.merge(new_filters)
         filters.store(new_filters)
 
+        # Rewrite cookie with 1 year expiry
+        cookies[:filters] = {
+          :value    => cookies[:filters],
+          :expires => 1.year.from_now,
+          :path     => "/",
+        }
+
         urls = [
           params[:back_url],
           request.referer,

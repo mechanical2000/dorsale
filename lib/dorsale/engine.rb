@@ -10,14 +10,31 @@ require "kaminari"
 require "turbolinks"
 require "bootstrap-kaminari-views"
 require "bootstrap-datepicker-rails"
+require "cocoon"
+require "selectize-rails"
 
 require "rails-i18n"
 require "cancan"
 require "awesome_print"
 require "kaminari-i18n"
+require "carrierwave"
+require "aasm"
+require "handles_sortable_columns"
+require "csv"
+require "pdf/reader"
+require "prawn"
+require "prawn/table"
+require "prawn/templates"
+require "combine_pdf"
 
+require "dorsale/file_loader"
+require "dorsale/polymorphic_id"
 require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
+require "dorsale/model_i18n"
+require "dorsale/model_to_s"
+
+require "acts-as-taggable-on"
 
 module Dorsale
   class Engine < ::Rails::Engine
@@ -29,5 +46,6 @@ module Dorsale
       g.template_engine :slim
     end
 
+    Mime::Type.register "application/vnd.ms-excel", :xls
   end
 end

@@ -1,0 +1,5 @@
+= comments_for person
+
+- if person.try(:context).present?
+  .well
+    = text2html(person.context)

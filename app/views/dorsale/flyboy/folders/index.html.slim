@@ -1,0 +1,8 @@
+.flyboy
+  .actions.top
+    = create_button dorsale.new_flyboy_folder_path
+    = search_form
+
+  = render "dorsale/flyboy/filters"
+  = render "dorsale/flyboy/folders/list", folders: @folders
+  = paginate @folders

@@ -1,0 +1,31 @@
+= simple_form_for (@task_comment || @task.comments.new), as: :task_comment do |f|
+  table
+    thead
+      tr
+        th = Dorsale::Flyboy::TaskComment.t(:progress)
+        th = Dorsale::Flyboy::TaskComment.t(:description)
+        th
+    tbody
+      tr
+        td.task_progress
+          = f.input :progress, label: false
+
+        td.description
+          = f.input :description, label: false
+
+        td.actions
+          = f.hidden_field :task_id
+          input.btn.btn-success type="submit" value=t("actions.create")
+
+      - @task.reload.comments.map do |comment|
+        tr
+          td.task_progress
+            = progress_bar percentage: comment.progress, label: true
+
+          td.description
+            p: small
+              span.date = l(comment.date)
+
+            p = text2html comment.description
+
+          td.actions

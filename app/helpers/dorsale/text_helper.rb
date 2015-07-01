@@ -1,5 +1,8 @@
 module Dorsale
   module TextHelper
+    include ::ActionView::Helpers::TextHelper
+    include ::ActionView::Helpers::SanitizeHelper
+
     def euros(n)
       return if n.nil?
 
@@ -29,6 +32,11 @@ module Dorsale
       number_with_precision(n, opts)
     end
 
+    def date(d)
+      return if d.nil?
+      I18n.l(d)
+    end
+
     def hours(n)
       return if n.nil?
 
@@ -39,7 +47,26 @@ module Dorsale
     end
 
     def text2html(str)
-      h(str).gsub("\r", "").gsub("\n", "<br />").html_safe
+      return if str.to_s.blank?
+
+      str = str.gsub("\r", "").strip
+      strip_tags(str).gsub("\n", "<br />").html_safe
+    end
+
+    def info(object, attribute, text = nil)
+      label = content_tag(:strong) do
+        object.t(attribute)
+      end
+
+      span_css_class = "#{object.class.model_name.element}-#{attribute}"
+
+      value = content_tag(:span, class: span_css_class) do
+        text || object.send(attribute)
+      end
+
+      content_tag(:div, class: "info") do
+        "#{label} : #{value}".html_safe
+      end
     end
   end
 end

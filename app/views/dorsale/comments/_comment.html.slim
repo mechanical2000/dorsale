@@ -1,19 +1,33 @@
-.comment.well id="comment#{comment.id}"
-  - if comment.user.try(:avatar).present?
-    = image_tag comment.user.avatar.url, class: "avatar"
+.comment id="comment#{comment.id}"
+  - if comment.user.try(:avatar_url).present?
+    = image_tag comment.user.avatar_url, class: "avatar"
   - else
     = image_tag "dorsale/avatar.png", class: "avatar"
 
-  p.infos
-    - if comment.user.present?
-      strong
-        = comment.user.name
+    p.actions
+      - if can?(:update, comment)
+        = icon_link_to :pencil, t("actions.edit"), dorsale.edit_comment_path(comment), class: "edit"
 
-      br
+      - if can?(:delete, comment)
+        = icon_link_to :trash, t("actions.delete"), dorsale.comment_path(comment), method: :delete, data: {confirm: t("actions.confirm")}
 
-    small.text-muted.right
-      = "écrit le "
-      = l(comment.created_at)
+    p.infos
+      - if engine_polymorphic_path(comment.commentable) != request.fullpath
+        span.commentable
+          = link_to comment.commentable.name, engine_polymorphic_path(comment.commentable)
+
+        span.separator
+          = " - "
+
+      span.date
+        = l(comment.created_at)
+
+      - if comment.user.present?
+        = " "
+        = ::Dorsale::Comment.t(:written_by)
+        = " "
+        span.author
+          = comment.user.name
 
   p.text = text2html(comment.text)
 

@@ -1,14 +1,16 @@
 module Dorsale
   module RoutesHelper
     def engine_polymorphic_path(obj, opts = {})
-      if obj.class.parent == Object
+      engine = obj.class.parents[-2]
+
+      if engine.nil?
         routes = main_app
       else
-        routes = obj.class.parent::Engine.routes
+        routes = engine::Engine.routes
       end
 
       opts = {
-        :controller => obj.class.model_name.collection,
+        :controller => "/#{obj.class.to_s.tableize}",
         :action     => :show,
         :id         => obj.to_param,
         :only_path  => true

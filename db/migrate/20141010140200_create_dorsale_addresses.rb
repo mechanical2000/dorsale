@@ -7,7 +7,7 @@ class CreateDorsaleAddresses < ActiveRecord::Migration
       t.string :zip
       t.string :country
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

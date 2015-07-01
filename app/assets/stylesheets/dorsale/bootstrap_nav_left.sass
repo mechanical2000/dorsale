@@ -1,0 +1,34 @@
+$nav-left-width: 200px !default
+$nav-left-background: #E8E8E8 !default
+$nav-left-font-size: 12px !default
+
+@media (min-width: $screen-sm-min)
+  #nav
+    .navbar-header,
+    .navbar-left li
+      padding-left: 1em
+
+    .navbar-left
+      display: block
+      position: absolute
+      left: 0
+      top: 50px
+      bottom: 0
+      height: 2000px
+      width: $nav-left-width
+      background: $nav-left-background
+      z-index: 5
+      font-size: $nav-left-font-size
+
+      li
+        float: none
+        background: none
+        border-bottom: 1px solid darken($nav-left-background, 10)
+        position: relative
+        z-index: 999
+
+      li.active
+        font-weight: bold
+
+  #main
+    margin-left: $nav-left-width

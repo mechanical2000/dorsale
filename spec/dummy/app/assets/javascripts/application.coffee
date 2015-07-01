@@ -1,0 +1,10 @@
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require bootstrap
+//= require cocoon
+//= require accounting
+//= require selectize
+//= require dorsale/all
+//= require dorsale/billing_machine/all
+//= require dorsale/customer_vault/all

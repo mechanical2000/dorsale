@@ -1,0 +1,22 @@
+= horizontal_form_for @individual, as: :individual do |f|
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :tag_list, collection: @tags, input_html: {multiple: true}
+  = f.input :email
+  = f.input :title
+  = f.input :twitter
+  = f.input :context, as: :text
+  = f.input :phone
+  = f.input :fax
+  = f.input :mobile
+  = f.input :www
+
+  / Temporaire - A refactoriser
+  = f.simple_fields_for :address do |af|
+    = af.input :street
+    = af.input :street_bis
+    = af.input :zip
+    = af.input :city
+    = af.input :country, as: :string
+
+  = form_buttons

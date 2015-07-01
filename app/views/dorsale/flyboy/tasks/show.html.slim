@@ -1,0 +1,14 @@
+.flyboy
+  - content_for :context do
+    = render "dorsale/flyboy/tasks/context", task: @task
+
+    = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
+
+  - content_for :main do
+    .task-comments
+      = render partial: "dorsale/flyboy/task_comments/list", locals: {task: @task}
+
+    - if @task.description.present?
+      .well = text2html @task.description
+
+  = render_contextual
