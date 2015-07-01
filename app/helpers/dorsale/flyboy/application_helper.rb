@@ -1,11 +1,27 @@
 module Dorsale
   module Flyboy
     module ApplicationHelper
+      include ::Handles::SortableColumns::InstanceMethods
 
       def tasks_for(taskable)
         @filters = ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
+
+        order ||= sortable_column_order do |column, direction|
+          case column
+          when "name", "status"
+            %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
+          when "progress", "term"
+            %(dorsale_flyboy_tasks.#{column} #{direction})
+          else
+            params["sort"] = "term"
+            "dorsale_flyboy_tasks.term ASC"
+          end
+        end
+
         tasks = ::Dorsale::Flyboy::Task.where(taskable: taskable)
         tasks = @filters.apply(tasks)
+        tasks = tasks.order(order)
+
         render "dorsale/flyboy/tasks/tasks_for_taskable", tasks: tasks, taskable: taskable
       end
 

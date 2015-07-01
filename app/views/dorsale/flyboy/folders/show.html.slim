@@ -4,6 +4,6 @@
 
   - content_for :main do
     .tasks
-      = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: true
+      = tasks_for @folder
 
   = render_contextual

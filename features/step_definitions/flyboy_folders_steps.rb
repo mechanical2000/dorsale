@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 When(/^I go to the folders section$/) do
   visit dorsale.flyboy_folders_path
 end
@@ -152,4 +150,21 @@ end
 Then(/^folders are paginated$/) do
   expect(all("tr.folder").count).to eq 50
   expect(page).to have_selector ".pagination"
+end
+
+Given(/^(\d+) tasks to sort in this folder$/) do |n|
+  n.to_i.times do
+    create(:flyboy_task, taskable: @folder)
+  end
+end
+
+When(/^I sort tasks by "(.*?)" "(.*?)"$/) do |column, direction|
+  sort = direction == "desc" ? "-#{column}" : "#{column}"
+  visit dorsale.flyboy_folder_path(@folder, sort: sort)
+end
+
+Then(/^tasks are sorted by "(.*?)" "(.*?)"$/) do |column, direction|
+  page_names    = all("tbody td.name").map(&:text)
+  expected_name = @folder.tasks.reorder(column => direction).pluck(:name)
+  expect(page_names).to eq expected_name
 end
