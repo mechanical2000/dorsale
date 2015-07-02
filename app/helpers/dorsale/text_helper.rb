@@ -61,7 +61,7 @@ module Dorsale
       span_css_class = "#{object.class.model_name.element}-#{attribute}"
 
       value = content_tag(:span, class: span_css_class) do
-        text || object.send(attribute)
+        ( text || object.send(attribute) ).to_s
       end
 
       content_tag(:div, class: "info") do

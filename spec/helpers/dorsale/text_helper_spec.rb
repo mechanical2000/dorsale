@@ -43,4 +43,14 @@ describe Dorsale::TextHelper, type: :helper do
     expect(text2html("<b>hello</b> world")).to eq "hello world"
   end
 
+  describe "#info" do
+    let(:invoice_line) { create :billing_machine_quotation_line, quantity: 9.99 }
+    it "should work with strings" do
+      expect(info invoice_line, :unit).to include invoice_line.unit
+    end
+    it "should work with floats" do
+      expect(info invoice_line, :quantity).to include invoice_line.quantity.to_s
+    end
+  end
+
 end
