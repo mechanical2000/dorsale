@@ -19,24 +19,30 @@ class DorsaleV2Changes < ActiveRecord::Migration
     add_column :dorsale_flyboy_folders, :folderable_id, :integer
     add_column :dorsale_flyboy_folders, :folderable_type, :string
 
-    # Rename BillingMachine tables
-    rename_table :invoices, :dorsale_billing_machine_invoices
-    rename_table :quotations, :dorsale_billing_machine_quotations
-    rename_table :id_cards, :dorsale_billing_machine_id_cards
-
-    # BillingMachine IdCard logo migration
-    rename_column :dorsale_billing_machine_id_cards, :logo_file_name, :logo
-    # TODO : Rename/move uploads folder
-    remove_column :dorsale_billing_machine_id_cards, :logo_content_type
-    remove_column :dorsale_billing_machine_id_cards, :logo_file_size
-    remove_column :dorsale_billing_machine_id_cards, :logo_updated_at
-
-    # TODO : Migration old quotation documents to Alexandrie
-    remove_table :documents
-
     Dorsale::Flyboy::Task
       .where(taskable_type: "Flyboy::Goal")
       .update_all(taskable_type: "Dorsale::Flyboy::Folder")
+
+    Dorsale::Comment
+      .where(commentable_type: "CustomerVault::Corporation")
+      .update_all(commentable_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::Comment
+      .where(commentable_type: "CustomerVault::Individual")
+      .update_all(commentable_type: "Dorsale::CustomerVault::Individual")
+
+    Dorsale::Address
+      .where(addressable_type: "CustomerVault::Corporation")
+      .update_all(addressable_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::Address
+      .where(addressable_type: "CustomerVault::Individual")
+      .update_all(addressable_type: "Dorsale::CustomerVault::Individual")
+
+    ActsAsTaggableOn::Tagging
+      .where(taggable_type: "CustomerVault::Corporation")
+      .update_all(taggable_type: "Dorsale::CustomerVault::Corporation")
+    ActsAsTaggableOn::Tagging
+      .where(taggable_type: "CustomerVault::Individual")
+      .update_all(taggable_type: "Dorsale::CustomerVault::Individual")
 
     Dorsale::CustomerVault::Link
       .where(alice_type: "CustomerVault::Corporation")
@@ -50,20 +56,6 @@ class DorsaleV2Changes < ActiveRecord::Migration
     Dorsale::CustomerVault::Link
       .where(bob_type: "CustomerVault::Individual")
       .update_all(bob_type: "Dorsale::CustomerVault::Individual")
-
-    Dorsale::BillingMachine::Invoice
-      .where(customer_type: "CustomerVault::Corporation")
-      .update_all(customer_type: "Dorsale::CustomerVault::Corporation")
-    Dorsale::BillingMachine::Invoice
-      .where(customer_type: "CustomerVault::Individual")
-      .update_all(customer_type: "Dorsale::CustomerVault::Individual")
-
-    Dorsale::BillingMachine::Quotation
-      .where(customer_type: "CustomerVault::Corporation")
-      .update_all(customer_type: "Dorsale::CustomerVault::Corporation")
-    Dorsale::BillingMachine::Quotation
-      .where(customer_type: "CustomerVault::Individual")
-      .update_all(customer_type: "Dorsale::CustomerVault::Individual")
 
   end
 end
