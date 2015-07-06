@@ -7,9 +7,9 @@ module Dorsale
       authorize! :create, @comment
 
       if @comment.save
-        flash[:success] = "Comment was successfully created."
+        flash[:success] = t("messages.comment.create_ok")
       else
-        flash[:danger] = "Error : comment not saved."
+        flash[:danger] = t("messages.comment.create_error")
       end
 
       redirect_to_back_url
