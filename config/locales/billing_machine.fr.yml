@@ -1,0 +1,50 @@
+fr:
+  activerecord:
+    models:
+      dorsale/billing_machine/invoice: "facture"
+      dorsale/billing_machine/quotation: "devis"
+      dorsale/billing_machine/id_card: "carte d'identité"
+      dorsale/billing_machine/payment_term: "conditions de paiement"
+
+    attributes:
+      id_card:
+        id_card_name: "nom de la carte"
+        entity_name: "nom de l'entité"
+        intracommunity_vat: "TVA intracommunautaire"
+        legal_form: "forme juridique"
+        registration_number: "numéro d'immatriculation"
+        registration_city: "ville d'immatriculation"
+        contact_full_name: "nom du contact"
+        contact_fax: "email du contact"
+        contact_email: "nom du contact"
+        contact_phone: "téléphone du contact"
+        contact_address_1: "adresse du contact (1)"
+        contact_address_2: "adresse du contact (2)"
+        contact_zip: "code postal du contact"
+        contact_city: "ville du contact"
+        bank_name: "nom de la banque"
+        bank_address: "adresse de la banque"
+        siret: "siret"
+        capital: "capital"
+        address1: "adresse (1)"
+        address2: "adresse (2)"
+        zip: "code postal"
+        city: "ville"
+        phone: "téléphone"
+        iban: "iban"
+        bic_swift: "BIC/SWIFT"
+        ape_naf: "APE/NAF"
+        custom_info_1: "information personalisées (1)"
+        custom_info_2: "information personalisées (2)"
+        custom_info_3: "information personalisées (3)"
+        logo: "logo"
+
+  messages:
+    invoices:
+      create_ok : "La facture a été créée."
+      update_ok : "La facture a été modifiée."
+      pay_ok    : "La facture a été marquée comme payée."
+      pay_error : "Impossible de marquer la facture comme payée."
+    quotations:
+      create_ok : "Le devis a été créé."
+      update_ok : "Le devis a été modifié."
