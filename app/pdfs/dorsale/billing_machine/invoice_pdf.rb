@@ -182,7 +182,6 @@ module Dorsale
       end
 
       def french_date date
-        date
         french_month = FRENCH_MONTH_NAMES[date.month]
         return date.day.to_s + ' ' + french_month + ' ' + date.year.to_s
       end
