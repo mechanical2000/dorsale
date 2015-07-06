@@ -1,6 +1,7 @@
 module Dorsale
   module BillingMachine
     class InvoicePdf < Prawn::Document
+      include Dorsale::Alexandrie::Prawn
       include ActionView::Helpers::NumberHelper
       attr_reader :main_document
 
