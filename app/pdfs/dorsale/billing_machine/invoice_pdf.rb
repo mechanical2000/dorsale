@@ -23,10 +23,8 @@ module Dorsale
       end
 
       def build
-        if @main_document.id_card.logo.present?
-          image @main_document.id_card.logo.path , at: [45, 765], :width => 150
-        end
 
+        build_logo
         build_legal_infos
         build_header
         build_contact_infos
@@ -35,6 +33,10 @@ module Dorsale
         build_table
         build_comments
         build_footer
+      end
+
+      def build_logo
+        image @main_document.id_card.logo.path , at: [45, 765], :width => 150 if @main_document.id_card.logo.present?
       end
 
       def build_legal_infos
@@ -181,7 +183,6 @@ module Dorsale
       end
 
       def french_date date
-        date
         french_month = FRENCH_MONTH_NAMES[date.month]
         return date.day.to_s + ' ' + french_month + ' ' + date.year.to_s
       end
