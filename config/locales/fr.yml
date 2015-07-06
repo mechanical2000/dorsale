@@ -5,6 +5,7 @@ fr:
       create_error : "Impossible de créer le fichier."
       delete_ok    : "Le fichier a été supprimé."
       delete_error : "Impossible de supprimer le fichier."
+      no_file_selected: "Pas de fichier selectionné"
     comment:
       create_ok    : "Le commentaire a été créé."
       create_error : "Impossible de créer le commentaire."
