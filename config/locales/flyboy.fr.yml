@@ -51,7 +51,9 @@ fr:
         status: "Etat"
         progress: "Progression"
       dorsale/flyboy/task:
-        taskable: "Taskable"
+        taskable: "Origine"
+        owner: "Propriétaire"
+        owner_id: "Propriétaire"
         created_at: "Créée le"
         name: "Titre"
         reminder: "Rappel"
