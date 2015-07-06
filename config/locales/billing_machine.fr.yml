@@ -7,7 +7,7 @@ fr:
       dorsale/billing_machine/payment_term: "conditions de paiement"
 
     attributes:
-      dorsale/billing_machine/id_card: "carte:
+      dorsale/billing_machine/id_card:
         id_card_name: "nom de la carte"
         entity_name: "nom de l'entité"
         intracommunity_vat: "TVA intracommunautaire"
