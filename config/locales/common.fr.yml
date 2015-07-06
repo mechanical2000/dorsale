@@ -134,5 +134,9 @@ fr:
     balance               : "Total à payer"
     expires_at            : "Date d'expiration"
 
+  errors:
+    messages:
+      extension_white_list_error : "Ce type de fichier n'est pas prit en charge"
+
   labels:
     <<: *attributes

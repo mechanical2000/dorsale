@@ -7,9 +7,9 @@ module Dorsale
       authorize! :create, @comment
 
       if @comment.save
-        flash[:success] = t("messages.comment.create_ok")
+        flash[:success] = t("messages.comments.create_ok")
       else
-        flash[:danger] = t("messages.comment.create_error")
+        flash[:danger] = t("messages.comments.create_error")
       end
 
       redirect_to_back_url
@@ -29,9 +29,9 @@ module Dorsale
       authorize! :update, @comment
 
       if @comment.update_attributes(comment_params)
-        flash[:notice] = t("messages.comment.update_ok")
+        flash[:notice] = t("messages.comments.update_ok")
       else
-        flash[:alert] = t("messages.comment.update_error")
+        flash[:alert] = t("messages.comments.update_error")
       end
 
       redirect_to_back_url
@@ -43,9 +43,9 @@ module Dorsale
       authorize! :delete, @comment
 
       if @comment.destroy
-        flash[:notice] = t("messages.comment.delete_ok")
+        flash[:notice] = t("messages.comments.delete_ok")
       else
-        flash[:alert] = t("messages.comment.delete_error")
+        flash[:alert] = t("messages.comments.delete_error")
       end
 
       redirect_to_back_url

@@ -1,12 +1,6 @@
 fr:
   messages:
-    attachment:
-      create_ok    : "Le fichier a été créé."
-      create_error : "Impossible de créer le fichier."
-      delete_ok    : "Le fichier a été supprimé."
-      delete_error : "Impossible de supprimer le fichier."
-      no_file_selected: "Pas de fichier selectionné"
-    comment:
+    comments:
       create_ok    : "Le commentaire a été créé."
       create_error : "Impossible de créer le commentaire."
       update_ok    : "Le commentaire a été modifié."

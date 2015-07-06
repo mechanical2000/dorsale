@@ -7,10 +7,10 @@ module Dorsale
         authorize! :create, @attachment
 
         if @attachment.save
-          flash[:notice] = t("messages.attachment.create_ok")
+          flash[:notice] = t("messages.attachments.create_ok")
         else
           ap @attachment.errors
-          flash[:alert] = t("messages.attachment.create_error")
+          flash[:alert] = t("messages.attachments.create_error")
         end
 
         redirect_to_back_url
@@ -22,9 +22,9 @@ module Dorsale
         authorize! :delete, @attachment
 
         if @attachment.destroy
-          flash[:notice] = t("messages.attachment.delete_ok")
+          flash[:notice] = t("messages.attachments.delete_ok")
         else
-          flash[:alert] = t("messages.attachment.delete_error")
+          flash[:alert] = t("messages.attachments.delete_error")
         end
 
         redirect_to_back_url
