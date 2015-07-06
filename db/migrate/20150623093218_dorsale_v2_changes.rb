@@ -57,5 +57,12 @@ class DorsaleV2Changes < ActiveRecord::Migration
       .where(bob_type: "CustomerVault::Individual")
       .update_all(bob_type: "Dorsale::CustomerVault::Individual")
 
+    Dorsale::Flyboy::Task
+      .where(taskable_type: "CustomerVault::Corporation")
+      .update_all(taskable_type: "Dorsale::CustomerVault::Corporation")
+    Dorsale::Flyboy::Task
+      .where(taskable_type: "CustomerVault::Individual")
+      .update_all(taskable_type: "Dorsale::CustomerVault::Individual")
+
   end
 end
