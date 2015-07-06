@@ -240,4 +240,16 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       PDF::Inspector::Text.analyze(pdf.render)
     end
   end
+
+  it "should build attachments" do
+    quotation  = create(:billing_machine_quotation)
+    attachment = create(:alexandrie_attachment, attachable: quotation)
+    pdf = quotation.pdf
+    pdf.build
+
+    text = Yomu.read(:text, pdf.render_with_attachments).split("\n")
+    expect(text).to include "page 1"
+    expect(text).to include "page 2"
+  end
+
 end

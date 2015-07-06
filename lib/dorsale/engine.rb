@@ -24,7 +24,6 @@ require "csv"
 require "pdf/reader"
 require "prawn"
 require "prawn/table"
-require "prawn/templates"
 require "combine_pdf"
 
 require "dorsale/file_loader"
@@ -33,6 +32,7 @@ require "dorsale/simple_form"
 require "dorsale/simple_form_bootstrap"
 require "dorsale/model_i18n"
 require "dorsale/model_to_s"
+require "dorsale/alexandrie/prawn"
 
 require "acts-as-taggable-on"
 

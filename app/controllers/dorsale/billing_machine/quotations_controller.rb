@@ -62,7 +62,7 @@ module Dorsale
 
         respond_to do |format|
           format.pdf {
-              pdf_data  = @quotation.pdf.render
+              pdf_data  = @quotation.pdf.render_with_attachments
 
               file_name = [
                 ::Dorsale::BillingMachine::Quotation.t,
