@@ -12,7 +12,6 @@ module Dorsale
         authorize! :list, ::Dorsale::BillingMachine::Quotation
 
         @quotations ||= ::Dorsale::BillingMachine::Quotation.all
-        @people     ||= ::Dorsale::CustomerVault::Person.list
         @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
         @order      ||= {unique_index: :desc}
 
