@@ -13,7 +13,6 @@ module Dorsale
         authorize! :list, ::Dorsale::BillingMachine::Invoice
 
         @invoices ||= ::Dorsale::BillingMachine::Invoice.all
-        @people   ||= ::Dorsale::CustomerVault::Person.list
         @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
         @order    ||= {unique_index: :desc}
 
