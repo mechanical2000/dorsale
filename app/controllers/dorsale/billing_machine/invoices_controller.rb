@@ -10,6 +10,7 @@ module Dorsale
       ]
 
       def index
+        # callback in BillingMachine::ApplicationController
         authorize! :list, ::Dorsale::BillingMachine::Invoice
 
         @invoices ||= ::Dorsale::BillingMachine::Invoice.all
@@ -34,6 +35,7 @@ module Dorsale
       end
 
       def new
+        # callback in BillingMachine::ApplicationController
         @invoice ||= ::Dorsale::BillingMachine::Invoice.new
         @invoice.lines.build
 
@@ -43,6 +45,7 @@ module Dorsale
       end
 
       def create
+        # callback in BillingMachine::ApplicationController
         @invoice ||= ::Dorsale::BillingMachine::Invoice.new(invoice_params)
 
         authorize! :create, Invoice
@@ -57,6 +60,7 @@ module Dorsale
       end
 
       def show
+        # callback in BillingMachine::ApplicationController
         authorize! :read, @invoice
 
         respond_to do |format|
@@ -80,6 +84,7 @@ module Dorsale
       end
 
       def copy
+        # callback in BillingMachine::ApplicationController
         @original = @invoice
         authorize! :read, @original
 
@@ -98,10 +103,12 @@ module Dorsale
       end
 
       def edit
+        # callback in BillingMachine::ApplicationController
         authorize! :update, @invoice
       end
 
       def update
+        # callback in BillingMachine::ApplicationController
         authorize! :update, @invoice
 
         if @invoice.update(invoice_params)
@@ -113,6 +120,7 @@ module Dorsale
       end
 
       def pay
+        # callback in BillingMachine::ApplicationController
         authorize! :update, @invoice
 
         if @invoice.update_attributes(paid: true)

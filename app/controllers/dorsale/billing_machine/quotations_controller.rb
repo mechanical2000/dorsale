@@ -9,6 +9,7 @@ module Dorsale
       ]
 
       def index
+        # callback in BillingMachine::ApplicationController
         authorize! :list, ::Dorsale::BillingMachine::Quotation
 
         @quotations ||= ::Dorsale::BillingMachine::Quotation.all
@@ -33,6 +34,7 @@ module Dorsale
       end
 
       def new
+        # callback in BillingMachine::ApplicationController
         @quotation ||= ::Dorsale::BillingMachine::Quotation.new
 
         @quotation.lines.build
@@ -43,6 +45,7 @@ module Dorsale
       end
 
       def create
+        # callback in BillingMachine::ApplicationController
         @quotation ||= ::Dorsale::BillingMachine::Quotation.new(quotation_params)
 
         authorize! :create, @quotation
@@ -57,6 +60,7 @@ module Dorsale
       end
 
       def show
+        # callback in BillingMachine::ApplicationController
         authorize! :read, @quotation
 
         respond_to do |format|
@@ -80,10 +84,12 @@ module Dorsale
       end
 
       def edit
+        # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
       end
 
       def update
+        # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
 
         if @quotation.update(quotation_params)
@@ -95,6 +101,7 @@ module Dorsale
       end
 
       def destroy
+        # callback in BillingMachine::ApplicationController
         authorize! :delete, @quotation
 
         if @quotation.destroy
