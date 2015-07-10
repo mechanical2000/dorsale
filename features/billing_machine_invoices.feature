@@ -212,3 +212,8 @@ Feature: Invoice Management
     Given an existing invoice
     When the user download the pdf
     Then the PDF should have the filename "Facture_2014-01_SN.pdf"
+
+  Scenario: Invoices data
+    Given existing "100" invoices with "123" amount
+    When the user goes to the invoices page
+    Then data total amount is "12 300"

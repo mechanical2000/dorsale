@@ -18,15 +18,16 @@ module Dorsale
 
         @quotations = @filters.apply(@quotations)
         @quotations = @quotations.order(@order)
+        @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
         @quotations = @quotations.page(params[:page]).per(50)
 
         respond_to do |format|
           format.csv {
-            send_data generate_encoded_csv(@quotations), type: "text/csv"
+            send_data generate_encoded_csv(@quotations_without_pagination), type: "text/csv"
           }
 
           format.json {
-            respond_with @quotations
+            respond_with @quotations_without_pagination
           }
 
           format.html
