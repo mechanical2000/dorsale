@@ -327,6 +327,5 @@ Given(/^existing "(.*?)" invoices with "(.*?)" amount$/) do |n, amount|
 end
 
 Then(/^data total amount is "(.*?)"$/) do |text|
-  save_screenshot "/Users/benoit/Desktop/capybara1.png"
   expect(find(".context")).to have_content text
 end
