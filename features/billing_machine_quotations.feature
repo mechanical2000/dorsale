@@ -127,3 +127,8 @@ Feature: Quotation Management
     When the user goes to the quotations page
     When he filters by date on today
     Then only the quotations of today do appear
+
+  Scenario: Quotations data
+    Given existing "100" quotations with "123" amount
+    When the user goes to the quotations page
+    Then data total amount is "12 300"

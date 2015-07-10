@@ -19,15 +19,16 @@ module Dorsale
 
         @invoices = @filters.apply(@invoices)
         @invoices = @invoices.order(@order)
+        @invoices_without_pagination = @invoices
         @invoices = @invoices.page(params[:page]).per(50)
 
         respond_to do |format|
           format.csv {
-            send_data generate_encoded_csv(@invoices), type: "text/csv"
+            send_data generate_encoded_csv(@invoices_without_pagination), type: "text/csv"
           }
 
           format.json {
-            respond_with @invoices
+            respond_with @invoices_without_pagination
           }
 
           format.html

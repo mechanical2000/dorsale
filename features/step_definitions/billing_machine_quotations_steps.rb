@@ -198,3 +198,15 @@ end
 When(/^he fill the quotation expiry$/) do
   fill_in :quotation_expires_at, with: "21/12/2012"
 end
+
+Given(/^existing "(.*?)" quotations with "(.*?)" amount$/) do |n, amount|
+  n.to_i.times do
+    quotation = create(:billing_machine_quotation)
+    quotation_line = create(:billing_machine_quotation_line,
+      quotation: quotation,
+      quantity: 1,
+      unit_price: amount,
+      total: nil
+    )
+  end
+end
