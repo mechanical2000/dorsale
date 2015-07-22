@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 2.0.1
+
+- Added periods management as decimal separator
+
 ## 2.0.0
 
 - Import CustomerVault
