@@ -332,6 +332,9 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uglifier (2.7.1)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     websocket-driver (0.5.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -366,6 +369,7 @@ DEPENDENCIES
   sqlite3
   thor
   timecop
+  uglifier
   yomu
   zeus
 

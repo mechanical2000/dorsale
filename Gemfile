@@ -6,6 +6,7 @@ gemspec
 
 group :production, :development do
   gem 'pg'
+  gem 'uglifier'
 end
 
 group :development, :test do
