@@ -4,6 +4,10 @@ gem "rails", "~> 4.2.1"
 
 gemspec
 
+group :production, :development do
+  gem 'pg'
+end
+
 group :development, :test do
   gem "thor"
   gem "pry"
