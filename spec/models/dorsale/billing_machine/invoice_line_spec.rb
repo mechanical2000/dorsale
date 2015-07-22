@@ -27,4 +27,24 @@ describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
     invoice = create(:billing_machine_invoice_line, quantity: nil, unit_price: nil, total: 0)
     expect(invoice.total).to eq(0)
   end
+
+  it "should accept , and . as decimal separator" do
+    business = FactoryGirl.create(:billing_machine_invoice_line)
+
+    business.update_attributes!(quantity: "12,34")
+    expect(business.reload.quantity).to eq 12.34
+
+    business.update_attributes!(quantity: "12.34")
+    expect(business.reload.quantity).to eq 12.34
+
+    business.update_attributes!(quantity: "123 456,78")
+    expect(business.reload.quantity).to eq 123456.78
+
+    business.update_attributes!(quantity: "123 456.78")
+    expect(business.reload.quantity).to eq 123456.78
+
+    business.update_attributes!(unit_price: "12,34")
+    expect(business.reload.unit_price).to eq 12.34
+
+  end
 end
