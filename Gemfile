@@ -7,6 +7,7 @@ gemspec
 group :production, :development do
   gem 'pg'
   gem 'uglifier'
+  gem 'thin'
 end
 
 group :development, :test do
