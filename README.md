@@ -13,4 +13,4 @@ go to http://localhost:3000/
 
 ## Online demo
 
-[https://dorsale-dummy.herokuapp.com]
+https://dorsale-dummy.herokuapp.com
