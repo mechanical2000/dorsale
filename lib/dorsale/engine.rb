@@ -35,7 +35,7 @@ require "dorsale/model_to_s"
 require "dorsale/alexandrie/prawn"
 
 require "acts-as-taggable-on"
-require_relative "../active_record_comma_type_cast"
+require "active_record_comma_type_cast"
 
 module Dorsale
   class Engine < ::Rails::Engine
