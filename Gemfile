@@ -9,6 +9,7 @@ group :production, :development do
   gem 'uglifier'
   gem "whenever"
   gem "exception_notification"
+  gem "database_cleaner"
 end
 
 group :development, :test do
