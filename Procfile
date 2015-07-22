@@ -1,1 +1,1 @@
-web: bundle exec thin -R config.ru -p $PORT start -e 'production'
+web: cd spec/dummy; bundle exec rails s -p $PORT -e 'production'

@@ -15,9 +15,11 @@ html
           = link_to "Dorsale Seed", main_app.root_path
         = horizontal do
           = nav do
-            = icon_link_to "users", "Customer Vault", customer_vault.people_path
-            = icon_link_to "tasks", "Flyboy Goals", flyboy.goals_path
-            = icon_link_to "check-square-o", "Flyboy Tasks", flyboy.tasks_path
+            = icon_link_to "users", "Customers", dorsale.customer_vault_people_path
+            = icon_link_to "tasks", "Folders", dorsale.flyboy_folders_path
+            = icon_link_to "check-square-o", "Tasks", dorsale.flyboy_tasks_path
+            = icon_link_to "euro", "Invoices", dorsale.billing_machine_invoices_path
+            = icon_link_to "euro", "Quotations", dorsale.billing_machine_quotations_path
 
     #main.container
       == yield

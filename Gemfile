@@ -7,7 +7,8 @@ gemspec
 group :production, :development do
   gem 'pg'
   gem 'uglifier'
-  gem 'thin'
+  gem "whenever"
+  gem "exception_notification"
 end
 
 group :development, :test do
