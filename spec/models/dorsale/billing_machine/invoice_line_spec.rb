@@ -29,22 +29,22 @@ describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
   end
 
   it "should accept , and . as decimal separator" do
-    business = FactoryGirl.create(:billing_machine_invoice_line)
+    line = FactoryGirl.create(:billing_machine_invoice_line)
 
-    business.update_attributes!(quantity: "12,34")
-    expect(business.reload.quantity).to eq 12.34
+    line.update_attributes!(quantity: "12,34")
+    expect(line.reload.quantity).to eq 12.34
 
-    business.update_attributes!(quantity: "12.34")
-    expect(business.reload.quantity).to eq 12.34
+    line.update_attributes!(quantity: "12.34")
+    expect(line.reload.quantity).to eq 12.34
 
-    business.update_attributes!(quantity: "123 456,78")
-    expect(business.reload.quantity).to eq 123456.78
+    line.update_attributes!(quantity: "123 456,78")
+    expect(line.reload.quantity).to eq 123456.78
 
-    business.update_attributes!(quantity: "123 456.78")
-    expect(business.reload.quantity).to eq 123456.78
+    line.update_attributes!(quantity: "123 456.78")
+    expect(line.reload.quantity).to eq 123456.78
 
-    business.update_attributes!(unit_price: "12,34")
-    expect(business.reload.unit_price).to eq 12.34
+    line.update_attributes!(unit_price: "12,34")
+    expect(line.reload.unit_price).to eq 12.34
 
   end
 end
