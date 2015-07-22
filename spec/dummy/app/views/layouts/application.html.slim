@@ -21,5 +21,8 @@ html
             = icon_link_to "euro", "Devis", dorsale.billing_machine_quotations_path
             = icon_link_to "euro", "Factures", dorsale.billing_machine_invoices_path
 
+    #flash.container
+      = render "dorsale/flash" 
+
     #main.container
       == yield
