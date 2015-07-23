@@ -1,0 +1,1 @@
+web: cd spec/dummy; bundle exec rails s -p $PORT -e 'production'

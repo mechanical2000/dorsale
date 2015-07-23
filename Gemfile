@@ -4,6 +4,14 @@ gem "rails", "~> 4.2.1"
 
 gemspec
 
+group :production, :development do
+  gem 'pg'
+  gem 'uglifier'
+  gem "whenever"
+  gem "exception_notification"
+  gem "database_cleaner"
+end
+
 group :development, :test do
   gem "thor"
   gem "pry"
