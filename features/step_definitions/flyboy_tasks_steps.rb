@@ -4,6 +4,7 @@ When(/^I create a task$/) do
   all("a[href*='tasks/new']").first.click
   fill_in "task_name", with: "I-am-the-task-title"
   fill_in "task_description", with: "I-am-the-task-description"
+  select @user.name
   find("form[id*=task] [type=submit]").click
 end
 

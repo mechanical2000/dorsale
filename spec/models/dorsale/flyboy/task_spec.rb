@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Dorsale::Flyboy::Task do
   it { is_expected.to belong_to(:taskable) }
+  it { is_expected.to belong_to :owner }
   it { is_expected.to have_many(:comments).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of :taskable}
@@ -80,4 +81,80 @@ describe Dorsale::Flyboy::Task do
     end
 
   end # describe '#snooze'
+
+  describe ".delayed" do
+    it "should have the scope" do
+      expect(::Dorsale::Flyboy::Task).to respond_to :delayed
+    end
+    it "should return delayed unfinished tasks" do
+      task = create(:flyboy_task, owner: @user1, term: Date.today+1)
+      task_1 = create(:flyboy_task, owner: @user1, term: Date.today-1, done: true)
+      task_2 = create(:flyboy_task, owner: @user1, term: Date.today-1, done: false)
+      task_3 = create(:flyboy_task, owner: @user1, term: Date.today-2, done: true)
+      task_4 = create(:flyboy_task, owner: @user1, term: Date.today-2, done: false)
+      tasks = ::Dorsale::Flyboy::Task.delayed
+      expect(tasks).to eq [task_2,task_4]
+      expect(tasks).to_not eq [task, task_1, task_3]
+    end
+  end
+  describe ".today" do
+    it "should have the scope" do
+      expect(::Dorsale::Flyboy::Task).to respond_to :today
+    end
+    it "should return today unfinished tasks" do
+      task = create(:flyboy_task, owner: @user1, term: Date.today+1)
+      task_1 = create(:flyboy_task, owner: @user1, term: Date.today, done: true)
+      task_2 = create(:flyboy_task, owner: @user1, term: Date.today, done: false)
+      tasks = ::Dorsale::Flyboy::Task.today
+      expect(tasks).to eq [task_2]
+      expect(tasks).to_not eq [task, task_1]
+    end
+  end
+  describe ".tomorrow" do
+    it "should have the scope" do
+      expect(::Dorsale::Flyboy::Task).to respond_to :tomorrow
+    end
+    it "should return tomorrow unfinished tasks" do
+      task = create(:flyboy_task, owner: @user1, term: Date.today)
+      task_1 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: true)
+      task_2 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: false)
+      tasks = ::Dorsale::Flyboy::Task.tomorrow
+      expect(tasks).to eq [task_2]
+      expect(tasks).to_not eq [task, task_1]
+    end
+  end
+  describe ".this_week" do
+    it "should have the scope" do
+      expect(::Dorsale::Flyboy::Task).to respond_to :this_week
+    end
+    it "should return this week unfinished tasks" do
+      Timecop.travel(2015, 5, 21) do
+        task = create(:flyboy_task, owner: @user1, term: Date.today-7, done: false)
+        task_1 = create(:flyboy_task, owner: @user1, term: Date.today+2, done: true)
+        task_2 = create(:flyboy_task, owner: @user1, term: Date.today+2, done: false)
+        task_3 = create(:flyboy_task, owner: @user1, term: Date.today+3, done: false)
+        task_4 = create(:flyboy_task, owner: @user1, term: Date.today+5, done: false)
+        tasks = ::Dorsale::Flyboy::Task.this_week
+        expect(tasks).to eq [task_2,task_3]
+        expect(tasks).to_not eq [task, task_1, task_4]
+      end
+    end
+  end
+  describe ".next_week" do
+    it "should have the scope" do
+      expect(::Dorsale::Flyboy::Task).to respond_to :next_week
+    end
+    it "should return next week unfinished tasks" do
+      Timecop.travel(2015, 5, 21) do
+        task = create(:flyboy_task, owner: @user1, term: Date.today, done: false)
+        task_1 = create(:flyboy_task, owner: @user1, term: Date.today+7, done: true)
+        task_2 = create(:flyboy_task, owner: @user1, term: Date.today+7, done: false)
+        task_3 = create(:flyboy_task, owner: @user1, term: Date.today+9, done: false)
+        task_4 = create(:flyboy_task, owner: @user1, term: Date.today+12, done: false)
+        tasks = ::Dorsale::Flyboy::Task.next_week
+        expect(tasks).to eq [task_2,task_3]
+        expect(tasks).to_not eq [task, task_1, task_4]
+      end
+    end
+  end  
 end

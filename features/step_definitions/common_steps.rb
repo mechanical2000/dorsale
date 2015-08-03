@@ -18,3 +18,8 @@ end
 Given(/^an existing payment term$/) do
   @payment_term = create(:billing_machine_payment_term)
 end
+
+Given(/^an existing user$/) do
+  @user = create(:user)
+  sign_in @user
+end

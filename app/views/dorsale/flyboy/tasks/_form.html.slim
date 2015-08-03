@@ -23,6 +23,7 @@
 
       = f.hidden_field :taskable_id
       = f.hidden_field :taskable_type
+      = f.input :owner_guid, collection: @owners.map{ |e| [e.name, e.guid] }
 
       = form_buttons
 

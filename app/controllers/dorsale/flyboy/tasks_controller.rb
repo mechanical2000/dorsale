@@ -13,7 +13,7 @@ module Dorsale
       def index
         authorize! :list, Task
 
-        @tasks ||= Task.all.includes(:taskable)
+        @tasks ||= current_user.tasks
 
         @order ||= sortable_column_order do |column, direction|
           case column
@@ -77,13 +77,15 @@ module Dorsale
       def new
         @task = Task.new
         @task.taskable_guid = params[:taskable_guid]
+        @owners ||= current_user.colleagues(@task.taskable)
 
         authorize! :create, @task
       end
 
       def edit
         authorize! :update, @task
-       end
+        @owners ||= current_user.colleagues(@task.taskable)
+      end
 
       def create
         @task ||= Task.new(task_params)
@@ -159,7 +161,7 @@ module Dorsale
       end
 
       def permitted_params
-        [:taskable_id, :taskable_type, :name, :description, :progress, :term, :reminder]
+        [:taskable_id, :taskable_type, :name, :description, :progress, :term, :reminder, :owner_guid]
       end
 
       def task_params

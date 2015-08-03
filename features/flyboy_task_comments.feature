@@ -1,5 +1,8 @@
 @javascript
 Feature: Manage folder comments
+  Background:
+    Given an existing user
+
   Scenario: Create a comment
     Given an existing task
     When I go to the tasks section

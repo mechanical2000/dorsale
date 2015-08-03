@@ -11,8 +11,16 @@ module Dorsale
       paginates_per 50
 
       belongs_to :taskable, polymorphic: true
+      belongs_to :owner, polymorphic: true
       has_many :comments, class_name: ::Dorsale::Flyboy::TaskComment, inverse_of: :task, dependent: :destroy
       polymorphic_id_for :taskable
+      polymorphic_id_for :owner
+
+      scope :delayed, -> { where('term < ?', Date.today).where(done: false)}
+      scope :today, -> { where('term = ?', Date.today).where(done: false)}
+      scope :tomorrow, -> { where('term = ?', Date.tomorrow).where(done: false)}
+      scope :this_week, -> { where('term > ?', Date.tomorrow).where('term <= ?', Date.today.end_of_week).where(done: false)}
+      scope :next_week, -> { where('term > ?', Date.today.end_of_week).where('term <= ?', (Date.today.end_of_week+1).end_of_week).where(done: false)}
 
       validates :taskable, presence: true
       validates :name,    presence: true
