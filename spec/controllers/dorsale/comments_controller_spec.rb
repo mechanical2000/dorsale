@@ -3,6 +3,10 @@ require "rails_helper"
 describe Dorsale::CommentsController, type: :controller do
   routes { Dorsale::Engine.routes }
 
+  let(:user) {create(:user)}
+  before :each do
+    sign_in user
+  end
 
   let(:valid_attributes){
     commentable = DummyModel.create!(name: "A")
@@ -10,7 +14,7 @@ describe Dorsale::CommentsController, type: :controller do
     {
       :commentable_id   => commentable.id,
       :commentable_type => commentable.class.to_s,
-      :text             => "Hello",
+      :text             => "Hello"
     }
   }
 

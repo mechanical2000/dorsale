@@ -4,5 +4,6 @@ FactoryGirl.define do
     date { DateTime.now }
     progress 95
     description "I-am-a-task-comment"
+    author { create(:user) }
   end
 end

@@ -82,14 +82,14 @@ end
 
 Given(/^an existing individual with recent comments$/) do
   @individual = create(:customer_vault_individual)
-  @individual_comment1 = @individual.comments.create(text: "individual-comment-1")
-  @individual_comment2 = @individual.comments.create(text: "individual-comment-2")
+  @individual_comment1 = @individual.comments.create(text: "individual-comment-1", author: @user)
+  @individual_comment2 = @individual.comments.create(text: "individual-comment-2", author: @user)
 end
 
 Given(/^an existing corporation with recent comments$/) do
   @corporation = create(:customer_vault_corporation)
-  @corporation_comment1 = @corporation.comments.create(text: "corporation-comment-1")
-  @corporation_comment2 = @corporation.comments.create(text: "corporation-comment-2")
+  @corporation_comment1 = @corporation.comments.create(text: "corporation-comment-1", author: @user)
+  @corporation_comment2 = @corporation.comments.create(text: "corporation-comment-2", author: @user)
 end
 
 When(/^I go on the people activity$/) do
@@ -106,7 +106,7 @@ end
 Given(/^an existing corporation with (\d+) comments$/) do |n|
   n.to_i.times do
     @corporation = create(:customer_vault_corporation)
-    @corporation.comments.create(text: "abc")
+    @corporation.comments.create(text: "abc", author: @user)
   end
 end
 

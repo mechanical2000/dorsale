@@ -4,5 +4,6 @@ FactoryGirl.define do
       DummyModel.create!(name: "abc")
     }
     text "the text"
+    author { create(:user) }
   end
 end

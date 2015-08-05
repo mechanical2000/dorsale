@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   routes { Dorsale::Engine.routes }
-
+  let(:user) { create(:user) }
   describe "#index" do
     it "should redirect to activity" do
       get :index
@@ -45,9 +45,9 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   describe "activity" do
     before do
       @person = create(:customer_vault_corporation)
-      @comment1 = @person.comments.create!(text: "ABC", created_at: Time.now - 3.days)
-      @comment2 = @person.comments.create!(text: "DEF", created_at: Time.now - 2.days)
-      @comment3 = @person.comments.create!(text: "DEF", created_at: Time.now - 9.days)
+      @comment1 = @person.comments.create!(text: "ABC", created_at: Time.now - 3.days, author: user)
+      @comment2 = @person.comments.create!(text: "DEF", created_at: Time.now - 2.days, author: user)
+      @comment3 = @person.comments.create!(text: "DEF", created_at: Time.now - 9.days, author: user)
     end
 
     it "should assigns all comments ordered by created_at DESC" do

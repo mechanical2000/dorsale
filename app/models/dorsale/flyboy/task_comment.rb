@@ -4,11 +4,13 @@ module Dorsale
       self.table_name = "dorsale_flyboy_task_comments"
 
       belongs_to :task
+      belongs_to :author, polymorphic: true
 
+      validates :author,      presence: true
       validates :task,        presence: true
       validates :date,        presence: true
       validates :description, presence: true
-      validates :progress, inclusion: {in: 0..100}
+      validates :progress,    inclusion: {in: 0..100}
 
       default_scope -> { order("created_at DESC") }
 

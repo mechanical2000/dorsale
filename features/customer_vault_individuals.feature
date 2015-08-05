@@ -4,6 +4,9 @@ Feature: Manage individuals
   I want to edit individuals
   In order to follow up on the relationship
 
+  Background:
+    Given an existing user
+
   Scenario: New individual
     When I create an new individual
     And I add his first_name, last_name and email

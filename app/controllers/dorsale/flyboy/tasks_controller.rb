@@ -129,7 +129,8 @@ module Dorsale
         @task_comment ||= @task.comments.new(
           :progress    => 100,
           :description => t("messages.tasks.complete_ok"),
-          :date        => DateTime.now
+          :date        => DateTime.now,
+          :author      => current_user
         )
 
         if @task_comment.save
