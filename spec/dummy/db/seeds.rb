@@ -6,6 +6,7 @@ require "database_cleaner"
 DatabaseCleaner.strategy = :truncation
 DatabaseCleaner.clean
 
+user = User.create(email: "demo@agilidee.com", password: "bidule", password_confirmation: "bidule")
 id_card = Dorsale::BillingMachine::IdCard.create!(id_card_name: "Bidule Corp", entity_name: "Bidule Corp")
 payment_term = Dorsale::BillingMachine::PaymentTerm.create!(label: "A réception")
 
@@ -48,7 +49,8 @@ corporation2 = Dorsale::CustomerVault::Corporation.create!(
 )
 
 corporation2.comments.create!(
-  :text => "Je viens d'avoir cette boite au téléphone, il faut leur faire un devis."
+  :text => "Je viens d'avoir cette boite au téléphone, il faut leur faire un devis.",
+  author: user
 )
 
 Dorsale::BillingMachine::Quotation.create!(
@@ -93,7 +95,8 @@ individual2 = Dorsale::CustomerVault::Individual.create!(
 )
 
 individual2.comments.create!(
-  :text => "Développeur, premier contact pour mutualiser un projet."
+  :text => "Développeur, premier contact pour mutualiser un projet.",
+  author: user
 )
 
 goal1 = Dorsale::Flyboy::Folder.create!(
@@ -108,7 +111,8 @@ goal1_task1 = goal1.tasks.create!(
 
 goal1_task1.comments.create!(
   :description => "Traduction française terminée",
-  :progress    => 50
+  :progress    => 50,
+  author: user
 )
 
 goal1_task2 = goal1.tasks.create!(
@@ -123,5 +127,6 @@ corporation2_task1 = Dorsale::Flyboy::Task.create!(
 
 corporation2_task1.comments.create!(
   :description => "Relance faire aujourd'hui. Paiement d'ici la fin de la semaine.",
-  :progress    => 50
+  :progress    => 50,
+  author: user
 )

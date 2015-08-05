@@ -4,7 +4,7 @@ Feature: People search
     Given existing individuals
     And existing corporations
     When he go to the people list
-    
+
   Scenario: Search individual by first name
     When he search an individual by first name
     Then this individual appear in search results
