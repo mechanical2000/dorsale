@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     Dorsale::Flyboy::Task.all
   end
 
-  def colleagues origin
+  def colleagues context
     return [self]
   end
 end
