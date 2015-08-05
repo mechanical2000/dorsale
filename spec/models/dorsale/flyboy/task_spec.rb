@@ -128,7 +128,7 @@ describe Dorsale::Flyboy::Task do
       expect(::Dorsale::Flyboy::Task).to respond_to :this_week
     end
     it "should return this week unfinished tasks" do
-      Timecop.travel(2015, 5, 21) do
+      Timecop.travel(2015, 5, 21, 12, 0, 0) do
         task = create(:flyboy_task, owner: @user1, term: Date.today-7, done: false)
         task_1 = create(:flyboy_task, owner: @user1, term: Date.today+2, done: true)
         task_2 = create(:flyboy_task, owner: @user1, term: Date.today+2, done: false)
