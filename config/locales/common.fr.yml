@@ -68,6 +68,7 @@ fr:
     remove_line: "Supprimer la ligne"
 
     pay        : "Payer"
+    paid       : "Payée"
 
   attributes: &attributes
     id                    : "Id"
@@ -113,7 +114,7 @@ fr:
     details               : "Détails"
     quantity              : "Quantité"
     due_date              : "Échéance"
-    paid                  : "Payé ?"
+    paid                  : "Payée ?"
     customer              : "Client"
     customer_guid         : "Client"
     tracking_id           : "Numéro"
