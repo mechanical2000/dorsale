@@ -83,7 +83,7 @@ module Dorsale
 
       def edit
         authorize! :update, @task
-       end
+      end
 
       def create
         @task ||= Task.new(task_params)
