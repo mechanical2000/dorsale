@@ -38,7 +38,7 @@ module Dorsale
         @tasks = @filters.apply(@tasks)
         @tasks = @tasks.search(params[:q])
 
-        if @order.is_a?(Proc)
+        if @order.is_a?(Proc) # when sorting by a polymorphic attribute
           @tasks = @tasks.sort(&@order)
           @tasks_without_pagination = @tasks
           @tasks = Kaminari.paginate_array(@tasks).page(params[:page])
