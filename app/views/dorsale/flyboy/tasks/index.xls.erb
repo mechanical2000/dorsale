@@ -14,7 +14,7 @@
         <Cell><Data ss:Type="String">Avancement tâche</Data></Cell>
         <Cell><Data ss:Type="String">Echéance</Data></Cell>
       </Row>
-    <% @tasks.each do |task| %>
+    <% @tasks_without_pagination.each do |task| %>
       <Row>
         <Cell><Data ss:Type="String"><%= task.taskable.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= task.taskable.class.t %></Data></Cell>

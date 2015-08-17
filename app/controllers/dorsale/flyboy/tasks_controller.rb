@@ -40,9 +40,11 @@ module Dorsale
 
         if @order.is_a?(Proc)
           @tasks = @tasks.sort(&@order)
+          @tasks_without_pagination = @tasks
           @tasks = Kaminari.paginate_array(@tasks).page(params[:page])
         else
           @tasks = @tasks.order(@order)
+          @tasks_without_pagination = @tasks
           @tasks = @tasks.page(params[:page])
         end
 
@@ -50,7 +52,7 @@ module Dorsale
           format.html
 
           format.csv do
-            send_data @tasks.to_csv,
+            send_data @tasks_without_pagination.to_csv,
               filename:    "feuille_de_route_#{Date.today}.csv",
               disposition: "attachment"
           end
@@ -58,7 +60,7 @@ module Dorsale
           format.xls
 
           format.pdf do
-            pdf = Roadmap.new(@tasks)
+            pdf = Roadmap.new(@tasks_without_pagination)
             pdf.build
             send_data pdf.render,
               filename:    "feuille_de_route_#{Date.today}.pdf",
@@ -83,7 +85,7 @@ module Dorsale
 
       def edit
         authorize! :update, @task
-       end
+      end
 
       def create
         @task ||= Task.new(task_params)

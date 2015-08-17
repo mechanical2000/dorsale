@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe Dorsale::Flyboy::FoldersController, type: :controller do
   render_views
   routes { Dorsale::Engine.routes }

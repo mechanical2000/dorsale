@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Dorsale::Flyboy::TasksController, type: :controller do
   routes { Dorsale::Engine.routes }
@@ -125,6 +125,17 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "sorting by term desc" do
         get :index, sort: "-term"
         expect(assigns(:tasks).to_a).to eq [@task2, @task3, @task1]
+      end
+    end
+
+    context "export" do
+      render_views
+      it "should not paginate the CSV" do
+        50.times { task.dup.save }
+        get :index, format: :csv
+        exported_lines_count_plus_header = CSV.parse(response.body).count
+        task_count = Dorsale::Flyboy::Task.count
+        expect(exported_lines_count_plus_header).to eq task_count+1
       end
     end
   end
