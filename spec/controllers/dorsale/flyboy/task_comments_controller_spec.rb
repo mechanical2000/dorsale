@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
   routes { Dorsale::Engine.routes }
