@@ -2,8 +2,8 @@ $(document).on "ready page:load", ->
   $("button.reset").click ->
     form = $(this).parents("form")
 
-    form.find("option").map ->
-      this.selected = true if this.value == ""
+    form.find("select option:first-child").map ->
+      this.selected = true
 
     form.find("input").map ->
       this.value = "" unless this.type.match(/submit|hidden|button/)
