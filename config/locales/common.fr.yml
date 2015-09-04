@@ -121,6 +121,7 @@ fr:
     count                 : "Nombre"
     length                : "Nombre"
     numer                 : "Nombre"
+    message               : "Message"
 
     # BillingMachine
     unit                  : "Unité"
