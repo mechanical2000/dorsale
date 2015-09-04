@@ -66,9 +66,9 @@ fr:
     comment    : "Commenter"
     add_line   : "Ajoute une ligne"
     remove_line: "Supprimer la ligne"
-
     pay        : "Payer"
     paid       : "Payée"
+    continue   : "Continuer"
 
   attributes: &attributes
     id                    : "Id"
