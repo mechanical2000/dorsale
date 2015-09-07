@@ -1,12 +1,23 @@
 table.default.quotations
-  thread
+  thead
     tr
-      th = ::Dorsale::BillingMachine::Quotation.t(:date)
-      th = ::Dorsale::BillingMachine::Quotation.t(:tracking_id)
-      th = ::Dorsale::BillingMachine::Quotation.t(:customer)
-      th = ::Dorsale::BillingMachine::Quotation.t(:total_duty)
-      th = ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes)
-      th = t("actions.actions")
+      th.hidden-sm.hidden-xs
+        = ::Dorsale::BillingMachine::Quotation.t(:date)
+
+      th.hidden-sm.hidden-md.hidden-xs
+        = ::Dorsale::BillingMachine::Quotation.t(:tracking_id)
+
+      th
+        = ::Dorsale::BillingMachine::Quotation.t(:customer)
+
+      th
+        = ::Dorsale::BillingMachine::Quotation.t(:total_duty)
+
+      th.hidden-xs
+        = ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes)
+
+      th
+        = t("actions.actions")
 
   tbody
     - quotations.each do |quotation|

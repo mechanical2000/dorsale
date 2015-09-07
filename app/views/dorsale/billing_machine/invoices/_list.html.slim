@@ -1,12 +1,23 @@
 table.default.invoices
-  thread
+  thead
     tr
-      th = ::Dorsale::BillingMachine::Invoice.t(:date)
-      th = ::Dorsale::BillingMachine::Invoice.t(:tracking_id)
-      th = ::Dorsale::BillingMachine::Invoice.t(:customer)
-      th = ::Dorsale::BillingMachine::Invoice.t(:total_duty)
-      th = ::Dorsale::BillingMachine::Invoice.t(:total_all_taxes)
-      th = t("actions.actions")
+      th.hidden-sm.hidden-xs.date
+        = ::Dorsale::BillingMachine::Invoice.t(:date)
+
+      th.hidden-sm.hidden-md.hidden-xs
+        = ::Dorsale::BillingMachine::Invoice.t(:tracking_id)
+
+      th
+        = ::Dorsale::BillingMachine::Invoice.t(:customer)
+
+      th
+        = ::Dorsale::BillingMachine::Invoice.t(:total_duty)
+
+      th.hidden-xs
+        = ::Dorsale::BillingMachine::Invoice.t(:total_all_taxes)
+
+      th
+        = t("actions.actions")
 
   tbody
     - invoices.each do |invoice|
