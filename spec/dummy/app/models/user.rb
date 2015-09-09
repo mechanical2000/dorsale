@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
     Dorsale::Flyboy::Task.all
   end
 
+  ##
+  # Implemention left to host application
   def colleagues context
     return [self]
   end
