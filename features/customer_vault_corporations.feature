@@ -4,6 +4,9 @@ Feature: Manage corporations
   I want to edit corporations
   In order to track oppotunities of business
 
+  Background:
+    Given an existing user
+
   Scenario: New corporation
     When I create an new corporation
     And I add the corporation's informations

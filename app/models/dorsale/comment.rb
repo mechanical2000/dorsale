@@ -1,8 +1,9 @@
 module Dorsale
   class Comment < ActiveRecord::Base
-    belongs_to :user
+    belongs_to :author, polymorphic: true
     belongs_to :commentable, polymorphic: true
 
+    validates :author,      presence: true
     validates :commentable, presence: true
     validates :text,        presence: true
 

@@ -3,6 +3,8 @@ module Dorsale
     class TaskCommentsController < ::Dorsale::Flyboy::ApplicationController
       def create
         @task_comment ||= TaskComment.new(task_comment_params)
+        @task_comment.author = current_user
+
         @task = @task_comment.task
 
         authorize! :update, @task

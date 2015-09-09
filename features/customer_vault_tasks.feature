@@ -1,5 +1,8 @@
 @javascript
 Feature: Create tasks on people
+  Background:
+    Given an existing user
+
   Scenario: Add a task to a corporation
     Given an existing corporation
     When I go on this corporation

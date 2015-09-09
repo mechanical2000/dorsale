@@ -1,6 +1,6 @@
 .comment id="comment#{comment.id}"
-  - if comment.user.try(:avatar_url).present?
-    = image_tag comment.user.avatar_url, class: "avatar"
+  - if comment.author.try(:avatar_url).present?
+    = image_tag comment.author.avatar_url, class: "avatar"
   - else
     = image_tag "dorsale/avatar.png", class: "avatar"
 
@@ -22,12 +22,11 @@
     span.date
       = l(comment.created_at)
 
-    - if comment.user.present?
-      = " "
-      = ::Dorsale::Comment.t(:written_by)
-      = " "
-      span.author
-        = comment.user.name
+    = " "
+    = ::Dorsale::Comment.t(:written_by)
+    = " "
+    span.author
+      = comment.author.name
 
   p.text = text2html(comment.text)
 

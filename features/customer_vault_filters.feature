@@ -1,5 +1,8 @@
 @javascript
 Feature: Filter people
+  Background:
+    Given an existing user
+
   Scenario: Filter by tags
     Given an existing corporation with tags hello and world
     And an other existing corporation with tags hello and goodbye

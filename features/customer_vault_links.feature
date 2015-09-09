@@ -4,6 +4,9 @@ Feature: Manage links
   I want to edit links
   In order to identify the people responsible for corporations
 
+  Background:
+    Given an existing user
+
   Scenario: Add a new link on individual
     Given an existing corporation
     And an existing indidual

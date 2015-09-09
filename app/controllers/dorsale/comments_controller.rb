@@ -2,7 +2,7 @@ module Dorsale
   class CommentsController < ApplicationController
     def create
       @comment = Comment.new(comment_params)
-      @comment.user = try(:current_user)
+      @comment.author = try(:current_user)
 
       authorize! :create, @comment
 

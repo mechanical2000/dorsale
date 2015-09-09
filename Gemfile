@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 4.2.1"
+gem 'devise'
+gem "database_cleaner"
 
 gemspec
 
@@ -9,7 +11,6 @@ group :production, :development do
   gem 'uglifier'
   gem "whenever"
   gem "exception_notification"
-  gem "database_cleaner"
 end
 
 group :development, :test do
@@ -24,7 +25,6 @@ group :development, :test do
   gem "cucumber-rails", require: false
   gem "capybara"
   gem "poltergeist"
-  gem "database_cleaner"
   gem "factory_girl_rails"
   gem "guard"
   gem "guard-cucumber"

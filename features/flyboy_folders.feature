@@ -1,5 +1,8 @@
 @javascript
 Feature: Manage folders
+  Background:
+    Given an existing user
+
   Scenario: Create a folder
     When I go to the folders section
     And I create a new folder
