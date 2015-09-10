@@ -1,6 +1,6 @@
 module Dorsale
   module CustomerVault
-    class ApplicationController < ::ApplicationController
+    class ApplicationController < ::Dorsale::ApplicationController
       handles_sortable_columns
 
       helper ::Dorsale::Flyboy::ApplicationHelper

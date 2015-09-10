@@ -49,7 +49,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "GET index" do
     it "assigns all tasks as @tasks" do
-      User.any_instance.stub(:tasks).and_return(Dorsale::Flyboy::Task.where(id: task.id))
+      Dorsale::UserScope.any_instance.stub(:tasks).and_return(Dorsale::Flyboy::Task.where(id: task.id))
       get :index, {}
       expect(assigns(:tasks).sort).to eq [task]
     end

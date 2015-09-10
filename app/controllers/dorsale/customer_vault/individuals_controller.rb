@@ -15,7 +15,7 @@ module Dorsale
       def new
         authorize! :create, ::Dorsale::CustomerVault::Individual
 
-        @individual ||= ::Dorsale::CustomerVault::Individual.new
+        @individual ||= current_user_scope.new_individual
         @individual.build_address if @individual.address.nil?
 
         @tags ||= customer_vault_tag_list
@@ -32,7 +32,7 @@ module Dorsale
       def create
         authorize! :create, ::Dorsale::CustomerVault::Individual
 
-        @individual ||= ::Dorsale::CustomerVault::Individual.new(individual_params)
+        @individual ||= current_user_scope.new_individual(individual_params)
 
         if @individual.save
           flash[:notice] = t("messages.individuals.create_ok")

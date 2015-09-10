@@ -12,8 +12,8 @@ module Dorsale
 
         @filters      ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
         @tags         ||= customer_vault_tag_list
-        @individuals  ||= ::Dorsale::CustomerVault::Individual.search(params[:q])
-        @corporations ||= ::Dorsale::CustomerVault::Corporation.search(params[:q])
+        @individuals  ||= current_user_scope.individuals.search(params[:q])
+        @corporations ||= current_user_scope.corporations.search(params[:q])
 
         if params[:q].blank?
           @individuals  = @filters.apply(@individuals)
@@ -30,7 +30,7 @@ module Dorsale
       def activity
         authorize! :list, Person
 
-        @comments ||= Dorsale::Comment
+        @comments ||= current_user_scope.comments
           .where("commentable_type LIKE ?", "%CustomerVault%")
           .order("created_at DESC, id DESC")
 

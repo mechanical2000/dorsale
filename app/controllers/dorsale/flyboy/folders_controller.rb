@@ -13,7 +13,7 @@ module Dorsale
       def index
         authorize! :list, Folder
 
-        @folders ||= Folder.all
+        @folders ||= current_user_scope.folders
 
         @order ||= sortable_column_order do |column, direction|
           case column
@@ -40,13 +40,13 @@ module Dorsale
       end
 
       def new
-        @folder ||= Folder.new
+        @folder ||= current_user_scope.new_folder
 
         authorize! :create, @folder
       end
 
       def create
-        @folder ||= Folder.new(folder_params)
+        @folder ||= current_user_scope.new_folder(folder_params)
 
         authorize! :create, @folder
 
@@ -86,6 +86,8 @@ module Dorsale
       end
 
       def open
+        authorize! :open, @folder
+
         if @folder.open!
           flash[:success] = t("messages.folders.open_ok")
         else
@@ -96,6 +98,8 @@ module Dorsale
       end
 
       def close
+        authorize! :close, @folder
+
         if @folder.close!
           flash[:success] = t("messages.folders.close_ok")
         else

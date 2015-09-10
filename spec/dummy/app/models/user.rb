@@ -7,14 +7,4 @@ class User < ActiveRecord::Base
   def name
     email
   end
-
-  def tasks
-    Dorsale::Flyboy::Task.all
-  end
-
-  ##
-  # Implemention left to host application
-  def colleagues context
-    return [self]
-  end
 end
