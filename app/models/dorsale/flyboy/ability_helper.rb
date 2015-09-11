@@ -6,8 +6,10 @@ module Dorsale
         can [:list, :create, :read, :update, :delete, :open, :close], ::Dorsale::Flyboy::Folder
         can [:list, :create, :read, :update, :delete, :complete, :snooze], ::Dorsale::Flyboy::Task
 
-        # Restricted actions
+        define_dorsale_flyboy_common_restrictions
+      end
 
+      def define_dorsale_flyboy_common_restrictions
         cannot [:update, :delete], ::Dorsale::Flyboy::Folder do |folder|
           folder.closed?
         end
@@ -21,7 +23,7 @@ module Dorsale
         end
 
         cannot :create, ::Dorsale::Flyboy::Task do |task|
-          task.taskable.present? && cannot?(:show, task.taskable)
+          task.taskable.present? && cannot?(:read, task.taskable)
         end
 
         cannot [:create, :update, :delete], ::Dorsale::Flyboy::Task do |task|

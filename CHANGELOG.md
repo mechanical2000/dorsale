@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Split Flyboy AbilityHelper
+
 ## 2.1.0
 
 - Begin migration to UserScope.
