@@ -1,6 +1,6 @@
 module Dorsale
   module BillingMachine
-    class ApplicationController < ::ApplicationController
+    class ApplicationController < ::Dorsale::ApplicationController
       before_filter :set_common_variables
 
       private

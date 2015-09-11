@@ -15,7 +15,7 @@ module Dorsale
       def new
         authorize! :create, ::Dorsale::CustomerVault::Corporation
 
-        @corporation ||= ::Dorsale::CustomerVault::Corporation.new
+        @corporation ||= current_user_scope.new_corporation
 
         @corporation.build_address if @corporation.address.nil?
       end
@@ -23,7 +23,7 @@ module Dorsale
       def create
         authorize! :create, ::Dorsale::CustomerVault::Corporation
 
-        @corporation ||= ::Dorsale::CustomerVault::Corporation.new(corporation_params)
+        @corporation ||= current_user_scope.new_corporation(corporation_params)
 
         if @corporation.save
           flash[:notice] = t("messages.corporations.create_ok")
