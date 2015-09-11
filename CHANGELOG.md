@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Begin migration to UserScope.
+
 ## 2.0.2
 
 - Embedded user concept into dorsale: the hosting app now shall provide a current_user with specific methods. Check requirements in README.
