@@ -21,12 +21,12 @@ class Dorsale::UserScope
     Dorsale::Flyboy::Folder.all
   end
 
-  def tasks
-    Dorsale::Flyboy::Task.all
-  end
-
   def new_folder(*args)
     folders.new(*args)
+  end
+
+  def tasks
+    Dorsale::Flyboy::Task.all
   end
 
   def new_task(*args)
@@ -49,10 +49,6 @@ class Dorsale::UserScope
 
   def new_corporation(*args)
     corporations.new(*args)
-  end
-
-  def people
-    Dorsale::CustomerVault::Person.all
   end
 
 end

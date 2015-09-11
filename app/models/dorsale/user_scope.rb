@@ -21,15 +21,15 @@ class Dorsale::UserScope
     raise NotImplementedError
   end
 
+  def new_folder(attributes = {})
+    raise NotImplementedError
+  end
+
   def tasks
     raise NotImplementedError
   end
 
-  def new_folder
-    raise NotImplementedError
-  end
-
-  def new_task
+  def new_task(attributes = {})
     raise NotImplementedError
   end
 
@@ -39,7 +39,7 @@ class Dorsale::UserScope
     raise NotImplementedError
   end
 
-  def new_individual
+  def new_individual(attributes = {})
     raise NotImplementedError
   end
 
@@ -47,11 +47,7 @@ class Dorsale::UserScope
     raise NotImplementedError
   end
 
-  def new_corporation
-    raise NotImplementedError
-  end
-
-  def people
+  def new_corporation(attributes = {})
     raise NotImplementedError
   end
 
