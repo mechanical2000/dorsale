@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+- Move People.list to UserScope
+
 ## 2.1.1
 
 - Split Flyboy AbilityHelper
