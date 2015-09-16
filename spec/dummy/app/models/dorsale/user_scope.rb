@@ -51,4 +51,8 @@ class Dorsale::UserScope
     corporations.new(*args)
   end
 
+  def people
+    (individuals + corporations).sort_by { |e| e.name.downcase }
+  end
+
 end

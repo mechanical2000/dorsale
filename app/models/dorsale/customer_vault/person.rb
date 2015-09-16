@@ -16,10 +16,6 @@ module Dorsale
       has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable
       accepts_nested_attributes_for :address, allow_destroy: true
 
-      def self.list
-        ::Dorsale::CustomerVault::Individual.all + ::Dorsale::CustomerVault::Corporation.all
-      end
-
       def links
         a = Link.where(alice_id: self.id, alice_type: self.class).map {|l| {title: l.title, person: l.bob, origin: l}}
         b = Link.where(bob_id: self.id, bob_type: self.class).map {|l| {title: l.title, person: l.alice, origin: l}}

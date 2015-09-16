@@ -13,7 +13,7 @@ module Dorsale
         authorize! :update, @person
 
         @link   ||= ::Dorsale::CustomerVault::Link.new
-        @people ||= ::Dorsale::CustomerVault::Person.list
+        @people ||= current_user_scope.people
       end
 
       def edit

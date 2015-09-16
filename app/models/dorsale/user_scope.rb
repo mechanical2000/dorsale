@@ -51,4 +51,8 @@ class Dorsale::UserScope
     raise NotImplementedError
   end
 
+  def people
+    raise NotImplementedError
+  end
+
 end
