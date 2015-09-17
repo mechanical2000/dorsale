@@ -1,1 +1,10 @@
-= render 'dorsale/flyboy/tasks/summary'
+- if @delayed_tasks.any?
+    = render 'dorsale/flyboy/tasks/summary_list', tasks: @delayed_tasks, title: t("datetime.delayed")
+- if @today_tasks.any?
+    = render 'dorsale/flyboy/tasks/summary_list', tasks: @today_tasks, title: t("datetime.today")
+- if @tomorrow_tasks.any?
+    = render 'dorsale/flyboy/tasks/summary_list', tasks: @tomorrow_tasks, title: t("datetime.tomorrow")
+- if @this_week_tasks.any?
+    = render 'dorsale/flyboy/tasks/summary_list', tasks: @this_week_tasks, title: t("datetime.this_week")
+- if @next_week_tasks.any?
+    = render 'dorsale/flyboy/tasks/summary_list', tasks: @next_week_tasks, title: t("datetime.next_week")
