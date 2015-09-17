@@ -1,0 +1,25 @@
+.task-group
+    h3 = title
+    table.default
+      thead
+        tr
+          th.taskable = ::Dorsale::Flyboy::Task.t(:taskable)
+          th.name     = ::Dorsale::Flyboy::Task.t
+          th.date     = ::Dorsale::Flyboy::Task.t(:date)
+      tbody
+        - tasks.each do |task|
+          tr
+            td.taskable
+              a href=engine_polymorphic_path(task.taskable)
+                = task.taskable.name
+
+            td.name
+              - if task.owner.nil?
+                = icon(:question)
+              - else
+                = icon(:user)
+
+              = link_to task.name, dorsale.flyboy_task_path(task)
+
+            td.date
+              .text-muted = date(task.term)
