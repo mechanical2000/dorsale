@@ -10,6 +10,7 @@ Dorsale::Engine.routes.draw do
   end
 
   namespace :flyboy do
+    concerns :tasks_summary
     resources :folders do
       member do
         patch :open
