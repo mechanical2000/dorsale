@@ -1,6 +1,8 @@
 module Dorsale
   module Flyboy
     class TasksController < ::Dorsale::Flyboy::ApplicationController
+      include Dorsale::Flyboy::TasksSummaryConcern
+
       before_action :set_objects, only: [
         :show,
         :edit,
@@ -154,6 +156,11 @@ module Dorsale
         end
 
         redirect_to dorsale.flyboy_tasks_path
+      end
+
+      def summary
+        setup_tasks_summary
+        render 'tasks_summary'
       end
 
       private

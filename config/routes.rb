@@ -10,6 +10,7 @@ Dorsale::Engine.routes.draw do
   end
 
   namespace :flyboy do
+    get "/tasks_summary" => "tasks#summary"
     resources :folders do
       member do
         patch :open

@@ -4,9 +4,9 @@
     .form-group
       label.sr-only for="status" Status
       select.form-control name="filters[status]"
-        option value="" Tous les status
-        option value="open" selected=(@filters.get("status") == "open") = "Ouvert"
-        option value="closed" selected=(@filters.get("status") == "closed") = "Fermé"
+        option value="" = t("messages.folders.status.all")
+        option value="open" selected=(@filters.get("status") == "open") = t("messages.folders.status.open")
+        option value="closed" selected=(@filters.get("status") == "closed") = t("messages.folders.status.closed")
 
     = filter_reset_button
     = filter_submit_button
