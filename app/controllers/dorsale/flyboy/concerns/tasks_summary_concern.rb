@@ -1,4 +1,4 @@
-module TasksSummary extend ActiveSupport::Concern
+module TasksSummaryConcern extend ActiveSupport::Concern
 included do
 
     end
