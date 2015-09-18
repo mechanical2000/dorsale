@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803160334) do
+ActiveRecord::Schema.define(version: 20150805134318) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -149,13 +149,14 @@ ActiveRecord::Schema.define(version: 20150803160334) do
   add_index "dorsale_billing_machine_quotations", ["payment_term_id"], name: "index_dorsale_billing_machine_quotations_on_payment_term_id"
 
   create_table "dorsale_comments", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "author_id"
     t.string   "user_type"
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.text     "text"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "author_type"
   end
 
   create_table "dorsale_customer_vault_corporations", force: :cascade do |t|
@@ -227,6 +228,8 @@ ActiveRecord::Schema.define(version: 20150803160334) do
     t.integer  "progress"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "author_type"
+    t.integer  "author_id"
   end
 
   add_index "dorsale_flyboy_task_comments", ["task_id"], name: "index_dorsale_flyboy_task_comments_on_task_id"
@@ -242,6 +245,8 @@ ActiveRecord::Schema.define(version: 20150803160334) do
     t.date     "reminder"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "owner_type"
+    t.integer  "owner_id"
   end
 
   add_index "dorsale_flyboy_tasks", ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id"
