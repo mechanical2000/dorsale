@@ -8,7 +8,7 @@
         = delete_button dorsale.flyboy_task_path(@task)
 
     - else
-      = context_title t('messages.folders.title_create')
+      = context_title t('messages.folders.new_task')
 
   - if can?(:read, @task.taskable)
     = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
