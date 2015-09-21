@@ -160,7 +160,6 @@ module Dorsale
 
       def summary
         setup_tasks_summary
-        render 'tasks_summary'
       end
 
       private

@@ -8,6 +8,10 @@ describe ::Dorsale::Flyboy::TasksController, type: :routing do
       expect(get("flyboy/tasks")).to route_to("dorsale/flyboy/tasks#index")
     end
 
+    it "routes to #summary" do
+      expect(get("flyboy/tasks/summary")).to route_to("dorsale/flyboy/tasks#summary")
+    end
+
     it "routes to #new" do
       expect(get("flyboy/tasks/new")).to route_to("dorsale/flyboy/tasks#new")
     end

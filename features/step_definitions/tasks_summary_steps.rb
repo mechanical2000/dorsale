@@ -11,7 +11,7 @@ Given(/^a task that expire today$/) do
 end
 
 When(/^he go to the tasks summary page$/) do
-  visit dorsale.flyboy_tasks_summary_path
+  visit dorsale.summary_flyboy_tasks_path
 end
 
 Then(/^the task is classed as 'expired'$/) do

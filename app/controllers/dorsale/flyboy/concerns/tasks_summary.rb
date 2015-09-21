@@ -1,6 +1,7 @@
 module Dorsale
   module Flyboy
-    module TasksSummaryConcern extend ActiveSupport::Concern
+    module TasksSummaryConcern
+      extend ActiveSupport::Concern
 
       def setup_tasks_summary
         tasks = current_user_scope.tasks.where("(owner_id is null and owner_type is null) or (owner_id = ? and owner_type = ?)", current_user.id, current_user.class.name)
