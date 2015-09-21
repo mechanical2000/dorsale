@@ -3,12 +3,12 @@
     = context_icon :check_square_o
 
     - if @task.persisted?
-      = context_title "Modifier #{@task.name}"
+      = context_title (t("update") + " " + @task.name)
       - if can?(:delete, @task)
         = delete_button dorsale.flyboy_task_path(@task)
 
     - else
-      = context_title "Nouvelle tâche"
+      = context_title t('messages.folders.title_create')
 
   - if can?(:read, @task.taskable)
     = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
