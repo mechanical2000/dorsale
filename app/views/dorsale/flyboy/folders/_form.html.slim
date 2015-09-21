@@ -3,7 +3,7 @@
     = context_icon :tasks
 
     - if @folder.persisted?
-      = context_title t("update") #{@folder.name}
+      = context_title t("update") + " " + #{@folder.name}
       - if can?(:delete, @folder)
         = delete_button dorsale.flyboy_folder_path(@folder)
 
