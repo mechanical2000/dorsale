@@ -1,0 +1,50 @@
+en:
+  activerecord:
+    models:
+      dorsale/billing_machine/invoice: "invoice"
+      dorsale/billing_machine/quotation: "quotation"
+      dorsale/billing_machine/id_card: "id card"
+      dorsale/billing_machine/payment_term: "payment term"
+
+    attributes:
+      dorsale/billing_machine/id_card:
+        id_card_name: "id card name"
+        entity_name: "entity name"
+        intracommunity_vat: "intracommunity VAT"
+        legal_form: "legal form"
+        registration_number: "registration number"
+        registration_city: "registration city"
+        contact_full_name: "contact name"
+        contact_fax: "contact fax number"
+        contact_email: "contact email"
+        contact_phone: "contact phone"
+        contact_address_1: "contact address (1)"
+        contact_address_2: "contact address (2)"
+        contact_zip: "contact zip"
+        contact_city: "contact city"
+        bank_name: "bank name"
+        bank_address: "bank address"
+        siret: "siret"
+        capital: "capital"
+        address1: "adress (1)"
+        address2: "adress (2)"
+        zip: "zip"
+        city: "city"
+        phone: "phone"
+        iban: "iban"
+        bic_swift: "BIC/SWIFT"
+        ape_naf: "APE/NAF"
+        custom_info_1: "custom informations (1)"
+        custom_info_2: "custom informations (2)"
+        custom_info_3: "custom informations (3)"
+        logo: "logo"
+
+  messages:
+    invoices:
+      create_ok : "Invoice successfully created."
+      update_ok : "Invoice successfully updated."
+      pay_ok    : "This invoice has been marked payed."
+      pay_error : "Impossible to mark this invoice as payed."
+    quotations:
+      create_ok : "Quotation successfully created."
+      update_ok : "Quotation successfully created."

@@ -1,0 +1,67 @@
+en:
+  messages:
+    forbidden: "This page dont exist"
+
+    folders:
+      title_create: "New folder"
+      create_ok: "Folder created"
+      update_ok: "Folder updated"
+      open_ok: "Folder is open again"
+      open_error: "One error occurs, folder can't be opened"
+      close_ok: "Folder closed"
+      close_error: "One error occurs, folder can't be closed"
+      status:
+        all: "All status"
+        open: "Open"
+        pending: "Pending"
+        closed: "Closed"
+        unknown: "Unknown"
+
+    tasks:
+      create_ok: "Task created"
+      update_ok: "Task updated"
+      delete_ok: "Task deleted"
+      delete_eror: "One error occurs, task can't be deleted"
+      snooze_ok: "Task snoozed"
+      snooze_eror: "One error occurs, task can't be snoozed"
+      complete_ok: "Task completed"
+      complete_eror: "One error occurs, task can't be completed"
+
+  actions:
+    complete: "Complete"
+    label: "Actions"
+    search: "Search"
+
+    folders:
+      new_task: "New task"
+
+  activerecord:
+    models:
+      dorsale/flyboy/folder:
+        one: "Folder"
+        other: "Folders"
+      dorsale/flyboy/task:
+        one: "Task"
+        other: "Tasks"
+    attributes:
+      dorsale/flyboy/folder:
+        name: "Name"
+        status: "Status"
+        description: "Description"
+        revision: "Revision"
+        status: "State"
+        progress: "Progress"
+      dorsale/flyboy/task:
+        taskable: "Origin"
+        owner: "Owner"
+        owner_id: "Owner"
+        created_at: "Created at"
+        name: "Name"
+        reminder: "Reminder"
+        term: "Term"
+        done: "Done ?"
+        description: "Description"
+        progress: "Progress"
+      dorsale/flyboy/task_comment:
+        progress: "Progress"
+        description: "Description"

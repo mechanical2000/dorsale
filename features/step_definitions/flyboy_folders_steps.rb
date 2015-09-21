@@ -118,7 +118,7 @@ Then(/^only open folders appear$/) do
 end
 
 When(/^I filter folders by closed$/) do
-  select "Fermé"
+  select I18n.t("messages.folders.status.closed")
   find(".filters [type=submit]:last-child").click
 end
 

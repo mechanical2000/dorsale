@@ -3,7 +3,7 @@ require "rails_helper"
 describe Dorsale::Flyboy::TasksController, type: :controller do
   routes { Dorsale::Engine.routes }
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     sign_in @user
   end
 
@@ -244,6 +244,62 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       task = Dorsale::Flyboy::Task.create! valid_attributes
       patch :snooze, {:id => task.to_param}
       expect(response).to redirect_to(flyboy_tasks_path)
+    end
+  end
+
+  describe "summary" do
+
+    let(:summary_user) { create :user }
+    let(:folder) { create(:flyboy_folder) }
+
+    before(:each) do
+      Dorsale::Flyboy::Task.destroy_all
+      sign_in summary_user
+    end
+
+    it 'should return own and unasigned delayed tasks' do
+      create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today - 1)
+      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today - 1 )
+      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today )
+      controller.setup_tasks_summary
+      expect(assigns(:delayed_tasks).count).to eq 2
+    end
+
+    it 'should return own and unasigned today\'s tasks' do
+      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today)
+      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today-1)
+      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today)
+      controller.setup_tasks_summary
+      expect(assigns(:today_tasks).count).to eq 2
+    end
+
+    it 'should return own and unasigned tomorrow\'s tasks' do
+      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today+1)
+      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today)
+      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today+1)
+      controller.setup_tasks_summary
+      expect(assigns(:tomorrow_tasks).count).to eq 2
+    end
+
+    it 'should return own and unasigned this week tasks' do
+      Timecop.travel(2015, 5, 21, 12, 0, 0) do
+        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today)
+        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today + 2)
+        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today+10)
+        create(:flyboy_task, taskable: folder, done: false, owner: nil, term: Date.today + 3)
+        controller.setup_tasks_summary
+        expect(assigns(:this_week_tasks).count).to eq 2
+      end
+    end
+
+    it 'should return own and unasigned next week tasks' do
+      Timecop.travel(2015, 5, 21, 12, 0, 0) do
+        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today)
+        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today+7)
+        create(:flyboy_task, taskable: folder, done: false, owner: nil, term: Date.today+7)
+        controller.setup_tasks_summary
+        expect(assigns(:next_week_tasks).count).to eq 2
+      end
     end
   end
 

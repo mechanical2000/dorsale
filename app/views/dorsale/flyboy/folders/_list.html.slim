@@ -8,7 +8,7 @@ table
       th.hidden-xs
         = sortable_column Dorsale::Flyboy::Folder.t(:status), column: "status"
       th
-        = t ".actions", default: t("helpers.actions")
+        = t("actions.actions")
 
   tbody
     - folders.each do |folder|

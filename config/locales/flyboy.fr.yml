@@ -11,6 +11,7 @@ fr:
       close_ok: "Le dossier a été fermé"
       close_error: "Impossible de fermer le dossier"
       status:
+        all: "Tous les status"
         open: "Ouvert"
         pending: "En attente"
         closed: "Fermé"

@@ -1,0 +1,8 @@
+en:
+  messages:
+    attachments:
+      create_ok    : "File successfully created."
+      create_error : "One error occurs, file not created."
+      delete_ok    : "File deleted."
+      delete_error : "Impossible to delete the file."
+      no_file_selected: "No file selected."
