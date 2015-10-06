@@ -1,0 +1,10 @@
+en:
+  update: "Update"
+  messages:
+    comments:
+      create_ok    : "Comment created."
+      create_error : "One error occurs, comment can't be created."
+      update_ok    : "Comment updated."
+      update_error : "One error occurs, comment can't be updated."
+      delete_ok    : "Comment deleted."
+      delete_error : "One error occurs, comment can't be deleted."

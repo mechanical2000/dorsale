@@ -18,6 +18,7 @@ Dorsale::Engine.routes.draw do
     end
 
     resources :tasks do
+      get :summary, on: :collection
       member do
         patch :complete
         patch :snooze

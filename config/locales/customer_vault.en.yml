@@ -1,0 +1,69 @@
+en:
+  customer_vault: "Directory"
+
+  sections:
+    activity: "Activity"
+    links: "Links"
+    tasks: "Tasks"
+    people: "People"
+
+  messages:
+    no_people: "No people find."
+    no_activity: "No recent activity."
+
+    corporations:
+      create_ok    : "Corporation created."
+      update_ok    : "Corporation updated."
+      delete_ok    : "Corporation deleted."
+      delete_error : "One error occurs, corporation not deleted."
+
+    individuals:
+      create_ok    : "Individual created."
+      update_ok    : "Individual updated."
+      delete_ok    : "Individual deleted."
+      delete_error : "One error occurs, person not deleted."
+
+    links:
+      create_ok    : "Link created."
+      update_ok    : "Link updated."
+      delete_ok    : "Link deleted."
+      delete_error : "One error occurs, link not deleted."
+
+  actions:
+    activity: "Activity"
+    new_individual: "New individual"
+    new_corporation: "New corporation"
+    new_link: "New link"
+    new_comment: "New comment"
+    new_task: "New task"
+
+  activerecord:
+    models:
+      dorsale/customer_vault/person:
+        one: "Person"
+        other: "People"
+      dorsale/customer_vault/corporation:
+        one: "Corporation"
+        other: "Corporations"
+      dorsale/customer_vault/individual:
+        one: "Individual"
+        other: "Individuals"
+      dorsale/customer_vault/link:
+        one: "Link"
+        other: "Links"
+
+    attributes:
+      dorsale/customer_vault/person: &customer_vault_person_attributes
+        context: "Context"
+        all_tags: "All tags"
+        capital: "Capital"
+        immatriculation_number_1: "Immatriculation number 1"
+        immatriculation_number_2: "Immatriculation number 2"
+        legal_form: "Legal form"
+      dorsale/customer_vault/individual:
+        <<: *customer_vault_person_attributes
+      dorsale/customer_vault/corporation:
+        <<: *customer_vault_person_attributes
+      dorsale/customer_vault/link:
+        alice: "Person"
+        bob: "Person"

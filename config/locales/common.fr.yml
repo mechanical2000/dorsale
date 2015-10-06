@@ -120,7 +120,7 @@ fr:
     tracking_id           : "Numéro"
     count                 : "Nombre"
     length                : "Nombre"
-    numer                 : "Nombre"
+    number                 : "Nombre"
     message               : "Message"
 
     # BillingMachine

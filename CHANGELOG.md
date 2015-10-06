@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.4
+
+- EN i18n fix
+
+## 2.1.3
+
+- Add tasks summary
+- Add EN translations
+
 ## 2.1.2
 
 - Move People.list to UserScope

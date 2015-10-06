@@ -25,6 +25,10 @@ module Dorsale
         render "dorsale/flyboy/tasks/tasks_for_taskable", tasks: tasks, taskable: taskable
       end
 
+      def show_tasks_summary
+        render "dorsale/flyboy/tasks/summary"
+      end
+
       def task_color(task)
         return "finished" if task.done
         return "ontime"   if task.reminder > Date.today
