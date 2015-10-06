@@ -100,6 +100,7 @@ module Dorsale
           flash[:success] = t("messages.tasks.create_ok")
           redirect_to @task
         else
+          @owners ||= current_user_scope.colleagues(@task.taskable)
           render :new
         end
       end
@@ -111,6 +112,7 @@ module Dorsale
           flash[:success] = t("messages.tasks.update_ok")
           redirect_to @task
         else
+          @owners ||= current_user_scope.colleagues(@task.taskable)
           render :edit
         end
       end
