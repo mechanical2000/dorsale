@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5
+
+- Fix Flyboy error on failing create task
+
 ## 2.1.4
 
 - EN i18n fix
