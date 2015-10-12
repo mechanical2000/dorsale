@@ -21,11 +21,12 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date     = Date.today       if date.nil?
-        self.due_date = 30.days.from_now if due_date.nil?
-        self.vat_rate = 20               if vat_rate.nil?
-        self.advance  = 0                if advance.nil?
-        self.paid     = false            if paid.nil?
+        self.date                = Date.today       if date.nil?
+        self.due_date            = 30.days.from_now if due_date.nil?
+        self.vat_rate            = 20               if vat_rate.nil?
+        self.advance             = 0                if advance.nil?
+        self.commercial_discount = 0                if commercial_discount.nil?
+        self.paid                = false            if paid.nil?
       end
 
       before_create :assign_unique_index
@@ -44,12 +45,13 @@ module Dorsale
       before_save :update_balance
 
       def update_balance
-        self.vat_rate        = 0 if vat_rate.nil?
-        self.advance         = 0 if advance.nil?
-        self.total_duty      = lines.pluck(:total).sum
-        self.vat_amount      = total_duty * vat_rate / 100.0
-        self.total_all_taxes = total_duty + vat_amount
-        self.balance         = total_all_taxes - advance
+        self.vat_rate            = 0 if vat_rate.nil?
+        self.advance             = 0 if advance.nil?
+        self.commercial_discount = 0 if commercial_discount.nil?
+        self.total_duty          = (lines.pluck(:total)).sum - commercial_discount
+        self.vat_amount          = total_duty * vat_rate / 100.0
+        self.total_all_taxes     = total_duty + vat_amount
+        self.balance             = total_all_taxes - advance
       end
 
       def pdf
@@ -84,6 +86,7 @@ module Dorsale
             "Code postal",
             "Ville",
             "Pays",
+            "Remise commerciale",
             "Montant HT",
             "Taux TVA",
             "Montant TVA",
@@ -105,6 +108,7 @@ module Dorsale
               invoice.customer.try(:address).try(:zip),
               invoice.customer.try(:address).try(:city),
               invoice.customer.try(:address).try(:country),
+              french_number(invoice.commercial_discount),
               french_number(invoice.total_duty),
               french_number(invoice.vat_rate),
               french_number(invoice.vat_amount),
