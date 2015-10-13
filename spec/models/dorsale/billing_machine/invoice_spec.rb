@@ -133,7 +133,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       invoice0 = create(:billing_machine_invoice, label: "invoiceLabel", date: "2014-07-31", unique_index: 1, commercial_discount:1, total_duty: 9.99, vat_rate: 19.6, vat_amount: 23.2, total_all_taxes: 43.35, advance: 3.5, id_card: id_card, customer: customer)
       invoice0.lines.create(quantity: 1, unit_price: 9.99)
       invoice1 = invoice0.dup
-      invoice1.update(label: 'çé"à;ç\";,@\\', date: "2014-08-01", unique_index: 2, advance: 3.0, vat_rate: 20)
+      invoice1.update(label: 'çé"à;ç\";,@\\', date: "2014-08-01", commercial_discount:0, unique_index: 2, advance: 3.0, vat_rate: 20)
       invoice1.lines.create(quantity: 1, unit_price: 13.0)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 
@@ -142,17 +142,17 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
         '"2014-07-31";"2014-01";"invoiceLabel";"cutomerName";"address1";"address2";'\
         '"13005";"Marseille";"country";"1,00";"8,99";"19,60";"1,76";"10,75";"3,50";"7,25"' + "\n"\
         '"2014-08-01";"2014-02";"çé""à;ç\"";,@\";"cutomerName";"address1";"address2";'\
-        '"13005";"Marseille";"country";"13,00";"20,00";"2,60";"15,60";"3,00";"12,60"' + "\n"
+        '"13005";"Marseille";"country";"0,00";"13,00";"20,00";"2,60";"15,60";"3,00";"12,60"' + "\n"
     end
     it 'should return expected csv with nil values' do
       invoice0 = create(:billing_machine_invoice, id_card: id_card, total_duty: nil,
         vat_rate: nil, vat_amount: nil, total_all_taxes: 0, advance: nil, label: nil,
-        customer: nil, payment_term: nil)
+        customer: nil, payment_term: nil, commercial_discount: nil)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 
       expect(csv_output).to be ==
         columns_names +
-        '"2014-02-19";"2014-01";"";"";"";"";"";"";"";"0,00";"0,00";"0,00";"0,00";"0,00";"0,00"' + "\n"
+        '"2014-02-19";"2014-01";"";"";"";"";"";"";"";"0,00";"0,00";"0,00";"0,00";"0,00";"0,00";"0,00"' + "\n"
     end
   end
 end
