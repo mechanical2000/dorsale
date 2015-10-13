@@ -22,16 +22,17 @@
       .col-xs-12.col-sm-6
         = info @invoice, :tracking_id
         = info @invoice, :label
-        = info @invoice, :date,            date(@invoice.date)
-        = info @invoice, :due_date,        date(@invoice.due_date)
-        = info @invoice, :payment_term,    @invoice.payment_term.try(:label)
-        = info @invoice, :vat_rate,        percentage(@invoice.vat_rate)
+        = info @invoice, :date,                date(@invoice.date)
+        = info @invoice, :due_date,            date(@invoice.due_date)
+        = info @invoice, :payment_term,        @invoice.payment_term.try(:label)
+        = info @invoice, :vat_rate,            percentage(@invoice.vat_rate)
         = info @invoice, :payment_status
-        = info @invoice, :total_duty,      euros(@invoice.total_duty)
-        = info @invoice, :vat_amount,      euros(@invoice.vat_amount)
-        = info @invoice, :advance,         euros(@invoice.advance)
-        = info @invoice, :total_all_taxes, euros(@invoice.total_all_taxes)
-        = info @invoice, :balance,         euros(@invoice.balance)
+        = info @invoice, :commercial_discount, euros(@invoice.commercial_discount)
+        = info @invoice, :total_duty,          euros(@invoice.total_duty)
+        = info @invoice, :vat_amount,          euros(@invoice.vat_amount)
+        = info @invoice, :advance,             euros(@invoice.advance)
+        = info @invoice, :total_all_taxes,     euros(@invoice.total_all_taxes)
+        = info @invoice, :balance,             euros(@invoice.balance)
 
     - @invoice.lines.each do |line|
       .panel.panel-default

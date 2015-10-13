@@ -28,9 +28,10 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date       = Date.today     if date.nil?
-        self.expires_at = date + 1.month if expires_at.nil?
-        self.vat_rate   = 20             if vat_rate.nil?
+        self.date                = Date.today     if date.nil?
+        self.expires_at          = date + 1.month if expires_at.nil?
+        self.vat_rate            = 20             if vat_rate.nil?
+        self.commercial_discount = 0              if commercial_discount.nil?
       end
 
       before_create :assign_unique_index
@@ -49,10 +50,11 @@ module Dorsale
       before_save :update_total
 
       def update_total
-        self.vat_rate        = 0 if vat_rate.nil?
-        self.total_duty      = lines.pluck(:total).sum
-        self.vat_amount      = total_duty * vat_rate / 100.0
-        self.total_all_taxes = total_duty + vat_amount
+        self.vat_rate            = 0 if vat_rate.nil?
+        self.commercial_discount = 0 if commercial_discount.nil?
+        self.total_duty          = (lines.pluck(:total).sum) - commercial_discount
+        self.vat_amount          = total_duty * vat_rate / 100.0
+        self.total_all_taxes     = total_duty + vat_amount
       end
 
       def pdf

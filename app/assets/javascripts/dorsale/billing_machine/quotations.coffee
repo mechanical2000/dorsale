@@ -11,23 +11,25 @@ $(document).on "ready page:load", ->
 
     update_total = ->
       total_duty = 0
-      vat_rate = $('#quotation_vat_rate').val().replace(',', '.')
+      vat_rate = parseFloat $('#quotation_vat_rate').val().replace(',', '.') || 0
+      commercial_discount = parseFloat $('#quotation_commercial_discount').val().replace(',', '.') || 0
 
       $('.quotation-line').each (index, element)->
           remove_me = $(element).find('.remove-line input[type="hidden"]').val()
           total_duty += sum_line $(element) if remove_me == 'false'
+      total_duty -= commercial_discount
       vat_amount = vat_rate * total_duty / 100.0
 
+      display_euros(commercial_discount, $('#quotation-commercial_discount'))
       display_euros(total_duty, $('#quotation-total_duty'))
       display_euros(vat_amount, $('#quotation-vat_amount'))
       display_euros(vat_amount+total_duty, $('#quotation-total_all_taxes'))
-
 
     # Set listener on inputs
     $('#quotation-lines').on 'input', 'input.line-quantity, input.line-unit_price', (event) ->
       update_line_total $(event.currentTarget).parents('.quotation-line')
       update_total()
-    $('#quotation').on 'input', 'input#quotation_vat_rate', (event) ->
+    $('#quotation').on 'input', 'input#quotation_commercial_discount, input#quotation_vat_rate', (event) ->
        update_total()
     $('#quotation').on 'cocoon:after-remove', (event) ->
        update_total()

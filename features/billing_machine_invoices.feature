@@ -53,9 +53,10 @@ Feature: Invoice Management
     When he adds a new line
     And he fills a line with "Machin truc", "8", "€", "20"
     Then the new line's total should be "160,00€"
-    Then the total duty is "200,00€"
-    And the VAT due is "40,00€"
-    And the total all taxes included is "240,00€"
+    And he fill the commercial discount with "20,00"
+    Then the total duty is "180,00€"
+    And the VAT due is "36,00€"
+    And the total all taxes included is "216,00€"
     When he saves the invoice
     Then a message signals the success of the creation
     Then it's added to the invoice list
@@ -69,20 +70,23 @@ Feature: Invoice Management
     Then a message signals the success of the update
     Then the invoices's label has changed
 
-  Scenario: New invoice with advance
+  Scenario: New invoice with advance and commercial discount
     When the user goes to the invoices page
     And he creates a new invoice
     And he fills a line with "Bidule", "1", "€", "100"
     Then the total all taxes included is "120,00€"
     And the advance is "0"€
+    And the commercial discount is "0"€
     And the balance included is "120,00€"
     When he changes the advance to "30"€
-    Then the balance included is "90,00€"
+    When he changes the commercial discount to "10"€
+    Then the balance included is "78,00€"
     When he saves the invoice
     Then a message signals the success of the creation
     When he goes to the newly created invoice page
     Then the advance is "30.0"€
-    Then the balance included is "90,00€"
+    Then the commercial discount is "10,00"€
+    Then the balance included is "78,00€"
 
   Scenario: New invoice with default date
     When the user goes to the invoices page
@@ -117,6 +121,13 @@ Feature: Invoice Management
     Then the new line total is "100,00€"
     And he fills a line with "Bidule", "10", "€", "100"
     Then the existing line total is "1.000,00€"
+    And the total duty is "1.000,00€"
+    And he changes the commercial discount to "100"€
+    Then the total duty is "900,00€"
+    And the VAT due is "180,00€"
+    And the total all taxes included is "1.080,00€"
+    And he changes the commercial discount to "0"€
+    Then the total duty is "1.000,00€"
     And the VAT due is "200,00€"
     And the total all taxes included is "1.200,00€"
     And he changes the VAT rate to "19.6"

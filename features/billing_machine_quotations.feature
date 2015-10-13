@@ -48,9 +48,10 @@ Feature: Quotation Management
     When he adds a new line
     And he fills an quotation line with "Machin truc", "8", "€", "20"
     Then the new line's total should be "160,00€"
-    Then the quotation total duty is "200,00€"
-    And the quotation VAT due is "40,00€"
-    And the quotation total all taxes included is "240,00€"
+    And he fill the quotation commercial discount with "20,00"
+    Then the quotation total duty is "180,00€"
+    And the quotation VAT due is "36,00€"
+    And the quotation total all taxes included is "216,00€"
     When he saves the quotation
     Then a message signals the success of the quotation creation
     Then it's added to the quotation list
@@ -97,6 +98,12 @@ Feature: Quotation Management
     And he fills an quotation line with "Bidule", "10", "€", "100"
     Then the existing quotation line total is "1.000,00€"
     And the quotation VAT due is "200,00€"
+    And he fill the quotation commercial discount with "100,00"
+    And the quotation total duty is "900,00€"
+    And the quotation VAT due is "180,00€"
+    And the quotation total all taxes included is "1.080,00€"
+    And he fill the quotation commercial discount with "0,00"
+    And the quotation total duty is "1.000,00€"
     And the quotation total all taxes included is "1.200,00€"
     And he changes the quotation VAT rate to "19.6"
     And the quotation VAT due is "196,00€"

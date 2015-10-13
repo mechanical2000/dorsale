@@ -135,6 +135,7 @@ en:
     total_all_taxes       : "Total all taxes"
     balance               : "Balance"
     expires_at            : "Expires at"
+    commercial_discount   : "Commercial discount"
 
   errors:
     messages:

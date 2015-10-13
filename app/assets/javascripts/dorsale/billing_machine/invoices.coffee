@@ -11,14 +11,17 @@ $(document).on "ready page:load", ->
 
     update_total = ->
       total_duty = 0
-      vat_rate = $('#invoice_vat_rate').val().replace(',', '.')
-      advance = $('#invoice_advance').val().replace(',', '.')
+      vat_rate = parseFloat $('#invoice_vat_rate').val().replace(',', '.') || 0
+      advance = parseFloat $('#invoice_advance').val().replace(',', '.') || 0
+      commercial_discount = parseFloat $('#invoice_commercial_discount').val().replace(',', '.') || 0
 
       $('.invoice-line').each (index, element)->
           remove_me = $(element).find('.remove-line input[type="hidden"]').val()
           total_duty += sum_line $(element) if remove_me == 'false'
+      total_duty -= commercial_discount
       vat_amount = vat_rate * total_duty / 100.0
 
+      display_euros(commercial_discount, $('#invoice-commercial_discount'))
       display_euros(total_duty, $('#invoice-total_duty'))
       display_euros(vat_amount, $('#invoice-vat_amount'))
       display_euros(vat_amount+total_duty, $('#invoice-total_all_taxes'))
@@ -28,7 +31,7 @@ $(document).on "ready page:load", ->
     $('#invoice-lines').on 'input', 'input.line-quantity, input.line-unit_price', (event) ->
       update_line_total $(event.currentTarget).parents('.invoice-line')
       update_total()
-    $('#invoice').on 'input', 'input#invoice_vat_rate, input#invoice_advance', (event) ->
+    $('#invoice').on 'input','input#invoice_commercial_discount, input#invoice_vat_rate, input#invoice_advance', (event) ->
        update_total()
     $('#invoice').on 'cocoon:after-remove', (event) ->
        update_total()

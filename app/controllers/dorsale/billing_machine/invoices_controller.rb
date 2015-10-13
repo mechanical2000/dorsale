@@ -147,6 +147,7 @@ module Dorsale
           :label,
           :paid,
           :date,
+          :commercial_discount,
           :vat_amount,
           :advance,
           :vat_rate,
