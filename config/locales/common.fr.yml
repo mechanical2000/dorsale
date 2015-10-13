@@ -135,6 +135,7 @@ fr:
     total_all_taxes       : "Total TTC"
     balance               : "Total à payer"
     expires_at            : "Date d'expiration"
+    commercial_discount   : "Remise commerciale"
 
   errors:
     messages:

@@ -106,6 +106,10 @@ Then(/^a message signals the success of the quotation update$/) do
   page.should have_selector '.alert-success'
 end
 
+Then(/^he fill the quotation commercial discount with "(.*?)"$/) do |arg1|
+  fill_in 'quotation_commercial_discount', with: arg1
+end
+
 Then(/^the quotation's label has changed$/) do
   visit dorsale.edit_billing_machine_quotation_path(@quotation)
   page.should have_field('quotation_label', with: @new_label)
@@ -116,7 +120,7 @@ Then(/^it's added to the quotation list$/) do
   @quotation = ::Dorsale::BillingMachine::Quotation.unscoped.order(:id).last
   page.should have_selector '.quotation .tracking_id', text: @quotation.tracking_id
   page.should have_selector '.quotation .customer_name', text: @customer.name
-  page.should have_selector '.quotation .total_duty', text: '200,00 €'
+  page.should have_selector '.quotation .total_duty', text: '180,00 €'
 end
 
 Then(/^he can see all the quotation informations$/) do

@@ -15,6 +15,7 @@
       = f.association :payment_term, collection: @payment_terms
       = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
       = f.input :vat_rate, as: :string
+      = f.input :commercial_discount, as: :string
 
       - if @id_cards.one?
         = f.hidden_field :id_card_id
@@ -31,6 +32,13 @@
         = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
 
     .total.well
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:commercial_discount)
+          = " : "
+        .col-sm-9
+          .form-control-static#quotation-commercial_discount
+
       .row
         label.col-sm-3.control-label
           = @quotation.t(:total_duty)

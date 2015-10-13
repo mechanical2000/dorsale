@@ -123,6 +123,9 @@ module Dorsale
 
       def build_synthesis
         font_size 10
+          if (@main_document.commercial_discount && @main_document.commercial_discount != 0.0)
+            @table_matrix.push ['Remise commerciale', '', '', euros(@main_document.commercial_discount)]
+          end
           @table_matrix.push ['Net HT', '', '', euros(@main_document.total_duty)]
           vat_rate = french_number(@main_document.vat_rate)
           @table_matrix.push ["TVA #{vat_rate} %", '', '', euros(@main_document.vat_amount)]

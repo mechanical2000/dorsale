@@ -80,6 +80,10 @@ When(/^he adds a new line$/) do
   click_link 'add-new-line'
 end
 
+When(/^he saves the invoice$/) do
+  find("[type=submit]").click
+end
+
 Then(/^the total duty is "(.*?)"$/) do |arg1|
   expect(page).to have_selector '.total #invoice-total_duty', text: arg1
 end
@@ -92,9 +96,11 @@ Then(/^the total all taxes included is "(.*?)"$/) do |arg1|
   expect(page).to have_selector '.total #invoice-total_all_taxes', text: arg1
 end
 
-When(/^he saves the invoice$/) do
-  find("[type=submit]").click
+Then(/^he fill the commercial discount with "(.*?)"$/) do |arg1|
+  fill_in 'invoice_commercial_discount', with: arg1
 end
+
+
 
 Then(/^it's added to the invoice list$/) do
   step('the user goes to the invoices page')
@@ -103,7 +109,7 @@ Then(/^it's added to the invoice list$/) do
   tracking_id = ::Dorsale::BillingMachine::Invoice.first.tracking_id
   expect(page).to have_selector '.invoice .tracking_id', text: tracking_id
   expect(page).to have_selector '.invoice .customer_name', text: @customer.name
-  expect(page).to have_selector '.invoice .total_duty', text: '200,00 €'
+  expect(page).to have_selector '.invoice .total_duty', text: '180,00 €'
 end
 
 When(/^he goes on the edit page of the invoice$/) do
@@ -113,6 +119,10 @@ end
 When(/^changes the label$/) do
   @new_label=  @invoice.label + " Edited"
   fill_in 'invoice_label', with: @new_label
+end
+
+Then(/^the commercial discount is "(.*?)"€$/) do |arg1|
+  expect(page).to have_selector '.total #invoice-commercial_discount', text: arg1
 end
 
 Then(/^the invoices's label has changed$/) do
@@ -127,6 +137,11 @@ end
 When(/^he changes the VAT rate to "(.*?)"$/) do |new_rate|
   fill_in 'invoice_vat_rate', with: new_rate
 end
+
+When(/^he changes the commercial discount to "(.*?)"€$/) do |arg1|
+  fill_in 'invoice_commercial_discount', with: arg1
+end
+
 
 Then(/^the new line total is "(.*?)"$/) do |value|
   expect(page).to have_selector '.invoice-line .line-total', text: value

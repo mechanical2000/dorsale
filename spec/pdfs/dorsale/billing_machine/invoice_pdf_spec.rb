@@ -38,6 +38,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
+      commercial_discount: 100.23,
       total_duty: 1812.53,
       vat_amount: 355.26,
       total_all_taxes: 2167.79,
@@ -183,21 +184,25 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       end # context in Lignes de facturation
 
       context 'in Synthèse' do
+
+        it_should_write 'Remise commerciale'
+        it_should_write '100,23 €'
+
         it_should_write 'Total HT'
-        it_should_write '1.812,52 €'
+        it_should_write '1.712,29 €'
 
         it_should_write 'TVA 19,6 %'
-        it_should_write '355,25 €'
+        it_should_write '335,61 €'
 
         it_should_write 'Total TTC'
-        it_should_write '2.167,78 €'
+        it_should_write '2.047,90 €'
 
         it_should_write 'Acompte reçu sur commande'
         it_should_write '1,79 €'
 
         it_should_write 'Solde à payer'
         it 'should write balance calculated using total_all_taxes - advance' do
-          text.strings.should include '2.165,99 €'
+          text.strings.should include '2.046,11 €'
         end
 
 
@@ -214,6 +219,10 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
           it 'should not write Acompte reçu sur commande' do
             @text_incomplete.strings.should_not include 'Acompte reçu sur commande'
+          end
+
+          it 'should not write Remise commerciale' do
+            @text_incomplete.strings.should_not include 'Remise commerciale'
           end
 
           it 'should not write Solde à payer' do

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.6
+
+- Add commercial discount to invoices and quotations
+
 ## 2.1.5
 
 - Fix Flyboy error on failing create task

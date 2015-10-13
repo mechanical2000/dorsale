@@ -131,6 +131,7 @@ module Dorsale
           :comments,
           :vat_amount,
           :vat_rate,
+          :commercial_discount,
           :lines_attributes => [
             :_destroy,
             :id,
