@@ -38,13 +38,32 @@ en:
         custom_info_2: "custom informations (2)"
         custom_info_3: "custom informations (3)"
         logo: "logo"
+  pdf:
+    your_contact: "Your contact : "
+    contact_phone: "Phone : "
+    contact_email: "Email : "
+    contact_fax: "Fax : "
+    subject: "Subject : "
+    tracking_number: "Number : "
+    date: "Date : "
+    customer: "Customer :"
+    designation: "DESIGNATION"
+    quantity: "QUANTITY"
+    unity: "UNITY"
+    tax: "TAX %"
+    unit_price: "UNIT PRICE"
+    line_total: "TOTAL"
 
   messages:
     invoices:
       create_ok : "Invoice successfully created."
       update_ok : "Invoice successfully updated."
+      create_error : "Impossible to create this invoice."
+      update_error : "Impossible to update this invoice."
       pay_ok    : "This invoice has been marked payed."
       pay_error : "Impossible to mark this invoice as payed."
     quotations:
       create_ok : "Quotation successfully created."
       update_ok : "Quotation successfully created."
+      create_error : "Impossible to create this quotation."
+      update_error : "Impossible to update this quotation."

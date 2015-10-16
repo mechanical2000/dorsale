@@ -40,13 +40,32 @@ fr:
         custom_info_2: "information personalisées (2)"
         custom_info_3: "information personalisées (3)"
         logo: "logo"
+  pdfs:
+    your_contact: "Votre contact : "
+    contact_phone: "Téléphone : "
+    contact_email: "Email : "
+    contact_fax: "Fax : "
+    subject: "Objet : "
+    tracking_number: "Numéro : "
+    date: "Date : "
+    customer: "Client :"
+    designation: "DÉSIGNATION"
+    quantity: "QTITÉ"
+    unity: "UNITÉ"
+    tax: "TVA %"
+    unit_price: "P.U €HT"
+    line_total: "TOTAL €HT"
 
   messages:
     invoices:
       create_ok : "La facture a été créée."
       update_ok : "La facture a été modifiée."
+      create_error : "Erreur dans la création de la facture."
+      update_error : "Erreur dans la modification de la facture."
       pay_ok    : "La facture a été marquée comme payée."
       pay_error : "Impossible de marquer la facture comme payée."
     quotations:
       create_ok : "Le devis a été créé."
       update_ok : "Le devis a été modifié."
+      create_error : "Erreur dans la création du devis."
+      update_error : "Erreur dans la modification du devis."
