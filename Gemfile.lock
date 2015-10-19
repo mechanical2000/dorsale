@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (2.1.6)
+    dorsale (2.1.7)
       aasm
       acts-as-taggable-on
       awesome_print
@@ -94,7 +94,7 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
     builder (3.2.2)
-    cancancan (1.12.0)
+    cancancan (1.13.1)
     capybara (2.4.3)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -119,7 +119,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
-    combine_pdf (0.2.5)
+    combine_pdf (0.2.6)
       ruby-rc4 (>= 0.1.5)
     cucumber (1.3.19)
       builder (>= 2.1.2)
@@ -305,7 +305,7 @@ GEM
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.5)
     ruby-rc4 (0.1.5)
-    sass (3.4.18)
+    sass (3.4.19)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
