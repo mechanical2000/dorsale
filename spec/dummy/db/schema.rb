@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151012181412) do
+ActiveRecord::Schema.define(version: 20150805134318) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -95,10 +95,9 @@ ActiveRecord::Schema.define(version: 20151012181412) do
     t.decimal  "vat_rate"
     t.boolean  "paid"
     t.date     "due_date"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "tracking_id"
-    t.decimal  "commercial_discount"
   end
 
   add_index "dorsale_billing_machine_invoices", ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id"
@@ -138,11 +137,10 @@ ActiveRecord::Schema.define(version: 20151012181412) do
     t.integer  "unique_index"
     t.decimal  "vat_rate"
     t.text     "comments"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.date     "expires_at"
     t.string   "tracking_id"
-    t.decimal  "commercial_discount"
   end
 
   add_index "dorsale_billing_machine_quotations", ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id"
