@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805134318) do
+ActiveRecord::Schema.define(version: 20151019100134) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -95,9 +95,10 @@ ActiveRecord::Schema.define(version: 20150805134318) do
     t.decimal  "vat_rate"
     t.boolean  "paid"
     t.date     "due_date"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "tracking_id"
+    t.decimal  "commercial_discount"
   end
 
   add_index "dorsale_billing_machine_invoices", ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id"
@@ -137,10 +138,11 @@ ActiveRecord::Schema.define(version: 20150805134318) do
     t.integer  "unique_index"
     t.decimal  "vat_rate"
     t.text     "comments"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.date     "expires_at"
     t.string   "tracking_id"
+    t.decimal  "commercial_discount"
   end
 
   add_index "dorsale_billing_machine_quotations", ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id"
@@ -188,6 +190,7 @@ ActiveRecord::Schema.define(version: 20150805134318) do
     t.string   "mobile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "skype"
   end
 
   create_table "dorsale_customer_vault_links", force: :cascade do |t|
@@ -245,8 +248,8 @@ ActiveRecord::Schema.define(version: 20150805134318) do
     t.date     "reminder"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "owner_type"
     t.integer  "owner_id"
+    t.string   "owner_type"
   end
 
   add_index "dorsale_flyboy_tasks", ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id"
