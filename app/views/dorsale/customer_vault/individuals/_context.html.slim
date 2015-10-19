@@ -11,5 +11,6 @@
   = context_info individual.t(:phone),   tel_link(individual.phone)
   = context_info individual.t(:mobile),  tel_link(individual.mobile)
   = context_info individual.t(:fax),     tel_link(individual.fax)
+  = context_info individual.t(:skype),   individual.skype
   = context_info individual.t(:www),     web_link(individual.www)
   = context_info individual.t(:address), individual.address.one_line if individual.address.present?
