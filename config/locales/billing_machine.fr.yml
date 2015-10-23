@@ -50,3 +50,4 @@ fr:
     quotations:
       create_ok : "Le devis a été créé."
       update_ok : "Le devis a été modifié."
+      copy_ok : "Le devis a été dupliqué."

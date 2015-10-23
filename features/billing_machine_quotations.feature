@@ -34,6 +34,12 @@ Feature: Quotation Management
     When the user goes to the quotation details
     Then he can see all the quotation informations
 
+  Scenario: Quotation copy
+    Given an existing quotation
+    When the user goes to the quotation details
+    And he copy the quotation
+    Then he is on the new quotation edit page
+
   Scenario: New quotation for existing customer
     And an existing customer
     And an existing payment term

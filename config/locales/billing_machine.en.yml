@@ -48,3 +48,4 @@ en:
     quotations:
       create_ok : "Quotation successfully created."
       update_ok : "Quotation successfully created."
+      update_ok : "Quotation successfully duplicated."

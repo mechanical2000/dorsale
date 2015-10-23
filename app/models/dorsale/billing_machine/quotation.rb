@@ -63,6 +63,20 @@ module Dorsale
         pdf
       end
 
+      def create_copy!
+        new_quotation = self.dup
+
+        self.lines.each do |line|
+          new_quotation.lines << line.dup
+        end
+
+        new_quotation.unique_index = nil
+        new_quotation.date         = Date.today
+
+        new_quotation.save!
+        new_quotation
+      end
+
     end # Quotation
   end # BillingMachine
 end # Dorsale

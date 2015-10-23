@@ -36,7 +36,9 @@ Dorsale::Engine.routes.draw do
       end
     end
 
-    resources :quotations
+    resources :quotations do
+      post :copy, on: :member
+    end
   end
 
   namespace :customer_vault do

@@ -248,8 +248,8 @@ ActiveRecord::Schema.define(version: 20151019100134) do
     t.date     "reminder"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "owner_id"
     t.string   "owner_type"
+    t.integer  "owner_id"
   end
 
   add_index "dorsale_flyboy_tasks", ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id"

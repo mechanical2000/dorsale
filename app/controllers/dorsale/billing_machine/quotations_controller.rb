@@ -6,6 +6,7 @@ module Dorsale
         :edit,
         :update,
         :destroy,
+        :copy,
       ]
 
       def index
@@ -112,6 +113,15 @@ module Dorsale
         end
 
         redirect_to dorsale.billing_machine_quotations_path
+      end
+
+      def copy
+        authorize! :create, @quotation
+
+        new_quotation = @quotation.create_copy!
+        flash[:notice] = t("messages.quotations.copy_ok")
+
+        redirect_to dorsale.edit_billing_machine_quotation_path(new_quotation)
       end
 
       private

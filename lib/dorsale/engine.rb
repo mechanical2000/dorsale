@@ -26,6 +26,12 @@ require "prawn"
 require "prawn/table"
 require "combine_pdf"
 
+if %w(development test).include?(Rails.env)
+  require "pry"
+  require "factory_girl_rails"
+  require "factory_girl"
+end
+
 require "dorsale/file_loader"
 require "dorsale/polymorphic_id"
 require "dorsale/simple_form"
@@ -41,10 +47,10 @@ module Dorsale
   class Engine < ::Rails::Engine
     isolate_namespace Dorsale
 
-    config.generators do |g|
-      g.test_framework      :rspec,        :fixture => false
-      g.fixture_replacement :factory_girl, :dir => 'spec/factories'
-      g.template_engine :slim
+    initializer "factory_girl" do
+      if %w(development test).include?(Rails.env)
+        FactoryGirl.definition_file_paths << Dorsale::Engine.root.join("spec/factories/").to_s
+      end
     end
 
     Mime::Type.register "application/vnd.ms-excel", :xls

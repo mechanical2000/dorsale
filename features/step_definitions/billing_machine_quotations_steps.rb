@@ -214,3 +214,15 @@ Given(/^existing "(.*?)" quotations with "(.*?)" amount$/) do |n, amount|
     )
   end
 end
+
+When(/^he copy the quotation$/) do
+  @quotations_count = Dorsale::BillingMachine::Quotation.count
+  find("[href$=copy]").click
+end
+
+Then(/^he is on the new quotation edit page$/) do
+  expect(Dorsale::BillingMachine::Quotation.count).to eq(@quotations_count+1)
+  @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
+  expect(current_path).to eq dorsale.edit_billing_machine_quotation_path(@quotation)
+end
+
