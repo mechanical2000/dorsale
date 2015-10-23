@@ -49,7 +49,7 @@ module Dorsale
 
     initializer "factory_girl" do
       if %w(development test).include?(Rails.env)
-        FactoryGirl.definition_file_paths << Dorsale::Engine.root.join("spec/factories/").to_s
+        FactoryGirl.definition_file_paths.unshift Dorsale::Engine.root.join("spec/factories/").to_s
       end
     end
 
