@@ -23,6 +23,24 @@ module Dorsale
         @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
         @quotations = @quotations.page(params[:page]).per(50)
 
+        @total_duty = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:total_duty)
+          .delete_if(&:blank?)
+          .sum
+
+        @vat_amount = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:vat_amount)
+          .delete_if(&:blank?)
+          .sum
+
+        @total_all_taxes = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:total_all_taxes)
+          .delete_if(&:blank?)
+          .sum
+
         respond_to do |format|
           format.csv {
             send_data generate_encoded_csv(@quotations_without_pagination), type: "text/csv"
@@ -144,6 +162,7 @@ module Dorsale
       def permitted_params
         [
           :label,
+          :state,
           :customer_guid,
           :payment_term_id,
           :id_card_id,

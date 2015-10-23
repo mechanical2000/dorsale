@@ -1,10 +1,6 @@
 .quotation-context: .context
   = context_title ::Dorsale::BillingMachine::Quotation.t(:data)
 
-  - total_duty = @quotations_without_pagination.map(&:total_duty).delete_if {|e| e.blank?}.inject(:+) || 0
-  - vat_amount = @quotations_without_pagination.map(&:vat_amount).delete_if {|e| e.blank?}.inject(:+) || 0
-  - total_all_taxes = @quotations_without_pagination.map(&:total_all_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
-
-  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_duty), euros(total_duty)
-  = context_info ::Dorsale::BillingMachine::Quotation.t(:vat_amount), euros(vat_amount)
-  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes), euros(total_all_taxes)
+  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_duty), euros(@total_duty)
+  = context_info ::Dorsale::BillingMachine::Quotation.t(:vat_amount), euros(@vat_amount)
+  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes), euros(@total_all_taxes)

@@ -8,6 +8,8 @@ describe ::Dorsale::BillingMachine::Quotation do
 
   it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
+  it { is_expected.to validate_presence_of :state }
+  it { is_expected.to ensure_inclusion_of(:state).in_array(::Dorsale::BillingMachine::Quotation::STATES) }
 
   it { is_expected.to respond_to :date }
   it { is_expected.to respond_to :label }
@@ -23,13 +25,19 @@ describe ::Dorsale::BillingMachine::Quotation do
     expect(create(:billing_machine_quotation)).to be_valid
   end
 
-  it "default date should be today" do
-    expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Date.today
-  end
+  describe "default values" do
+    it "default date should be today" do
+      expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Date.today
+    end
 
-  it "default expires_at should be date + 1 month" do
-    quotation = ::Dorsale::BillingMachine::Quotation.new(date: "21/12/2012")
-    expect(quotation.expires_at).to eq Date.parse("21/01/2013")
+    it "default expires_at should be date + 1 month" do
+      quotation = ::Dorsale::BillingMachine::Quotation.new(date: "21/12/2012")
+      expect(quotation.expires_at).to eq Date.parse("21/01/2013")
+    end
+
+    it "default state should be pending" do
+      expect(::Dorsale::BillingMachine::Quotation.new.state).to eq "pending"
+    end
   end
 
   it "should work fine upon creation" do
@@ -119,8 +127,12 @@ describe ::Dorsale::BillingMachine::Quotation do
       expect(q1.updated_at).to_not eq q2.updated_at
     end
 
-    xit "should reset state to pending" do
-      # state not yet implemented
+    it "should reset state to pending" do
+      q1 = create(:billing_machine_quotation, state: "canceled")
+      q2 = q1.create_copy!
+
+      expect(q1.reload.state).to eq "canceled"
+      expect(q2.reload.state).to eq "pending"
     end
   end
 

@@ -3,6 +3,8 @@ module Dorsale
     class Quotation < ActiveRecord::Base
       self.table_name = "dorsale_billing_machine_quotations"
 
+      STATES = %w(pending accepted refused canceled)
+
       belongs_to :customer, polymorphic: true
       belongs_to :id_card
       belongs_to :payment_term
@@ -22,6 +24,7 @@ module Dorsale
 
       validates :id_card, presence: true
       validates :date,    presence: true
+      validates :state,   presence: true, inclusion: {in: STATES}
 
       # simple_form
       validates :id_card_id, presence: true
@@ -32,6 +35,7 @@ module Dorsale
         self.expires_at          = date + 1.month if expires_at.nil?
         self.vat_rate            = 20             if vat_rate.nil?
         self.commercial_discount = 0              if commercial_discount.nil?
+        self.state               = STATES.first   if state.nil?
       end
 
       before_create :assign_unique_index
@@ -74,6 +78,7 @@ module Dorsale
         new_quotation.created_at   = nil
         new_quotation.updated_at   = nil
         new_quotation.date         = Date.today
+        new_quotation.state        = Quotation::STATES.first
 
         new_quotation.save!
 
