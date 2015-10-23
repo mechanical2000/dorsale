@@ -1,4 +1,7 @@
 fr:
+  actions:
+    create_invoice: "Créer facture"
+
   activerecord:
     models:
       dorsale/billing_machine/invoice: "facture"
@@ -51,3 +54,4 @@ fr:
       create_ok : "Le devis a été créé."
       update_ok : "Le devis a été modifié."
       copy_ok : "Le devis a été dupliqué."
+      create_invoice_ok : "La facture a été créée depuis le devis"

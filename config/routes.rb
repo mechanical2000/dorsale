@@ -38,6 +38,7 @@ Dorsale::Engine.routes.draw do
 
     resources :quotations do
       post :copy, on: :member
+      post :create_invoice, on: :member
     end
   end
 

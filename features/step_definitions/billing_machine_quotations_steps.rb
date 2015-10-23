@@ -220,9 +220,19 @@ When(/^he copy the quotation$/) do
   find("[href$=copy]").click
 end
 
-Then(/^he is on the new quotation edit page$/) do
+Then(/^he is on the created quotation edit page$/) do
   expect(Dorsale::BillingMachine::Quotation.count).to eq(@quotations_count+1)
   @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
   expect(current_path).to eq dorsale.edit_billing_machine_quotation_path(@quotation)
 end
 
+When(/^he create an invoice from the quotation$/) do
+  @invoices_count = Dorsale::BillingMachine::Invoice.count
+  find("[href$='create_invoice']").click
+end
+
+Then(/^he is on the created invoice edit page$/) do
+  expect(Dorsale::BillingMachine::Invoice.count).to eq(@invoices_count+1)
+  @invoice = Dorsale::BillingMachine::Invoice.reorder(:id).last
+  expect(current_path).to eq dorsale.edit_billing_machine_invoice_path(@invoice)
+end

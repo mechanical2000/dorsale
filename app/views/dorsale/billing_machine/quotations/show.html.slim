@@ -1,9 +1,10 @@
 .billing_machine
   .quotation-details
     .actions
-      = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
       = update_button dorsale.edit_billing_machine_quotation_path(@quotation)
       = download_button dorsale.billing_machine_quotation_path(@quotation, format: :pdf)
+      = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
+      = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), method: :post, action: :create_invoice, confirm: true, icon: :magic
 
 
       - if @quotation.customer

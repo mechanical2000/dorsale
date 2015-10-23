@@ -87,6 +87,37 @@ module Dorsale
         new_quotation
       end
 
+      def create_invoice!
+        new_invoice = Dorsale::BillingMachine::Invoice.new
+
+        self.attributes.each do |k, v|
+          next if k.to_s == "id"
+          next if k.to_s.match /index|tracking|_at/
+
+          if new_invoice.respond_to?("#{k}=")
+            new_invoice.public_send("#{k}=", v)
+          end
+        end
+
+        self.lines.each do |line|
+          new_line = new_invoice.lines.new
+          line.attributes.each do |k, v|
+            next if k.to_s == "id"
+            next if k.to_s.match /index|tracking|_at/
+
+          if new_line.respond_to?("#{k}=")
+            new_line.public_send("#{k}=", v)
+          end
+          end
+        end
+
+        new_invoice.date = Date.today
+
+        new_invoice.save!
+
+        new_invoice
+      end
+
     end # Quotation
   end # BillingMachine
 end # Dorsale

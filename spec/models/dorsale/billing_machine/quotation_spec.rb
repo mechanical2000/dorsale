@@ -122,6 +122,36 @@ describe ::Dorsale::BillingMachine::Quotation do
     xit "should reset state to pending" do
       # state not yet implemented
     end
-
   end
+
+  describe "#create_invoice!" do
+    it "should convert quotation to invoice" do
+      q  = create(:billing_machine_quotation, label: "ABC")
+      ql = create(:billing_machine_quotation_line, quotation: q, label: "DEF")
+
+      i = q.create_invoice!.reload
+
+      expect(i).to be_a Dorsale::BillingMachine::Invoice
+      expect(i).to be_persisted
+      expect(i.label).to eq "ABC"
+      expect(i.lines.count).to eq 1
+      expect(i.lines.first.label).to eq "DEF"
+    end
+
+    it "should reset date" do
+      q = create(:billing_machine_quotation, date: 3.days.ago)
+      expect(q.date).to_not eq Date.today
+      expect(q.create_invoice!.date).to eq Date.today
+    end
+
+    it "should reset unique_index, tracking_id, created_at, updated_at" do
+      q = create(:billing_machine_quotation, unique_index: 56544)
+      i = q.create_invoice!.reload
+      expect(i.unique_index).to_not eq q.unique_index
+      expect(i.tracking_id).to_not eq q.tracking_id
+      expect(i.created_at).to_not eq q.created_at
+      expect(i.updated_at).to_not eq q.updated_at
+    end
+  end
+
 end

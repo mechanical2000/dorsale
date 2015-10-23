@@ -44,5 +44,10 @@ describe ::Dorsale::BillingMachine::QuotationsController do
       route_to("dorsale/billing_machine/quotations#copy", id: "1")
     end
 
+    it "#create_invoice" do
+      expect(post "/billing_machine/quotations/1/create_invoice").to \
+      route_to("dorsale/billing_machine/quotations#create_invoice", id: "1")
+    end
+
   end
 end

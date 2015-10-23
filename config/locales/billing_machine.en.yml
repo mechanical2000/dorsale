@@ -1,4 +1,7 @@
 en:
+  actions:
+    create_invoice: "Create invoice"
+
   activerecord:
     models:
       dorsale/billing_machine/invoice: "invoice"
@@ -48,4 +51,5 @@ en:
     quotations:
       create_ok : "Quotation successfully created."
       update_ok : "Quotation successfully created."
-      update_ok : "Quotation successfully duplicated."
+      copy_ok : "Quotation successfully duplicated."
+      create_invoice_ok : "Invoice successfully created from quotation."

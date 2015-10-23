@@ -7,6 +7,7 @@ module Dorsale
         :update,
         :destroy,
         :copy,
+        :create_invoice,
       ]
 
       def index
@@ -122,6 +123,16 @@ module Dorsale
         flash[:notice] = t("messages.quotations.copy_ok")
 
         redirect_to dorsale.edit_billing_machine_quotation_path(new_quotation)
+      end
+
+      def create_invoice
+        authorize! :read, @quotation
+        authorize! :create, ::Dorsale::BillingMachine::Invoice
+
+        new_invoice = @quotation.create_invoice!
+        flash[:notice] = t("messages.quotations.create_invoice_ok")
+
+        redirect_to dorsale.edit_billing_machine_invoice_path(new_invoice)
       end
 
       private

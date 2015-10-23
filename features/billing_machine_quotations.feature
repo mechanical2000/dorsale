@@ -38,7 +38,13 @@ Feature: Quotation Management
     Given an existing quotation
     When the user goes to the quotation details
     And he copy the quotation
-    Then he is on the new quotation edit page
+    Then he is on the created quotation edit page
+
+  Scenario: Quotation to invoice
+    Given an existing quotation
+    When the user goes to the quotation details
+    And he create an invoice from the quotation
+    Then he is on the created invoice edit page
 
   Scenario: New quotation for existing customer
     And an existing customer
