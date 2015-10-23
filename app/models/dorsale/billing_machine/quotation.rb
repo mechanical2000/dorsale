@@ -71,9 +71,19 @@ module Dorsale
         end
 
         new_quotation.unique_index = nil
+        new_quotation.created_at   = nil
+        new_quotation.updated_at   = nil
         new_quotation.date         = Date.today
 
         new_quotation.save!
+
+        self.attachments.each do |attachment|
+          new_attachment            = attachment.dup
+          new_attachment.attachable = new_quotation
+          new_attachment.file       = File.open(attachment.file.path)
+          new_attachment.save!
+        end
+
         new_quotation
       end
 

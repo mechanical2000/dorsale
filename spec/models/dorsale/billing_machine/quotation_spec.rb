@@ -94,12 +94,14 @@ describe ::Dorsale::BillingMachine::Quotation do
     it "should duplicate infos, lines, and documents" do
       q  = create(:billing_machine_quotation, label: "ABC")
       ql = create(:billing_machine_quotation_line, quotation: q, label: "DEF")
+      pdf = create(:alexandrie_attachment, attachable: q)
 
-      q2 = q.create_copy!
+      q2 = q.create_copy!.reload
       expect(q2).to be_persisted
       expect(q2.label).to eq "ABC"
       expect(q2.lines.count).to eq 1
       expect(q2.lines.first.label).to eq "DEF"
+      expect(q2.attachments.count).to eq 1
     end
 
     it "should reset date" do
@@ -108,14 +110,17 @@ describe ::Dorsale::BillingMachine::Quotation do
       expect(q.create_copy!.date).to eq Date.today
     end
 
-    it "should reset unique_index and tracking_id" do
+    it "should reset unique_index, tracking_id, created_at, updated_at" do
       q1 = create(:billing_machine_quotation)
-      q2 = q1.create_copy!
+      q2 = q1.create_copy!.reload
       expect(q1.unique_index).to_not eq q2.unique_index
       expect(q1.tracking_id).to_not eq q2.tracking_id
+      expect(q1.created_at).to_not eq q2.created_at
+      expect(q1.updated_at).to_not eq q2.updated_at
     end
 
-    xit "should reset status to pending" do
+    xit "should reset state to pending" do
+      # state not yet implemented
     end
 
   end
