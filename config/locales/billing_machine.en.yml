@@ -1,4 +1,7 @@
 en:
+  actions:
+    create_invoice: "Create invoice"
+
   activerecord:
     models:
       dorsale/billing_machine/invoice: "invoice"
@@ -7,6 +10,12 @@ en:
       dorsale/billing_machine/payment_term: "payment term"
 
     attributes:
+      dorsale/billing_machine/quotation/state:
+        pending: "Pending"
+        accepted: "Accepted"
+        refused: "Refused"
+        canceled: "Canceled"
+
       dorsale/billing_machine/id_card:
         id_card_name: "id card name"
         entity_name: "entity name"
@@ -48,3 +57,5 @@ en:
     quotations:
       create_ok : "Quotation successfully created."
       update_ok : "Quotation successfully created."
+      copy_ok : "Quotation successfully duplicated."
+      create_invoice_ok : "Invoice successfully created from quotation."

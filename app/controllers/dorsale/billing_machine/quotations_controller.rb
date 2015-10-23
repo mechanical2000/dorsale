@@ -6,6 +6,8 @@ module Dorsale
         :edit,
         :update,
         :destroy,
+        :copy,
+        :create_invoice,
       ]
 
       def index
@@ -20,6 +22,24 @@ module Dorsale
         @quotations = @quotations.order(@order)
         @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
         @quotations = @quotations.page(params[:page]).per(50)
+
+        @total_duty = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:total_duty)
+          .delete_if(&:blank?)
+          .sum
+
+        @vat_amount = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:vat_amount)
+          .delete_if(&:blank?)
+          .sum
+
+        @total_all_taxes = @quotations_without_pagination.to_a
+          .select{ |q| q.state != "canceled" }
+          .map(&:total_all_taxes)
+          .delete_if(&:blank?)
+          .sum
 
         respond_to do |format|
           format.csv {
@@ -114,6 +134,25 @@ module Dorsale
         redirect_to dorsale.billing_machine_quotations_path
       end
 
+      def copy
+        authorize! :create, @quotation
+
+        new_quotation = @quotation.create_copy!
+        flash[:notice] = t("messages.quotations.copy_ok")
+
+        redirect_to dorsale.edit_billing_machine_quotation_path(new_quotation)
+      end
+
+      def create_invoice
+        authorize! :read, @quotation
+        authorize! :create, ::Dorsale::BillingMachine::Invoice
+
+        new_invoice = @quotation.create_invoice!
+        flash[:notice] = t("messages.quotations.create_invoice_ok")
+
+        redirect_to dorsale.edit_billing_machine_invoice_path(new_invoice)
+      end
+
       private
 
       def set_objects
@@ -123,6 +162,7 @@ module Dorsale
       def permitted_params
         [
           :label,
+          :state,
           :customer_guid,
           :payment_term_id,
           :id_card_id,

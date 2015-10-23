@@ -18,7 +18,7 @@ module Dorsale
 
         options.deep_merge!(
           :data => {
-            :confirm => confirm
+            :confirm => confirm,
           }
         )
       end
@@ -39,7 +39,7 @@ module Dorsale
     def read_button(url, options = {})
       options = {
         :icon   => "info-circle",
-        :action => :read
+        :action => :read,
       }.merge(options)
 
       dorsale_button(url, options)
@@ -47,8 +47,9 @@ module Dorsale
 
     def download_button(url, options = {})
       options = {
-        :icon   => "cloud-download",
-        :action => :download
+        :icon     => "cloud-download",
+        :action   => :download,
+        :download => url,
       }.merge(options)
 
       dorsale_button(url, options)
@@ -57,7 +58,7 @@ module Dorsale
     def update_button(url, options = {})
       options = {
         :icon   => :pencil,
-        :action => :update
+        :action => :update,
       }.merge(options)
 
       dorsale_button(url, options)
@@ -101,7 +102,7 @@ module Dorsale
         :icon    => :"clock-o",
         :action  => :snooze,
         :confirm => true,
-        :method  => :patch
+        :method  => :patch,
       }.merge(options)
 
       dorsale_button(url, options)
@@ -112,7 +113,7 @@ module Dorsale
         :icon    => :lock,
         :action  => :lock,
         :confirm => true,
-        :method  => :patch
+        :method  => :patch,
       }.merge(options)
 
       dorsale_button(url, options)
@@ -123,7 +124,7 @@ module Dorsale
         :icon    => :unlock,
         :action  => :unlock,
         :confirm => true,
-        :method  => :patch
+        :method  => :patch,
       }.merge(options)
 
       dorsale_button(url, options)
