@@ -120,8 +120,9 @@ fr:
     tracking_id           : "Numéro"
     count                 : "Nombre"
     length                : "Nombre"
-    number                 : "Nombre"
+    number                : "Nombre"
     message               : "Message"
+    skype                 : "Skype"
 
     # BillingMachine
     unit                  : "Unité"

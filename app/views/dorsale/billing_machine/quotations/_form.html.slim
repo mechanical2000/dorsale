@@ -10,6 +10,7 @@
               = @quotation.tracking_id
 
       = f.input :label
+      = f.input :state, collection: billing_machine_quotation_states_for_select
       = f.input :date, html5: true
       = f.input :expires_at, html5: true
       = f.association :payment_term, collection: @payment_terms

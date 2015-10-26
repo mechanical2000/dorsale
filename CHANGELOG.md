@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.8
+
+- Quotation copy
+- Convert quotation to invoice
+- Add quotation states
+- Add "download" attributes to `download_button` helper
+
+## 2.1.7
+
+- Fix i18n
+- Add skype to CustomerVault
+
 ## 2.1.6
 
 - Add commercial discount to invoices and quotations

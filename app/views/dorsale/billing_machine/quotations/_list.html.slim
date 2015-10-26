@@ -16,6 +16,9 @@ table.default.quotations
       th.hidden-xs
         = ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes)
 
+      th.hidden-xs
+        = ::Dorsale::BillingMachine::Quotation.t(:state)
+
       th
         = t("actions.actions")
 
@@ -36,6 +39,9 @@ table.default.quotations
 
         td.hidden-xs.total_all_taxes
           = euros(quotation.total_all_taxes)
+
+        td
+          = quotation.t("state.#{quotation.state}")
 
         td.actions
           = read_button dorsale.billing_machine_quotation_path(quotation)

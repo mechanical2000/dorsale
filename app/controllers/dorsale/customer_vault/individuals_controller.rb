@@ -84,6 +84,7 @@ module Dorsale
           :phone,
           :fax,
           :mobile,
+          :skype,
           :tag_list => [],
           :address_attributes => [
             :street,

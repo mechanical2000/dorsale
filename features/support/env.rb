@@ -16,10 +16,6 @@ end
 Capybara.javascript_driver = :poltergeist
 Capybara.current_driver = :poltergeist
 
-require "factory_girl_rails"
-FactoryGirl.definition_file_paths = [File.expand_path('../../../spec/factories', __FILE__)]
-FactoryGirl.find_definitions
-
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
 # selectors in your step definitions to use the XPath syntax.

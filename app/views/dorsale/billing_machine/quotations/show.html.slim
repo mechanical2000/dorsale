@@ -3,6 +3,8 @@
     .actions
       = update_button dorsale.edit_billing_machine_quotation_path(@quotation)
       = download_button dorsale.billing_machine_quotation_path(@quotation, format: :pdf)
+      = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
+      = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), method: :post, action: :create_invoice, confirm: true, icon: :magic
 
 
       - if @quotation.customer
@@ -21,6 +23,7 @@
     .well: .row
       .col-xs-12.col-sm-6
         = info @quotation, :tracking_id
+        = info @quotation, :state, @quotation.t("state.#{@quotation.state}")
         = info @quotation, :label
         = info @quotation, :date,                date(@quotation.date)
         = info @quotation, :expires_at,          date(@quotation.expires_at)
