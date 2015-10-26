@@ -76,6 +76,7 @@ module Dorsale
         end
 
         build_middle
+        build_page_numbers
       end
 
       def setup
@@ -211,7 +212,7 @@ module Dorsale
       end
 
       def main_document_type
-        "Facture"
+         Dorsale::BillingMachine::Invoice.model_name.human.humanize
       end
 
       def build_table
@@ -278,19 +279,19 @@ module Dorsale
           table_totals = []
 
           if has_discount
-            table_totals.push ['REMISE', euros(@main_document.commercial_discount)]
+            table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", euros(@main_document.commercial_discount)]
           end
 
-          table_totals.push ['TOTAL HT', euros(@main_document.total_duty)]
+          table_totals.push ["#{I18n.t("pdfs.total_duty")}", euros(@main_document.total_duty)]
 
           vat_rate = french_number(@main_document.vat_rate)
-          table_totals.push ["TVA #{vat_rate} %", euros(@main_document.vat_amount)]
+          table_totals.push ["#{I18n.t("pdfs.vat")}#{vat_rate} %", euros(@main_document.vat_amount)]
 
           if has_advance
-            table_totals.push ['ACOMPTE', euros(@main_document.advance)]
-            table_totals.push ['TOTAL TTC', euros(@main_document.balance)]
+            table_totals.push ["#{I18n.t("pdfs.advance")}", euros(@main_document.advance)]
+            table_totals.push ["#{I18n.t("pdfs.total_all_taxes")}", euros(@main_document.balance)]
           else
-            table_totals.push ['TOTAL TTC', euros(@main_document.total_all_taxes)]
+            table_totals.push ["#{I18n.t("pdfs.total_all_taxes")}", euros(@main_document.total_all_taxes)]
           end
 
           table table_totals,
@@ -313,6 +314,8 @@ module Dorsale
 
       def build_comments
       end
+
+
 
       def build_payment_conditions
         top = bounds.top - 10.3.cm
@@ -384,12 +387,24 @@ module Dorsale
         tva = I18n.t("pdfs.tva") + @id_card.intracommunity_vat.to_s if @id_card.intracommunity_vat.present?
         bounding_box [bounds.left, top], height: height, width: width do
           font_size 9 do
-            float do
-              text "page #{} / #{} ", :align => :right
-            end
             text "#{@id_card.entity_name} #{address_line}"
             text "#{tel} #{fax} #{email}"
             text "#{capital} #{registration} #{siret} #{tva}"
+          end
+        end
+      end
+
+      def build_page_numbers
+        top = bounds.bottom + footer_height - 1.8.cm
+        bounding_box [0, top], height: footer_height, width: bounds.width do
+          font_size 9 do
+            float do
+              options = {
+              :align => :right,
+              :start_count_at => 1
+              }
+              number_pages "page <page>/<total>", options
+            end
           end
         end
       end

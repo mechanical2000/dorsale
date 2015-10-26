@@ -70,8 +70,11 @@ fr:
     capital: "au capital de"
     registration: "RCS "
     siret: "SIRET "
-    tva: "TVA "
-
+    vat: "TVA "
+    commercial_discount: "REMISE"
+    total_duty: "TOTAL HT"
+    advance: "ACOMPTE"
+    total_all_taxes: "TOTAL TTC"
 
   messages:
     invoices:

@@ -20,7 +20,7 @@ module Dorsale
       end
 
       def main_document_type
-        "Devis"
+        Dorsale::BillingMachine::Quotation.model_name.human.humanize
       end
 
       def build_bank_infos
@@ -29,12 +29,12 @@ module Dorsale
       def build_synthesis
         font_size 10
           if (@main_document.commercial_discount && @main_document.commercial_discount != 0.0)
-            @table_matrix.push ['Remise commerciale', '', '', euros(@main_document.commercial_discount)]
+            @table_matrix.push ["#{I18n.t("pdfs.commercial_discount")}", '', '', euros(@main_document.commercial_discount)]
           end
-          @table_matrix.push ['Net HT', '', '', euros(@main_document.total_duty)]
+          @table_matrix.push ["#{I18n.t("pdfs.total_duty")}", '', '', euros(@main_document.total_duty)]
           vat_rate = french_number(@main_document.vat_rate)
-          @table_matrix.push ["TVA #{vat_rate} %", '', '', euros(@main_document.vat_amount)]
-          @table_matrix.push ['Total TTC', '', '', euros(@main_document.total_all_taxes)]
+          @table_matrix.push ["#{I18n.t("pdfs.vat")}#{vat_rate} %", '', '', euros(@main_document.vat_amount)]
+          @table_matrix.push ["#{I18n.t("pdfs.total_all_taxes")}", '', '', euros(@main_document.total_all_taxes)]
           write_table_from_matrix(@table_matrix)
       end
 
