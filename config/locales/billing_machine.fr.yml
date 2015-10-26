@@ -62,6 +62,16 @@ fr:
     tax: "TVA %"
     unit_price: "P.U €HT"
     line_total: "TOTAL €HT"
+    payment_terms: "Conditions de paiement :"
+    iban: "IBAN :"
+    bic_swift: "BIC / SWIFT :"
+    info_phone: "Tel. :"
+    info_fax: "Fax :"
+    capital: "au capital de"
+    registration: "RCS "
+    siret: "SIRET "
+    tva: "TVA "
+
 
   messages:
     invoices:

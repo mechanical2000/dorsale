@@ -62,6 +62,15 @@ en:
     tax: "TAX %"
     unit_price: "UNIT PRICE"
     line_total: "TOTAL"
+    payment_terms: "Payment terms:"
+    iban: "IBAN :"
+    bic_swift: "BIC / SWIFT :"
+    info_phone: "Phone :"
+    info_fax: "Fax :"
+    capital: "capital :"
+    registration: "registration :"
+    siret: "SIRET "
+    tva: "TVA "
 
   messages:
     invoices:

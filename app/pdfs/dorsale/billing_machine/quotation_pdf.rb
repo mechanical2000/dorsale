@@ -45,11 +45,15 @@ module Dorsale
       end
 
       def build_comments
-        bounding_box [50, 140], :width => 445, :height => 50 do
-         draw_bounds_debug
-         font_size 9
-         text @main_document.comments
+        top = bounds.top - 22.4.cm
+        height = 1.cm
+        width  = 7.5.cm
+
+        bounding_box [bounds.left, top], height: height, width: width do
+          draw_bounds_debug
+          text @main_document.comments if @main_document.comments.present?
         end
+
       end
     end
   end

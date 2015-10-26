@@ -13,8 +13,16 @@ module Dorsale
       BLACK      = "000000"
       BLUE       = "005F9E"
 
+      def has_advance
+        @main_document.try(:advance) && @main_document.advance != 0.0
+      end
+
+      def has_discount
+        @main_document.try(:commercial_discount) && @main_document.commercial_discount != 0.0
+      end
+
       def first_column_width
-        7.1.cm
+        7.6.cm
       end
 
       def second_column_width
@@ -26,7 +34,7 @@ module Dorsale
       end
 
       def fourth_column_width
-       3.4.cm
+       2.9.cm
       end
 
       def last_column_width
@@ -50,11 +58,11 @@ module Dorsale
       end
 
       def middle_height
-        bounds.height - header_height - footer_height
+        15.cm
       end
 
       def footer_height
-        4.5.cm
+        4.cm
       end
 
       def logo_height
@@ -62,9 +70,12 @@ module Dorsale
       end
 
       def build
-        build_header
+        repeat :all do
+          build_header
+          build_footer
+        end
+
         build_middle
-        build_footer
       end
 
       def setup
@@ -113,16 +124,19 @@ module Dorsale
         end
       end
 
+      def address_line
+        [@id_card.address1,@id_card.address2, @id_card.zip, @id_card.city].select(&:present?).join(", ")
+      end
+
       def build_contact
         top    = bounds.top - 4.cm
         left   = bounds.left
         width  = bounds.width / 2 - 1.1.cm
-        height = 2.3.cm
+        height = 2.5.cm
 
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
           text "<b>#{@id_card.entity_name}</b>", inline_format: true if @id_card.entity_name.present?
-          address_line = [@id_card.address1,@id_card.address2, @id_card.zip, @id_card.city].select(&:present?).join(", ")
           text "<b>#{address_line} </b>", inline_format: true
           text " "
           text "<b>#{I18n.t("pdfs.your_contact")} : #{@id_card.contact_full_name}</b>", inline_format: true if @id_card.contact_full_name.present?
@@ -188,15 +202,11 @@ module Dorsale
         left   = bounds.left
         top    = bounds.top - header_height
         width  = bounds.width - left
-
-        bounding_box [left, top], width: width, height: 9.5.cm do
-          draw_bounds_debug
-          build_table
-        end
-
-        bounding_box [left, top - 10.3.cm], width: width, height: middle_height - 9.5.cm do
-          draw_bounds_debug
-          build_total
+        bounding_box [left, top], width: width, height: middle_height do
+        build_table
+        build_total
+        build_payment_conditions
+        build_bank_informations
         end
       end
 
@@ -205,153 +215,182 @@ module Dorsale
       end
 
       def build_table
-        table_products = [[I18n.t("pdfs.designation"),
-          I18n.t("pdfs.quantity"),
-          I18n.t("pdfs.unity"),
-          I18n.t("pdfs.unit_price"),
-          I18n.t("pdfs.line_total")]]
+        left   = bounds.left
+        top    = bounds.top
+        width  = bounds.width - left
 
-
-        @main_document.lines.each do |line|
-          table_products.push [line.label,
-              french_number(line.quantity),
-              line.unit,
-              french_number(euros(line.unit_price), 2),
-              french_number(euros(line.total), 2)]
-        end
-
-
-        float do
-            table [ ['','', '', '' , '']],
-                :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, last_column_width],
-                :cell_style => {:height => 9.5.cm}
+        bounding_box [left, top], width: width, height: 9.5.cm do
+          repeat :all do
+            float do
+                table [[I18n.t("pdfs.designation"),
+            I18n.t("pdfs.quantity"),
+            I18n.t("pdfs.unity"),
+            I18n.t("pdfs.unit_price"),
+            I18n.t("pdfs.line_total")]],
+                    :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, last_column_width],
+                    :cell_style => {:height => 9.5.cm} do
+                      row(0).style :text_color       => BLACK
+                      row(0).style :font_style       => :bold
+                      column(0).style :align => :left
+                      column(1..4).style :align => :right
+                    end
+                 end
+              end
           end
+
+        bounding_box [left, top - 0.8.cm], width: width, height: 8.8.cm do
+          draw_bounds_debug
+          repeat :all do
+            build_line
+          end
+          table_products = []
+
+
+          @main_document.lines.each do |line|
+            table_products.push [line.label,
+                french_number(line.quantity),
+                line.unit,
+                french_number(euros(line.unit_price), 2),
+                french_number(euros(line.total), 2)]
+          end
+
+
 
         table table_products,
           :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, last_column_width],
           :cell_style    => {border_width: 0} do
-            row(0).style :text_color       => BLACK
-            row(0).style :font_style       => :bold
-
             cells.style do |c|
               c.align = c.column == 0 ? :left : :right
             end
           end
+        end
       end
 
       def build_total
-        table_totals = []
 
-        if @main_document.try(:commercial_discount) && @main_document.commercial_discount != 0.0
-          table_totals.push ['Remise commerciale', euros(@main_document.commercial_discount)]
-        end
-        table_totals.push ['Net HT', euros(@main_document.total_duty)]
-        vat_rate = french_number(@main_document.vat_rate)
-        table_totals.push ["TVA #{vat_rate} %", euros(@main_document.vat_amount)]
-        table_totals.push ['Total TTC', euros(@main_document.total_all_taxes)]
+        left   = bounds.left
+        top    = bounds.top - 10.3.cm
+        width  = bounds.width - left
 
-        if @main_document.try(:advance) && @main_document.advance != 0.0
-          table_totals.push ['Acompte reçu sur commande', euros(@main_document.advance)]
-          table_totals.push ['Solde à payer', euros(@main_document.balance)]
-        end
+        bounding_box [left, top], width: width, height: middle_height - 9.5.cm do
+          draw_bounds_debug
 
-        table table_totals,
-          :column_widths => [fourth_column_width, last_column_width],
-          :cell_style    => {border_width: 1},
-          :position      => :right do
+          table_totals = []
 
-            cells.style do |c|
-              if c.column == 0
-                c.text_color       = BLACK
+          if has_discount
+            table_totals.push ['REMISE', euros(@main_document.commercial_discount)]
+          end
+
+          table_totals.push ['TOTAL HT', euros(@main_document.total_duty)]
+
+          vat_rate = french_number(@main_document.vat_rate)
+          table_totals.push ["TVA #{vat_rate} %", euros(@main_document.vat_amount)]
+
+          if has_advance
+            table_totals.push ['ACOMPTE', euros(@main_document.advance)]
+            table_totals.push ['TOTAL TTC', euros(@main_document.balance)]
+          else
+            table_totals.push ['TOTAL TTC', euros(@main_document.total_all_taxes)]
+          end
+
+          table table_totals,
+            :column_widths => [fourth_column_width, last_column_width],
+            :cell_style    => {border_width: [0, 1, 0 ,0]},
+            :position      => :right do
+              row(-1).style :font_style       => :bold
+              column(0).padding_right = 0.2.cm
+              row(-1).borders = [:top, :right]
+              row(-1).border_width = 1
+              cells.style do |c|
+                c.align = :right
               end
-
-              c.align = :right
             end
+          stroke do
+            rectangle [(bounds.right - fourth_column_width - last_column_width), bounds.top], (fourth_column_width + last_column_width), (bounds.top-cursor)
+          end
         end
       end
 
       def build_comments
       end
 
-      def build_footer
-        top = bounds.bottom + footer_height
+      def build_payment_conditions
+        top = bounds.top - 10.3.cm
+        height = 1.cm
+        width  = 7.5.cm
 
-        bounding_box [0, top], width: bounds.width, height: footer_height do
+        bounding_box [bounds.left, top], height: height, width: width do
           draw_bounds_debug
-
-          left  = bounds.left
-          width = bounds.width - left
-
-          bounding_box [left, bounds.top], width: width, height: bounds.height do
-            draw_bounds_debug
-            build_payment_conditions
-            build_bank_informations
-            builds_legals
-            builds_id_card_informations
+          font_size 9 do
+            text I18n.t("pdfs.payment_terms"), style: :bold if @main_document.payment_term.present?
+            text @main_document.payment_term.try(:label)
           end
         end
       end
 
-      def build_payment_conditions
-        height = 2.cm
-        width  = bounds.width / 2 - 2.cm
+      def build_bank_informations
+        top = bounds.top - 11.5.cm
+        height = 1.cm
+        width  = 7.5.cm
 
-        bounding_box [bounds.left, bounds.top], height: height, width: width do
+        bounding_box [bounds.left, top], height: height, width: width do
           draw_bounds_debug
-          text "Conditions de paiement :", style: :bold
-          text @main_document.payment_term.try(:label)
+          font_size 9 do
+            text "#{I18n.t("pdfs.iban")} #{@id_card.iban}" if @id_card.iban.present?
+            text "#{I18n.t("pdfs.bic_swift")} #{@id_card.bic_swift}"  if @id_card.bic_swift.present?
+          end
         end
       end
 
-      def build_bank_informations
-        height = 2.cm
-        width  = bounds.width / 2 + 2.cm
-        left   = width - 4.cm
+      def build_footer
+        top = bounds.bottom + footer_height
+        bounding_box [0, top], width: bounds.width, height: footer_height do
 
-        bounding_box [left, bounds.top], height: height, width: width do
-          draw_bounds_debug
-          text 'Coordonnées bancaires :', style: :bold
-          text "IBAN : #{@id_card.iban}"
-          text "BIC / SWIFT : #{@id_card.bic_swift}"
+          builds_legals
+          build_line
+          builds_id_card_informations
+
         end
       end
 
       def builds_legals
-        text @id_card.custom_info_1, color: GREY
+        top = bounds.top
+        height = 1.5.cm
+        width  = bounds.width
+        bounding_box [bounds.left, top], height: height, width: width do
+          font_size 9 do
+            text @id_card.custom_info_1, inline_format: true
+          end
+        end
+      end
+
+      def build_line
+        stroke do
+          horizontal_rule
+          line_width 1
+        end
       end
 
       def builds_id_card_informations
-        height = 15.mm
-        width1 = bounds.width / 3 - 2.5.mm
-        width2 = bounds.width / 3 + 5.0.mm
-        width3 = bounds.width / 3 - 2.5.mm
-        left1  = 0
-        left2  = width1
-        left3  = width1 + width2
-        top    = bounds.bottom + height
-
-        fill_color BLUE
-        font_size 9
-
-        bounding_box [left1, top], height: height, width: width1 do
-          draw_bounds_debug
-          text @id_card.address1.to_s
-          text @id_card.zip.to_s + " " + @id_card.city.to_s
-          text "www.agilidee.com"
-        end
-
-        bounding_box [left2, top], height: height, width: width2 do
-          draw_bounds_debug
-          text "RCS " + @id_card.registration_city.to_s + ' ' + @id_card.registration_number.to_s
-          text 'SIRET ' + @id_card.siret.to_s
-          text 'TVA ' + @id_card.intracommunity_vat.to_s
-        end
-
-        bounding_box [left3, top], height: height, width: width3 do
-          draw_bounds_debug
-          text @id_card.legal_form.to_s
-          text ' au capital de ' + number_with_delimiter(@id_card.capital, :delimiter => '.').to_s + ' €'
-          text 'APE ' + @id_card.ape_naf.to_s
+        top = bounds.top - 1.8.cm
+        height = 1.1.cm
+        width  = bounds.width
+        tel = "#{I18n.t("pdfs.info_phone")} #{@id_card.contact_phone} - " if @id_card.contact_phone.present?
+        fax = "#{I18n.t("pdfs.info_fax")} #{@id_card.contact_fax} -" if @id_card.contact_fax.present?
+        email = "#{@id_card.contact_email}" if @id_card.contact_email.present?
+        capital = "#{ @id_card.legal_form.to_s} #{I18n.t("pdfs.capital")} " + number_with_delimiter(@id_card.capital, :delimiter => '.').to_s + " €" if @id_card.legal_form.present? && @id_card.capital.present?
+        registration = I18n.t("pdfs.registration") + @id_card.registration_city.to_s + ' ' + @id_card.registration_number.to_s if @id_card.registration_number.present?
+        siret = I18n.t("pdfs.siret") + @id_card.siret.to_s if @id_card.siret.present?
+        tva = I18n.t("pdfs.tva") + @id_card.intracommunity_vat.to_s if @id_card.intracommunity_vat.present?
+        bounding_box [bounds.left, top], height: height, width: width do
+          font_size 9 do
+            float do
+              text "page #{} / #{} ", :align => :right
+            end
+            text "#{@id_card.entity_name} #{address_line}"
+            text "#{tel} #{fax} #{email}"
+            text "#{capital} #{registration} #{siret} #{tva}"
+          end
         end
       end
 
