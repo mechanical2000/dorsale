@@ -75,6 +75,7 @@ fr:
     total_duty: "TOTAL HT"
     advance: "ACOMPTE"
     total_all_taxes: "TOTAL TTC"
+    expires_at: "Date d'expiration : "
 
   messages:
     invoices:

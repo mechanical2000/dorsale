@@ -71,6 +71,7 @@ en:
     registration: "registration :"
     siret: "SIRET "
     tva: "TVA "
+    expires_at: "Expires at : "
 
   messages:
     invoices:

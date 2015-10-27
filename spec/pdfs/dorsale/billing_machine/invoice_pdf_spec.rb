@@ -29,7 +29,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     contact_email: 'email@example.org',
     iban: 'FR76 0000 0000 0000 0000 0000 000',
     bic_swift: 'PSSTTHEGAME',
-    custom_info_1: "Mention légale" + "\n" + "Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de " +
+    custom_info_1: "Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de " +
         'pénalités de retard sur la base du taux BCE majoré de dix (10) points et au paiement d’une indemnité forfaitaire pour frais de ' +
         'recouvrement d’un montant de 999999€'
     ) }

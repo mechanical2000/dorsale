@@ -4,8 +4,9 @@ module Dorsale
   module BillingMachine
     class InvoicePdf < Prawn::Document
       include Dorsale::Alexandrie::Prawn
+      include Dorsale::AllHelpers
       include ActionView::Helpers::NumberHelper
-      DEBUG = false
+      DEBUG = true
 
       GREY       = "808080"
       LIGHT_GREY = "C0C0C0"
@@ -40,9 +41,6 @@ module Dorsale
       def last_column_width
         bounds.width - first_column_width - second_column_width - third_column_width - fourth_column_width
       end
-
-      FRENCH_MONTH_NAMES = [nil, 'janvier', 'février', 'mars', 'avril', 'mai',
-        'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
 
       attr_reader :main_document
 
@@ -137,6 +135,7 @@ module Dorsale
 
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
+          font_size 8 do
           text "<b>#{@id_card.entity_name}</b>", inline_format: true if @id_card.entity_name.present?
           text "<b>#{address_line} </b>", inline_format: true
           text " "
@@ -144,6 +143,7 @@ module Dorsale
           text "<b>#{I18n.t("pdfs.contact_phone")}</b>  #{@id_card.contact_phone}", inline_format: true if @id_card.contact_phone.present?
           text "<b>#{I18n.t("pdfs.contact_fax")}</b> #{@id_card.contact_fax}",   inline_format: true if @id_card.contact_fax.present?
           text "<b>#{I18n.t("pdfs.contact_email")}</b> #{@id_card.contact_email}",   inline_format: true if @id_card.contact_email.present?
+          end
         end
       end
 
@@ -179,7 +179,7 @@ module Dorsale
             table_customer << [I18n.t("pdfs.tracking_number") , @main_document.tracking_id.to_s]
           end
           if @main_document.date.present?
-            table_customer << [I18n.t("pdfs.date") , french_date(@main_document.date)]
+            table_customer << [I18n.t("pdfs.date") , date(@main_document.date)]
           end
           if @main_document.customer.present?
             name = "#{@main_document.customer.name}\n" if @main_document.customer.name.present?
@@ -208,6 +208,8 @@ module Dorsale
         build_total
         build_payment_conditions
         build_bank_informations
+        build_expiry
+        build_comments
         end
       end
 
@@ -244,15 +246,15 @@ module Dorsale
           repeat :all do
             build_line
           end
-          table_products = []
+          table_products = [[]]
 
 
           @main_document.lines.each do |line|
             table_products.push [line.label,
-                french_number(line.quantity),
+                number(line.quantity).gsub(",00","").gsub(".00",""),
                 line.unit,
-                french_number(euros(line.unit_price), 2),
-                french_number(euros(line.total), 2)]
+                euros(line.unit_price),
+                euros(line.total),]
           end
 
 
@@ -276,7 +278,7 @@ module Dorsale
         bounding_box [left, top], width: width, height: middle_height - 9.5.cm do
           draw_bounds_debug
 
-          table_totals = []
+          table_totals = [[]]
 
           if has_discount
             table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", euros(@main_document.commercial_discount)]
@@ -284,7 +286,7 @@ module Dorsale
 
           table_totals.push ["#{I18n.t("pdfs.total_duty")}", euros(@main_document.total_duty)]
 
-          vat_rate = french_number(@main_document.vat_rate)
+          vat_rate = number(@main_document.vat_rate)
           table_totals.push ["#{I18n.t("pdfs.vat")}#{vat_rate} %", euros(@main_document.vat_amount)]
 
           if has_advance
@@ -329,6 +331,9 @@ module Dorsale
             text @main_document.payment_term.try(:label)
           end
         end
+      end
+
+      def build_expiry
       end
 
       def build_bank_informations
@@ -384,13 +389,13 @@ module Dorsale
         capital = "#{ @id_card.legal_form.to_s} #{I18n.t("pdfs.capital")} " + number_with_delimiter(@id_card.capital, :delimiter => '.').to_s + " €" if @id_card.legal_form.present? && @id_card.capital.present?
         registration = I18n.t("pdfs.registration") + @id_card.registration_city.to_s + ' ' + @id_card.registration_number.to_s if @id_card.registration_number.present?
         siret = I18n.t("pdfs.siret") + @id_card.siret.to_s if @id_card.siret.present?
-        tva = I18n.t("pdfs.tva") + @id_card.intracommunity_vat.to_s if @id_card.intracommunity_vat.present?
-        bounding_box [bounds.left, top], height: height, width: width do
-          font_size 9 do
-            text "#{@id_card.entity_name} #{address_line}"
-            text "#{tel} #{fax} #{email}"
-            text "#{capital} #{registration} #{siret} #{tva}"
-          end
+        tva = I18n.t("pdfs.vat") + @id_card.intracommunity_vat.to_s if @id_card.intracommunity_vat.present?
+        font_size 9 do
+          text_box "#{@id_card.entity_name} #{address_line}\n#{tel} #{fax} #{email}\n#{capital} #{registration} #{siret} #{tva}",
+            :at       => [bounds.left, top],
+            :height   => height,
+            :width    => width,
+            :overflow => :shrink_to_fit
         end
       end
 
@@ -412,29 +417,6 @@ module Dorsale
       def draw_bounds_debug
         transparent(0.5) { stroke_bounds } if DEBUG
       end
-
-      def french_date date
-        french_month = FRENCH_MONTH_NAMES[date.month]
-        return date.day.to_s + ' ' + french_month + ' ' + date.year.to_s
-      end
-
-      def euros amount
-        amount ||= 0
-        french_number(amount, 2).to_s + " €"
-      end
-
-      def french_number amount, precision = -1
-        if precision >= 0
-          number_with_precision(amount, :precision => precision, :delimiter => '.', :separator => ",")
-        else
-          number_with_delimiter(amount, :delimiter => '.', :separator => ",")
-        end
-      end
-
-      def number_without_trailling_zero number
-        return ("%g" % number)
-      end
-
     end
   end
 end
