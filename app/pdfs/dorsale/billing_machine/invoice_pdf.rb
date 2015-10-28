@@ -6,7 +6,7 @@ module Dorsale
       include Dorsale::Alexandrie::Prawn
       include Dorsale::AllHelpers
       include ActionView::Helpers::NumberHelper
-      DEBUG = true
+      DEBUG = false
 
       GREY       = "808080"
       LIGHT_GREY = "C0C0C0"
@@ -72,7 +72,6 @@ module Dorsale
           build_header
           build_footer
         end
-
         build_middle
         build_page_numbers
       end
@@ -225,11 +224,7 @@ module Dorsale
         bounding_box [left, top], width: width, height: 9.5.cm do
           repeat :all do
             float do
-                table [[I18n.t("pdfs.designation"),
-            I18n.t("pdfs.quantity"),
-            I18n.t("pdfs.unity"),
-            I18n.t("pdfs.unit_price"),
-            I18n.t("pdfs.line_total")]],
+                table [["","","","",""]],
                     :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, last_column_width],
                     :cell_style => {:height => 9.5.cm} do
                       row(0).style :text_color       => BLACK
@@ -241,12 +236,16 @@ module Dorsale
               end
           end
 
-        bounding_box [left, top - 0.8.cm], width: width, height: 8.8.cm do
+        bounding_box [left, top], width: width, height: 8.8.cm do
           draw_bounds_debug
           repeat :all do
             build_line
           end
-          table_products = [[]]
+          table_products = [[I18n.t("pdfs.designation"),
+            I18n.t("pdfs.quantity"),
+            I18n.t("pdfs.unity"),
+            I18n.t("pdfs.unit_price"),
+            I18n.t("pdfs.line_total")]]
 
 
           @main_document.lines.each do |line|
@@ -257,11 +256,12 @@ module Dorsale
                 euros(line.total),]
           end
 
-
-
         table table_products,
           :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, last_column_width],
+          :header => true,
           :cell_style    => {border_width: 0} do
+            row(0).font_style = :bold
+            row(0).border_width = 1,
             cells.style do |c|
               c.align = c.column == 0 ? :left : :right
             end
@@ -281,7 +281,7 @@ module Dorsale
           table_totals = [[]]
 
           if has_discount
-            table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", euros(@main_document.commercial_discount)]
+            table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", "\- #{euros(@main_document.commercial_discount)}"]
           end
 
           table_totals.push ["#{I18n.t("pdfs.total_duty")}", euros(@main_document.total_duty)]

@@ -1,18 +1,6 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
-
-  def self.it_should_write(string)
-    it "should write '#{string}'" do
-      text.strings.should include string
-    end
-  end
-
-  def self.it_should_not_write(string)
-    it "should write '#{string}'" do
-      text.strings.should_not include string
-    end
-  end
+describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
 
   let(:customer) {
     create(:customer_vault_corporation)
@@ -35,14 +23,15 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     contact_email: 'email@example.org',
     iban: 'FR76 0000 0000 0000 0000 0000 000',
     bic_swift: 'PSSTTHEGAME',
-    custom_info_1: "Mention légale" + "\n" + "Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de " +
+    custom_info_1: "Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de " +
         'pénalités de retard sur la base du taux BCE majoré de dix (10) points et au paiement d’une indemnité forfaitaire pour frais de ' +
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:quotation) { create(:billing_machine_quotation,
+  let(:quotation) {
+
+    q = create(:billing_machine_quotation,
       date: '16/04/2014',
-      expires_at: '10/06/2014',
       id_card: id_card,
       customer: customer,
       commercial_discount: 100.23,
@@ -50,211 +39,220 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       vat_amount: 355.26,
       total_all_taxes: 2167.79,
       vat_rate: 19.6,
-      comments: 'this is the quotation comment') }
+      comments: 'this is the quotation comment')
 
-  let(:quotation_line) { create(:billing_machine_quotation_line,
-    quotation_id: quotation.id,
+    create(:billing_machine_quotation_line,
+    quotation: q,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
-    total: 7.98) }
+    total: 7.98)
 
-  let(:quotation_line_2) { create(:billing_machine_quotation_line,
-    quotation_id: quotation.id,
+    create(:billing_machine_quotation_line,
+    quotation: q,
     label: 'Truc',
     quantity: 42.42,
     unit: 'nuts',
     unit_price: 42.54,
-    total: 1804.55) }
+    total: 1804.55)
 
-  let(:pdf) { quotation.pdf }
+    q.reload
+  }
+
+  let(:pdf) {
+    quotation.pdf
+  }
+
+  let(:content) {
+    tempfile = Tempfile.new("pdf")
+    tempfile.binmode
+    tempfile.write(pdf.render)
+    tempfile.flush
+    Yomu.new(tempfile.path).text
+   }
 
   describe "#initialize" do
     it 'inherits from Prawn::Document' do
-      pdf.should be_kind_of(Prawn::Document)
-    end
-
-    it 'inherits from CommonQuotation' do
-      pdf.should be_kind_of(::Dorsale::BillingMachine::QuotationPdf)
+      expect(pdf).to be_kind_of(Prawn::Document)
     end
 
     it 'should assign @main_document' do
-      pdf.main_document.should eq(quotation)
+       expect(pdf.main_document).to eq quotation
     end
   end
 
-  describe "#build" do
-    let(:text) { PDF::Inspector::Text.analyze(pdf.render) }
-
-    context 'when the id card is empty' do
-      let(:id_card) { ::Dorsale::BillingMachine::IdCard.create(id_card_name: 'default')}
-      it 'should not crash' do
-        pdf.build
-      end
-    end
-
-    before do
-      quotation.lines << quotation_line
-      quotation.lines << quotation_line_2
+  describe 'when the id card is empty' do
+    let(:id_card) {
+      ::Dorsale::BillingMachine::IdCard.create(id_card_name: 'default')
+    }
+    it 'should not crash' do
       pdf.build
     end
-    context 'in Mentions légales - Coin supérieur droit' do
-      it_should_write 'HEYHO'
-      it_should_write 'SIRET 000 000 000 00000 APE 0000A'
-      it_should_write 'SARL au capital de 1.000.000.000 euros'
-      it_should_write 'RCS MARSEILLE 000 000 000'
-      it_should_write 'N° TVA FR 00 000 000 000 000 00'
-      it_should_write '42 Avenue de Ruby'
-      it_should_write '13004 Marseille'
+  end
+
+  describe 'Id card informations' do
+    it 'is expected to print the right information' do
+      expect(content).to include 'HEYHO'
+      expect(content).to include 'SIRET 000 000 000 00000 '
+      expect(content).to include 'SARL au capital de 1.000.000.000 €'
+      expect(content).to include 'RCS MARSEILLE 000 000 000'
+      expect(content).to include 'TVA FR 00 000 000 000 000 00'
+      expect(content).to include '42 Avenue de Ruby'
+      expect(content).to include '13004 Marseille'
     end
+  end
 
-    context 'in Entete de facturation' do
-
-    it_should_write 'Devis'
-
+  describe 'Header' do
     it "should write invoice tracking id" do
-      text.strings.should include ' N°' + quotation.tracking_id
-    end
-    it "should write 'Marseille le ' and invoice date" do
-      text.strings.should include 'Marseille le ' + '16 avril 2014'
+      expect(content).to include 'Devis'
+      expect(content).to include 'Numéro :'
+      expect(content).to include quotation.tracking_id
     end
 
-      context 'in Informations contact' do
-        it_should_write 'Contact :'
-        it_should_write ' Jane Doe'
-        it_should_write 'Tél :'
-        it_should_write ' +33.6.00.00.00.00'
-        it_should_write 'Fax:'
-        it_should_write ' +33.9.00.00.00.00'
-        it_should_write 'Email:'
-        it_should_write ' email@example.org'
+    it "is expected to print invoice date" do
+      expect(content).to include 'Date : ' + '16/04/2014'
+    end
+
+    it 'is expected to print contact informations' do
+      expect(content).to include 'Jane Doe'
+      expect(content).to include 'Téléphone :'
+      expect(content).to include ' +33.6.00.00.00.00'
+      expect(content).to include 'Fax :'
+      expect(content).to include ' +33.9.00.00.00.00'
+      expect(content).to include 'Email :'
+      expect(content).to include ' email@example.org'
+    end
+  end
+
+  describe 'customer information' do
+    it "should write customer name" do
+      expect(content).to include 'Client :'
+      expect(content).to include quotation.customer.name
+    end
+
+    it "is expected to print customer address" do
+      expect(content).to include quotation.customer.address.street
+      expect(content).to include quotation.customer.address.street_bis
+    end
+
+    it "is expected to print customer zip and city" do
+      expect(content).to include quotation.customer.address.zip.to_s +
+       ' ' + quotation.customer.address.city.to_s
+    end
+
+   it "is expected to print 'Objet :' and invoice label" do
+     expect(content).to include 'Objet : '
+     expect(content).to include quotation.label
+    end
+  end
+
+  describe "product table" do
+    it "is expected to print the header" do
+      expect(content).to include 'DÉSIGNATION'
+      expect(content).to include 'QTITÉ'
+      expect(content).to include 'UNITÉ'
+      expect(content).to include 'P.U €HT'
+      expect(content).to include 'TOTAL €HT'
+    end
+    it 'is expected to print invoice line label of each invoice line' do
+      quotation.lines.each do |line|
+        expect(content).to include line.label
       end
-
-      context 'in Informations client' do
-        it_should_write 'A l’attention de :'
-
-        it "should write customer name" do
-          text.strings.should include quotation.customer.name
-        end
-
-        it "should write customer address" do
-          text.strings.should include quotation.customer.address.street
-          text.strings.should include quotation.customer.address.street_bis
-        end
-
-        it "should write customer zip and city" do
-          text.strings.should include quotation.customer.address.zip.to_s +
-           ' ' + quotation.customer.address.city.to_s
-        end
-
-        it "should write customer country" do
-          text.strings.should include quotation.customer.address.country
-        end
-      end # context in Informations client
-    end # context in Entete de facturation
-
-    it "shoud write 'Objet :' and invoice label" do
-      text.strings.should include 'Objet :'
-      text.strings.should include ' ' + quotation.label
     end
 
-    context "in Tableau" do
-      it_should_write 'Prestation'
-      it_should_write 'Prix'
-      it_should_write 'unitaire'
-      it_should_write 'Quantité'
-      it_should_write 'Total HT'
-
-
-      context "in Lignes de facturation" do
-        it 'should write invoice line label of each invoice line' do
-          quotation.lines.each do |line|
-            text.strings.should include line.label
-          end
-        end
-
-        it 'should write invoice line quantity of each line' do
-          text.strings.should include '3,14'
-          text.strings.should include '42,42'
-        end
-
-        it 'should write invoice line unit_price of each line' do
-          text.strings.should include '2,54 €'
-          text.strings.should include '42,54 €'
-        end
-
-        it 'should write invoice line total of each line' do
-          text.strings.should include '7,98 €'
-          text.strings.should include '1.804,55 €'
-        end
-      end # context in Lignes de facturation
-
-      context 'in Synthèse' do
-
-        it_should_write 'Remise commerciale'
-        it_should_write '100,23 €'
-
-        it_should_write 'Total HT'
-        it_should_write '1.712,29 €'
-
-        it_should_write 'TVA 19,6 %'
-        it_should_write '335,61 €'
-
-        it_should_write 'Total TTC'
-        it_should_write '2.047,90 €'
-
-        it_should_not_write 'Acompte reçu sur commande'
-        it_should_not_write '1,79 €'
-
-        it_should_not_write 'Solde à payer'
-        it 'should write balance calculated using total_all_taxes - advance' do
-          text.strings.should_not include '2.046,11 €'
-        end
-
-      end
-    end # context in Tableau
-    it_should_write "Date d'expiration : 10/06/2014"
-
-    it_should_write 'Conditions de paiement :'
-
-    it 'should write invoice payment term' do
-      text.strings.should include quotation.payment_term.label
+    it 'is expected to print invoice line quantity of each line' do
+      expect(content).to include '3,14'
+      expect(content).to include '42,42'
     end
 
-    it_should_not_write 'Coordonnées bancaires :'
-    it_should_not_write 'IBAN : FR76 0000 0000 0000 0000 0000 000'
-    it_should_not_write 'BIC / SWIFT : PSSTTHEGAME'
-
-    context 'in Comments - Bas de page' do
-      it_should_write 'this is the quotation comment'
+    it 'is expected to print invoice line unit_price of each line' do
+      expect(content).to include '2,54 €'
+      expect(content).to include '42,54 €'
     end
 
-    context 'in Mentions légales - Bas de page' do
-      it_should_write 'Mention légale'
-      it_should_write 'Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de'
-      it_should_write 'pénalités de retard sur la base du taux BCE majoré de dix (10) points et au paiement d’une indemnité forfaitaire pour frais de'
-      it_should_write 'recouvrement d’un montant de 999999€'
+    it 'is expected to print invoice line total of each line' do
+      expect(content).to include '7,98 €'
+      expect(content).to include '1 804,55 €'
     end
-  end # describe #build
+  end
 
-  describe "missing data" do
-    it "missing payment_term should be OK" do
-      quotation = create(:billing_machine_quotation, payment_term: nil)
-      pdf     = ::Dorsale::BillingMachine::QuotationPdf.new(quotation)
+  describe 'Total table' do
+    it 'is expected to print all the invoice synthesis' do
+      expect(content).to include 'REMISE'
+      expect(content).to include '- 100,23 €'
+      expect(content).to include 'TOTAL HT'
+      expect(content).to include '1 712,29 €'
+      expect(content).to include 'TVA 19,60 %'
+      expect(content).to include '335,61 €'
+      expect(content).to_not include 'ACOMPTE'
+      expect(content).to include 'TOTAL TTC'
+      expect(content).to include '2 047,90 €'
+    end
+  end
+
+
+  describe 'Footer' do
+    it 'is expected to print invoice payment term' do
+      expect(content).to include 'Conditions de paiement :'
+      expect(content).to include quotation.payment_term.label
+    end
+
+    it 'is expected to print current and total page number' do
+      expect(content).to include 'page 1/1'
+    end
+
+    it 'is expected to print current and total page number' do
+      expect(content).to include quotation.comments
+    end
+
+    it 'is expected to print invoice legals and banks' do
+      expect(content).to_not include 'IBAN : FR76 0000 0000 0000 0000 0000 000'
+      expect(content).to_not include 'BIC / SWIFT : PSSTTHEGAME'
+      expect(content).to include 'Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de'
+      expect(content).to include 'pénalités de retard sur la base du taux BCE majoré de dix (10) points et au paiement d’une indemnité forfaitaire pour frais de'
+      expect(content).to include 'recouvrement d’un montant de 999999€'
+    end
+  end
+
+  describe 'incomplete invoice' do
+    before(:each) do
+      quotation_incomplete = create(:billing_machine_quotation, total_duty: 1000, vat_amount: 196,
+        total_all_taxes: 1196,customer: customer, date: '2014-04-16', vat_rate: 19.6, id_card: id_card)
+      pdf_incomplete = quotation_incomplete.pdf
+      pdf_incomplete.build
+      tempfile = Tempfile.new("pdf")
+      tempfile.binmode
+      tempfile.write(pdf_incomplete.render)
+      tempfile.flush
+      @incomplete_content = Yomu.new(tempfile.path).text
+    end
+
+    it 'is expected not to print ACOMPTE' do
+      expect(@incomplete_content).to_not include 'ACOMPTE'
+    end
+
+    it 'is expected not to print REMISE' do
+      expect(@incomplete_content).to_not include 'REMISE'
+    end
+
+    it 'is expected to print TOTAL TTC' do
+      expect(@incomplete_content).to include 'TOTAL TTC'
+    end
+  end
+
+  describe "attachment" do
+    it "should build attachments" do
+      quotation  = create(:billing_machine_quotation)
+      attachment = create(:alexandrie_attachment, attachable: quotation)
+      pdf = quotation.pdf
       pdf.build
-      PDF::Inspector::Text.analyze(pdf.render)
+
+      text = Yomu.read(:text, pdf.render_with_attachments).split("\n")
+      expect(text).to include "page 1"
+      expect(text).to include "page 2"
     end
   end
-
-  it "should build attachments" do
-    quotation  = create(:billing_machine_quotation)
-    attachment = create(:alexandrie_attachment, attachable: quotation)
-    pdf = quotation.pdf
-    pdf.build
-
-    text = Yomu.read(:text, pdf.render_with_attachments).split("\n")
-    expect(text).to include "page 1"
-    expect(text).to include "page 2"
-  end
-
 end
+
+
+
