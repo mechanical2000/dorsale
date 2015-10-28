@@ -43,6 +43,7 @@ require "dorsale/alexandrie/prawn"
 require "acts-as-taggable-on"
 require "active_record_comma_type_cast"
 
+
 module Dorsale
   class Engine < ::Rails::Engine
     isolate_namespace Dorsale

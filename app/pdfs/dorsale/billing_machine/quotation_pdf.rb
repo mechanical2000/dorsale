@@ -20,35 +20,38 @@ module Dorsale
       end
 
       def main_document_type
-        "Devis"
+        Dorsale::BillingMachine::Quotation.model_name.human.humanize
       end
 
-      def build_bank_infos
-      end
-
-      def build_synthesis
-        font_size 10
-          if (@main_document.commercial_discount && @main_document.commercial_discount != 0.0)
-            @table_matrix.push ['Remise commerciale', '', '', euros(@main_document.commercial_discount)]
-          end
-          @table_matrix.push ['Net HT', '', '', euros(@main_document.total_duty)]
-          vat_rate = french_number(@main_document.vat_rate)
-          @table_matrix.push ["TVA #{vat_rate} %", '', '', euros(@main_document.vat_amount)]
-          @table_matrix.push ['Total TTC', '', '', euros(@main_document.total_all_taxes)]
-          write_table_from_matrix(@table_matrix)
+      def build_bank_informations
       end
 
       def build_expiry
         return if @main_document.expires_at.nil?
-        move_down 15
-        text "Date d'expiration : " + I18n.l(@main_document.expires_at)
+        top = bounds.top - 11.5.cm
+        height = 0.5.cm
+        width  = 7.5.cm
+
+        bounding_box [bounds.left, top], height: height, width: width do
+          draw_bounds_debug
+          font_size 9 do
+            text "<b>#{I18n.t("pdfs.expires_at")}</b> #{I18n.l(@main_document.expires_at)}", inline_format: true
+          end
+        end
       end
 
       def build_comments
-        bounding_box [50, 140], :width => 445, :height => 50 do
-         draw_bounds_debug
-         font_size 9
-         text @main_document.comments
+        return if @main_document.comments.blank?
+        top = bounds.top - 12.cm
+        height = 1.5.cm
+        width  = 10.cm
+
+        font_size 9 do
+          text_box @main_document.comments,
+            :at       => [bounds.left, top],
+            :height   => height,
+            :width    => width,
+            :overflow => :shrink_to_fit
         end
       end
     end
