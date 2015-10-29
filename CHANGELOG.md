@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.10
+
+- Fix destroy dependencies
+
 ## 2.1.9
 
 - Add new template for invoices and quotations
