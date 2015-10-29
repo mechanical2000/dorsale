@@ -12,8 +12,8 @@ module Dorsale
       end
 
       has_many :comments, -> { order("id DESC") }, class_name: ::Dorsale::Comment, as: :commentable
-      has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable
-      has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable
+      has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable, dependent: :destroy
+      has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable, dependent: :destroy
       accepts_nested_attributes_for :address, allow_destroy: true
 
       def links
