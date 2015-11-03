@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  include Dorsale::User::Active
+  include Dorsale::User::PasswordGeneration
+
   def name
     email
   end

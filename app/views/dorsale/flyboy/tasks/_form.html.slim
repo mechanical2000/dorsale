@@ -23,7 +23,7 @@
 
       = f.hidden_field :taskable_id
       = f.hidden_field :taskable_type
-      = f.input :owner_guid, collection: @owners.map{ |e| [e.name, e.guid] }
+      = f.input :owner_guid, collection: @owners.map{ |e| [e.to_s, e.try(:guid)] }
 
       = form_buttons
 
