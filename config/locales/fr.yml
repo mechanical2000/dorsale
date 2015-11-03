@@ -10,6 +10,10 @@ fr:
       delete_error : "Impossible de supprimer le commentaire."
     users:
       inactive: "Ce compte est inactif"
+      create_ok    : "L'utilisateur a été créé."
+      create_error : "Impossible de créer l'utilisateur."
+      update_ok    : "L'utilisateur a été modifié."
+      update_error : "Impossible de modifier l'utilisateur."
   emails:
     user:
       new_account:

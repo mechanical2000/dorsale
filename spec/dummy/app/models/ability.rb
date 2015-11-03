@@ -9,6 +9,7 @@ class Ability
   def initialize(*)
     define_alexandrie_abilities
     define_dorsale_comment_abilities
+    define_user_abilities
     define_dorsale_flyboy_abilities
     define_dorsale_billing_machine_abilities
     define_dorsale_customer_vault_abilities

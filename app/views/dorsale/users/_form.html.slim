@@ -1,0 +1,6 @@
+.well
+  = horizontal_form_for @user do |u|
+    = u.input :email
+    = u.input :is_active, as: :boolean, wrapper: :horizontal_radio_and_checkboxes, label: "Actif ?"
+
+    = form_buttons obj: @user

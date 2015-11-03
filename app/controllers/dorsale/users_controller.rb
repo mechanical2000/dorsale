@@ -30,9 +30,9 @@ module Dorsale
       @user = User.new(user_params)
       authorize! :create, @user
       if @user.save
-        redirect_to dorsale.users_path, notice: t("flash.success.user.created")
+        redirect_to dorsale.users_path, notice: t("messages.users.create_ok")
       else
-        flash[:error] = t("flash.errors.user.created")
+        flash[:error] = t("messages.users.create_error")
         render :new
       end
     end
@@ -40,9 +40,9 @@ module Dorsale
     def update
       authorize! :update, @user
       if @user.update(user_params)
-        redirect_to dorsale.users_path, notice: t("flash.success.user.updated")
+        redirect_to dorsale.users_path, notice: t("messages.users.update_ok")
       else
-        flash[:error] = t("flash.errors.user.updated")
+        flash[:error] = t("messages.users.update_error")
         render :edit
       end
     end
