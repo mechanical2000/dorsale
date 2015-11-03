@@ -1,4 +1,4 @@
-module Dorsale::User::PasswordGeneration
+module Dorsale::Users::PasswordGeneration
   def self.included(user_model)
     user_model.class_eval do
       before_validation :generate_password, on: :create

@@ -1,4 +1,4 @@
-module Dorsale::User::Active
+module Dorsale::Users::Active
   def self.included(user_model)
     user_model.class_eval do
       validates :is_active, inclusion: {in: [true, false]}
