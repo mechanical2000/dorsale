@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 gem "rails", "~> 4.2.1"
 gem 'devise'
+gem 'devise-bootstrap-views'
+gem 'devise-i18n'
 gem "database_cleaner"
 
 gemspec
