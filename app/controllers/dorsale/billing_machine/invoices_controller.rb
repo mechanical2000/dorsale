@@ -66,6 +66,7 @@ module Dorsale
 
         respond_to do |format|
           format.pdf {
+              authorize! :download, @invoice
               pdf_data  = @invoice.pdf.render
 
               file_name = [
@@ -87,7 +88,7 @@ module Dorsale
       def copy
         # callback in BillingMachine::ApplicationController
         @original = @invoice
-        authorize! :read, @original
+        authorize! :copy, @original
 
         @invoice = @original.dup
 

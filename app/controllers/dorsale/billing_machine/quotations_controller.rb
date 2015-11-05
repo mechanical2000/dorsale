@@ -86,6 +86,7 @@ module Dorsale
 
         respond_to do |format|
           format.pdf {
+              authorize! :download, @quotation
               pdf_data  = @quotation.pdf.render_with_attachments
 
               file_name = [
@@ -135,7 +136,7 @@ module Dorsale
       end
 
       def copy
-        authorize! :create, @quotation
+        authorize! :copy, @quotation
 
         new_quotation = @quotation.create_copy!
         flash[:notice] = t("messages.quotations.copy_ok")
