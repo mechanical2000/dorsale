@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.11
+
+- Add users management
+
 ## 2.1.10
 
 - Fix destroy dependencies
