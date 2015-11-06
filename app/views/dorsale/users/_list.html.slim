@@ -1,0 +1,18 @@
+table.default
+  thead
+    tr
+      th.hidden-xs
+        = t("attributes.email")
+
+      th
+        = t("actions.actions")
+
+  tbody
+    - users.each do |user|
+      tr.user-line
+
+        td.hidden-xs.email
+          = user
+
+        td.actions
+          = update_button dorsale.edit_user_path(user)

@@ -26,7 +26,7 @@
     = ::Dorsale::Comment.t(:written_by)
     = " "
     span.author
-      = comment.author.name
+      = comment.author.to_s
 
   p.text = text2html(comment.text)
 
