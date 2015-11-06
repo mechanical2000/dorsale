@@ -123,6 +123,7 @@ fr:
     number                : "Nombre"
     message               : "Message"
     skype                 : "Skype"
+    is_active             : "Actif ?"
 
     # BillingMachine
     unit                  : "Unité"

@@ -8,3 +8,19 @@ fr:
       update_error : "Impossible de modifier le commentaire."
       delete_ok    : "Le commentaire a été supprimé."
       delete_error : "Impossible de supprimer le commentaire."
+    users:
+      inactive: "Ce compte est inactif"
+      create_ok    : "L'utilisateur a été créé."
+      create_error : "Impossible de créer l'utilisateur."
+      update_ok    : "L'utilisateur a été modifié."
+      update_error : "Impossible de modifier l'utilisateur."
+  emails:
+    user:
+      new_account:
+        title: "Nouveau compte"
+        body:
+          title: "Nouveau compte créé"
+          subtitle: "Félicitation pour la création de votre compte."
+          login: "Votre login est: %{login}"
+          password: "Votre mot de passe est: %{password}"
+          url_label: "Cliquez ici pour accéder au service"

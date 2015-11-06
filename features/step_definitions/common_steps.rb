@@ -23,3 +23,11 @@ Given(/^an existing user$/) do
   @user = create(:user)
   sign_in @user
 end
+
+Given(/^an active user$/) do
+  @user = create(:user)
+end
+
+Given(/^an inactive user$/) do
+  @user = create(:user, is_active: false)
+end

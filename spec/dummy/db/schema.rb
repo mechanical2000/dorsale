@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023135421) do
+ActiveRecord::Schema.define(version: 20151103110115) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -295,6 +295,7 @@ ActiveRecord::Schema.define(version: 20151023135421) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.boolean  "is_active"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
