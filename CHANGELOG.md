@@ -3,6 +3,7 @@
 ## 2.1.11
 
 - Add users management
+- Change invoices and quotations authorizes
 
 ## 2.1.10
 
