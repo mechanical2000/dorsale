@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.12
+
+- Fix comments on destroyed individuals
+
 ## 2.1.11
 
 - Add users management
