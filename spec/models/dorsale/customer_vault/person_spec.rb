@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ::Dorsale::CustomerVault::Person, type: :model do
+
   describe '#links' do
     let(:c) { create(:customer_vault_corporation) }
     let(:c2) { create(:customer_vault_corporation) }
