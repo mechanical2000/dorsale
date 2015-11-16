@@ -23,8 +23,8 @@ module Dorsale
         super
         self.date                = Date.today       if date.nil?
         self.due_date            = 30.days.from_now if due_date.nil?
-        self.vat_rate            = 20               if vat_rate.nil?
         self.advance             = 0                if advance.nil?
+        self.vat_amount          = 0                if vat_amount.nil?
         self.commercial_discount = 0                if commercial_discount.nil?
         self.paid                = false            if paid.nil?
       end
@@ -45,13 +45,14 @@ module Dorsale
       before_save :update_balance
 
       def update_balance
-        self.vat_rate            = 0 if vat_rate.nil?
         self.advance             = 0 if advance.nil?
         self.commercial_discount = 0 if commercial_discount.nil?
-        self.total_duty          = (lines.pluck(:total)).sum - commercial_discount
-        self.vat_amount          = total_duty * vat_rate / 100.0
-        self.total_all_taxes     = total_duty + vat_amount
-        self.balance             = total_all_taxes - advance
+        self.total_excluding_taxes          = (lines.pluck(:total)).sum - commercial_discount
+        lines.each do |line|
+          self.vat_amount += (line.total * line.vat_rate) / 100
+        end
+        self.total_including_taxes     = total_excluding_taxes + vat_amount
+        self.balance             = total_including_taxes - advance
       end
 
       def pdf

@@ -8,7 +8,16 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
   it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
 
+  it { is_expected.to respond_to :date }
+  it { is_expected.to respond_to :label }
+  it { is_expected.to respond_to :vat_amount }
+  it { is_expected.to respond_to :unique_index }
   it { is_expected.to respond_to :commercial_discount }
+
+  it {is_expected.to respond_to :total_excluding_taxes}
+  it {is_expected.to respond_to :total_including_taxes}
+
+  it { is_expected.to respond_to :advance }
 
   it "should have a valid factory" do
     expect(create(:billing_machine_invoice)).to be_valid
@@ -87,27 +96,27 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
   describe "totals" do
     it "should be calculated upon saving" do
-      invoice = create(:billing_machine_invoice, vat_rate: 20, total_duty: 0, vat_amount: 0, total_all_taxes: 0, commercial_discount: 10, advance: 40, balance: 0)
-      create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
-      create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
-      expect(invoice.total_duty).to eq(90.0)
-      expect(invoice.vat_amount).to eq(18.0)
-      expect(invoice.total_all_taxes).to eq(108)
-      expect(invoice.balance).to eq(68.0)
+      invoice = create(:billing_machine_invoice, total_excluding_taxes: 0, total_including_taxes: 0, commercial_discount: 10, advance: 40, balance: 0)
+      create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, vat_rate: 20, invoice: invoice)
+      create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, vat_rate: 20, invoice: invoice)
+      expect(invoice.total_excluding_taxes).to eq(90.0)
+      expect(invoice.vat_amount).to eq(20.0)
+      expect(invoice.total_including_taxes).to eq(120)
+      expect(invoice.balance).to eq(70.0)
     end
     it "should be calculated upon saving" do
-      invoice = create(:billing_machine_invoice, vat_rate: nil, total_duty: nil, vat_amount: nil, total_all_taxes: nil, commercial_discount: 10.5, advance: nil, balance: nil)
+      invoice = create(:billing_machine_invoice, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, commercial_discount: 10.5, advance: nil, balance: nil)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
 
-      expect(invoice.total_duty).to eq(89.5)
+      expect(invoice.total_excluding_taxes).to eq(89.5)
       expect(invoice.vat_amount).to eq(0.0)
-      expect(invoice.total_all_taxes).to eq(89.5)
+      expect(invoice.total_including_taxes).to eq(89.5)
       expect(invoice.balance).to eq(89.5)
     end
 
     it "should work fine even with empty lines" do
-      invoice = create(:billing_machine_invoice, vat_rate: nil, total_duty: nil, vat_amount: nil, total_all_taxes: nil, advance: nil, balance: nil)
+      invoice = create(:billing_machine_invoice, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, advance: nil, balance: nil)
       create(:billing_machine_invoice_line, quantity: nil, unit_price: nil, invoice: invoice)
       expect(invoice.total_duty).to eq(0.0)
     end
@@ -130,11 +139,11 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
     let(:columns_names) {'"Date";"Numéro";"Objet";"Client";"Adresse 1";"Adresse 2";"Code postal";"Ville";"Pays";"Remise commerciale";"Montant HT";"Taux TVA";"Montant TVA";"Montant TTC";"Acompte";"Solde à payer"'+"\n"}
     it 'should return csv', ignore_semaphore: true do
-      invoice0 = create(:billing_machine_invoice, label: "invoiceLabel", date: "2014-07-31", unique_index: 1, commercial_discount:1, total_duty: 9.99, vat_rate: 19.6, vat_amount: 23.2, total_all_taxes: 43.35, advance: 3.5, id_card: id_card, customer: customer)
-      invoice0.lines.create(quantity: 1, unit_price: 9.99)
+      invoice0 = create(:billing_machine_invoice, label: "invoiceLabel", date: "2014-07-31", unique_index: 1, commercial_discount:1, total_excluding_taxes: 9.99, vat_amount: 23.2, total_including_taxes: 43.35, advance: 3.5, id_card: id_card, customer: customer)
+      invoice0.lines.create(quantity: 1, unit_price: 9.99, vat_rate: 19.6)
       invoice1 = invoice0.dup
-      invoice1.update(label: 'çé"à;ç\";,@\\', date: "2014-08-01", commercial_discount:0, unique_index: 2, advance: 3.0, vat_rate: 20)
-      invoice1.lines.create(quantity: 1, unit_price: 13.0)
+      invoice1.update(label: 'çé"à;ç\";,@\\', date: "2014-08-01", commercial_discount:0, unique_index: 2, advance: 3.0)
+      invoice1.lines.create(quantity: 1, unit_price: 13.0 , vat_rate: 20)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 
       expect(csv_output).to be ==
@@ -145,8 +154,8 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
         '"13005";"Marseille";"country";"0,00";"13,00";"20,00";"2,60";"15,60";"3,00";"12,60"' + "\n"
     end
     it 'should return expected csv with nil values' do
-      invoice0 = create(:billing_machine_invoice, id_card: id_card, total_duty: nil,
-        vat_rate: nil, vat_amount: nil, total_all_taxes: 0, advance: nil, label: nil,
+      invoice0 = create(:billing_machine_invoice, id_card: id_card, total_excluding_taxes: nil,
+        vat_amount: nil, total_including_taxes: 0, advance: nil, label: nil,
         customer: nil, payment_term: nil, commercial_discount: nil)
       csv_output = ::Dorsale::BillingMachine::Invoice.to_csv
 

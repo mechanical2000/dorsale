@@ -3,6 +3,13 @@ require "rails_helper"
 describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
   it { is_expected.to belong_to :invoice }
 
+  it { is_expected.to respond_to :quantity }
+  it { is_expected.to respond_to :label }
+  it { is_expected.to respond_to :vat_rate }
+  it { is_expected.to respond_to :total }
+  it { is_expected.to respond_to :unit }
+  it { is_expected.to respond_to :unit_price }
+
   it "should have a valid factory" do
     expect(build(:billing_machine_invoice_line)).to be_valid
   end

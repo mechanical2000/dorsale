@@ -14,12 +14,14 @@ module Dorsale
       def update_total
         self.quantity   ||= 0
         self.unit_price ||= 0
+        self.vat_rate   ||= 20
         self.total = self.quantity * self.unit_price
       end
 
-      # ???
-      after_save do
-        self.invoice.reload.save
+      after_save :update_invoice_total
+
+      def update_invoice_total
+        self.invoice.reload.save!
       end
 
     end

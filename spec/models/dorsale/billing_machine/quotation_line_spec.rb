@@ -9,6 +9,7 @@ describe ::Dorsale::BillingMachine::QuotationLine do
   it { is_expected.to belong_to :quotation }
   it { is_expected.to respond_to :quantity }
   it { is_expected.to respond_to :label }
+  it { is_expected.to respond_to :vat_rate }
   it { is_expected.to respond_to :total }
   it { is_expected.to respond_to :unit }
   it { is_expected.to respond_to :unit_price }

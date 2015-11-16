@@ -11,15 +11,18 @@ module Dorsale
       before_save :update_total
 
       def update_total
-        self.quantity ||= 0
+        self.quantity   ||= 0
         self.unit_price ||= 0
-        self.total = self.quantity * self.unit_price
+        self.vat_rate   ||= 20
+        self.total       = self.quantity * self.unit_price
       end
 
-      # ???
-      after_save do
-        self.quotation.reload.save
+      after_save :update_quotation_total
+
+      def update_quotation_total
+        self.quotation.reload.save!
       end
+
     end
   end
 end
