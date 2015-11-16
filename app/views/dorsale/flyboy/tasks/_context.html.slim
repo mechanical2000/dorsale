@@ -3,7 +3,7 @@
   = context_title task.name
   = render "dorsale/flyboy/tasks/actions", task: task
   
-  = context_info task.t(:owner), l(task.owner)
+  = context_info task.t(:owner), task.owner
 
   .infos
     strong
