@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.13
+
+- Add owner to tasks context
+
 ## 2.1.12
 
 - Fix comments on destroyed individuals

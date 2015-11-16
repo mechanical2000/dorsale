@@ -2,6 +2,8 @@
   = context_icon :check_square_o
   = context_title task.name
   = render "dorsale/flyboy/tasks/actions", task: task
+  
+  = context_info task.t(:owner), task.owner
 
   .infos
     strong
