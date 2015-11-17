@@ -1,6 +1,6 @@
 .quotation-context: .context
   = context_title ::Dorsale::BillingMachine::Quotation.t(:data)
 
-  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_duty), euros(@total_duty)
+  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_excluding_taxes), euros(@total_excluding_taxes)
   = context_info ::Dorsale::BillingMachine::Quotation.t(:vat_amount), euros(@vat_amount)
-  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes), euros(@total_all_taxes)
+  = context_info ::Dorsale::BillingMachine::Quotation.t(:total_including_taxes), euros(@total_including_taxes)

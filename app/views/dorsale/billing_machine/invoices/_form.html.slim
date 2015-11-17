@@ -15,7 +15,6 @@
       = f.input :due_date, html5: true
       = f.input :paid, as: :select, include_blank: false
       = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
-      = f.input :vat_rate, as: :string
       = f.input :advance, as: :string
       = f.input :commercial_discount, as: :string
 
@@ -32,33 +31,41 @@
         = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
 
     .total.well
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:commercial_discount)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-commercial_discount
 
       .row
         label.col-sm-3.control-label
-          = @invoice.t(:total_duty)
+          = @invoice.t(:total_excluding_taxes)
           = " : "
         .col-sm-9
-          .form-control-static#invoice-total_duty
+          .form-control-static#invoice-total_excluding_taxes
 
       .row
         label.col-sm-3.control-label
-          = @invoice.t(:vat_rate)
+          = @invoice.t(:vat_amount)
           = " : "
         .col-sm-9
           .form-control-static#invoice-vat_amount
 
       .row
         label.col-sm-3.control-label
-          = @invoice.t(:total_all_taxes)
+          = @invoice.t(:total_including_taxes)
           = " : "
         .col-sm-9
-          .form-control-static#invoice-total_all_taxes
+          .form-control-static#invoice-total_including_taxes
+      
+      .row
+        label.col-sm-3.control-label
+          = @invoice.t(:advance)
+          = " : "
+        .col-sm-9
+          .form-control-static#invoice-advance
+          
+      .row
+        label.col-sm-3.control-label
+          = @invoice.t(:commercial_discount)
+          = " : "
+        .col-sm-9
+          .form-control-static#invoice-commercial_discount
 
       .row
         label.col-sm-3.control-label

@@ -32,11 +32,11 @@
         = info @quotation, :date,                date(@quotation.date)
         = info @quotation, :expires_at,          date(@quotation.expires_at)
         = info @quotation, :payment_term,        @quotation.payment_term.try(:label)
-        = info @quotation, :vat_rate,            percentage(@quotation.vat_rate)
-        = info @quotation, :commercial_discount, euros(@quotation.commercial_discount)
-        = info @quotation, :total_duty,          euros(@quotation.total_duty)
+        = info @quotation, :total_duty,          euros(@quotation.total_excluding_taxes)
         = info @quotation, :vat_amount,          euros(@quotation.vat_amount)
-        = info @quotation, :total_all_taxes,     euros(@quotation.total_all_taxes)
+        = info @quotation, :total_all_taxes,     euros(@quotation.total_including_taxes)
+        = info @quotation, :commercial_discount, euros(@quotation.commercial_discount)
+        = info @quotation, :balance, euros(@quotation.balance)
 
     - @quotation.lines.each do |line|
       .panel.panel-default
@@ -45,14 +45,17 @@
             = line.label
 
         .panel-body
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :quantity
 
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :unit_price, euros(line.unit_price)
 
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :unit
+          
+          .col-xs-12.col-sm-3
+            = info line, :vat_rate
 
         .panel-footer
           = info line, :total, euros(line.total)

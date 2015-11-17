@@ -29,13 +29,12 @@
         = info @invoice, :date,                date(@invoice.date)
         = info @invoice, :due_date,            date(@invoice.due_date)
         = info @invoice, :payment_term,        @invoice.payment_term.try(:label)
-        = info @invoice, :vat_rate,            percentage(@invoice.vat_rate)
         = info @invoice, :payment_status
-        = info @invoice, :commercial_discount, euros(@invoice.commercial_discount)
-        = info @invoice, :total_duty,          euros(@invoice.total_duty)
+        = info @invoice, :total_excluding_taxes,          euros(@invoice.total_duty)
         = info @invoice, :vat_amount,          euros(@invoice.vat_amount)
+        = info @invoice, :total_including_taxes,     euros(@invoice.total_all_taxes)
         = info @invoice, :advance,             euros(@invoice.advance)
-        = info @invoice, :total_all_taxes,     euros(@invoice.total_all_taxes)
+        = info @invoice, :commercial_discount, euros(@invoice.commercial_discount)
         = info @invoice, :balance,             euros(@invoice.balance)
 
     - @invoice.lines.each do |line|
@@ -45,14 +44,17 @@
             = line.label
 
         .panel-body
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :quantity
 
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :unit_price, euros(line.unit_price)
 
-          .col-xs-12.col-sm-4
+          .col-xs-12.col-sm-3
             = info line, :unit
+
+          .col-xs-12.col-sm-3
+            = info line, :vat_rate
 
         .panel-footer
           = info line, :total, euros(line.total)

@@ -72,9 +72,9 @@ fr:
     siret: "SIRET "
     vat: "TVA "
     commercial_discount: "REMISE"
-    total_duty: "TOTAL HT"
+    total_excluding_taxes: "TOTAL HT"
     advance: "ACOMPTE"
-    total_all_taxes: "TOTAL TTC"
+    total_including_taxes: "TOTAL TTC"
     expires_at: "Date d'expiration : "
 
   messages:

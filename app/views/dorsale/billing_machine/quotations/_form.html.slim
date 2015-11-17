@@ -15,7 +15,6 @@
       = f.input :expires_at, html5: true
       = f.association :payment_term, collection: @payment_terms
       = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
-      = f.input :vat_rate, as: :string
       = f.input :commercial_discount, as: :string
 
       - if @id_cards.one?
@@ -35,17 +34,10 @@
     .total.well
       .row
         label.col-sm-3.control-label
-          = @quotation.t(:commercial_discount)
-          = " : "
-        .col-sm-9
-          .form-control-static#quotation-commercial_discount
-
-      .row
-        label.col-sm-3.control-label
           = @quotation.t(:total_duty)
           = " : "
         .col-sm-9
-          .form-control-static#quotation-total_duty
+          .form-control-static#quotation-total_excluding_taxes
 
       .row
         label.col-sm-3.control-label
@@ -59,6 +51,20 @@
           = @quotation.t(:total_all_taxes)
           = " : "
         .col-sm-9
-          .form-control-static#quotation-total_all_taxes
+          .form-control-static#quotation-total_including_taxes
+          
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:commercial_discount)
+          = " : "
+        .col-sm-9
+          .form-control-static#quotation-commercial_discount
+
+      .row
+        label.col-sm-3.control-label
+          = @quotation.t(:balance)
+          = " : "
+        .col-sm-9
+          .form-control-static#quotation-balance
 
     = form_buttons

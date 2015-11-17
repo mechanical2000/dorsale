@@ -5,18 +5,19 @@
 
     .col-sm-12
       .col-sm-3
-      .col-sm-3
         = f.input :quantity, as: :string, input_html: {class: "line-quantity"}
       .col-sm-3
         = f.input :unit, as: :string, input_html: {class: "line-unit"}
       .col-sm-3
         = f.input :unit_price, as: :string, input_html: {class: "line-unit_price"}
+      .col-sm-3
+        = f.input :vat_rate, as: :string, input_html: {class: "line-vat-rate"}
 
     .col-sm-12
       .col-sm-3.remove-line
         = link_to_remove_association t("actions.remove_line"), f, class: "btn btn-danger btn-xs remove-line"
 
-      .col-sm-9
+      .col-sm-9.text-right
         label.line-total-label
           = ::Dorsale::BillingMachine::InvoiceLine.t(:total)
           = " : "
