@@ -29,17 +29,16 @@ module Dorsale
       # simple_form
       validates :id_card_id, presence: true
 
-      def initialize(*args)
+      def initialize(*)
         super
-        self.date                = Date.today     if date.nil?
-        self.expires_at          = date + 1.month if expires_at.nil?
-        self.commercial_discount = 0              if commercial_discount.nil?
-        self.vat_amount          = 0              if vat_amount.nil?
-        self.state               = STATES.first   if state.nil?
+        self.state                 = STATES.first   if state.nil?
+        self.date                  = Date.today     if date.nil?
+        assign_default_values
       end
 
       before_create :assign_unique_index
       before_create :assign_tracking_id
+      before_validation :assign_default_values
 
       def assign_unique_index
         if unique_index.nil?
@@ -51,15 +50,31 @@ module Dorsale
         self.tracking_id = date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
 
+      def assign_default_values
+        self.expires_at            = date + 1.month if expires_at.nil?
+        self.commercial_discount   = 0              if commercial_discount.nil?
+        self.vat_amount            = 0              if vat_amount.nil?
+        self.total_excluding_taxes = 0              if total_excluding_taxes
+      end
+
       before_save :update_total
 
       def update_total
-        self.commercial_discount   = 0 if commercial_discount.nil?
-        self.total_excluding_taxes = (lines.pluck(:total).sum) - commercial_discount
+        assign_default_values
+
+        self.total_excluding_taxes = lines.pluck(:total).sum
+
+        self.vat_amount = 0.0
+
         lines.each do |line|
-          self.vat_amount += (line.total * line.vat_rate) / 100
+          self.vat_amount += (line.total * line.vat_rate / 100)
         end
+
         self.total_including_taxes  = total_excluding_taxes + vat_amount
+      end
+
+      def balance
+      self.total_including_taxes - commercial_discount
       end
 
       def pdf

@@ -9,12 +9,22 @@ module Dorsale
         order(created_at: :asc)
       }
 
-      before_save :update_total
+      def intialize(*)
+        super
+        assign_default_values
+      end
 
-      def update_total
+      before_validation :assign_default_values
+      before_validation :update_total
+
+      def assign_default_values
         self.quantity   ||= 0
         self.unit_price ||= 0
         self.vat_rate   ||= 20
+      end
+
+      def update_total
+        assign_default_values
         self.total = self.quantity * self.unit_price
       end
 

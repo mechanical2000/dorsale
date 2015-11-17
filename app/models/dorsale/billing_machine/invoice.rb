@@ -21,16 +21,14 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date                = Date.today       if date.nil?
-        self.due_date            = 30.days.from_now if due_date.nil?
-        self.advance             = 0                if advance.nil?
-        self.vat_amount          = 0                if vat_amount.nil?
-        self.commercial_discount = 0                if commercial_discount.nil?
-        self.paid                = false            if paid.nil?
+        assign_default_values
+        self.due_date              = 30.days.from_now if due_date.nil?
+        self.date                  = Date.today       if date.nil?
       end
 
       before_create :assign_unique_index
       before_create :assign_tracking_id
+      before_validation :assign_default_values
 
       def assign_unique_index
         if unique_index.nil?
@@ -42,17 +40,26 @@ module Dorsale
         self.tracking_id = date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
 
+      def assign_default_values
+        self.advance               = 0                if advance.nil?
+        self.vat_amount            = 0                if vat_amount.nil?
+        self.commercial_discount   = 0                if commercial_discount.nil?
+        self.total_excluding_taxes = 0                if total_excluding_taxes.nil?
+        self.paid                  = false            if paid.nil?
+      end
+
       before_save :update_balance
 
       def update_balance
         self.advance             = 0 if advance.nil?
         self.commercial_discount = 0 if commercial_discount.nil?
-        self.total_excluding_taxes          = (lines.pluck(:total)).sum - commercial_discount
+        self.total_excluding_taxes          = (lines.pluck(:total)).sum
+        self.vat_amount = 0.0
         lines.each do |line|
-          self.vat_amount += (line.total * line.vat_rate) / 100
+          self.vat_amount += (line.total * line.vat_rate / 100)
         end
         self.total_including_taxes     = total_excluding_taxes + vat_amount
-        self.balance             = total_including_taxes - advance
+        self.balance             = total_including_taxes - advance - commercial_discount
       end
 
       def pdf
@@ -87,11 +94,10 @@ module Dorsale
             "Code postal",
             "Ville",
             "Pays",
-            "Remise commerciale",
             "Montant HT",
-            "Taux TVA",
             "Montant TVA",
             "Montant TTC",
+            "Remise commerciale",
             "Acompte",
             "Solde à payer"
           ]
@@ -109,11 +115,10 @@ module Dorsale
               invoice.customer.try(:address).try(:zip),
               invoice.customer.try(:address).try(:city),
               invoice.customer.try(:address).try(:country),
-              french_number(invoice.commercial_discount),
-              french_number(invoice.total_duty),
-              french_number(invoice.vat_rate),
+              french_number(invoice.total_excluding_taxes),
               french_number(invoice.vat_amount),
-              french_number(invoice.total_all_taxes),
+              french_number(invoice.total_including_taxes),
+              french_number(invoice.commercial_discount),
               french_number(invoice.advance),
               french_number(invoice.balance)
             ]
