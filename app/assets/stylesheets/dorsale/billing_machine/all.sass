@@ -13,3 +13,65 @@
 
   .on_alert
     background: $state-danger-bg !important
+
+
+#invoice-form
+  table
+    width: 100%
+
+    td, th
+      border: 1px solid #DDD
+
+    th
+      width: 8em
+      padding: 0.5em
+
+    td
+      padding: 0 0.25em 0 0
+      text-align: right
+
+    td > input
+      text-align: right
+      padding: 0.25em 0.5em
+      background: transparent
+      width: calc(100% - 1em)
+      outline: none
+      border: none
+
+
+    th.invoice_line-label
+      width: auto
+      text-align: left
+
+    td.invoice_line-label,
+    td.invoice_line-label input
+      text-align: left
+
+    td[class*=total],
+    td[class*=balance],
+    td[class*=vat_amount],
+      background: #F1F2F3
+
+    tfoot td[colspan],
+      border: none
+
+    #add-new-line-td
+      text-align: left
+      vertical-align: top
+
+      a#add-new-line
+        margin-bottom: 3em
+
+
+  .form-control
+    @extend .input-sm
+
+  .form-group
+    margin: 0
+
+  .form-group + .form-group
+    margin-top: 1em
+
+  label abbr
+    border: none
+

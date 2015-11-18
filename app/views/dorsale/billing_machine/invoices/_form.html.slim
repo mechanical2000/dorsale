@@ -1,77 +1,115 @@
-#invoice.edit
+- vat_mode = ::Dorsale::BillingMachine.vat_mode
+
+#invoice-form
   = horizontal_form_for @invoice, as: :invoice do |f|
-    .well
-      - if @invoice.persisted?
-        .form-group
-          label.control-label.col-sm-3
-            = Dorsale::BillingMachine::Invoice.t(:tracking_id)
-          .col-sm-9
-            .form-control-static.invoice-unique-index
-              = @invoice.tracking_id
+    h1
+      = @invoice.class.t.capitalize
+      - if @invoice.tracking_id.present?
+        = " n° "
+        = @invoice.tracking_id
 
-      = f.input :label
-      = f.input :date, html5: true
-      = f.input :payment_term_id, collection: @payment_terms
-      = f.input :due_date, html5: true
-      = f.input :paid, as: :select, include_blank: false
-      = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
-      = f.input :advance, as: :string
-      = f.input :commercial_discount, as: :string
+    .row
+      .col-md-6
+        .well
+          - if @id_cards.one?
+            = f.hidden_field :id_card_id
+          - else
+            = f.input :id_card_id, collection: @id_cards
 
-      - if @id_cards.one?
-        = f.hidden_field :id_card_id
-      - else
-        = f.input :id_card_id, collection: @id_cards
+        = f.input :label
 
-    #invoice-lines
-      = f.simple_fields_for :lines do |l|
-        = render "line_fields", f: l
+      .col-md-6
+        .well
+          = f.input :date, html5: true
+          hr
+          = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
 
-      p.center
-        = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
+    table
+      thead
+        tr
+          th.invoice_line-label      = ::Dorsale::BillingMachine::InvoiceLine.t(:label)
+          th.invoice_line-quantity   = ::Dorsale::BillingMachine::InvoiceLine.t(:quantity)
+          th.invoice_line-unit       = ::Dorsale::BillingMachine::InvoiceLine.t(:unit)
+          - if vat_mode == :multiple
+            th.invoice_line-vat_rate   = ::Dorsale::BillingMachine::InvoiceLine.t(:vat_rate)
+          th.invoice_line-unit_price = ::Dorsale::BillingMachine::InvoiceLine.t(:unit_price)
+          th.invoice_line-total      = ::Dorsale::BillingMachine::InvoiceLine.t(:total)
 
-    .total.well
+      tbody
+        = f.simple_fields_for :lines do |lf|
+          = render "line_fields", f: lf
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:total_excluding_taxes)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-total_excluding_taxes
+      tfoot
+        tr
+          td colspan=(vat_mode == :single ? 5 : 6)
+            br
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:vat_amount)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-vat_amount
+        tr
+          td#add-new-line-td(
+            colspan=(vat_mode == :single ? 2 : 3)
+            rowspan=(vat_mode == :single ? 7 : 6)
+          )
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:total_including_taxes)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-total_including_taxes
-      
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:advance)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-advance
-          
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:commercial_discount)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-commercial_discount
+            = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-success btn-sm", id: "add-new-line", "data-association-insertion-node" => "tbody", "data-association-insertion-method" => "append"
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:balance)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-balance
+            = f.input :payment_term_id, collection: @payment_terms
+            = f.input :due_date, html5: true
+            = f.input :paid, as: :select, include_blank: false
+
+          th.invoice-commercial_discount-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:commercial_discount)
+
+          td.invoice-commercial_discount
+            = f.text_field :commercial_discount
+            = "€"
+
+        tr
+          th.invoice-total_excluding_taxes-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:total_excluding_taxes)
+
+          td.invoice-total_excluding_taxes
+            = f.text_field :total_excluding_taxes, disabled: true
+            = "€"
+
+        - if vat_mode == :single
+          tr
+            th.invoice-vat_rate-label colspan=2
+              = ::Dorsale::BillingMachine::InvoiceLine.t(:vat_rate)
+
+            td.invoice-vat_rate
+              = f.text_field :vat_rate
+              = "%"
+
+        tr
+          th.invoice-vat_amount-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:vat_amount)
+
+          td.invoice-vat_amount
+            = f.text_field :vat_amount, disabled: true
+            = "€"
+
+        tr
+          th.invoice-advance-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:advance)
+
+          td.invoice-advance
+            = f.text_field :advance
+            = "€"
+
+        tr
+          th.invoice-total_including_taxes-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:total_including_taxes)
+
+          td.invoice-total_including_taxes
+            = f.text_field :total_including_taxes, disabled: true
+            = "€"
+
+        tr
+          th.invoice-balance-label colspan=2
+            = ::Dorsale::BillingMachine::InvoiceLine.t(:balance)
+
+          td.invoice-balance
+            = f.text_field :balance, disabled: true
+            = "€"
 
     = form_buttons

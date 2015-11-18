@@ -149,7 +149,7 @@ module Dorsale
           :paid,
           :date,
           :commercial_discount,
-          :vat_amount,
+          :vat_rate,
           :advance,
           :due_date,
           :lines_attributes => [
@@ -159,6 +159,7 @@ module Dorsale
             :quantity,
             :unit,
             :unit_price,
+            :vat_rate,
           ],
         ]
       end

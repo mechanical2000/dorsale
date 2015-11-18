@@ -170,7 +170,7 @@ module Dorsale
           :date,
           :expires_at,
           :comments,
-          :vat_amount,
+          :vat_rate,
           :commercial_discount,
           :lines_attributes => [
             :_destroy,
@@ -179,6 +179,7 @@ module Dorsale
             :quantity,
             :unit,
             :unit_price,
+            :vat_rate,
           ],
         ]
       end
