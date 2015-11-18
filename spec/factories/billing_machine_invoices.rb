@@ -5,6 +5,6 @@ FactoryGirl.define do
     id_card      { create(:billing_machine_id_card) }
     date         { "2014-02-19" }
     label        { "Software service" }
-    advance      { 1.00 }
+    advance      { 0 }
   end
 end

@@ -73,29 +73,64 @@ describe ::Dorsale::BillingMachine::Quotation do
 
   describe "totals" do
     it "should be calculated upon saving" do
-      quotation = create(:billing_machine_quotation, total_excluding_taxes: 0, vat_amount: 0, total_including_taxes: 0, commercial_discount: 10)
-      create(:billing_machine_quotation_line, quantity: 10, unit_price: 5, quotation: quotation)
-      create(:billing_machine_quotation_line, vat_rate: 20, quantity: 10, unit_price: 5, quotation: quotation)
-      expect(quotation.total_excluding_taxes).to eq(100.0)
+      quotation = create(:billing_machine_quotation, commercial_discount: 10)
+
+      create(:billing_machine_quotation_line,
+        :vat_rate   => 20,
+        :quantity   => 10,
+        :unit_price => 5,
+        :quotation  => quotation,
+      )
+
+      create(:billing_machine_quotation_line,
+        :vat_rate   => 20,
+        :quantity   => 10,
+        :unit_price => 5,
+        :quotation  => quotation
+      )
+
+      expect(quotation.total_excluding_taxes).to eq(90.0)
       expect(quotation.vat_amount).to eq(18)
       expect(quotation.total_including_taxes).to eq(108)
       expect(quotation.balance).to eq(108)
     end
-    it "should be calculated upon saving" do
-      quotation = create(:billing_machine_quotation, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, commercial_discount: 20)
-      create(:billing_machine_quotation_line, quantity: 10, vat_rate: 10, unit_price: 5, quotation: quotation)
-      create(:billing_machine_quotation_line, quantity: 10, vat_rate: 20, unit_price: 5, quotation: quotation)
 
-      expect(quotation.total_excluding_taxes).to eq(100)
+    it "should be calculated upon saving with different vat rates" do
+      quotation = create(:billing_machine_quotation, commercial_discount: 20)
+      create(:billing_machine_quotation_line,
+        :quantity   => 10,
+        :vat_rate   => 10,
+        :unit_price => 5,
+        :quotation  => quotation,
+      )
+
+      create(:billing_machine_quotation_line,
+        :quantity   => 10,
+        :vat_rate   => 20,
+        :unit_price => 5,
+        :quotation  => quotation,
+      )
+
+      expect(quotation.total_excluding_taxes).to eq(80)
       expect(quotation.vat_amount).to eq(12)
       expect(quotation.total_including_taxes).to eq(92)
       expect(quotation.balance).to eq(92)
     end
 
     it "should work fine even with empty lines" do
-      quotation = create(:billing_machine_quotation, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, commercial_discount: nil)
-      create(:billing_machine_quotation_line, quantity: nil, unit_price: nil, vat_rate: nil, quotation: quotation)
+      quotation = create(:billing_machine_quotation, commercial_discount: nil)
+
+      create(:billing_machine_quotation_line,
+        :quantity   => nil,
+        :unit_price => nil,
+        :vat_rate   => nil,
+        :quotation  => quotation,
+      )
+
       expect(quotation.total_excluding_taxes).to eq(0.0)
+      expect(quotation.vat_amount).to eq(0.0)
+      expect(quotation.total_including_taxes).to eq(0.0)
+      expect(quotation.balance).to eq(0.0)
     end
   end
 

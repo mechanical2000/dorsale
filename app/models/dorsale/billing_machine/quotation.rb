@@ -57,41 +57,55 @@ module Dorsale
         self.total_excluding_taxes = 0              if total_excluding_taxes
       end
 
-      before_save :update_total
+      before_save :update_totals
 
-      def update_total
+      def update_totals
         assign_default_values
 
-        self.total_excluding_taxes = lines.pluck(:total).sum
+        self.total_excluding_taxes = lines.pluck(:total).sum - commercial_discount
 
-        commercial_discount? && total_excluding_taxes.nonzero? && discount_rate = commercial_discount / total_excluding_taxes
+        if commercial_discount? && total_excluding_taxes.nonzero?
+          discount_rate = commercial_discount / lines.pluck(:total).sum
+        else
+          discount_rate = 0.0
+        end
 
         self.vat_amount = 0.0
 
         lines.each do |line|
-          line_total = line.total
-          line_total = line_total - (line_total * discount_rate) if discount_rate.present?
-          self.vat_amount += (line_total * line.vat_rate / 100)
+          if discount_rate.present?
+            line_total = line.total - (line.total * discount_rate)
+          else
+            line_total = line.total
+          end
+          self.vat_amount += (line_total * line.vat_rate / 100.0)
         end
 
-        self.total_including_taxes  = total_excluding_taxes + vat_amount - commercial_discount
+        self.total_including_taxes = total_excluding_taxes + vat_amount
       end
 
+      def total_excluding_taxes=(*); super; end
+      private :total_excluding_taxes=
+
+      def vat_amount=(*); super; end
+      private :vat_amount=
+
+      def total_including_taxes=(*); super; end
+      private :total_including_taxes=
+
       def balance
-      self.total_including_taxes
+        self.total_including_taxes
       end
 
       def vat_rate
-        lines.first.vat_rate
+        lines.first.try(:vat_rate)
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::QuotationPdf.new(self)
+        pdf = ::Dorsale::BillingMachine::QuotationSingleVatPdf.new(self)
         pdf.build
         pdf
       end
-
-
 
       def create_copy!
         new_quotation = self.dup

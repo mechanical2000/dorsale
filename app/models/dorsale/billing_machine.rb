@@ -1,0 +1,2 @@
+module Dorsale::BillingMachine
+end

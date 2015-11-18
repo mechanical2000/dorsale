@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
+describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
 
   let(:customer) {
     create(:customer_vault_corporation)
@@ -35,10 +35,6 @@ describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
       id_card: id_card,
       customer: customer,
       commercial_discount: 100.23,
-      total_duty: 1812.53,
-      vat_amount: 355.26,
-      total_all_taxes: 2167.79,
-      vat_rate: 19.6,
       comments: 'this is the quotation comment')
 
     create(:billing_machine_quotation_line,
@@ -46,6 +42,7 @@ describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
+    vat_rate: 19.6,
     total: 7.98)
 
     create(:billing_machine_quotation_line,
@@ -54,6 +51,7 @@ describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
     quantity: 42.42,
     unit: 'nuts',
     unit_price: 42.54,
+    vat_rate: 19.6,
     total: 1804.55)
 
     q.reload
@@ -216,8 +214,7 @@ describe ::Dorsale::BillingMachine::QuotationPdf, pdfs: true do
 
   describe 'incomplete invoice' do
     before(:each) do
-      quotation_incomplete = create(:billing_machine_quotation, total_duty: 1000, vat_amount: 196,
-        total_all_taxes: 1196,customer: customer, date: '2014-04-16', vat_rate: 19.6, id_card: id_card)
+      quotation_incomplete = create(:billing_machine_quotation, customer: customer, date: '2014-04-16', id_card: id_card)
       pdf_incomplete = quotation_incomplete.pdf
       pdf_incomplete.build
       tempfile = Tempfile.new("pdf")

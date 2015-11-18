@@ -1,6 +1,6 @@
 module Dorsale
   module BillingMachine
-    class QuotationMultipleVatPdf < ::Dorsale::BillingMachine::InvoiceMultipleVatPdf
+    class QuotationMultipleVatPdf < ::Dorsale::BillingMachine::InvoiceSingleVatPdf
       def build
         super
         build_attachments
