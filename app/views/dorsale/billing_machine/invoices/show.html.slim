@@ -30,9 +30,9 @@
         = info @invoice, :due_date,            date(@invoice.due_date)
         = info @invoice, :payment_term,        @invoice.payment_term.try(:label)
         = info @invoice, :payment_status
-        = info @invoice, :total_excluding_taxes,          euros(@invoice.total_duty)
+        = info @invoice, :total_excluding_taxes,          euros(@invoice.total_excluding_taxes)
         = info @invoice, :vat_amount,          euros(@invoice.vat_amount)
-        = info @invoice, :total_including_taxes,     euros(@invoice.total_all_taxes)
+        = info @invoice, :total_including_taxes,     euros(@invoice.total_including_taxes)
         = info @invoice, :advance,             euros(@invoice.advance)
         = info @invoice, :commercial_discount, euros(@invoice.commercial_discount)
         = info @invoice, :balance,             euros(@invoice.balance)

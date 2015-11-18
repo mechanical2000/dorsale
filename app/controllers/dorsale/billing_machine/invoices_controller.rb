@@ -151,7 +151,6 @@ module Dorsale
           :commercial_discount,
           :vat_amount,
           :advance,
-          :vat_rate,
           :due_date,
           :lines_attributes => [
             :_destroy,

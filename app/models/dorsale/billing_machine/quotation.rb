@@ -64,7 +64,7 @@ module Dorsale
 
         self.total_excluding_taxes = lines.pluck(:total).sum
 
-        commercial_discount? && discount_rate = commercial_discount / total_excluding_taxes
+        commercial_discount? && total_excluding_taxes.nonzero? && discount_rate = commercial_discount / total_excluding_taxes
 
         self.vat_amount = 0.0
 
@@ -81,11 +81,17 @@ module Dorsale
       self.total_including_taxes
       end
 
+      def vat_rate
+        lines.first.vat_rate
+      end
+
       def pdf
         pdf = ::Dorsale::BillingMachine::QuotationPdf.new(self)
         pdf.build
         pdf
       end
+
+
 
       def create_copy!
         new_quotation = self.dup

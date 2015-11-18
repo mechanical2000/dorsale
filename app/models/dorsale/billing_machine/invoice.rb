@@ -54,7 +54,7 @@ module Dorsale
         self.advance             = 0 if advance.nil?
         self.commercial_discount = 0 if commercial_discount.nil?
         self.total_excluding_taxes          = (lines.pluck(:total)).sum
-        commercial_discount? && discount_rate = commercial_discount / total_excluding_taxes
+        commercial_discount? && total_excluding_taxes.nonzero? && discount_rate = commercial_discount / total_excluding_taxes
 
         self.vat_amount = 0.0
 
@@ -68,9 +68,13 @@ module Dorsale
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::InvoicePdf.new(self)
+        pdf = ::Dorsale::BillingMachine::InvoiceMultipleVatPdf.new(self)
         pdf.build
         pdf
+      end
+
+      def vat_rate
+        lines.first.vat_rate
       end
 
       def payment_status

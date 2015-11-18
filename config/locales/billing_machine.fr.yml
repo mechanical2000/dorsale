@@ -71,6 +71,7 @@ fr:
     registration: "RCS "
     siret: "SIRET "
     vat: "TVA "
+    vat_amount: "MONTANT TVA"
     commercial_discount: "REMISE"
     total_excluding_taxes: "TOTAL HT"
     advance: "ACOMPTE"

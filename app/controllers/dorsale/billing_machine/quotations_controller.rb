@@ -25,7 +25,7 @@ module Dorsale
 
         @total_duty = @quotations_without_pagination.to_a
           .select{ |q| q.state != "canceled" }
-          .map(&:total_duty)
+          .map(&:total_excluding_taxes)
           .delete_if(&:blank?)
           .sum
 
@@ -37,7 +37,7 @@ module Dorsale
 
         @total_all_taxes = @quotations_without_pagination.to_a
           .select{ |q| q.state != "canceled" }
-          .map(&:total_all_taxes)
+          .map(&:total_including_taxes)
           .delete_if(&:blank?)
           .sum
 
@@ -171,7 +171,6 @@ module Dorsale
           :expires_at,
           :comments,
           :vat_amount,
-          :vat_rate,
           :commercial_discount,
           :lines_attributes => [
             :_destroy,
