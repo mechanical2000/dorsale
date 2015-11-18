@@ -54,12 +54,17 @@ module Dorsale
         self.advance             = 0 if advance.nil?
         self.commercial_discount = 0 if commercial_discount.nil?
         self.total_excluding_taxes          = (lines.pluck(:total)).sum
+        commercial_discount? && discount_rate = commercial_discount / total_excluding_taxes
+
         self.vat_amount = 0.0
+
         lines.each do |line|
-          self.vat_amount += (line.total * line.vat_rate / 100)
+          line_total = line.total
+          line_total = line_total - (line_total * discount_rate) if discount_rate.present?
+          self.vat_amount += (line_total * line.vat_rate / 100)
         end
-        self.total_including_taxes     = total_excluding_taxes + vat_amount
-        self.balance             = total_including_taxes - advance - commercial_discount
+        self.total_including_taxes  = total_excluding_taxes + vat_amount - commercial_discount
+        self.balance                = total_including_taxes - advance
       end
 
       def pdf
@@ -95,9 +100,9 @@ module Dorsale
             "Ville",
             "Pays",
             "Montant HT",
+            "Remise commerciale",
             "Montant TVA",
             "Montant TTC",
-            "Remise commerciale",
             "Acompte",
             "Solde à payer"
           ]
@@ -116,9 +121,9 @@ module Dorsale
               invoice.customer.try(:address).try(:city),
               invoice.customer.try(:address).try(:country),
               french_number(invoice.total_excluding_taxes),
+              french_number(invoice.commercial_discount),
               french_number(invoice.vat_amount),
               french_number(invoice.total_including_taxes),
-              french_number(invoice.commercial_discount),
               french_number(invoice.advance),
               french_number(invoice.balance)
             ]

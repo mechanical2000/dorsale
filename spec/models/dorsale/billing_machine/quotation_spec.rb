@@ -77,9 +77,9 @@ describe ::Dorsale::BillingMachine::Quotation do
       create(:billing_machine_quotation_line, quantity: 10, unit_price: 5, quotation: quotation)
       create(:billing_machine_quotation_line, vat_rate: 20, quantity: 10, unit_price: 5, quotation: quotation)
       expect(quotation.total_excluding_taxes).to eq(100.0)
-      expect(quotation.vat_amount).to eq(20.0)
-      expect(quotation.total_including_taxes).to eq(120.0)
-      expect(quotation.balance).to eq(110.0)
+      expect(quotation.vat_amount).to eq(18)
+      expect(quotation.total_including_taxes).to eq(108)
+      expect(quotation.balance).to eq(108)
     end
     it "should be calculated upon saving" do
       quotation = create(:billing_machine_quotation, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, commercial_discount: 20)
@@ -87,9 +87,9 @@ describe ::Dorsale::BillingMachine::Quotation do
       create(:billing_machine_quotation_line, quantity: 10, vat_rate: 20, unit_price: 5, quotation: quotation)
 
       expect(quotation.total_excluding_taxes).to eq(100)
-      expect(quotation.vat_amount).to eq(15)
-      expect(quotation.total_including_taxes).to eq(115)
-      expect(quotation.balance).to eq(95)
+      expect(quotation.vat_amount).to eq(12)
+      expect(quotation.total_including_taxes).to eq(92)
+      expect(quotation.balance).to eq(92)
     end
 
     it "should work fine even with empty lines" do

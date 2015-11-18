@@ -100,9 +100,9 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, vat_rate: 20, invoice: invoice)
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, vat_rate: 20, invoice: invoice)
       expect(invoice.total_excluding_taxes).to eq(100.0)
-      expect(invoice.vat_amount).to eq(20.0)
-      expect(invoice.total_including_taxes).to eq(120)
-      expect(invoice.balance).to eq(70.0)
+      expect(invoice.vat_amount).to eq(18)
+      expect(invoice.total_including_taxes).to eq(108)
+      expect(invoice.balance).to eq(68)
     end
     it "should be calculated upon saving" do
       invoice = create(:billing_machine_invoice, total_excluding_taxes: nil, vat_amount: nil, total_including_taxes: nil, commercial_discount: 10, advance: nil, balance: nil)
@@ -110,9 +110,9 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       create(:billing_machine_invoice_line, quantity: 10, unit_price: 5, invoice: invoice)
 
       expect(invoice.total_excluding_taxes).to eq(100)
-      expect(invoice.vat_amount).to eq(20)
-      expect(invoice.total_including_taxes).to eq(120)
-      expect(invoice.balance).to eq(110)
+      expect(invoice.vat_amount).to eq(18)
+      expect(invoice.total_including_taxes).to eq(108)
+      expect(invoice.balance).to eq(108)
     end
 
     it "should work fine even with empty lines" do
@@ -137,7 +137,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       )
     }
 
-    let(:columns_names) {'"Date";"Numéro";"Objet";"Client";"Adresse 1";"Adresse 2";"Code postal";"Ville";"Pays";"Montant HT";"Montant TVA";"Montant TTC";"Remise commerciale";"Acompte";"Solde à payer"'+"\n"}
+    let(:columns_names) {'"Date";"Numéro";"Objet";"Client";"Adresse 1";"Adresse 2";"Code postal";"Ville";"Pays";"Montant HT";"Remise commerciale";"Montant TVA";"Montant TTC";"Acompte";"Solde à payer"'+"\n"}
     it 'should return csv', ignore_semaphore: true do
       invoice0 = create(:billing_machine_invoice, label: "invoiceLabel", date: "2014-07-31", unique_index: 1, commercial_discount:1, total_excluding_taxes: 9.99, vat_amount: 23.2, total_including_taxes: 43.35, advance: 3.5, id_card: id_card, customer: customer)
       invoice0.lines.create(quantity: 1, unit_price: 9.99, vat_rate: 19.6)
@@ -149,9 +149,9 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       expect(csv_output).to be ==
         columns_names +
         '"2014-07-31";"2014-01";"invoiceLabel";"cutomerName";"address1";"address2";'\
-        '"13005";"Marseille";"country";"9,99";"1,96";"11,95";"1,00";"3,50";"7,45"' + "\n"\
+        '"13005";"Marseille";"country";"9,99";"1,00";"1,76";"10,75";"3,50";"7,25"' + "\n"\
         '"2014-08-01";"2014-02";"çé""à;ç\"";,@\";"cutomerName";"address1";"address2";'\
-        '"13005";"Marseille";"country";"13,00";"2,60";"15,60";"0,00";"3,00";"12,60"' + "\n"
+        '"13005";"Marseille";"country";"13,00";"0,00";"2,60";"15,60";"3,00";"12,60"' + "\n"
     end
 
     it 'should return expected csv with nil values' do

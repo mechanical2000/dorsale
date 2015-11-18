@@ -64,17 +64,21 @@ module Dorsale
 
         self.total_excluding_taxes = lines.pluck(:total).sum
 
+        commercial_discount? && discount_rate = commercial_discount / total_excluding_taxes
+
         self.vat_amount = 0.0
 
         lines.each do |line|
-          self.vat_amount += (line.total * line.vat_rate / 100)
+          line_total = line.total
+          line_total = line_total - (line_total * discount_rate) if discount_rate.present?
+          self.vat_amount += (line_total * line.vat_rate / 100)
         end
 
-        self.total_including_taxes  = total_excluding_taxes + vat_amount
+        self.total_including_taxes  = total_excluding_taxes + vat_amount - commercial_discount
       end
 
       def balance
-      self.total_including_taxes - commercial_discount
+      self.total_including_taxes
       end
 
       def pdf
