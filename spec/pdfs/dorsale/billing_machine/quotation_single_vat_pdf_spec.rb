@@ -1,6 +1,9 @@
 require "rails_helper"
 
 describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
+  before :each do
+    ::Dorsale::BillingMachine.vat_mode = :single
+  end
 
   let(:customer) {
     create(:customer_vault_corporation)

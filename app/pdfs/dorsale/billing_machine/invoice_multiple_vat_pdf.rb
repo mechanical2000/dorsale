@@ -1,6 +1,6 @@
 module Dorsale
   module BillingMachine
-    class InvoiceMultipleVatPdf < ::Dorsale::BillingMachine::InvoiceSimpleVatPdf
+    class InvoiceMultipleVatPdf < ::Dorsale::BillingMachine::InvoiceSingleVatPdf
 
       def first_column_width
         6.4.cm

@@ -77,7 +77,7 @@ module Dorsale
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::InvoiceSingleVatPdf.new(self)
+        pdf = ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
         pdf.build
         pdf
       end

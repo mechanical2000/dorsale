@@ -102,7 +102,7 @@ module Dorsale
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::QuotationSingleVatPdf.new(self)
+        pdf = ::Dorsale::BillingMachine.quotation_pdf_model.new(self)
         pdf.build
         pdf
       end
