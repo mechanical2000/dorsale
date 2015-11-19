@@ -1,4 +1,9 @@
 tr.line
+  td.actions
+    a.delete href="#"
+      span.fa.fa-fw.fa-trash
+    = f.hidden_field :_destroy
+
   td.line-label
     = f.text_area :label, rows: 1
 

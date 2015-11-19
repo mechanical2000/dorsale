@@ -28,6 +28,7 @@
     table#lines-table
       thead
         tr
+          th.actions
           th.line-label      = document.lines.first.class.t(:label)
           th.line-quantity   = document.lines.first.class.t(:quantity)
           th.line-unit       = document.lines.first.class.t(:unit)

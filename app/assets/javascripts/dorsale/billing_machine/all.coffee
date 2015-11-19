@@ -69,6 +69,13 @@ $(document).on "ready page:load cocoon:after-insert", ->
       $(this).val formatted_number
   $("#billing_machine-form input.number").blur()
 
+  # Auto ajust line label textarea height
   $("#billing_machine-form textarea").keyup ->
      this.rows = this.value.split("\n").length
   $("#billing_machine-form textarea").keyup()
+
+  # Button to delete line
+  $("#billing_machine-form a.delete").click ->
+    $(this).parents("td").find("input").val(1)
+    $(this).parents("tr").hide()
+    return false
