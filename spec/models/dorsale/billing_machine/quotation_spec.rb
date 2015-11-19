@@ -96,6 +96,7 @@ describe ::Dorsale::BillingMachine::Quotation do
     end
 
     it "should be calculated upon saving with different vat rates" do
+      Dorsale::BillingMachine.vat_mode = :multiple
       quotation = create(:billing_machine_quotation, commercial_discount: 20)
       create(:billing_machine_quotation_line,
         :quantity   => 10,
@@ -115,6 +116,7 @@ describe ::Dorsale::BillingMachine::Quotation do
       expect(quotation.vat_amount).to eq(12)
       expect(quotation.total_including_taxes).to eq(92)
       expect(quotation.balance).to eq(92)
+      Dorsale::BillingMachine.vat_mode = :single
     end
 
     it "should work fine even with empty lines" do

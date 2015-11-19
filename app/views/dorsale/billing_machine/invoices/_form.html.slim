@@ -29,13 +29,13 @@
       thead
         tr
           th.actions
-          th.line-label      = document.lines.first.class.t(:label)
-          th.line-quantity   = document.lines.first.class.t(:quantity)
-          th.line-unit       = document.lines.first.class.t(:unit)
+          th.line-label      = Dorsale::BillingMachine::InvoiceLine.t(:label)
+          th.line-quantity   = Dorsale::BillingMachine::InvoiceLine.t(:quantity)
+          th.line-unit       = Dorsale::BillingMachine::InvoiceLine.t(:unit)
           - if vat_mode == :multiple
-            th.line-vat_rate   = document.lines.first.class.t(:vat_rate)
-          th.line-unit_price = document.lines.first.class.t(:unit_price)
-          th.line-total      = document.lines.first.class.t(:total)
+            th.line-vat_rate   = Dorsale::BillingMachine::InvoiceLine.t(:vat_rate)
+          th.line-unit_price = Dorsale::BillingMachine::InvoiceLine.t(:unit_price)
+          th.line-total      = Dorsale::BillingMachine::InvoiceLine.t(:total)
 
       tbody
         = f.simple_fields_for :lines do |lf|

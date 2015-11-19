@@ -55,12 +55,12 @@ Then(/^he can see all the informations$/) do
   expect(page).to have_selector '.invoice-label', @invoice.label
 end
 
-When(/^he fills a line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |arg1, arg2, arg3, arg4|
-  within(all('.invoice-line').last()) do
-    find(:css,"input.line-label").set(arg1)
-    find(:css,"input.line-quantity").set arg2
-    find(:css,"input.line-unit").set arg3
-    find(:css,"input.line-unit_price").set arg4
+When(/^he fills a line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |label, quantity, unit, unit_price|
+  within all('.line').last do
+    find(".line-label textarea").set label
+    find(".line-quantity input").set  quantity
+    find(".line-unit input").set  unit
+    find(".line-unit_price input").set unit_price
   end
 end
 
@@ -72,8 +72,8 @@ Then(/^the invoice is displayed correctly$/) do
   expect(page).to have_selector '.tracking_id', @invoice.tracking_id
 end
 
-Then(/^the new line's total should be "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.line-total', text: arg1
+Then(/^the new line's total should be "(.*?)"$/) do |total|
+  expect(find(".line-total input").value).to eq total
 end
 
 When(/^he adds a new line$/) do
@@ -84,8 +84,8 @@ When(/^he saves the invoice$/) do
   find("[type=submit]").click
 end
 
-Then(/^the total duty is "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-total_duty', text: arg1
+Then(/^the total excluding taxes is "(.*?)"$/) do |total|
+  expect(find(".total_excluding_taxes").value).to eq total
 end
 
 Then(/^the VAT due is "(.*?)"$/) do |arg1|
@@ -109,7 +109,7 @@ Then(/^it's added to the invoice list$/) do
   tracking_id = ::Dorsale::BillingMachine::Invoice.first.tracking_id
   expect(page).to have_selector '.invoice .tracking_id', text: tracking_id
   expect(page).to have_selector '.invoice .customer_name', text: @customer.name
-  expect(page).to have_selector '.invoice .total_duty', text: '180,00 €'
+  expect(page).to have_selector '.invoice .total_excluding_taxes', text: '180,00 €'
 end
 
 When(/^he goes on the edit page of the invoice$/) do
@@ -222,12 +222,12 @@ Then(/^the invoice line shows the right traking-id$/) do
   expect(page).to have_selector '.tracking_id' , text: @invoice.tracking_id
 end
 
-Then(/^the invoice line shows the right total-duty value$/) do
-  expect(page).to have_selector '.total_duty' , text: "9,99 €"
+Then(/^the invoice line shows the right total excluding taxes value$/) do
+  expect(page).to have_selector '.total_excluding_taxes' , text: "9,99 €"
 end
 
-Then(/^the invoice line shows the right all taxes value$/) do
-  expect(page).to have_selector '.total_all_taxes' , text: "11,99 €" #@invoice.total_all_taxes pb d'arrondi
+Then(/^the invoice line shows the right total including taxes value$/) do
+  expect(page).to have_selector '.total_including_taxes' , text: "11,99 €" #@invoice.total_all_taxes pb d'arrondi
 end
 
 Then(/^the invoice line shows the right customer's name$/) do

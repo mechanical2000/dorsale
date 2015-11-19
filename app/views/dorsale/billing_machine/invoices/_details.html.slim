@@ -17,17 +17,18 @@
       .well
         = document.date
         hr
-          = document.customer.name
-          br
-          = document.customer.address.street
-          br
-          = document.customer.address.street_bis
-          br
-          = document.customer.address.zip
-          = " "
-          = document.customer.address.city
-          br
-          = document.customer.address.country
+          - if document.customer.present?
+            = document.customer.name
+            br
+            = document.customer.address.street
+            br
+            = document.customer.address.street_bis
+            br
+            = document.customer.address.zip
+            = " "
+            = document.customer.address.city
+            br
+            = document.customer.address.country
 
   table#lines-table
     thead

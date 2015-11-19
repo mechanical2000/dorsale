@@ -14,8 +14,8 @@ Feature: Invoice Management
     And the invoice line shows the right date
     And the invoice line shows the right traking-id
     And the invoice line shows the right customer's name
-    And the invoice line shows the right total-duty value
-    And the invoice line shows the right all taxes value
+    And the invoice line shows the right total excluding taxes value
+    And the invoice line shows the right total including taxes value
 
   Scenario: Paginate by 50 invoices
     Given 75 existing invoices
@@ -48,13 +48,13 @@ Feature: Invoice Management
     And he fills the reference, the date and the payment terms
     And he chooses the customer
     And he fills a line with "Bidule", "4", "€", "10"
-    Then the new line's total should be "40,00€"
-    And the total duty is "40,00€"
+    Then the new line's total should be "40,00"
+    And the total excluding taxes is "40,00"
     When he adds a new line
     And he fills a line with "Machin truc", "8", "€", "20"
     Then the new line's total should be "160,00€"
     And he fill the commercial discount with "20,00"
-    Then the total duty is "180,00€"
+    Then the total excluding taxes is "180,00"
     And the VAT due is "36,00€"
     And the total all taxes included is "216,00€"
     When he saves the invoice
