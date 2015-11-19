@@ -110,6 +110,7 @@ fr:
     color                 : "Couleur"
     data                  : "Informations"
     comment               : "Commentaire"
+    comments              : "Commentaires"
     written_by            : "écrit par"
     details               : "Détails"
     quantity              : "Quantité"

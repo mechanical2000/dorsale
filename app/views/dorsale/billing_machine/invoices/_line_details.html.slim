@@ -1,0 +1,19 @@
+tr.line
+  td.line-label
+    = text2html line.label
+
+  td.line-quantity
+    = number line.quantity
+
+  td.line-unit
+    = line.unit
+
+  - if ::Dorsale::BillingMachine.vat_mode == :multiple
+    td.line-vat_rate
+      = percentage(line.vat_rate)
+
+  td.line-unit_price
+    = euros line.unit_price
+
+  td.line-total
+    = euros line.total

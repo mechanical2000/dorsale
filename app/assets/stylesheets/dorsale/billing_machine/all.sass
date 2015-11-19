@@ -15,7 +15,8 @@
     background: $state-danger-bg !important
 
 
-#billing_machine-form
+#billing_machine-form,
+#billing_machine-show
   table
     width: 100%
 
@@ -53,6 +54,9 @@
     td.line-label,
     td.line-label input,
     td.line-label textarea,
+    td.line-unit,
+    td.line-unit input,
+    td.line-unit textarea,
       text-align: left
 
     th.actions,
@@ -104,3 +108,17 @@
 
   #quotation_comments
     height: 5.5em !important
+
+
+#billing_machine-show
+  table
+    th, td
+      padding: 0.5em
+
+    td[class*=total],
+    td[class*=balance],
+    td[class*=vat_amount],
+      background: #FFFFFF
+
+  .document-panel
+    margin-top: 1em
