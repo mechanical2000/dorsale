@@ -15,7 +15,7 @@
     background: $state-danger-bg !important
 
 
-#invoice-form
+#billing_machine-form
   table
     width: 100%
 
@@ -30,21 +30,27 @@
       padding: 0 0.25em 0 0
       text-align: right
 
-    td > input
+    td > input,
+    td > textarea,
       text-align: right
+      margin: 0
       padding: 0.5em
       background: transparent
       width: calc(100% - 1em)
       outline: none
       border: none
 
+    textarea
+      height: initial !important
+      resize: none
 
-    th.invoice_line-label
+    th.line-label
       width: auto
       text-align: left
 
-    td.invoice_line-label,
-    td.invoice_line-label input
+    td.line-label,
+    td.line-label input,
+    td.line-label textarea,
       text-align: left
 
     td[class*=total],
@@ -70,7 +76,7 @@
   label abbr
     border: none
 
-  #invoice_lines-table
+  #lines-table
     margin-bottom: 2em
 
   #totals-table
@@ -81,3 +87,6 @@
       width: 16em
     td
       width: 8em
+
+  #quotation_comments
+    height: 5.5em !important

@@ -1,22 +1,22 @@
-tr.invoice_line
-  td.invoice_line-label
-    = f.text_field :label
+tr.line
+  td.line-label
+    = f.text_area :label, rows: 1
 
-  td.invoice_line-quantity
+  td.line-quantity
     = f.text_field :quantity, class: "number"
 
-  td.invoice_line-unit
+  td.line-unit
     = f.text_field :unit, class: "number"
 
   - if ::Dorsale::BillingMachine.vat_mode == :multiple
-    td.invoice_line-vat_rate
+    td.line-vat_rate
       = f.text_field :vat_rate, class: "number"
       = "%"
 
-  td.invoice_line-unit_price
+  td.line-unit_price
     = f.text_field :unit_price, class: "number"
     = "€"
 
-  td.invoice_line-total
+  td.line-total
     = f.text_field :total, class: "number", disabled: true
     = "€"
