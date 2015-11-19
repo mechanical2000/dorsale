@@ -32,7 +32,7 @@
 
     td > input
       text-align: right
-      padding: 0.25em 0.5em
+      padding: 0.5em
       background: transparent
       width: calc(100% - 1em)
       outline: none
@@ -55,13 +55,8 @@
     tfoot td[colspan],
       border: none
 
-    #add-new-line-td
-      text-align: left
-      vertical-align: top
-
-      a#add-new-line
-        margin-bottom: 3em
-
+  a#add-new-line
+    margin-bottom: 3em
 
   .form-control
     @extend .input-sm
@@ -75,3 +70,14 @@
   label abbr
     border: none
 
+  #invoice_lines-table
+    margin-bottom: 2em
+
+  #totals-table
+    width: 24em
+    margin: 0 0 0 auto
+
+    th
+      width: 16em
+    td
+      width: 8em

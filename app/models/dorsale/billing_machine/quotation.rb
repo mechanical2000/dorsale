@@ -98,7 +98,21 @@ module Dorsale
       end
 
       def vat_rate
-        lines.first.try(:vat_rate)
+        @vat_rate || lines.first.try(:vat_rate)
+      end
+
+      def vat_rate=(value)
+        @vat_rate = vat_rate
+      end
+
+      before_validation :apply_vat_rate_to_lines
+
+      def apply_vat_rate_to_lines
+        return if ::Dorsale::BillingMachine.vat_mode == :multiple
+
+        lines.each do |line|
+          line.vat_rate = vat_rate
+        end
       end
 
       def pdf
