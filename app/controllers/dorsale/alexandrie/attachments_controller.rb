@@ -41,7 +41,10 @@ module Dorsale
       end
 
       def attachment_params
-        params.require(:attachment).permit(permitted_params_for_attachment)
+        params
+          .require(:attachment)
+          .permit(permitted_params_for_attachment)
+          .merge(sender: current_user)
       end
 
       def redirect_to_back_url

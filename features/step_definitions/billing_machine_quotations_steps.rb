@@ -236,3 +236,12 @@ Then(/^he is on the created invoice edit page$/) do
   @invoice = Dorsale::BillingMachine::Invoice.reorder(:id).last
   expect(current_path).to eq dorsale.edit_billing_machine_invoice_path(@invoice)
 end
+
+When(/^he add a new document$/) do
+  attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf")
+  find("form[id*=attachment] [type=submit]").click
+end
+
+Then(/^the document is in the quotation details$/) do
+  expect(page).to have_content "pdf.pdf"
+end

@@ -5,6 +5,7 @@ Feature: Quotation Management
   In order to give them to my future customers
 
   Background:
+    Given an existing user
     Given an existing id card
 
   Scenario: Existing quotation displayed in quotations page
@@ -134,6 +135,13 @@ Feature: Quotation Management
     And he delete a document
     Then a message signals the success of the quotation update
     And the document is not in the quotation details
+
+  Scenario: Create a document
+    And an existing quotation
+    When the user goes to the quotation details
+    And he add a new document
+    Then a message signals the success of the quotation update
+    And the document is in the quotation details
 
   Scenario: Filter by customer
     Given a bunch of existing quotations

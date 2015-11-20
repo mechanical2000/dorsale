@@ -4,8 +4,12 @@ FactoryGirl.define do
       DummyModel.create!(name: "abc")
     }
 
+    sender {
+      create(:user)
+    }
+
     file {
-      path = Rails.root.join("../../spec/files/pdf.pdf").to_s
+      path = Dorsale::Engine.root.join("spec/files/pdf.pdf").to_s
       Rack::Test::UploadedFile.new(path, "application/pdf")
     }
   end
