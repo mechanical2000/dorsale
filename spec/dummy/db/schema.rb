@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103110115) do
+ActiveRecord::Schema.define(version: 20151120122613) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20151103110115) do
     t.integer "attachable_id"
     t.string  "attachable_type"
     t.string  "file"
+    t.integer "sender_id"
+    t.string  "sender_type"
   end
 
   create_table "dorsale_billing_machine_id_cards", force: :cascade do |t|
