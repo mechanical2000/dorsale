@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.15
+
+- Hide delete attachment button is not allowed by ability
+
 ## 2.1.14
 
 - Add sender to attachments
