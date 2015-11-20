@@ -3,5 +3,6 @@ ul.list-group
     li.list-group-item
       = link_to a, a.file.url, download: a.file_identifier
 
-      .pull-right
-        = delete_button dorsale.alexandrie_attachment_path(a)
+      - if can?(:delete, a)
+        .pull-right
+          = delete_button dorsale.alexandrie_attachment_path(a)
