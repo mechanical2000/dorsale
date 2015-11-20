@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.14
+
+- Add sender to attachments
+
 ## 2.1.13
 
 - Add owner to tasks context

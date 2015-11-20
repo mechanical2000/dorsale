@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (2.1.13)
+    dorsale (2.1.14)
       aasm
       acts-as-taggable-on
       awesome_print
@@ -34,7 +34,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
-    aasm (4.4.1)
+    aasm (4.5.0)
     actionmailer (4.2.4)
       actionpack (= 4.2.4)
       actionview (= 4.2.4)
@@ -116,7 +116,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.9.1.1)
+    coffee-script-source (1.10.0)
     combine_pdf (0.2.11)
       ruby-rc4 (>= 0.1.5)
     cucumber (1.3.20)
