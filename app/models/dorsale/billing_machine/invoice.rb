@@ -52,11 +52,12 @@ module Dorsale
 
       def update_totals
         assign_default_values
+        lines_sum = lines.map(&:total).sum
 
-        self.total_excluding_taxes = lines.pluck(:total).sum - commercial_discount
+        self.total_excluding_taxes = lines_sum - commercial_discount
 
-        if commercial_discount.nonzero? && total_excluding_taxes.nonzero?
-          discount_rate = commercial_discount / lines.pluck(:total).sum
+        if commercial_discount.nonzero? && lines_sum.nonzero?
+          discount_rate = commercial_discount / lines_sum
         else
           discount_rate = 0.0
         end
@@ -87,7 +88,7 @@ module Dorsale
       end
 
       def vat_rate=(value)
-        @vat_rate = vat_rate
+        @vat_rate = value
       end
 
       before_validation :apply_vat_rate_to_lines
