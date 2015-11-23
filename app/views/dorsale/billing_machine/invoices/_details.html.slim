@@ -15,7 +15,7 @@
 
     .col-md-6
       .well
-        = info document, :date, date(document.date)
+        = info document, :date
         hr
           - if document.customer.present?
             = document.customer.name
@@ -51,13 +51,15 @@
         = document.payment_term.try(:label)
 
         - if document_type == :invoice
-          = info document, :due_date, date(document.due_date)
-          = info document, :paid, t(document.paid.to_s)
+          = info document, :due_date
+          = info document, :paid
 
         - if document_type == :quotation
-          = info document, :state, document.t("state.#{document.state}")
-          br
-          = info document, :comments, document.comments
+          = info document, :state
+
+          - if document.comments.present?
+            br
+            = info document, :comments, text2html(document.comments), separator: " :<br />"
 
     .col-sm-6
         table#totals-table
@@ -84,7 +86,7 @@
                   = document.class.t(:vat_rate)
 
                 td.vat_rate
-                  = percentage (document.vat_rate)
+                  = percentage document.vat_rate
 
             tr
               th.vat_amount-label
@@ -116,10 +118,8 @@
                 td.balance
                   = euros document.balance
 
-  - if document_type == :quotation
-    .document-panel
-      = panel title: document.t(:documents)
-        .panel-body
-          = attachments_for document
-
-
+- if document_type == :quotation
+  .attachments-panel
+    = panel title: document.t(:documents)
+      .panel-body
+        = attachments_for document

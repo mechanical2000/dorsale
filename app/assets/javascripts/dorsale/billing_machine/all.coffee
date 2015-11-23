@@ -74,6 +74,10 @@ $(document).on "ready page:load cocoon:after-insert", ->
      this.rows = this.value.split("\n").length
   $("#billing_machine-form textarea").keyup()
 
+  # Fix Cocoon bug
+  $("#billing_machine-form .line textarea").map ->
+    this.value = this.value.trim()
+
   # Button to delete line
   $("#billing_machine-form a.delete").click ->
     $(this).parents("td").find("input").val(1)

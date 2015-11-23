@@ -53,20 +53,38 @@ module Dorsale
       strip_tags(str).gsub("\n", "<br />").html_safe
     end
 
-    def info(object, attribute, text = nil)
-      label = content_tag(:strong) do
-        object.t(attribute)
+    def info(object, attribute, text_or_options = nil, options = {})
+      if text_or_options.is_a?(Hash)
+        text    = nil
+        options = text_or_options
+      else
+        text = text_or_options
       end
 
-      span_css_class = "#{object.class.model_name.element}-#{attribute}"
+      label     = options[:label]     || object.t(attribute)
+      tag       = options[:tag]       || :div
+      separator = options[:separator] || " : "
+      helper    = options[:helper]
+      i18n_key  = "#{object.class.to_s.tableize.singularize}/#{attribute}"
+      nested    = I18n.t("activerecord.attributes.#{i18n_key}").is_a?(Hash)
 
-      value = content_tag(:span, class: span_css_class) do
-        ( text || object.send(attribute) ).to_s
-      end
+      value = text
+      value = object.public_send(attribute)     if value.nil?
+      value = object.t("#{attribute}.#{value}") if nested
+      value = send(helper, value)               if helper
+      value = number(value)                     if value.is_a?(Numeric)
+      value = l(value)                          if value.is_a?(Time)
+      value = l(value)                          if value.is_a?(Date)
+      value = value.to_s
 
-      content_tag(:div, class: "info") do
-        "#{label} : #{value}".html_safe
+      html_label     = content_tag(:strong, class: "info-label") { label }
+      span_css_class = "info-value #{object.class.model_name.element}-#{attribute}"
+      html_value     = content_tag(:span, class: span_css_class) { value }
+
+      content_tag(tag, class: "info") do
+        [html_label, separator, html_value].join.html_safe
       end
     end
-  end
-end
+
+  end # TextHelper
+end # Dorsale

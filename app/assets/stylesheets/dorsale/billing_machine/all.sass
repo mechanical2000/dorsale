@@ -17,8 +17,6 @@
 
 #billing_machine-form,
 #billing_machine-show
-
-
   table
     width: 100%
 
@@ -128,10 +126,13 @@
     th, td
       padding: 0.5em
 
+    td
+      text-align: right
+
     td[class*=total],
     td[class*=balance],
     td[class*=vat_amount],
       background: #FFFFFF
 
-  .document-panel
-    margin-top: 1em
+#billing_machine-show + .attachments-panel
+  margin-top: 1em

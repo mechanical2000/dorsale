@@ -4,6 +4,14 @@ fr:
   "true"  : "Oui"
   "false" : "Non"
 
+  date:
+    formats:
+      default: "%d/%m/%Y"
+
+  time:
+    formats:
+      default: "%d/%m/%Y à %H:%M"
+
   actions: &actions
     actions    : "Actions"
     index      : "Liste"
