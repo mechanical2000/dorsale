@@ -11,8 +11,9 @@ Given(/^an existing emtpy quotation$/) do
   @quotation = create(:billing_machine_quotation, label: nil, customer: nil, id_card: @id_card)
 end
 
-Given(/^an existing quotation with a "(.*?)"% VAT rate$/) do |arg1|
-  @quotation = create(:billing_machine_quotation, id_card: @id_card, vat_rate: arg1)
+Given(/^an existing quotation with a "(.*?)"% VAT rate$/) do |rate|
+  @quotation = create(:billing_machine_quotation, id_card: @id_card)
+  create(:billing_machine_quotation_line, vat_rate: rate, quotation: @quotation)
 end
 
 Given(/^(\d+) associated documents to this quotation$/) do |arg1|
@@ -40,25 +41,16 @@ When(/^the quotation line shows the right customer's name$/) do
   page.should have_selector '.customer_name', text: @customer.name
 end
 
-When(/^the quotation line shows the right total\-duty value$/) do
-  page.should have_selector '.total_duty' , text: "9,99 €"
+When(/^the quotation line shows the right total excluding taxes value$/) do
+  page.should have_selector '.total_excluding_taxes' , text: "9,99 €"
 end
 
-When(/^the quotation line shows the right all taxes value$/) do
-  page.should have_selector '.total_all_taxes' , text: "11,99 €"
+When(/^the quotation line shows the right total including taxes value$/) do
+  page.should have_selector '.total_including_taxes' , text: "11,99 €"
 end
 
 When(/^the user goes to the quotation details$/) do
   visit dorsale.billing_machine_quotation_path(@quotation)
-end
-
-When(/^he fills an quotation line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |arg1, arg2, arg3, arg4|
-  within(all('.quotation-line').last()) do
-    find(:css,"input.line-label").set(arg1)
-    find(:css,"input.line-quantity").set arg2
-    find(:css,"input.line-unit").set arg3
-    find(:css,"input.line-unit_price").set arg4
-  end
 end
 
 When(/^he creates a new quotation$/) do
@@ -94,14 +86,6 @@ Then(/^the document is not in the quotation details$/) do
   page.should have_link 'pdf.pdf', count: 1
 end
 
-Then(/^the quotation new line total is "(.*?)"$/) do |arg1|
- page.should have_selector '.quotation-line .line-total', text: arg1
-end
-
-Then(/^the existing quotation line total is "(.*?)"$/) do |arg1|
-  page.should have_selector '.quotation-line .line-total', text: arg1
-end
-
 Then(/^a message signals the success of the quotation update$/) do
   page.should have_selector '.alert-success'
 end
@@ -116,11 +100,11 @@ Then(/^the quotation's label has changed$/) do
 end
 
 Then(/^it's added to the quotation list$/) do
-  page.should have_selector '.quotation .date', text: @date
+  page.should have_selector '.date', text: @date
   @quotation = ::Dorsale::BillingMachine::Quotation.unscoped.order(:id).last
-  page.should have_selector '.quotation .tracking_id', text: @quotation.tracking_id
-  page.should have_selector '.quotation .customer_name', text: @customer.name
-  page.should have_selector '.quotation .total_duty', text: '180,00 €'
+  page.should have_selector '.tracking_id', text: @quotation.tracking_id
+  page.should have_selector '.customer_name', text: @customer.name
+  page.should have_selector '.total_excluding_taxes', text: '180,00 €'
 end
 
 Then(/^he can see all the quotation informations$/) do
@@ -141,24 +125,8 @@ Then(/^the quotation is displayed correctly$/) do
   expect(page).to have_selector '.tracking_id', @quotation.tracking_id
 end
 
-Then(/^the quotation total duty is "(.*?)"$/) do |arg1|
-  page.should have_selector '.total #quotation-total_duty', text: arg1
-end
-
-Then(/^the quotation VAT due is "(.*?)"$/) do |arg1|
-  page.should have_selector '.total #quotation-vat_amount', text: arg1
-end
-
-Then(/^the quotation total all taxes included is "(.*?)"$/) do |arg1|
-  page.should have_selector '.total #quotation-total_all_taxes', text: arg1
-end
-
 Then(/^a message signals the success of the quotation creation$/) do
   page.should have_selector '.alert-success'
-end
-
-Then(/^the quotation VAT rate is "(.*?)"$/) do |arg1|
-  page.should have_field('quotation_vat_rate', with: arg1)
 end
 
 Then(/^he will see links to the documents$/) do

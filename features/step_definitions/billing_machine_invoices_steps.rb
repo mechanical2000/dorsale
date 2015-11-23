@@ -14,7 +14,8 @@ Given(/^an existing invoice$/) do
 end
 
 Given(/^an existing invoice with a "(.*?)"% VAT rate$/) do |rate|
-  @invoice = create(:billing_machine_invoice, id_card: @id_card, vat_rate: rate)
+  @invoice = create(:billing_machine_invoice, id_card: @id_card)
+  create(:billing_machine_invoice_line, vat_rate: rate, invoice: @invoice)
 end
 
 Given(/^an existing paid invoice$/) do
@@ -29,9 +30,10 @@ When(/^he creates a new invoice$/) do
   find(".link_create").click
 end
 
-When(/^he fills the reference, the date and the payment terms$/) do
+When(/^he fills the reference, the date, the vat rate and the payment terms$/) do
   fill_in 'invoice_label', with: @label = 'My reference'
   fill_in 'invoice_date', with: @date = '01/01/2014'
+  fill_in 'invoice_vat_rate', with: '20'
   select @payment_term.label
 end
 
@@ -72,10 +74,6 @@ Then(/^the invoice is displayed correctly$/) do
   expect(page).to have_selector '.tracking_id', @invoice.tracking_id
 end
 
-Then(/^the new line's total should be "(.*?)"$/) do |total|
-  expect(find(".line-total input").value).to eq total
-end
-
 When(/^he adds a new line$/) do
   click_link 'add-new-line'
 end
@@ -85,19 +83,19 @@ When(/^he saves the invoice$/) do
 end
 
 Then(/^the total excluding taxes is "(.*?)"$/) do |total|
-  expect(find(".total_excluding_taxes").value).to eq total
+  expect(find(".total_excluding_taxes input").value).to eq total
 end
 
-Then(/^the VAT due is "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-vat_amount', text: arg1
+Then(/^the VAT due is "(.*?)"$/) do |vat|
+  expect(find(".vat_amount input").value).to eq vat
 end
 
-Then(/^the total all taxes included is "(.*?)"$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-total_all_taxes', text: arg1
+Then(/^the total including taxes is "(.*?)"$/) do |total|
+  expect(find(".total_including_taxes input").value).to eq total
 end
 
-Then(/^he fill the commercial discount with "(.*?)"$/) do |arg1|
-  fill_in 'invoice_commercial_discount', with: arg1
+Then(/^he fill the commercial discount with "(.*?)"$/) do |value|
+  find(".commercial_discount input").set value
 end
 
 
@@ -121,8 +119,8 @@ When(/^changes the label$/) do
   fill_in 'invoice_label', with: @new_label
 end
 
-Then(/^the commercial discount is "(.*?)"€$/) do |arg1|
-  expect(page).to have_selector '.total #invoice-commercial_discount', text: arg1
+Then(/^the commercial discount is "(.*?)"€$/) do |discount|
+   expect( find(".commercial_discount input").value).to eq discount
 end
 
 Then(/^the invoices's label has changed$/) do
@@ -131,7 +129,7 @@ Then(/^the invoices's label has changed$/) do
 end
 
 Then(/^the VAT rate is "(.*?)"$/) do |rate|
-  expect(page).to have_field('invoice_vat_rate', with: rate)
+  expect( find(".vat_rate input").value).to eq rate
 end
 
 When(/^he changes the VAT rate to "(.*?)"$/) do |new_rate|
@@ -144,11 +142,9 @@ end
 
 
 Then(/^the new line total is "(.*?)"$/) do |value|
-  expect(page).to have_selector '.invoice-line .line-total', text: value
-end
-
-Then(/^the existing line total is "(.*?)"$/) do |value|
-  expect(page).to have_selector '.invoice-line .line-total', text: value
+  within all('.line').last do
+    expect( find(".line-total input").value).to eq value
+  end
 end
 
 When(/^he finds and clicks on the download CSV export file$/) do
@@ -197,12 +193,12 @@ Then(/^a message signals that the invoice is set to paid$/) do
   expect(find('.alert-success')).to be_visible
 end
 
-Then(/^the advance is "(.*?)"€$/) do |value|
-  expect(page).to have_field('invoice_advance', with: value)
+Then(/^the advance is "(.*?)"€$/) do |advance|
+  expect( find(".advance input").value).to eq advance
 end
 
-Then(/^the balance included is "(.*?)"$/) do |value|
-  expect(page).to have_selector '#invoice-balance', text: value
+Then(/^the balance is "(.*?)"$/) do |balance|
+  expect( find(".balance input").value).to eq balance
 end
 
 When(/^he changes the advance to "(.*?)"€$/) do |value|

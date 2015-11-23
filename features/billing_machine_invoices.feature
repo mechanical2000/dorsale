@@ -45,18 +45,18 @@ Feature: Invoice Management
     And an existing payment term
     When the user goes to the invoices page
     And he creates a new invoice
-    And he fills the reference, the date and the payment terms
+    And he fills the reference, the date, the vat rate and the payment terms
     And he chooses the customer
     And he fills a line with "Bidule", "4", "€", "10"
-    Then the new line's total should be "40,00"
+    Then the new line total is "40,00"
     And the total excluding taxes is "40,00"
     When he adds a new line
     And he fills a line with "Machin truc", "8", "€", "20"
-    Then the new line's total should be "160,00€"
+    Then the new line total is "160,00"
     And he fill the commercial discount with "20,00"
     Then the total excluding taxes is "180,00"
-    And the VAT due is "36,00€"
-    And the total all taxes included is "216,00€"
+    And the VAT due is "36,00"
+    And the total including taxes is "216,00"
     When he saves the invoice
     Then a message signals the success of the creation
     Then it's added to the invoice list
@@ -74,19 +74,19 @@ Feature: Invoice Management
     When the user goes to the invoices page
     And he creates a new invoice
     And he fills a line with "Bidule", "1", "€", "100"
-    Then the total all taxes included is "120,00€"
-    And the advance is "0"€
-    And the commercial discount is "0"€
-    And the balance included is "120,00€"
+    Then the total including taxes is "120,00"
+    And the advance is "0,00"€
+    And the commercial discount is "0,00"€
+    And the balance is "120,00"
     When he changes the advance to "30"€
     When he changes the commercial discount to "10"€
-    Then the balance included is "78,00€"
+    Then the balance is "78,00"
     When he saves the invoice
     Then a message signals the success of the creation
     When he goes to the newly created invoice page
-    Then the advance is "30.0"€
+    Then the advance is "30,00"€
     Then the commercial discount is "10,00"€
-    Then the balance included is "78,00€"
+    Then the balance is "78,00"
 
   Scenario: New invoice with default date
     When the user goes to the invoices page
@@ -97,42 +97,41 @@ Feature: Invoice Management
   Scenario: New invoice with default VAT rate
     When the user goes to the invoices page
     And he creates a new invoice
-    Then the VAT rate is "20"
+    Then the VAT rate is "20,00"
 
   Scenario: Existing invoice with non default VAT rate
     And an existing invoice with a "19.6"% VAT rate
     And he goes on the edit page of the invoice
-    # value should be preserved
-    Then the VAT rate is "19.6"
+    Then the VAT rate is "19,60"
 
   Scenario: New invoice with non default VAT rate
     When the user goes to the invoices page
     And he creates a new invoice
     And he fills a line with "Bidule", "1", "€", "100"
     And he changes the VAT rate to "19.6"
-    Then the VAT rate is "19.6"
-    And the VAT due is "19,60€"
-    And the total all taxes included is "119,60€"
+    Then the VAT rate is "19,60"
+    And the VAT due is "19,60"
+    And the total including taxes is "119,60"
 
   Scenario: Change values without saving(test live preview)
     When the user goes to the invoices page
     And he creates a new invoice
     And he fills a line with "Bidule", "2", "€", "50"
-    Then the new line total is "100,00€"
+    Then the new line total is "100,00"
     And he fills a line with "Bidule", "10", "€", "100"
-    Then the existing line total is "1.000,00€"
-    And the total duty is "1.000,00€"
+    Then the new line total is "1 000,00"
+    And the total excluding taxes is "1 000,00"
     And he changes the commercial discount to "100"€
-    Then the total duty is "900,00€"
-    And the VAT due is "180,00€"
-    And the total all taxes included is "1.080,00€"
+    Then the total excluding taxes is "900,00"
+    And the VAT due is "180,00"
+    And the total including taxes is "1 080,00"
     And he changes the commercial discount to "0"€
-    Then the total duty is "1.000,00€"
-    And the VAT due is "200,00€"
-    And the total all taxes included is "1.200,00€"
+    Then the total excluding taxes is "1 000,00"
+    And the VAT due is "200,00"
+    And the total including taxes is "1 200,00"
     And he changes the VAT rate to "19.6"
-    And the VAT due is "196,00€"
-    And the total all taxes included is "1.196,00€"
+    And the VAT due is "196,00"
+    And the total including taxes is "1 196,00"
 
   Scenario: Export invoices in CSV
     And an existing invoice

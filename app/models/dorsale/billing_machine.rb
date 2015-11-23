@@ -1,4 +1,6 @@
 module Dorsale::BillingMachine
+  DEFAULT_VAT_RATE = 20.00
+
   class << self
     def vat_modes
       [:single, :multiple]
