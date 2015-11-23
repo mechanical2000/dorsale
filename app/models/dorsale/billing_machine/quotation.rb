@@ -74,11 +74,7 @@ module Dorsale
         self.vat_amount = 0.0
 
         lines.each do |line|
-          if discount_rate.nonzero?
-            line_total = line.total - (line.total * discount_rate)
-          else
-            line_total = line.total
-          end
+          line_total = line.total - (line.total * discount_rate)
           self.vat_amount += (line_total * line.vat_rate / 100.0)
         end
 
@@ -99,7 +95,7 @@ module Dorsale
       end
 
       def vat_rate
-        @vat_rate || lines.first.try(:vat_rate)
+        @vat_rate || lines.first.try(:vat_rate) || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
       end
 
       def vat_rate=(value)

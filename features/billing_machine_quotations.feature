@@ -15,8 +15,8 @@ Feature: Quotation Management
     And the quotation line shows the right date
     And the quotation line shows the right traking-id
     And the quotation line shows the right customer's name
-    And the quotation line shows the right total-duty value
-    And the quotation line shows the right all taxes value
+    And the quotation line shows the right total excluding taxes value
+    And the quotation line shows the right total including taxes value
 
   Scenario: Paginate by 50 quotations
     Given 75 existing quotations
@@ -55,16 +55,16 @@ Feature: Quotation Management
     And he fills the reference and the date
     And he fill the quotation expiry
     And he chooses the customer
-    And he fills an quotation line with "Bidule", "4", "€", "10"
-    Then the new line's total should be "40,00€"
-    And the quotation total duty is "40,00€"
+    And he fills a line with "Bidule", "4", "€", "10"
+    Then the new line total is "40,00"
+    And the total excluding taxes is "40,00"
     When he adds a new line
-    And he fills an quotation line with "Machin truc", "8", "€", "20"
-    Then the new line's total should be "160,00€"
+    And he fills a line with "Machin truc", "8", "€", "20"
+    Then the new line total is "160,00"
     And he fill the quotation commercial discount with "20,00"
-    Then the quotation total duty is "180,00€"
-    And the quotation VAT due is "36,00€"
-    And the quotation total all taxes included is "216,00€"
+    And the total excluding taxes is "180,00"
+    And the VAT due is "36,00"
+    And the total including taxes is "216,00"
     When he saves the quotation
     Then a message signals the success of the quotation creation
     Then it's added to the quotation list
@@ -87,40 +87,40 @@ Feature: Quotation Management
   Scenario: New quotation with default VAT rate
     When the user goes to the quotations page
     And he creates a new quotation
-    Then the quotation VAT rate is "20"
+    Then the VAT rate is "20,00"
 
   Scenario: Existing quotation with non default VAT rate
     And an existing quotation with a "19.6"% VAT rate
     And he goes on the edit page of the quotation
-    Then the quotation VAT rate is "19.6"
+    Then the VAT rate is "19,60"
 
   Scenario: New quotation with non default VAT rate
     When the user goes to the quotations page
     And he creates a new quotation
-    And he fills an quotation line with "Bidule", "1", "€", "100"
+    And he fills a line with "Bidule", "1", "€", "100"
     And he changes the quotation VAT rate to "19.6"
-    Then the quotation VAT rate is "19.6"
-    And the quotation VAT due is "19,60€"
-    And the quotation total all taxes included is "119,60€"
+    Then the VAT rate is "19,60"
+    And the VAT due is "19,60"
+    And the total including taxes is "119,60"
 
   Scenario: Change quotation values without saving(test live preview)
     When the user goes to the quotations page
     And he creates a new quotation
-    And he fills an quotation line with "Bidule", "2", "€", "50"
-    Then the quotation new line total is "100,00€"
-    And he fills an quotation line with "Bidule", "10", "€", "100"
-    Then the existing quotation line total is "1.000,00€"
-    And the quotation VAT due is "200,00€"
-    And he fill the quotation commercial discount with "100,00"
-    And the quotation total duty is "900,00€"
-    And the quotation VAT due is "180,00€"
-    And the quotation total all taxes included is "1.080,00€"
-    And he fill the quotation commercial discount with "0,00"
-    And the quotation total duty is "1.000,00€"
-    And the quotation total all taxes included is "1.200,00€"
+    And he fills a line with "Bidule", "2", "€", "50"
+    Then the new line total is "100,00"
+    And he fills a line with "Bidule", "10", "€", "100"
+    Then the new line total is "1 000,00"
+    And the VAT due is "200,00"
+    And he fill the commercial discount with "100,00"
+    And the total excluding taxes is "900,00"
+    And the VAT due is "180,00"
+    And the total including taxes is "1 080,00"
+    And he fill the commercial discount with "0,00"
+    And the total excluding taxes is "1 000,00"
+    And the total including taxes is "1 200,00"
     And he changes the quotation VAT rate to "19.6"
-    And the quotation VAT due is "196,00€"
-    And the quotation total all taxes included is "1.196,00€"
+    And the VAT due is "196,00"
+    And the total including taxes is "1 196,00"
 
   Scenario: Existing quotation has is associated documents shown on the show page
     And an existing quotation

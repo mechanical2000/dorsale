@@ -58,6 +58,9 @@
           = info document, :state, document.t("state.#{document.state}")
           br
           = info document, :comments, document.comments
+          br
+          = info document, :expires_at, date(document.expires_at)
+          
 
     .col-sm-6
         table#totals-table

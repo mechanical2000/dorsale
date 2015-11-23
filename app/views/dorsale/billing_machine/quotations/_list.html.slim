@@ -34,11 +34,11 @@ table.default.quotations
         td.customer_name
           = quotation.customer.try(:name)
 
-        td.total_duty
-          = euros(quotation.total_including_taxes)
-
-        td.hidden-xs.total_all_taxes
+        td.total_excluding_taxes
           = euros(quotation.total_excluding_taxes)
+
+        td.hidden-xs.total_including_taxes
+          = euros(quotation.total_including_taxes)
 
         td
           = quotation.t("state.#{quotation.state}")
