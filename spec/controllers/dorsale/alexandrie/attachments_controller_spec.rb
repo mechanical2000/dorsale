@@ -18,6 +18,14 @@ describe Dorsale::Alexandrie::AttachmentsController, type: :controller do
     }
   }
 
+  let(:user) {
+    create(:user)
+  }
+
+  before :each do
+    sign_in user
+  end
+
   describe "create" do
     it "should create attachment" do
       post :create, attachment: valid_attributes, back_url: "/"
