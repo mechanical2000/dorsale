@@ -17,6 +17,8 @@
 
 #billing_machine-form,
 #billing_machine-show
+
+
   table
     width: 100%
 
@@ -29,23 +31,30 @@
 
     td
       padding: 0 0.25em 0 0
-      text-align: right
 
     td > input,
     td > textarea,
       text-align: right
-      margin: 0
+      margin: 0.5em 0 0.5em 1em
       padding: 0.5em
       background: transparent
-      width: calc(100% - 1em)
+      width: calc(100% - 2em)
       outline: none
       border: none
+      border-radius: 0px !important
+      box-shadow: none
+      border-bottom: 1px solid #E0E0E0
 
     textarea
       display: block
       height: initial !important
       resize: none
       overflow: hidden
+
+    span.unit
+      display: inline-block
+      width: 1em
+      text-align: right
 
     th.line-label
       width: auto
@@ -68,10 +77,14 @@
     th.actions
       border: none
 
+    // disabled fields
     td[class*=total],
     td[class*=balance],
     td[class*=vat_amount],
       background: #F1F2F3
+
+      > input
+        border: none
 
     tfoot td[colspan],
       border: none

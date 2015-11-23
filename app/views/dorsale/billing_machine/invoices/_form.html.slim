@@ -64,7 +64,7 @@
 
               td.commercial_discount
                 = f.text_field :commercial_discount, class: "number"
-                = "€"
+                span.unit = "€"
 
             tr
               th.total_excluding_taxes-label
@@ -72,7 +72,7 @@
 
               td.total_excluding_taxes
                 = f.text_field :total_excluding_taxes, class: "number", disabled: true
-                = "€"
+                span.unit = "€"
 
             - if vat_mode == :single
               tr
@@ -81,7 +81,7 @@
 
                 td.vat_rate
                   = f.text_field :vat_rate, class: "number"
-                  = "%"
+                  span.unit = "%"
 
             tr
               th.vat_amount-label
@@ -89,7 +89,7 @@
 
               td.vat_amount
                 = f.text_field :vat_amount, class: "number", disabled: true
-                = "€"
+                span.unit = "€"
 
             tr
               th.total_including_taxes-label
@@ -97,7 +97,7 @@
 
               td.total_including_taxes
                 = f.text_field :total_including_taxes, class: "number", disabled: true
-                = "€"
+                span.unit = "€"
 
             - if document.respond_to?(:advance)
               tr
@@ -106,7 +106,7 @@
 
                 td.advance
                   = f.text_field :advance, class: "number"
-                  = "€"
+                  span.unit = "€"
 
               tr
                 th.balance-label
@@ -114,6 +114,6 @@
 
                 td.balance
                   = f.text_field :balance, class: "number", disabled: true
-                  = "€"
+                  span.unit = "€"
 
     = form_buttons

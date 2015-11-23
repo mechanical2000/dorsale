@@ -16,12 +16,12 @@ tr.line
   - if ::Dorsale::BillingMachine.vat_mode == :multiple
     td.line-vat_rate
       = f.text_field :vat_rate, class: "number"
-      = "%"
+      span.unit = "%"
 
   td.line-unit_price
     = f.text_field :unit_price, class: "number"
-    = "€"
+    span.unit = "€"
 
   td.line-total
     = f.text_field :total, class: "number", disabled: true
-    = "€"
+    span.unit = "€"
