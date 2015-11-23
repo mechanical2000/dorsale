@@ -86,10 +86,6 @@ Then(/^the document is not in the quotation details$/) do
   page.should have_link 'pdf.pdf', count: 1
 end
 
-Then(/^the existing quotation line total is "(.*?)"$/) do |arg1|
-  page.should have_selector '.quotation-line .line-total', text: arg1
-end
-
 Then(/^a message signals the success of the quotation update$/) do
   page.should have_selector '.alert-success'
 end
@@ -129,20 +125,8 @@ Then(/^the quotation is displayed correctly$/) do
   expect(page).to have_selector '.tracking_id', @quotation.tracking_id
 end
 
-Then(/^the quotation VAT due is "(.*?)"$/) do |arg1|
-  page.should have_selector '.total #quotation-vat_amount', text: arg1
-end
-
-Then(/^the quotation total all taxes included is "(.*?)"$/) do |arg1|
-  page.should have_selector '.total #quotation-total_all_taxes', text: arg1
-end
-
 Then(/^a message signals the success of the quotation creation$/) do
   page.should have_selector '.alert-success'
-end
-
-Then(/^the quotation VAT rate is "(.*?)"$/) do |arg1|
-  page.should have_field('quotation_vat_rate', with: arg1)
 end
 
 Then(/^he will see links to the documents$/) do
