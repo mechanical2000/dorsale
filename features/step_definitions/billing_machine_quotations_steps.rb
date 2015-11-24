@@ -21,6 +21,37 @@ Given(/^(\d+) associated documents to this quotation$/) do |arg1|
   @document2 = create(:alexandrie_attachment, attachable: @quotation)
 end
 
+Given(/^a bunch of existing quotations$/) do
+  c1 = create(:customer_vault_corporation, name: 'Bidule')
+  c2 = create(:customer_vault_corporation, name: 'Machin')
+  c3 = create(:customer_vault_corporation, name: 'Chose')
+
+  i1 = create(:customer_vault_individual, first_name: 'Oh')
+  i2 = create(:customer_vault_individual, first_name: 'Ah')
+  i3 = create(:customer_vault_individual, first_name: 'Eh')
+
+  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today)
+  create(:billing_machine_quotation, id_card: @id_card, customer: c2, date: Date.today)
+  create(:billing_machine_quotation, id_card: @id_card, customer: c3, date: Date.today)
+  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today - 2.days)
+
+  create(:billing_machine_quotation, id_card: @id_card, customer: i1, date: Date.today - 3.days)
+  create(:billing_machine_quotation, id_card: @id_card, customer: i2, date: Date.today - 3.days)
+  create(:billing_machine_quotation, id_card: @id_card, customer: i3, date: Date.today - 3.days)
+end
+
+Given(/^existing "(.*?)" quotations with "(.*?)" amount$/) do |n, amount|
+  n.to_i.times do
+    quotation = create(:billing_machine_quotation)
+    quotation_line = create(:billing_machine_quotation_line,
+      quotation: quotation,
+      quantity: 1,
+      unit_price: amount,
+      total: nil
+    )
+  end
+end
+
 When(/^he changes the quotation VAT rate to "(.*?)"$/) do |arg1|
   fill_in 'quotation_vat_rate', with: arg1
 end
@@ -77,8 +108,27 @@ When(/^changes the quotation label$/) do
   fill_in 'quotation_label', with: @new_label
 end
 
+When(/^he copy the quotation$/) do
+  @quotations_count = Dorsale::BillingMachine::Quotation.count
+  find("[href$=copy]").click
+end
+
 When(/^he delete a document$/) do
   all(".link_delete").first.click
+end
+
+When(/^he create an invoice from the quotation$/) do
+  @invoices_count = Dorsale::BillingMachine::Invoice.count
+  find("[href$='create_invoice']").click
+end
+
+When(/^he fill the quotation expiry$/) do
+  fill_in :quotation_expires_at, with: "21/12/2012"
+end
+
+When(/^he add a new document$/) do
+  attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf")
+  find("form[id*=attachment] [type=submit]").click
 end
 
 Then(/^the document is not in the quotation details$/) do
@@ -140,25 +190,6 @@ Then(/^the quotation informations are visible on the quotation details$/) do
   expect(page).to have_content "I-am-a-comment"
 end
 
-Given(/^a bunch of existing quotations$/) do
-  c1 = create(:customer_vault_corporation, name: 'Bidule')
-  c2 = create(:customer_vault_corporation, name: 'Machin')
-  c3 = create(:customer_vault_corporation, name: 'Chose')
-
-  i1 = create(:customer_vault_individual, first_name: 'Oh')
-  i2 = create(:customer_vault_individual, first_name: 'Ah')
-  i3 = create(:customer_vault_individual, first_name: 'Eh')
-
-  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c2, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c3, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today - 2.days)
-
-  create(:billing_machine_quotation, id_card: @id_card, customer: i1, date: Date.today - 3.days)
-  create(:billing_machine_quotation, id_card: @id_card, customer: i2, date: Date.today - 3.days)
-  create(:billing_machine_quotation, id_card: @id_card, customer: i3, date: Date.today - 3.days)
-end
-
 Then(/^only the quotations of this customer do appear$/) do
   expect(page).to have_selector(".customer_name", text: 'Bidule', count: 2)
 end
@@ -167,47 +198,16 @@ Then(/^only the quotations of today do appear$/) do
   expect(page).to have_selector(".quotation", count: 3)
 end
 
-When(/^he fill the quotation expiry$/) do
-  fill_in :quotation_expires_at, with: "21/12/2012"
-end
-
-Given(/^existing "(.*?)" quotations with "(.*?)" amount$/) do |n, amount|
-  n.to_i.times do
-    quotation = create(:billing_machine_quotation)
-    quotation_line = create(:billing_machine_quotation_line,
-      quotation: quotation,
-      quantity: 1,
-      unit_price: amount,
-      total: nil
-    )
-  end
-end
-
-When(/^he copy the quotation$/) do
-  @quotations_count = Dorsale::BillingMachine::Quotation.count
-  find("[href$=copy]").click
-end
-
 Then(/^he is on the created quotation edit page$/) do
   expect(Dorsale::BillingMachine::Quotation.count).to eq(@quotations_count+1)
   @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
   expect(current_path).to eq dorsale.edit_billing_machine_quotation_path(@quotation)
 end
 
-When(/^he create an invoice from the quotation$/) do
-  @invoices_count = Dorsale::BillingMachine::Invoice.count
-  find("[href$='create_invoice']").click
-end
-
 Then(/^he is on the created invoice edit page$/) do
   expect(Dorsale::BillingMachine::Invoice.count).to eq(@invoices_count+1)
   @invoice = Dorsale::BillingMachine::Invoice.reorder(:id).last
   expect(current_path).to eq dorsale.edit_billing_machine_invoice_path(@invoice)
-end
-
-When(/^he add a new document$/) do
-  attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf")
-  find("form[id*=attachment] [type=submit]").click
 end
 
 Then(/^the document is in the quotation details$/) do

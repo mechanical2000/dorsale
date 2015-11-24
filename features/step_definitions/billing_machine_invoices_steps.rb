@@ -22,6 +22,61 @@ Given(/^an existing paid invoice$/) do
   @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: true)
 end
 
+Given(/^billing machine in single vat mode$/) do
+  ::Dorsale::BillingMachine.vat_mode = :single
+end
+
+Given(/^a bunch of existing invoices$/) do
+  c1 = create(:customer_vault_corporation, name: 'Bidule')
+  c2 = create(:customer_vault_corporation, name: 'Machin')
+  c3 = create(:customer_vault_corporation, name: 'Chose')
+
+  i1 = create(:customer_vault_individual, first_name: 'Oh')
+  i2 = create(:customer_vault_individual, first_name: 'Ah')
+  i3 = create(:customer_vault_individual, first_name: 'Eh')
+
+  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.today, paid: true)
+  create(:billing_machine_invoice, id_card: @id_card, customer: c2, date: Date.today)
+  create(:billing_machine_invoice, id_card: @id_card, customer: c3, date: Date.today)
+  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.today - 2.days)
+
+  create(:billing_machine_invoice, id_card: @id_card, customer: i1, date: Date.today - 3.days)
+  create(:billing_machine_invoice, id_card: @id_card, customer: i2, date: Date.today - 3.days)
+  create(:billing_machine_invoice, id_card: @id_card, customer: i3, date: Date.today - 3.days)
+end
+
+Given(/^an existing unpaid invoice$/) do
+  @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: false)
+end
+
+Given(/^its due date is not yet passed$/) do
+  @invoice.update(due_date: (Date.today + 1))
+end
+
+Given(/^its due date is the same day$/) do
+  @invoice.update(due_date: (Date.today))
+end
+
+Given(/^its due date is yesterday$$/) do
+  @invoice.update(due_date: (Date.today - 1))
+end
+
+Given(/^its due date is (\d+) days ago$/) do |days|
+  @invoice.update(due_date: (Date.today - days.to_i))
+end
+
+Given(/^existing "(.*?)" invoices with "(.*?)" amount$/) do |n, amount|
+  n.to_i.times do
+    invoice = create(:billing_machine_invoice, advance: 0)
+    invoice_line = create(:billing_machine_invoice_line,
+      invoice: invoice,
+      quantity: 1,
+      unit_price: amount,
+      total: nil
+    )
+  end
+end
+
 When(/^(the user|he) goes to the invoices page$/) do |arg1|
   visit dorsale.billing_machine_invoices_path
 end
@@ -49,14 +104,6 @@ When(/^wants to copy it$/) do
   find(".link_copy").click
 end
 
-Then(/^a new invoice is displayed with the informations$/) do
-  expect(page).to have_field('invoice_label', with: @invoice.label)
-end
-
-Then(/^he can see all the informations$/) do
-  expect(page).to have_selector '.invoice-label', @invoice.label
-end
-
 When(/^he fills a line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |label, quantity, unit, unit_price|
   within all('.line').last do
     find(".line-label textarea").set label
@@ -66,12 +113,21 @@ When(/^he fills a line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |label, qua
   end
 end
 
-Then(/^he should see (\d+) invoices$/) do |count|
-  expect(page).to have_selector '.invoice', count: count
+When(/^he goes on the edit page of the invoice$/) do
+  visit dorsale.edit_billing_machine_invoice_path(@invoice)
 end
 
-Then(/^the invoice is displayed correctly$/) do
-  expect(page).to have_selector '.tracking_id', @invoice.tracking_id
+When(/^changes the label$/) do
+  @new_label=  @invoice.label + " Edited"
+  fill_in 'invoice_label', with: @new_label
+end
+
+When(/^he changes the VAT rate to "(.*?)"$/) do |new_rate|
+  fill_in 'invoice_vat_rate', with: new_rate
+end
+
+When(/^he changes the commercial discount to "(.*?)"€$/) do |arg1|
+  fill_in 'invoice_commercial_discount', with: arg1
 end
 
 When(/^he adds a new line$/) do
@@ -80,6 +136,61 @@ end
 
 When(/^he saves the invoice$/) do
   find("[type=submit]").click
+end
+
+When(/^he finds and clicks on the download CSV export file$/) do
+  find("[href$=csv]").click
+end
+
+When(/^he set the invoice as paid$/) do
+  find("[href$=pay]").click
+end
+
+When(/^he marks the invoice as unpaid$/) do
+  within '.form-group.select.invoice_paid' do
+    select 'No'
+  end
+end
+
+When(/^he changes the advance to "(.*?)"€$/) do |value|
+  fill_in 'invoice_advance', with: value
+end
+
+When(/^he goes to the newly created invoice page$/) do
+  @invoice = ::Dorsale::BillingMachine::Invoice.unscoped.order(:id).last
+  visit dorsale.edit_billing_machine_invoice_path(@invoice)
+end
+
+When(/^he filters by date on today$/) do
+  select "Aujourd'hui"
+  find(".filter-submit").click
+end
+
+When(/^he filters by one customer$/) do
+  within('.filters') do
+    select('Bidule')
+    find(".filter-submit").click
+  end
+end
+
+When(/^he filters by status on paid$/) do
+  within('.filters') do
+    select('Payées')
+    find(".filter-submit").click
+  end
+end
+
+When(/^the user download the pdf$/) do
+  visit dorsale.billing_machine_invoice_path(@invoice)
+  find(".link_download").click
+end
+
+Then(/^he should see (\d+) invoices$/) do |count|
+  expect(page).to have_selector '.invoice', count: count
+end
+
+Then(/^the invoice is displayed correctly$/) do
+  expect(page).to have_selector '.tracking_id', @invoice.tracking_id
 end
 
 Then(/^the total excluding taxes is "(.*?)"$/) do |total|
@@ -98,8 +209,6 @@ Then(/^he fill the commercial discount with "(.*?)"$/) do |value|
   find(".commercial_discount input").set value
 end
 
-
-
 Then(/^it's added to the invoice list$/) do
   step('the user goes to the invoices page')
   expect(page).to have_selector '.invoice .date', text: @date
@@ -108,15 +217,6 @@ Then(/^it's added to the invoice list$/) do
   expect(page).to have_selector '.invoice .tracking_id', text: tracking_id
   expect(page).to have_selector '.invoice .customer_name', text: @customer.name
   expect(page).to have_selector '.invoice .total_excluding_taxes', text: '180,00 €'
-end
-
-When(/^he goes on the edit page of the invoice$/) do
-  visit dorsale.edit_billing_machine_invoice_path(@invoice)
-end
-
-When(/^changes the label$/) do
-  @new_label=  @invoice.label + " Edited"
-  fill_in 'invoice_label', with: @new_label
 end
 
 Then(/^the commercial discount is "(.*?)"€$/) do |discount|
@@ -132,27 +232,10 @@ Then(/^the VAT rate is "(.*?)"$/) do |rate|
   expect( find(".vat_rate input").value).to eq rate
 end
 
-When(/^he changes the VAT rate to "(.*?)"$/) do |new_rate|
-  fill_in 'invoice_vat_rate', with: new_rate
-end
-
-When(/^he changes the commercial discount to "(.*?)"€$/) do |arg1|
-  fill_in 'invoice_commercial_discount', with: arg1
-end
-
-
 Then(/^the new line total is "(.*?)"$/) do |value|
   within all('.line').last do
     expect( find(".line-total input").value).to eq value
   end
-end
-
-When(/^he finds and clicks on the download CSV export file$/) do
-  find("[href$=csv]").click
-end
-
-When(/^he set the invoice as paid$/) do
-  find("[href$=pay]").click
 end
 
 Then(/^the invoice is marked paid$/) do
@@ -161,12 +244,6 @@ end
 
 Then(/^can't set the invoice as paid again$/) do
   expect(all("[href$=pay]").count).to eq 0
-end
-
-When(/^he marks the invoice as unpaid$/) do
-  within '.form-group.select.invoice_paid' do
-    select 'No'
-  end
 end
 
 Then(/^the invoice is marked unpaid$/) do
@@ -201,15 +278,6 @@ Then(/^the balance is "(.*?)"$/) do |balance|
   expect( find(".balance input").value).to eq balance
 end
 
-When(/^he changes the advance to "(.*?)"€$/) do |value|
-  fill_in 'invoice_advance', with: value
-end
-
-When(/^he goes to the newly created invoice page$/) do
-  @invoice = ::Dorsale::BillingMachine::Invoice.unscoped.order(:id).last
-  visit dorsale.edit_billing_machine_invoice_path(@invoice)
-end
-
 Then(/^the invoice line shows the right date$/) do
   expect(page).to have_selector '.date' , text: I18n.l(@invoice.date)
 end
@@ -238,35 +306,12 @@ Then(/^the invoice default due date is set to today's date\.$/) do
   expect(page).to have_field('invoice_due_date', with: I18n.l(Date.today + 30.days))
 end
 
-Given(/^a bunch of existing invoices$/) do
-  c1 = create(:customer_vault_corporation, name: 'Bidule')
-  c2 = create(:customer_vault_corporation, name: 'Machin')
-  c3 = create(:customer_vault_corporation, name: 'Chose')
-
-  i1 = create(:customer_vault_individual, first_name: 'Oh')
-  i2 = create(:customer_vault_individual, first_name: 'Ah')
-  i3 = create(:customer_vault_individual, first_name: 'Eh')
-
-  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.today, paid: true)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c2, date: Date.today)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c3, date: Date.today)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.today - 2.days)
-
-  create(:billing_machine_invoice, id_card: @id_card, customer: i1, date: Date.today - 3.days)
-  create(:billing_machine_invoice, id_card: @id_card, customer: i2, date: Date.today - 3.days)
-  create(:billing_machine_invoice, id_card: @id_card, customer: i3, date: Date.today - 3.days)
+Then(/^a new invoice is displayed with the informations$/) do
+  expect(page).to have_field('invoice_label', with: @invoice.label)
 end
 
-When(/^he filters by date on today$/) do
-  select "Aujourd'hui"
-  find(".filter-submit").click
-end
-
-When(/^he filters by one customer$/) do
-  within('.filters') do
-    select('Bidule')
-    find(".filter-submit").click
-  end
+Then(/^he can see all the informations$/) do
+  expect(page).to have_selector '.invoice-label', @invoice.label
 end
 
 Then(/^only the invoices of this customer do appear$/) do
@@ -277,35 +322,8 @@ Then(/^only the invoices of today do appear$/) do
   expect(page).to have_selector(".invoice", count: 3)
 end
 
-When(/^he filters by status on paid$/) do
-  within('.filters') do
-    select('Payées')
-    find(".filter-submit").click
-  end
-end
-
 Then(/^only the invoices paid do appear$/) do
   expect(page).to have_selector(".invoice", count: 1)
-end
-
-Given(/^an existing unpaid invoice$/) do
-  @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: false)
-end
-
-Given(/^its due date is not yet passed$/) do
-  @invoice.update(due_date: (Date.today + 1))
-end
-
-Given(/^its due date is the same day$/) do
-  @invoice.update(due_date: (Date.today))
-end
-
-Given(/^its due date is yesterday$$/) do
-  @invoice.update(due_date: (Date.today - 1))
-end
-
-Given(/^its due date is (\d+) days ago$/) do |days|
-  @invoice.update(due_date: (Date.today - days.to_i))
 end
 
 Then(/^the invoice paid status should not have a color$/) do
@@ -316,25 +334,8 @@ Then(/^the invoice status should be "(.*?)"$/) do |color|
   expect(find(".invoice")[:class]).to include(color)
 end
 
-When(/^the user download the pdf$/) do
-  visit dorsale.billing_machine_invoice_path(@invoice)
-  find(".link_download").click
-end
-
 Then(/^the PDF should have the filename "([^\"]*)"$/) do |filename|
   expect(page.response_headers['Content-Disposition']).to include("filename=\"#{filename}\"")
-end
-
-Given(/^existing "(.*?)" invoices with "(.*?)" amount$/) do |n, amount|
-  n.to_i.times do
-    invoice = create(:billing_machine_invoice, advance: 0)
-    invoice_line = create(:billing_machine_invoice_line,
-      invoice: invoice,
-      quantity: 1,
-      unit_price: amount,
-      total: nil
-    )
-  end
 end
 
 Then(/^data total amount is "(.*?)"$/) do |text|
