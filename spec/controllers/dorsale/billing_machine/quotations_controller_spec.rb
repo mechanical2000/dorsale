@@ -12,14 +12,14 @@ describe Dorsale::BillingMachine::QuotationsController, type: :controller do
       q2.quotation.update_attributes!(state: "canceled")
 
       get :index
-      expect(assigns(:total_duty)).to eq 10
+      expect(assigns(:total_excluding_taxes)).to eq 10
     end
 
     it "stats should be 0 if no quotations" do
       get :index
-      expect(assigns(:total_duty)).to eq 0
+      expect(assigns(:total_excluding_taxes)).to eq 0
       expect(assigns(:vat_amount)).to eq 0
-      expect(assigns(:total_all_taxes)).to eq 0
+      expect(assigns(:total_including_taxes)).to eq 0
     end
   end
 end

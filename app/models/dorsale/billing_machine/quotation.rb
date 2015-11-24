@@ -29,17 +29,16 @@ module Dorsale
       # simple_form
       validates :id_card_id, presence: true
 
-      def initialize(*args)
+      def initialize(*)
         super
-        self.date                = Date.today     if date.nil?
-        self.expires_at          = date + 1.month if expires_at.nil?
-        self.vat_rate            = 20             if vat_rate.nil?
-        self.commercial_discount = 0              if commercial_discount.nil?
-        self.state               = STATES.first   if state.nil?
+        self.state                 = STATES.first   if state.nil?
+        self.date                  = Date.today     if date.nil?
+        assign_default_values
       end
 
       before_create :assign_unique_index
       before_create :assign_tracking_id
+      before_validation :assign_default_values
 
       def assign_unique_index
         if unique_index.nil?
@@ -51,18 +50,82 @@ module Dorsale
         self.tracking_id = date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
 
-      before_save :update_total
+      def assign_default_values
+        self.expires_at            = date + 1.month if expires_at.nil?
+        self.commercial_discount   = 0              if commercial_discount.nil?
+        self.vat_amount            = 0              if vat_amount.nil?
+        self.total_excluding_taxes = 0              if total_excluding_taxes
+      end
 
-      def update_total
-        self.vat_rate            = 0 if vat_rate.nil?
-        self.commercial_discount = 0 if commercial_discount.nil?
-        self.total_duty          = (lines.pluck(:total).sum) - commercial_discount
-        self.vat_amount          = total_duty * vat_rate / 100.0
-        self.total_all_taxes     = total_duty + vat_amount
+      before_save :update_totals
+
+      def update_totals
+        assign_default_values
+        lines_sum = lines.map(&:total).sum
+
+        self.total_excluding_taxes = lines_sum - commercial_discount
+
+        if commercial_discount.nonzero? && lines_sum.nonzero?
+          discount_rate = commercial_discount / lines_sum
+        else
+          discount_rate = 0.0
+        end
+
+        self.vat_amount = 0.0
+
+        lines.each do |line|
+          line_total = line.total - (line.total * discount_rate)
+          self.vat_amount += (line_total * line.vat_rate / 100.0)
+        end
+
+        self.total_including_taxes = total_excluding_taxes + vat_amount
+      end
+
+      def total_excluding_taxes=(*); super; end
+      private :total_excluding_taxes=
+
+      def vat_amount=(*); super; end
+      private :vat_amount=
+
+      def total_including_taxes=(*); super; end
+      private :total_including_taxes=
+
+      def balance
+        self.total_including_taxes
+      end
+
+      def vat_rate
+        if ::Dorsale::BillingMachine.vat_mode == :multiple
+          raise "Quotation#vat_rate is not available in multiple vat mode"
+        end
+
+        return @vat_rate if @vat_rate
+
+        vat_rates = lines.map(&:vat_rate).uniq
+
+        if vat_rates.length > 1
+          raise "Quotation has multiple vat rates"
+        end
+
+        vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      end
+
+      def vat_rate=(value)
+        @vat_rate = value
+      end
+
+      before_validation :apply_vat_rate_to_lines
+
+      def apply_vat_rate_to_lines
+        return if ::Dorsale::BillingMachine.vat_mode == :multiple
+
+        lines.each do |line|
+          line.vat_rate = vat_rate
+        end
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::QuotationPdf.new(self)
+        pdf = ::Dorsale::BillingMachine.quotation_pdf_model.new(self)
         pdf.build
         pdf
       end

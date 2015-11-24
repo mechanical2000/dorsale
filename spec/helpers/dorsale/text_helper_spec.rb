@@ -44,12 +44,51 @@ describe Dorsale::TextHelper, type: :helper do
   end
 
   describe "#info" do
-    let(:invoice_line) { create :billing_machine_quotation_line, quantity: 9.99 }
+    let(:quotation_line) {
+      l = create(:billing_machine_quotation_line,
+        :unit     => "abc",
+        :quantity => 1000.17,
+      )
+
+      def l.date; Date.parse("2015-01-25"); end
+      def l.time; Time.parse("2015-01-25  17:09:23"); end
+      l
+    }
+
     it "should work with strings" do
-      expect(info invoice_line, :unit).to include invoice_line.unit
+      expect(info quotation_line, :unit).to eq %(<div class="info"><strong class="info-label">Unité</strong> : <span class="info-value quotation_line-unit">abc</span></div>)
     end
+
+    it "should accept other tags" do
+      expect(info quotation_line, :unit, nil, tag: :p).to eq %(<p class="info"><strong class="info-label">Unité</strong> : <span class="info-value quotation_line-unit">abc</span></p>)
+    end
+
+    it "should accept separator" do
+      expect(info quotation_line, :unit, separator: " -> ").to eq %(<div class="info"><strong class="info-label">Unité</strong> -> <span class="info-value quotation_line-unit">abc</span></div>)
+    end
+
+    it "should accept nested values" do
+      expect(info quotation_line.quotation, :state).to eq %(<div class="info"><strong class="info-label">État</strong> : <span class="info-value quotation-state">En attente</span></div>)
+    end
+
+    it "should override value" do
+      expect(info quotation_line, :unit, "zzzzz").to include "zzzzz"
+    end
+
     it "should work with floats" do
-      expect(info invoice_line, :quantity).to include invoice_line.quantity.to_s
+      expect(info quotation_line, :quantity).to include "1 000,17"
+    end
+
+    it "should work with date" do
+      expect(info quotation_line, :date).to include "25/01/2015"
+    end
+
+    it "should work with time" do
+      expect(info quotation_line, :time).to include "25/01/2015 à 17:09"
+    end
+
+    it "should accept helper" do
+      expect(info quotation_line, :quantity, helper: :euros).to include "1 000,17 €"
     end
   end
 

@@ -1,23 +1,27 @@
-.well.nested-fields.invoice-line
-  .row
-    .col-sm-12
-      = f.input :label, as: :string, input_html: {class: "line-label"}
+tr.line
+  td.actions
+    a.delete href="#"
+      span.fa.fa-fw.fa-trash
+    = f.hidden_field :_destroy
 
-    .col-sm-12
-      .col-sm-3
-      .col-sm-3
-        = f.input :quantity, as: :string, input_html: {class: "line-quantity"}
-      .col-sm-3
-        = f.input :unit, as: :string, input_html: {class: "line-unit"}
-      .col-sm-3
-        = f.input :unit_price, as: :string, input_html: {class: "line-unit_price"}
+  td.line-label
+    = f.text_area :label, rows: 1
 
-    .col-sm-12
-      .col-sm-3.remove-line
-        = link_to_remove_association t("actions.remove_line"), f, class: "btn btn-danger btn-xs remove-line"
+  td.line-quantity
+    = f.text_field :quantity, class: "number"
 
-      .col-sm-9
-        label.line-total-label
-          = ::Dorsale::BillingMachine::InvoiceLine.t(:total)
-          = " : "
-        span.line-total
+  td.line-unit
+    = f.text_field :unit
+
+  - if ::Dorsale::BillingMachine.vat_mode == :multiple
+    td.line-vat_rate
+      = f.text_field :vat_rate, class: "number"
+      span.unit = "%"
+
+  td.line-unit_price
+    = f.text_field :unit_price, class: "number"
+    span.unit = "€"
+
+  td.line-total
+    = f.text_field :total, class: "number", disabled: true
+    span.unit = "€"

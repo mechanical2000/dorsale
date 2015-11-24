@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20151120122613) do
     t.decimal  "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal  "vat_rate"
   end
 
   add_index "dorsale_billing_machine_invoice_lines", ["invoice_id"], name: "index_dorsale_billing_machine_invoice_lines_on_invoice_id"
@@ -88,17 +89,16 @@ ActiveRecord::Schema.define(version: 20151120122613) do
     t.integer  "id_card_id"
     t.date     "date"
     t.string   "label"
-    t.decimal  "total_duty"
+    t.decimal  "total_excluding_taxes"
     t.decimal  "vat_amount"
-    t.decimal  "total_all_taxes"
+    t.decimal  "total_including_taxes"
     t.decimal  "advance"
     t.decimal  "balance"
     t.integer  "unique_index"
-    t.decimal  "vat_rate"
     t.boolean  "paid"
     t.date     "due_date"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
   end
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20151120122613) do
     t.decimal  "total"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.decimal  "vat_rate"
   end
 
   add_index "dorsale_billing_machine_quotation_lines", ["quotation_id"], name: "index_dorsale_billing_machine_quotation_lines_on_quotation_id"
@@ -134,14 +135,13 @@ ActiveRecord::Schema.define(version: 20151120122613) do
     t.integer  "payment_term_id"
     t.date     "date"
     t.string   "label"
-    t.decimal  "total_duty"
+    t.decimal  "total_excluding_taxes"
     t.decimal  "vat_amount"
-    t.decimal  "total_all_taxes"
+    t.decimal  "total_including_taxes"
     t.integer  "unique_index"
-    t.decimal  "vat_rate"
     t.text     "comments"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.date     "expires_at"
     t.string   "tracking_id"
     t.decimal  "commercial_discount"

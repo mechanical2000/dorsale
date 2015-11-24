@@ -11,10 +11,10 @@ table.default.quotations
         = ::Dorsale::BillingMachine::Quotation.t(:customer)
 
       th
-        = ::Dorsale::BillingMachine::Quotation.t(:total_duty)
+        = ::Dorsale::BillingMachine::Quotation.t(:total_excluding_taxes)
 
       th.hidden-xs
-        = ::Dorsale::BillingMachine::Quotation.t(:total_all_taxes)
+        = ::Dorsale::BillingMachine::Quotation.t(:total_including_taxes)
 
       th.hidden-xs
         = ::Dorsale::BillingMachine::Quotation.t(:state)
@@ -34,11 +34,11 @@ table.default.quotations
         td.customer_name
           = quotation.customer.try(:name)
 
-        td.total_duty
-          = euros(quotation.total_duty)
+        td.total_excluding_taxes
+          = euros(quotation.total_excluding_taxes)
 
-        td.hidden-xs.total_all_taxes
-          = euros(quotation.total_all_taxes)
+        td.hidden-xs.total_including_taxes
+          = euros(quotation.total_including_taxes)
 
         td
           = quotation.t("state.#{quotation.state}")

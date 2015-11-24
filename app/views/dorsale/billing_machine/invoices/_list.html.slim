@@ -11,10 +11,10 @@ table.default.invoices
         = ::Dorsale::BillingMachine::Invoice.t(:customer)
 
       th
-        = ::Dorsale::BillingMachine::Invoice.t(:total_duty)
+        = ::Dorsale::BillingMachine::Invoice.t(:total_excluding_taxes)
 
       th.hidden-xs
-        = ::Dorsale::BillingMachine::Invoice.t(:total_all_taxes)
+        = ::Dorsale::BillingMachine::Invoice.t(:total_including_taxes)
 
       th
         = t("actions.actions")
@@ -31,11 +31,11 @@ table.default.invoices
         td.customer_name
           = invoice.customer.try(:name)
 
-        td.total_duty
-          = euros(invoice.total_duty)
+        td.total_excluding_taxes
+          = euros(invoice.total_excluding_taxes)
 
-        td.hidden-xs.total_all_taxes
-          = euros(invoice.total_all_taxes)
+        td.hidden-xs.total_including_taxes
+          = euros(invoice.total_including_taxes)
 
         td.actions
           = read_button dorsale.billing_machine_invoice_path(invoice)

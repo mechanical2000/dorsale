@@ -2,9 +2,31 @@ require "rails_helper"
 
 describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
   it { is_expected.to belong_to :invoice }
+  it { is_expected.to validate_presence_of :invoice }
+
+  it { is_expected.to respond_to :quantity }
+  it { is_expected.to respond_to :label }
+  it { is_expected.to respond_to :vat_rate }
+  it { is_expected.to respond_to :total }
+  it { is_expected.to respond_to :unit }
+  it { is_expected.to respond_to :unit_price }
 
   it "should have a valid factory" do
     expect(build(:billing_machine_invoice_line)).to be_valid
+  end
+
+  describe "default values" do
+    it "quantity should be 0" do
+      expect(::Dorsale::BillingMachine::InvoiceLine.new.quantity).to eq 0
+    end
+
+    it "unit_price should be 0" do
+      expect(::Dorsale::BillingMachine::InvoiceLine.new.unit_price).to eq 0
+    end
+
+    it "vat_rate should be 0" do
+      expect(::Dorsale::BillingMachine::InvoiceLine.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    end
   end
 
   it "should be sorted by created_at" do

@@ -1,6 +1,9 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
+describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
+  before :each do
+    ::Dorsale::BillingMachine.vat_mode = :single
+  end
 
   let(:customer) {
     create(:customer_vault_corporation)
@@ -28,40 +31,37 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
         'recouvrement d’un montant de 999999€'
     ) }
 
-  let(:invoice) {
+  let(:quotation) {
 
-    i = create(:billing_machine_invoice,
+    q = create(:billing_machine_quotation,
       date: '16/04/2014',
       id_card: id_card,
       customer: customer,
       commercial_discount: 100.23,
-      total_duty: 1812.53,
-      vat_amount: 355.26,
-      total_all_taxes: 2167.79,
-      advance: 1.79,
-      vat_rate: 19.6,
-      balance: 2166.0)
+      comments: 'this is the quotation comment')
 
-    create(:billing_machine_invoice_line,
-    invoice: i,
+    create(:billing_machine_quotation_line,
+    quotation: q,
     quantity: 3.14,
     unit: 'heures',
     unit_price: 2.54,
+    vat_rate: 19.6,
     total: 7.98)
 
-    create(:billing_machine_invoice_line,
-    invoice: i,
+    create(:billing_machine_quotation_line,
+    quotation: q,
     label: 'Truc',
     quantity: 42.42,
     unit: 'nuts',
     unit_price: 42.54,
+    vat_rate: 19.6,
     total: 1804.55)
 
-    i.reload
+    q.reload
   }
 
   let(:pdf) {
-    invoice.pdf
+    quotation.pdf
   }
 
   let(:content) {
@@ -78,7 +78,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
     end
 
     it 'should assign @main_document' do
-       expect(pdf.main_document).to eq invoice
+       expect(pdf.main_document).to eq quotation
     end
   end
 
@@ -105,9 +105,9 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
   describe 'Header' do
     it "should write invoice tracking id" do
-      expect(content).to include 'Facture'
+      expect(content).to include 'Devis'
       expect(content).to include 'Numéro :'
-      expect(content).to include invoice.tracking_id
+      expect(content).to include quotation.tracking_id
     end
 
     it "is expected to print invoice date" do
@@ -128,22 +128,22 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
   describe 'customer information' do
     it "should write customer name" do
       expect(content).to include 'Client :'
-      expect(content).to include invoice.customer.name
+      expect(content).to include quotation.customer.name
     end
 
     it "is expected to print customer address" do
-      expect(content).to include invoice.customer.address.street
-      expect(content).to include invoice.customer.address.street_bis
+      expect(content).to include quotation.customer.address.street
+      expect(content).to include quotation.customer.address.street_bis
     end
 
     it "is expected to print customer zip and city" do
-      expect(content).to include invoice.customer.address.zip.to_s +
-       ' ' + invoice.customer.address.city.to_s
+      expect(content).to include quotation.customer.address.zip.to_s +
+       ' ' + quotation.customer.address.city.to_s
     end
 
    it "is expected to print 'Objet :' and invoice label" do
      expect(content).to include 'Objet : '
-     expect(content).to include invoice.label
+     expect(content).to include quotation.label
     end
   end
 
@@ -156,7 +156,7 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       expect(content).to include 'TOTAL €HT'
     end
     it 'is expected to print invoice line label of each invoice line' do
-      invoice.lines.each do |line|
+      quotation.lines.each do |line|
         expect(content).to include line.label
       end
     end
@@ -185,10 +185,9 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       expect(content).to include '1 712,29 €'
       expect(content).to include 'TVA 19,60 %'
       expect(content).to include '335,61 €'
-      expect(content).to include 'ACOMPTE'
-      expect(content).to include '1,79 €'
+      expect(content).to_not include 'ACOMPTE'
       expect(content).to include 'TOTAL TTC'
-      expect(content).to include '2 046,11 €'
+      expect(content).to include '2 047,90 €'
     end
   end
 
@@ -196,16 +195,20 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
   describe 'Footer' do
     it 'is expected to print invoice payment term' do
       expect(content).to include 'Conditions de paiement :'
-      expect(content).to include invoice.payment_term.label
+      expect(content).to include quotation.payment_term.label
     end
 
     it 'is expected to print current and total page number' do
       expect(content).to include 'page 1/1'
     end
 
+    it 'is expected to print current and total page number' do
+      expect(content).to include quotation.comments
+    end
+
     it 'is expected to print invoice legals and banks' do
-      expect(content).to include 'IBAN : FR76 0000 0000 0000 0000 0000 000'
-      expect(content).to include 'BIC / SWIFT : PSSTTHEGAME'
+      expect(content).to_not include 'IBAN : FR76 0000 0000 0000 0000 0000 000'
+      expect(content).to_not include 'BIC / SWIFT : PSSTTHEGAME'
       expect(content).to include 'Tout retard de règlement donnera lieu de plein droit et sans qu’aucune mise en demeure ne soit nécessaire au paiement de'
       expect(content).to include 'pénalités de retard sur la base du taux BCE majoré de dix (10) points et au paiement d’une indemnité forfaitaire pour frais de'
       expect(content).to include 'recouvrement d’un montant de 999999€'
@@ -214,10 +217,8 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
 
   describe 'incomplete invoice' do
     before(:each) do
-      invoice_incomplete=create(:billing_machine_invoice, total_duty: 1000, vat_amount: 196,
-        total_all_taxes: 1196, advance: 0, balance: 1146 , customer: customer,
-        date: '2014-04-16', vat_rate: 19.6, id_card: id_card)
-      pdf_incomplete = invoice_incomplete.pdf
+      quotation_incomplete = create(:billing_machine_quotation, customer: customer, date: '2014-04-16', id_card: id_card)
+      pdf_incomplete = quotation_incomplete.pdf
       pdf_incomplete.build
       tempfile = Tempfile.new("pdf")
       tempfile.binmode
@@ -238,4 +239,20 @@ describe ::Dorsale::BillingMachine::InvoicePdf, pdfs: true do
       expect(@incomplete_content).to include 'TOTAL TTC'
     end
   end
+
+  describe "attachment" do
+    it "should build attachments" do
+      quotation  = create(:billing_machine_quotation)
+      attachment = create(:alexandrie_attachment, attachable: quotation)
+      pdf = quotation.pdf
+      pdf.build
+
+      text = Yomu.read(:text, pdf.render_with_attachments).split("\n")
+      expect(text).to include "page 1"
+      expect(text).to include "page 2"
+    end
+  end
 end
+
+
+

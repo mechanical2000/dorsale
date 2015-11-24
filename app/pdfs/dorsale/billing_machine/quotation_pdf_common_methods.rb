@@ -1,6 +1,6 @@
 module Dorsale
   module BillingMachine
-    class QuotationPdf < ::Dorsale::BillingMachine::InvoicePdf
+    module QuotationPdfCommonMethods
       def build
         super
         build_attachments

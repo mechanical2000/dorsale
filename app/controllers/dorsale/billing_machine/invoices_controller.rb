@@ -149,9 +149,8 @@ module Dorsale
           :paid,
           :date,
           :commercial_discount,
-          :vat_amount,
-          :advance,
           :vat_rate,
+          :advance,
           :due_date,
           :lines_attributes => [
             :_destroy,
@@ -160,6 +159,7 @@ module Dorsale
             :quantity,
             :unit,
             :unit_price,
+            :vat_rate,
           ],
         ]
       end

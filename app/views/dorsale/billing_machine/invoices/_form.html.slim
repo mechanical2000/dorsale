@@ -1,70 +1,120 @@
-#invoice.edit
-  = horizontal_form_for @invoice, as: :invoice do |f|
-    .well
-      - if @invoice.persisted?
-        .form-group
-          label.control-label.col-sm-3
-            = Dorsale::BillingMachine::Invoice.t(:tracking_id)
-          .col-sm-9
-            .form-control-static.invoice-unique-index
-              = @invoice.tracking_id
+- vat_mode      = ::Dorsale::BillingMachine.vat_mode
+- document_type = document.class.to_s.split("::").last.downcase.to_sym
 
-      = f.input :label
-      = f.input :date, html5: true
-      = f.input :payment_term_id, collection: @payment_terms
-      = f.input :due_date, html5: true
-      = f.input :paid, as: :select, include_blank: false
-      = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
-      = f.input :vat_rate, as: :string
-      = f.input :advance, as: :string
-      = f.input :commercial_discount, as: :string
+#billing_machine-form
+  = horizontal_form_for document, as: document_type do |f|
+    h1
+      = document.class.t.capitalize
+      - if document.tracking_id.present?
+        = " n° "
+        = document.tracking_id
 
-      - if @id_cards.one?
-        = f.hidden_field :id_card_id
-      - else
-        = f.input :id_card_id, collection: @id_cards
+    .row
+      .col-md-6
+        .well
+          - if @id_cards.one?
+            = f.hidden_field :id_card_id
+          - else
+            = f.input :id_card_id, collection: @id_cards
 
-    #invoice-lines
-      = f.simple_fields_for :lines do |l|
-        = render "line_fields", f: l
+        = f.input :label
 
-      p.center
-        = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-primary", id: "add-new-line"
+      .col-md-6
+        .well
+          = f.input :date, html5: true
+          hr
+          = f.input :customer_guid, collection: @people.map{ |e| [e.name, e.guid] }
 
-    .total.well
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:commercial_discount)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-commercial_discount
+    table#lines-table
+      thead
+        tr
+          th.actions
+          th.line-label      = Dorsale::BillingMachine::InvoiceLine.t(:label)
+          th.line-quantity   = Dorsale::BillingMachine::InvoiceLine.t(:quantity)
+          th.line-unit       = Dorsale::BillingMachine::InvoiceLine.t(:unit)
+          - if vat_mode == :multiple
+            th.line-vat_rate   = Dorsale::BillingMachine::InvoiceLine.t(:vat_rate)
+          th.line-unit_price = Dorsale::BillingMachine::InvoiceLine.t(:unit_price)
+          th.line-total      = Dorsale::BillingMachine::InvoiceLine.t(:total)
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:total_duty)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-total_duty
+      tbody
+        = f.simple_fields_for :lines do |lf|
+          = render "line_fields", f: lf
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:vat_rate)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-vat_amount
+    .row
+      .col-sm-6
+        = link_to_add_association t("actions.add_line"), f, :lines, class: "btn btn-success btn-sm", id: "add-new-line", "data-association-insertion-node" => "#lines-table tbody", "data-association-insertion-method" => "append"
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:total_all_taxes)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-total_all_taxes
+        = f.input :payment_term_id, collection: @payment_terms
 
-      .row
-        label.col-sm-3.control-label
-          = @invoice.t(:balance)
-          = " : "
-        .col-sm-9
-          .form-control-static#invoice-balance
+        - if document_type == :invoice
+          = f.input :due_date, html5: true
+          = f.input :paid, as: :select, include_blank: false
+
+        - if document_type == :quotation
+          = f.input :state, collection: billing_machine_quotation_states_for_select
+          = f.input :expires_at, html5: true
+          = f.input :comments
+
+      .col-sm-6
+        table#totals-table
+          tbody
+            tr
+              th.commercial_discount-label
+                = document.class.t(:commercial_discount)
+
+              td.commercial_discount
+                = f.text_field :commercial_discount, class: "number"
+                span.unit = "€"
+
+            tr
+              th.total_excluding_taxes-label
+                = document.class.t(:total_excluding_taxes)
+
+              td.total_excluding_taxes
+                = f.text_field :total_excluding_taxes, class: "number", disabled: true
+                span.unit = "€"
+
+            - if vat_mode == :single
+              tr
+                th.vat_rate-label
+                  = document.class.t(:vat_rate)
+
+                td.vat_rate
+                  = f.text_field :vat_rate, class: "number"
+                  span.unit = "%"
+
+            tr
+              th.vat_amount-label
+                = document.class.t(:vat_amount)
+
+              td.vat_amount
+                = f.text_field :vat_amount, class: "number", disabled: true
+                span.unit = "€"
+
+            tr
+              th.total_including_taxes-label
+                = document.class.t(:total_including_taxes)
+
+              td.total_including_taxes
+                = f.text_field :total_including_taxes, class: "number", disabled: true
+                span.unit = "€"
+
+            - if document.respond_to?(:advance)
+              tr
+                th.advance-label
+                  = document.class.t(:advance)
+
+                td.advance
+                  = f.text_field :advance, class: "number"
+                  span.unit = "€"
+
+              tr
+                th.balance-label
+                  = document.class.t(:balance)
+
+                td.balance
+                  = f.text_field :balance, class: "number", disabled: true
+                  span.unit = "€"
 
     = form_buttons

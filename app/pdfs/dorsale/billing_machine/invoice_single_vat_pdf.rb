@@ -2,7 +2,7 @@ require "prawn/measurement_extensions"
 
 module Dorsale
   module BillingMachine
-    class InvoicePdf < Prawn::Document
+    class InvoiceSingleVatPdf < Prawn::Document
       include Dorsale::Alexandrie::Prawn
       include Dorsale::AllHelpers
       include ActionView::Helpers::NumberHelper
@@ -284,16 +284,16 @@ module Dorsale
             table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", "\- #{euros(@main_document.commercial_discount)}"]
           end
 
-          table_totals.push ["#{I18n.t("pdfs.total_duty")}", euros(@main_document.total_duty)]
+          table_totals.push ["#{I18n.t("pdfs.total_excluding_taxes")}", euros(@main_document.total_excluding_taxes)]
 
           vat_rate = number(@main_document.vat_rate)
           table_totals.push ["#{I18n.t("pdfs.vat")}#{vat_rate} %", euros(@main_document.vat_amount)]
 
           if has_advance
             table_totals.push ["#{I18n.t("pdfs.advance")}", euros(@main_document.advance)]
-            table_totals.push ["#{I18n.t("pdfs.total_all_taxes")}", euros(@main_document.balance)]
+            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.balance)]
           else
-            table_totals.push ["#{I18n.t("pdfs.total_all_taxes")}", euros(@main_document.total_all_taxes)]
+            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.total_including_taxes)]
           end
 
           table table_totals,

@@ -23,9 +23,9 @@ module Dorsale
         @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
         @quotations = @quotations.page(params[:page]).per(50)
 
-        @total_duty = @quotations_without_pagination.to_a
+        @total_excluding_taxes = @quotations_without_pagination.to_a
           .select{ |q| q.state != "canceled" }
-          .map(&:total_duty)
+          .map(&:total_excluding_taxes)
           .delete_if(&:blank?)
           .sum
 
@@ -35,9 +35,9 @@ module Dorsale
           .delete_if(&:blank?)
           .sum
 
-        @total_all_taxes = @quotations_without_pagination.to_a
+        @total_including_taxes = @quotations_without_pagination.to_a
           .select{ |q| q.state != "canceled" }
-          .map(&:total_all_taxes)
+          .map(&:total_including_taxes)
           .delete_if(&:blank?)
           .sum
 
@@ -170,7 +170,6 @@ module Dorsale
           :date,
           :expires_at,
           :comments,
-          :vat_amount,
           :vat_rate,
           :commercial_discount,
           :lines_attributes => [
@@ -180,6 +179,7 @@ module Dorsale
             :quantity,
             :unit,
             :unit_price,
+            :vat_rate,
           ],
         ]
       end

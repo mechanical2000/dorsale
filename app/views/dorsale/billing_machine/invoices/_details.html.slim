@@ -1,0 +1,130 @@
+- vat_mode      = ::Dorsale::BillingMachine.vat_mode
+- document_type = document.class.to_s.split("::").last.downcase.to_sym
+
+#billing_machine-show
+  h1
+    = document.class.t.capitalize
+    - if document.tracking_id.present?
+      = " n° "
+      = document.tracking_id
+
+  .row
+    .col-md-6
+      .well
+        = info document, :label
+
+    .col-md-6
+      .well
+        = info document, :date
+        hr
+          - if document.customer.present?
+            = document.customer.name
+            br
+            = document.customer.address.street
+            br
+            = document.customer.address.street_bis
+            br
+            = document.customer.address.zip
+            = " "
+            = document.customer.address.city
+            br
+            = document.customer.address.country
+
+  table#lines-table
+    thead
+      tr
+        th.line-label      = document.lines.first.class.t(:label)
+        th.line-quantity   = document.lines.first.class.t(:quantity)
+        th.line-unit       = document.lines.first.class.t(:unit)
+        - if vat_mode == :multiple
+          th.line-vat_rate   = document.lines.first.class.t(:vat_rate)
+        th.line-unit_price = document.lines.first.class.t(:unit_price)
+        th.line-total      = document.lines.first.class.t(:total)
+
+    tbody
+      - document.lines.each do |line|
+        = render "line_details", line: line
+
+  .row
+    .col-sm-6
+      .well
+        = document.payment_term.try(:label)
+
+        - if document_type == :invoice
+          = info document, :due_date
+          = info document, :paid
+
+        - if document_type == :quotation
+          = info document, :state
+          br
+
+          = info document, :expires_at
+          br
+
+          - if document.comments.present?
+            = info document, :comments, text2html(document.comments), separator: " :<br />"
+            br
+
+
+    .col-sm-6
+        table#totals-table
+          tbody
+            - if document.commercial_discount.nonzero?
+              tr
+                th.commercial_discount-label
+                  = document.class.t(:commercial_discount)
+
+                td.commercial_discount
+                  = " - #{euros document.commercial_discount}"
+
+
+            tr
+              th.total_excluding_taxes-label
+                = document.class.t(:total_excluding_taxes)
+
+              td.total_excluding_taxes
+                = euros document.total_excluding_taxes
+
+            - if vat_mode == :single
+              tr
+                th.vat_rate-label
+                  = document.class.t(:vat_rate)
+
+                td.vat_rate
+                  = percentage document.vat_rate
+
+            tr
+              th.vat_amount-label
+                = document.class.t(:vat_amount)
+
+              td.vat_amount
+                = euros document.vat_amount
+
+            tr
+              th.total_including_taxes-label
+                = document.class.t(:total_including_taxes)
+
+              td.total_including_taxes
+                = euros document.total_including_taxes
+
+            - if document.respond_to?(:advance)
+              - document.advance.present?
+                tr
+                  th.advance-label
+                    = document.class.t(:advance)
+
+                  td.advance
+                    = euros document.advance
+
+              tr
+                th.balance-label
+                  = document.class.t(:balance)
+
+                td.balance
+                  = euros document.balance
+
+- if document_type == :quotation
+  .attachments-panel
+    = panel title: document.t(:documents)
+      .panel-body
+        = attachments_for document

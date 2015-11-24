@@ -4,6 +4,14 @@ fr:
   "true"  : "Oui"
   "false" : "Non"
 
+  date:
+    formats:
+      default: "%d/%m/%Y"
+
+  time:
+    formats:
+      default: "%d/%m/%Y à %H:%M"
+
   actions: &actions
     actions    : "Actions"
     index      : "Liste"
@@ -110,6 +118,7 @@ fr:
     color                 : "Couleur"
     data                  : "Informations"
     comment               : "Commentaire"
+    comments              : "Commentaires"
     written_by            : "écrit par"
     details               : "Détails"
     quantity              : "Quantité"
@@ -133,8 +142,8 @@ fr:
     vat_rate              : "Taux TVA"
     vat_amount            : "Montant TVA"
     advance               : "Avance"
-    total_duty            : "Total HT"
-    total_all_taxes       : "Total TTC"
+    total_including_taxes : "Total TTC"
+    total_excluding_taxes : "Total HT"
     balance               : "Total à payer"
     expires_at            : "Date d'expiration"
     commercial_discount   : "Remise commerciale"

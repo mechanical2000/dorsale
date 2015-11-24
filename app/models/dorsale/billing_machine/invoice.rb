@@ -21,16 +21,14 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date                = Date.today       if date.nil?
-        self.due_date            = 30.days.from_now if due_date.nil?
-        self.vat_rate            = 20               if vat_rate.nil?
-        self.advance             = 0                if advance.nil?
-        self.commercial_discount = 0                if commercial_discount.nil?
-        self.paid                = false            if paid.nil?
+        assign_default_values
+        self.due_date              = 30.days.from_now if due_date.nil?
+        self.date                  = Date.today       if date.nil?
       end
 
       before_create :assign_unique_index
       before_create :assign_tracking_id
+      before_validation :assign_default_values
 
       def assign_unique_index
         if unique_index.nil?
@@ -42,22 +40,73 @@ module Dorsale
         self.tracking_id = date.year.to_s + "-" + unique_index.to_s.rjust(2, "0")
       end
 
-      before_save :update_balance
+      def assign_default_values
+        self.advance               = 0.0   if advance.nil?
+        self.vat_amount            = 0.0   if vat_amount.nil?
+        self.commercial_discount   = 0.0   if commercial_discount.nil?
+        self.total_excluding_taxes = 0.0   if total_excluding_taxes.nil?
+        self.paid                  = false if paid.nil?
+      end
 
-      def update_balance
-        self.vat_rate            = 0 if vat_rate.nil?
-        self.advance             = 0 if advance.nil?
-        self.commercial_discount = 0 if commercial_discount.nil?
-        self.total_duty          = (lines.pluck(:total)).sum - commercial_discount
-        self.vat_amount          = total_duty * vat_rate / 100.0
-        self.total_all_taxes     = total_duty + vat_amount
-        self.balance             = total_all_taxes - advance
+      before_save :update_totals
+
+      def update_totals
+        assign_default_values
+        lines_sum = lines.map(&:total).sum
+
+        self.total_excluding_taxes = lines_sum - commercial_discount
+
+        if commercial_discount.nonzero? && lines_sum.nonzero?
+          discount_rate = commercial_discount / lines_sum
+        else
+          discount_rate = 0.0
+        end
+
+        self.vat_amount = 0.0
+
+        lines.each do |line|
+          line_total = line.total - (line.total * discount_rate)
+          self.vat_amount += (line_total * line.vat_rate / 100.0)
+        end
+
+        self.total_including_taxes = total_excluding_taxes + vat_amount
+        self.balance               = total_including_taxes - advance
       end
 
       def pdf
-        pdf = ::Dorsale::BillingMachine::InvoicePdf.new(self)
+        pdf = ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
         pdf.build
         pdf
+      end
+
+      def vat_rate
+        if ::Dorsale::BillingMachine.vat_mode == :multiple
+          raise "Invoice#vat_rate is not available in multiple vat mode"
+        end
+
+        return @vat_rate if @vat_rate
+
+        vat_rates = lines.map(&:vat_rate).uniq
+
+        if vat_rates.length > 1
+          raise "Invoice has multiple vat rates"
+        end
+
+        vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      end
+
+      def vat_rate=(value)
+        @vat_rate = value
+      end
+
+      before_validation :apply_vat_rate_to_lines
+
+      def apply_vat_rate_to_lines
+        return if ::Dorsale::BillingMachine.vat_mode == :multiple
+
+        lines.each do |line|
+          line.vat_rate = vat_rate
+        end
       end
 
       def payment_status
@@ -74,6 +123,18 @@ module Dorsale
         end
       end
 
+      def total_excluding_taxes=(*); super; end
+      private :total_excluding_taxes=
+
+      def vat_amount=(*); super; end
+      private :vat_amount=
+
+      def total_including_taxes=(*); super; end
+      private :total_including_taxes=
+
+      def balance=(*); super; end
+      private :balance=
+
       def self.to_csv(options = { :force_quotes => true, :col_sep => ";" })
         CSV.generate(options) do |csv|
           column_names = [
@@ -88,7 +149,6 @@ module Dorsale
             "Pays",
             "Remise commerciale",
             "Montant HT",
-            "Taux TVA",
             "Montant TVA",
             "Montant TTC",
             "Acompte",
@@ -109,10 +169,9 @@ module Dorsale
               invoice.customer.try(:address).try(:city),
               invoice.customer.try(:address).try(:country),
               french_number(invoice.commercial_discount),
-              french_number(invoice.total_duty),
-              french_number(invoice.vat_rate),
+              french_number(invoice.total_excluding_taxes),
               french_number(invoice.vat_amount),
-              french_number(invoice.total_all_taxes),
+              french_number(invoice.total_including_taxes),
               french_number(invoice.advance),
               french_number(invoice.balance)
             ]
