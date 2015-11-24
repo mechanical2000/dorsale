@@ -21,7 +21,7 @@ RSpec.describe Dorsale::BillingMachine do
   it "vat_mode should not accept :abc value" do
     expect {
       bm.vat_mode = :abc
-    }.to raise_error
+    }.to raise_error(RuntimeError)
   end
 
 

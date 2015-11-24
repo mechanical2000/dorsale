@@ -9,19 +9,13 @@ class AddTaxesRateToQuotationAndInvoiceLines < ActiveRecord::Migration
     add_column :dorsale_billing_machine_invoice_lines, :vat_rate, :decimal
 
     Dorsale::BillingMachine::Invoice.all.each do |invoice|
-      invoice.lines.each do |line|
-        line.vat_rate = invoice.vat_rate
-        line.save!
-      end
-     invoice.save!
+      invoice.vat_rate = invoice.read_attribute(:vat_rate) || 0.0
+      invoice.save!
     end
 
     Dorsale::BillingMachine::Quotation.all.each do |quotation|
-      quotation.lines.each do |line|
-        line.vat_rate = quotation.vat_rate
-        line.save!
-      end
-     quotation.save!
+      quotation.vat_rate = quotation.read_attribute(:vat_rate) || 0.0
+      quotation.save!
     end
 
     remove_column :dorsale_billing_machine_quotations, :vat_rate

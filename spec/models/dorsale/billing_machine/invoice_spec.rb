@@ -1,9 +1,14 @@
 require "rails_helper"
 
 describe ::Dorsale::BillingMachine::Invoice, type: :model do
+  # Reset to default mode before each test
+  before :each do
+    ::Dorsale::BillingMachine.vat_mode = :single
+  end
+
   it { is_expected.to belong_to :customer }
   it { is_expected.to belong_to :payment_term }
-  it { is_expected.to have_many :lines }
+  it { is_expected.to have_many(:lines).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
@@ -91,6 +96,38 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
     it "should be false by default" do
       invoice = create(:billing_machine_invoice)
       expect(invoice.paid).to eq(false)
+    end
+  end
+
+  describe "vat rate" do
+    it "default vat rate should be 20" do
+      expect(::Dorsale::BillingMachine::Invoice.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    end
+
+    it "it should be specified vat rate" do
+      expect(build(:billing_machine_invoice, vat_rate: 12).vat_rate).to eq 12
+    end
+
+    it "it should be first line vat rate" do
+      invoice = create(:billing_machine_invoice)
+      line1   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 10)
+      line2   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 10)
+      expect(invoice.vat_rate).to eq 10
+    end
+
+    it "it should raise if multiple vat_rates" do
+      invoice = create(:billing_machine_invoice)
+      line1   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 10)
+
+      expect{
+        line2   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 15)
+      }.to raise_error(RuntimeError)
+    end
+
+    it "it should raise when vat mode is multiple" do
+      ::Dorsale::BillingMachine.vat_mode = :multiple
+      invoice = build(:billing_machine_invoice)
+      expect{ invoice.vat_rate }.to raise_error(RuntimeError)
     end
   end
 

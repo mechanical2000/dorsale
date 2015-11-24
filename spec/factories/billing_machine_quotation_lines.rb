@@ -6,8 +6,6 @@ FactoryGirl.define do
     quantity   { 10 }
     unit       { "€" }
     unit_price { 20 }
-    vat_rate     { 20.0 }
-    total      { 240 }
   end
 end
 

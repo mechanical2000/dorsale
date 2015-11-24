@@ -95,7 +95,17 @@ module Dorsale
       end
 
       def vat_rate
-        @vat_rate || lines.first.try(:vat_rate) || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+        if ::Dorsale::BillingMachine.vat_mode == :multiple
+          raise "Invoice#vat_rate is not available in multiple vat mode"
+        end
+
+        vat_rates = lines.map(&:vat_rate).uniq
+
+        if vat_rates.length > 1
+          raise "Invoice has multiple vat rates"
+        end
+
+        @vat_rate || vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
       end
 
       def vat_rate=(value)

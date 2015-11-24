@@ -5,11 +5,13 @@ module Dorsale
 
       belongs_to :invoice, inverse_of: :lines
 
+      validates :invoice, presence: true
+
       default_scope -> {
         order(created_at: :asc)
       }
 
-      def intialize(*)
+      def initialize(*)
         super
         assign_default_values
       end
@@ -20,7 +22,7 @@ module Dorsale
       def assign_default_values
         self.quantity   ||= 0
         self.unit_price ||= 0
-        self.vat_rate   ||= 20
+        self.vat_rate   ||= ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
       end
 
       def update_total

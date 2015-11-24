@@ -3,8 +3,7 @@ require "rails_helper"
 describe ::Dorsale::BillingMachine::Quotation do
   it { is_expected.to belong_to :customer }
   it { is_expected.to belong_to :payment_term }
-
-  it { is_expected.to have_many :lines }
+  it { is_expected.to have_many(:lines).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
@@ -16,9 +15,8 @@ describe ::Dorsale::BillingMachine::Quotation do
   it { is_expected.to respond_to :comments }
   it { is_expected.to respond_to :unique_index }
   it { is_expected.to respond_to :commercial_discount }
-
-    it {is_expected.to respond_to :total_excluding_taxes}
-  it {is_expected.to respond_to :total_including_taxes}
+  it { is_expected.to respond_to :total_excluding_taxes }
+  it { is_expected.to respond_to :total_including_taxes }
 
   it "should have a valid factory" do
     expect(create(:billing_machine_quotation)).to be_valid
@@ -68,6 +66,38 @@ describe ::Dorsale::BillingMachine::Quotation do
     it 'should return correct tracking_id' do
       quotation = create(:billing_machine_quotation, date: '2014-02-01')
       expect(quotation.tracking_id).to eq('2014-01')
+    end
+  end
+
+  describe "vat rate" do
+    it "default vat rate should be 20" do
+      expect(::Dorsale::BillingMachine::Quotation.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    end
+
+    it "it should be specified vat rate" do
+      expect(build(:billing_machine_quotation, vat_rate: 12).vat_rate).to eq 12
+    end
+
+    it "it should be first line vat rate" do
+      quotation = create(:billing_machine_quotation)
+      line1   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+      line2   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+      expect(quotation.vat_rate).to eq 10
+    end
+
+    it "it should raise if multiple vat_rates" do
+      quotation = create(:billing_machine_quotation)
+      line1   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+
+      expect{
+        line2   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 15)
+      }.to raise_error(RuntimeError)
+    end
+
+    it "it should raise when vat mode is multiple" do
+      ::Dorsale::BillingMachine.vat_mode = :multiple
+      quotation = build(:billing_machine_quotation)
+      expect{ quotation.vat_rate }.to raise_error(RuntimeError)
     end
   end
 
