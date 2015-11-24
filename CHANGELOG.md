@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+
+- Add per line vat rate mode
+- Change billing machine column names
+- New invoices and quotations views
+
 ## 2.1.15
 
 - Hide delete attachment button is not allowed by ability
