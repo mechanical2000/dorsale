@@ -14,6 +14,7 @@
         .well
           - if @id_cards.one?
             = f.hidden_field :id_card_id
+            = info document, :id_card
           - else
             = f.input :id_card_id, collection: @id_cards
 

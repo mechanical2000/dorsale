@@ -147,6 +147,7 @@ fr:
     balance               : "Total à payer"
     expires_at            : "Date d'expiration"
     commercial_discount   : "Remise commerciale"
+    id_card               : "Carte d'identité"
 
   errors:
     messages:
