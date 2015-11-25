@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- Small fixes on invoices and quotations
+
 ## 2.2.0
 
 - Add per line vat rate mode
