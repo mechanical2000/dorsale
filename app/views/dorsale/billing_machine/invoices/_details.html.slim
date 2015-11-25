@@ -20,15 +20,17 @@
           - if document.customer.present?
             = document.customer.name
             br
+            - if document.customer.address.present?
             = document.customer.address.street
-            br
-            = document.customer.address.street_bis
-            br
-            = document.customer.address.zip
-            = " "
-            = document.customer.address.city
-            br
-            = document.customer.address.country
+              - if document.customer.address.street_bis.present?
+                br
+                = document.customer.address.street_bis
+              br
+              = document.customer.address.zip
+              = " "
+              = document.customer.address.city
+              br
+              = document.customer.address.country
 
   table#lines-table
     thead
@@ -48,7 +50,8 @@
   .row
     .col-sm-6
       .well
-        = document.payment_term.try(:label)
+        = info document, :payment_term
+        br
 
         - if document_type == :invoice
           = info document, :due_date
