@@ -107,6 +107,7 @@ module Dorsale
       def edit
         # callback in BillingMachine::ApplicationController
         authorize! :update, @invoice
+        @invoice.lines.build
       end
 
       def update

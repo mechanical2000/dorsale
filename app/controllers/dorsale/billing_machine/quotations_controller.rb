@@ -108,6 +108,7 @@ module Dorsale
       def edit
         # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
+        @quotation.lines.build
       end
 
       def update
