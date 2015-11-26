@@ -69,6 +69,7 @@ en:
     pay        : "Pay"
     paid       : "Payd"
     continue   : "Continue"
+    rename     : "Rename"
 
   attributes: &attributes
     id                    : "Id"

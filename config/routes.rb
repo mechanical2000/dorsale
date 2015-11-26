@@ -10,7 +10,7 @@ Dorsale::Engine.routes.draw do
 
 
   namespace :alexandrie do
-    resources :attachments, only: [:create, :destroy]
+    resources :attachments, only: [:create, :edit, :update, :destroy]
   end
 
   namespace :flyboy do

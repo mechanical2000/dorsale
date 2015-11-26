@@ -3,6 +3,8 @@ fr:
     attachments:
       create_ok    : "Le fichier a été créé."
       create_error : "Impossible de créer le fichier."
+      update_ok    : "Le fichier a été modifié."
+      update_error : "Impossible de modifier le fichier."
       delete_ok    : "Le fichier a été supprimé."
       delete_error : "Impossible de supprimer le fichier."
       no_file_selected: "Pas de fichier selectionné"

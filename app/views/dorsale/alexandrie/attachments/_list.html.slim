@@ -1,8 +1,13 @@
-ul.list-group
+ul.list-group.attachments
   - ::Dorsale::Alexandrie::Attachment.where(attachable: attachable).each do |a|
-    li.list-group-item
-      = link_to a, a.file.url, download: a.file_identifier
+    li.list-group-item.attachment
+      = link_to a, a.file.url, download: a.download_filename
 
-      - if can?(:delete, a)
-        .pull-right
+      .pull-right
+        - if can?(:update, a)
+          = update_button dorsale.edit_alexandrie_attachment_path(a), action: :rename
+
+        = " "
+
+        - if can?(:delete, a)
           = delete_button dorsale.alexandrie_attachment_path(a)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120122613) do
+ActiveRecord::Schema.define(version: 20151126142254) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -26,11 +26,14 @@ ActiveRecord::Schema.define(version: 20151120122613) do
   end
 
   create_table "dorsale_alexandrie_attachments", force: :cascade do |t|
-    t.integer "attachable_id"
-    t.string  "attachable_type"
-    t.string  "file"
-    t.integer "sender_id"
-    t.string  "sender_type"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.string   "file"
+    t.integer  "sender_id"
+    t.string   "sender_type"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "dorsale_billing_machine_id_cards", force: :cascade do |t|
