@@ -21,7 +21,11 @@ module Dorsale
       def assign_default_values
         self.quantity   ||= 0
         self.unit_price ||= 0
-        self.vat_rate   ||= ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+        if ::Dorsale::BillingMachine.vat_mode == :single
+          self.vat_rate ||= quotation.try(:vat_rate)
+        else
+          self.vat_rate ||= ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+        end
       end
 
       def update_total
