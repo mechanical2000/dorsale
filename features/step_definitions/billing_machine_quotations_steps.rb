@@ -113,10 +113,6 @@ When(/^he copy the quotation$/) do
   find("[href$=copy]").click
 end
 
-When(/^he delete a document$/) do
-  all(".link_delete").first.click
-end
-
 When(/^he create an invoice from the quotation$/) do
   @invoices_count = Dorsale::BillingMachine::Invoice.count
   find("[href$='create_invoice']").click
@@ -124,11 +120,6 @@ end
 
 When(/^he fill the quotation expiry$/) do
   fill_in :quotation_expires_at, with: "21/12/2012"
-end
-
-When(/^he add a new document$/) do
-  attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf")
-  find("form[id*=attachment] [type=submit]").click
 end
 
 Then(/^the document is not in the quotation details$/) do

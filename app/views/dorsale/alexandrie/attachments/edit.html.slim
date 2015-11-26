@@ -1,0 +1,6 @@
+= form_for @attachment, as: :attachment do |f|
+  .input-group
+    = f.text_field :name, class: "form-control"
+    span.input-group-btn
+      button.btn.btn-success type="submit"
+        = t("actions.save")

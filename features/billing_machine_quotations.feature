@@ -144,6 +144,15 @@ Feature: Quotation Management
     Then a message signals the success of the quotation update
     And the document is in the quotation details
 
+  Scenario: Update a document
+    And an existing quotation
+    When the user goes to the quotation details
+    And he add a new document
+    Then a message signals the success of the quotation update
+    And the document is in the quotation details
+    When he update the document
+    Then the document is updated
+
   Scenario: Filter by customer
     Given a bunch of existing quotations
     When the user goes to the quotations page

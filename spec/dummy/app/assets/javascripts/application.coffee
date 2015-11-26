@@ -8,3 +8,4 @@
 //= require dorsale/all
 //= require dorsale/billing_machine/all
 //= require dorsale/customer_vault/all
+//= require dorsale/alexandrie/all
