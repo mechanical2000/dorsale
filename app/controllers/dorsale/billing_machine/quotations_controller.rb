@@ -108,7 +108,7 @@ module Dorsale
       def edit
         # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
-        @quotation.lines.build if @quotation.lines.empty?
+        @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
       end
 
       def update
