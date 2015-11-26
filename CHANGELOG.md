@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.3
+
+- Add attachments renaming
+- Fix invoices errors
+
 ## 2.2.2
 
 - Add default value to filters
