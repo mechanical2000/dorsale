@@ -57,8 +57,7 @@ module Dorsale
       def new
         # callback in BillingMachine::ApplicationController
         @quotation ||= ::Dorsale::BillingMachine::Quotation.new
-
-        @quotation.lines.build
+        @quotation.lines.build if @quotation.lines.empty?
 
         @quotation.id_card = @id_cards.first if @id_cards.one?
 
@@ -108,6 +107,11 @@ module Dorsale
       def edit
         # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
+        if ::Dorsale::BillingMachine.vat_mode == :single
+          @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
+        else
+          @quotation.lines.build if @quotation.lines.empty?
+        end
       end
 
       def update
