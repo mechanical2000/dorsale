@@ -20,13 +20,9 @@ module Dorsale
       before_validation :update_total
 
       def assign_default_values
-        self.quantity   ||= 0
-        self.unit_price ||= 0
-        if ::Dorsale::BillingMachine.vat_mode == :single
-          self.vat_rate ||= invoice.try(:vat_rate)
-        else
+          self.quantity   ||= 0
+          self.unit_price ||= 0
           self.vat_rate ||= ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
-        end
       end
 
       def update_total
