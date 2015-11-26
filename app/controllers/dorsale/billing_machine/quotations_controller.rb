@@ -57,8 +57,7 @@ module Dorsale
       def new
         # callback in BillingMachine::ApplicationController
         @quotation ||= ::Dorsale::BillingMachine::Quotation.new
-
-        @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
+        @quotation.lines.build if @quotation.lines.empty?
 
         @quotation.id_card = @id_cards.first if @id_cards.one?
 
