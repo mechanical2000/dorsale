@@ -108,7 +108,11 @@ module Dorsale
       def edit
         # callback in BillingMachine::ApplicationController
         authorize! :update, @quotation
-        @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
+        if ::Dorsale::BillingMachine.vat_mode == :single
+          @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
+        else
+          @quotation.lines.build if @quotation.lines.empty?
+        end
       end
 
       def update
