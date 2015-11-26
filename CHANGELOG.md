@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.2
+
+- Add default value to filters
+- Add ability do task comment view
+
 ## 2.2.1
 
 - Small fixes on invoices and quotations
