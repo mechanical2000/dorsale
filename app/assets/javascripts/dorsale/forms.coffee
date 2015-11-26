@@ -6,9 +6,11 @@ $(document).on "ready page:load", ->
       this.selected = true
 
     form.find("input").map ->
-      this.value = "" unless this.type.match(/submit|hidden|button/)
+      return if this.type.match(/submit|hidden|button/)
+      this.value = $(this).data("default-value") || ""
 
-    form.find("textarea").val("")
+    form.find("textarea").map ->
+      this.value = $(this).data("default-value") || ""
 
     form.find("select").map ->
       this.selectize.clear() if this.selectize
