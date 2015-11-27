@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4
+
+- Attachments : Do not validate presence of sender to allow all attachments without sender to be updated
+
 ## 2.2.3
 
 - Add attachments renaming
