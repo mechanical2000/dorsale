@@ -7,7 +7,6 @@ module Dorsale
       belongs_to :sender,     polymorphic: true
 
       validates :attachable, presence: true
-      validates :sender,     presence: true
       validates :file,       presence: true
 
       mount_uploader :file, ::Dorsale::Alexandrie::FileUploader
