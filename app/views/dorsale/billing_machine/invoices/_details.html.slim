@@ -8,6 +8,10 @@
       = " n° "
       = document.tracking_id
 
+    - if document_type == :invoice
+      .label class=document.payment_status
+        = document.t("payment_status.#{document.payment_status}")
+
   .row
     .col-md-6
       .well
@@ -45,7 +49,7 @@
 
     tbody
       - document.lines.each do |line|
-        = render "line_details", line: line
+        = render "dorsale/billing_machine/invoices/line_details", line: line
 
   .row
     .col-sm-6
