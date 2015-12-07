@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.5
+
+- Fix invoices colors
+- Fix invoices totals
+- Fix partials names
+
 ## 2.2.4
 
 - Attachments : Do not validate presence of sender to allow all attachments without sender to be updated
