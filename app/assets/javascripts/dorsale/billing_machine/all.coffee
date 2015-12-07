@@ -19,6 +19,7 @@ $(document).on "ready page:load cocoon:after-insert", ->
 
     # Update line totals
     $("#billing_machine-form .line").map ->
+      return if parseInt($(this).find("input[name*=destroy]").val()) == 1
       quantity   = str2num $(this).find(".line-quantity input").val()
       unit_price = str2num $(this).find(".line-unit_price input").val()
       line_total = unit_price * quantity
@@ -37,6 +38,8 @@ $(document).on "ready page:load cocoon:after-insert", ->
     # VAT amount based on each line total with discount rate
     vat_amount = 0.0
     $("#billing_machine-form .line").map ->
+      return if parseInt($(this).find("input[name*=destroy]").val()) == 1
+
       # Per line VAT rate
       if $(this).find(".line-vat_rate input").length > 0
         vat_rate = str2num $(this).find(".line-vat_rate input").val()
@@ -82,4 +85,5 @@ $(document).on "ready page:load cocoon:after-insert", ->
   $("#billing_machine-form a.delete").click ->
     $(this).parents("td").find("input").val(1)
     $(this).parents("tr").hide()
+    $("#billing_machine-form input").keyup() # Update totals
     return false
