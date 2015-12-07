@@ -10,4 +10,4 @@
       - if can?(:pay, @invoice)
         = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay, method: :patch
 
-  = render "details", document: @invoice
+  = render "dorsale/billing_machine/invoices/details", document: @invoice

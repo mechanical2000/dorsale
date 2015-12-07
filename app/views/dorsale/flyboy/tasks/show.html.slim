@@ -6,7 +6,7 @@
 
   - content_for :main do
     .task-comments
-      = render partial: "dorsale/flyboy/task_comments/list", locals: {task: @task}
+      = render "dorsale/flyboy/task_comments/list", task: @task
 
     - if @task.description.present?
       .well = text2html @task.description
