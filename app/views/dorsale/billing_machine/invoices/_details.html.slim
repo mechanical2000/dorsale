@@ -8,6 +8,10 @@
       = " n° "
       = document.tracking_id
 
+    - if document_type == :invoice
+      .label class=document.payment_status
+        = document.t("payment_status.#{document.payment_status}")
+
   .row
     .col-md-6
       .well

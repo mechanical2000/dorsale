@@ -5,14 +5,32 @@
     .btn
       margin: 0 0 0.5em 0.5em
 
-  .paid
-    background: $state-success-bg !important
+  tr.paid td
+    background: $state-success-bg
 
-  .late
-    background: $state-warning-bg !important
+  tr.late td
+    background: $state-warning-bg
 
-  .on_alert
-    background: $state-danger-bg !important
+  tr.on_alert td
+    background: $state-danger-bg
+
+  .label.pending
+    @extend .label-info
+
+  .label.paid
+    @extend .label-success
+
+  .label.late
+    @extend .label-warning
+
+  .label.on_alert
+    @extend .label-danger
+
+  .label
+    font-size: 50%
+    vertical-align: top
+    display: inline-block
+    margin: 0.5em 0.75em
 
 
 #billing_machine-form,

@@ -1,13 +1,12 @@
 .billing_machine
-  .invoice-details class="#{@invoice.payment_status}"
-    .actions
-      - if can?(:copy, @invoice)
-        = copy_button dorsale.copy_billing_machine_invoice_path(@invoice)
-      - if can?(:update, @invoice)
-        = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
-      - if can?(:download, @invoice)
-        = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
-      - if can?(:pay, @invoice)
-        = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay, method: :patch
+  .actions
+    - if can?(:copy, @invoice)
+      = copy_button dorsale.copy_billing_machine_invoice_path(@invoice)
+    - if can?(:update, @invoice)
+      = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
+    - if can?(:download, @invoice)
+      = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
+    - if can?(:pay, @invoice)
+      = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :pay, method: :patch
 
   = render "dorsale/billing_machine/invoices/details", document: @invoice

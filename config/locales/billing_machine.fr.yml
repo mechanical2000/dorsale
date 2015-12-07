@@ -10,6 +10,12 @@ fr:
       dorsale/billing_machine/payment_term: "conditions de paiement"
 
     attributes:
+      dorsale/billing_machine/invoice/payment_status:
+        pending: "En attente"
+        paid: "Payée"
+        on_alert: "En alerte"
+        late: "En retard"
+
       dorsale/billing_machine/quotation/state:
         pending: "En attente"
         accepted: "Accepté"
