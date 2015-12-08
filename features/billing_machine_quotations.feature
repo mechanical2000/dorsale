@@ -46,7 +46,7 @@ Feature: Quotation Management
     Given an existing quotation
     When the user goes to the quotation details
     And he create an invoice from the quotation
-    Then he is on the created invoice edit page
+    Then an invoice is created from quotation
 
   Scenario: New quotation for existing customer
     And an existing customer

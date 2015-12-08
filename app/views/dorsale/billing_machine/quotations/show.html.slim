@@ -7,7 +7,7 @@
     - if can?(:copy, @quotation)
       = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
     - if can?(:create, @quotation)
-      = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), method: :post, action: :create_invoice, confirm: true, icon: :magic
+      = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 
   = render "dorsale/billing_machine/invoices/details", document: @quotation
 

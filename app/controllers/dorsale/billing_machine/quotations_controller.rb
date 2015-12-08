@@ -152,10 +152,9 @@ module Dorsale
         authorize! :read, @quotation
         authorize! :create, ::Dorsale::BillingMachine::Invoice
 
-        new_invoice = @quotation.create_invoice!
-        flash[:notice] = t("messages.quotations.create_invoice_ok")
+        @invoice = @quotation.to_new_invoice
 
-        redirect_to dorsale.edit_billing_machine_invoice_path(new_invoice)
+        render "dorsale/billing_machine/invoices/new"
       end
 
       private

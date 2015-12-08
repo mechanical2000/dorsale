@@ -116,6 +116,7 @@ end
 When(/^he create an invoice from the quotation$/) do
   @invoices_count = Dorsale::BillingMachine::Invoice.count
   find("[href$='create_invoice']").click
+  find("[type=submit]").click
 end
 
 When(/^he fill the quotation expiry$/) do
@@ -195,10 +196,10 @@ Then(/^he is on the created quotation edit page$/) do
   expect(current_path).to eq dorsale.edit_billing_machine_quotation_path(@quotation)
 end
 
-Then(/^he is on the created invoice edit page$/) do
+Then(/^an invoice is created from quotation$/) do
   expect(Dorsale::BillingMachine::Invoice.count).to eq(@invoices_count+1)
   @invoice = Dorsale::BillingMachine::Invoice.reorder(:id).last
-  expect(current_path).to eq dorsale.edit_billing_machine_invoice_path(@invoice)
+  expect(@invoice.label).to eq @quotation.label
 end
 
 Then(/^the document is in the quotation details$/) do

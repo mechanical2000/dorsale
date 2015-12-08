@@ -155,7 +155,7 @@ module Dorsale
         new_quotation
       end
 
-      def create_invoice!
+      def to_new_invoice
         new_invoice = Dorsale::BillingMachine::Invoice.new
 
         self.attributes.each do |k, v|
@@ -180,8 +180,6 @@ module Dorsale
         end
 
         new_invoice.date = Date.today
-
-        new_invoice.save!
 
         new_invoice
       end
