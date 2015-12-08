@@ -212,7 +212,7 @@ describe ::Dorsale::BillingMachine::Quotation do
       i = q.to_new_invoice
 
       expect(i).to be_a Dorsale::BillingMachine::Invoice
-      expect(i).to be_persisted
+      expect(i).to_not be_persisted
       expect(i.label).to eq "ABC"
       expect(i.lines.count).to eq 1
       expect(i.lines.first.label).to eq "DEF"
