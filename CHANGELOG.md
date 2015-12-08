@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6
+
+- Quotation to invoice : edit before save
+
 ## 2.2.5
 
 - Fix invoices colors
