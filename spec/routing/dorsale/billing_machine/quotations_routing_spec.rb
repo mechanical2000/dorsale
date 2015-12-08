@@ -45,7 +45,7 @@ describe ::Dorsale::BillingMachine::QuotationsController do
     end
 
     it "#create_invoice" do
-      expect(post "/billing_machine/quotations/1/create_invoice").to \
+      expect(get "/billing_machine/quotations/1/create_invoice").to \
       route_to("dorsale/billing_machine/quotations#create_invoice", id: "1")
     end
 

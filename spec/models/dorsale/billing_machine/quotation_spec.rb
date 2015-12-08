@@ -204,29 +204,29 @@ describe ::Dorsale::BillingMachine::Quotation do
     end
   end
 
-  describe "#create_invoice!" do
+  describe "#to_new_invoice" do
     it "should convert quotation to invoice" do
       q  = create(:billing_machine_quotation, label: "ABC")
       ql = create(:billing_machine_quotation_line, quotation: q, label: "DEF")
 
-      i = q.create_invoice!.reload
+      i = q.to_new_invoice
 
       expect(i).to be_a Dorsale::BillingMachine::Invoice
-      expect(i).to be_persisted
+      expect(i).to_not be_persisted
       expect(i.label).to eq "ABC"
-      expect(i.lines.count).to eq 1
+      expect(i.lines.length).to eq 1
       expect(i.lines.first.label).to eq "DEF"
     end
 
     it "should reset date" do
       q = create(:billing_machine_quotation, date: 3.days.ago)
       expect(q.date).to_not eq Date.today
-      expect(q.create_invoice!.date).to eq Date.today
+      expect(q.to_new_invoice.date).to eq Date.today
     end
 
     it "should reset unique_index, tracking_id, created_at, updated_at" do
       q = create(:billing_machine_quotation, unique_index: 56544)
-      i = q.create_invoice!.reload
+      i = q.to_new_invoice
       expect(i.unique_index).to_not eq q.unique_index
       expect(i.tracking_id).to_not eq q.tracking_id
       expect(i.created_at).to_not eq q.created_at
