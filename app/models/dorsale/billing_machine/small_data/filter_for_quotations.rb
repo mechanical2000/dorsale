@@ -3,8 +3,9 @@ module Dorsale
     module SmallData
       class FilterForQuotations < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          'customer_guid' => FilterStrategyByCustomer.new('quotations'),
-          'time_period'   => FilterStrategyByTimePeriod.new('quotations'),
+          "customer_guid"   => FilterStrategyByCustomer.new("quotations"),
+          "time_period"     => FilterStrategyByTimePeriod.new("quotations"),
+          "quotation_state" => FilterStrategyByState.new("quotations"),
         }
 
         def strategy key
@@ -12,8 +13,21 @@ module Dorsale
         end
 
         def target
-          'quotations'
+          "quotations"
         end
+
+        def customer_guid
+          get("customer_guid")
+        end
+
+        def time_period
+          get("time_period")
+        end
+
+        def quotation_state
+          get("quotation_state")
+        end
+
       end
     end
   end

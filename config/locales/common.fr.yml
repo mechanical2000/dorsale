@@ -155,5 +155,15 @@ fr:
     messages:
       extension_white_list_error : "Ce type de fichier n'est pas prit en charge"
 
+  filters:
+    all_customers: "Tous les clients"
+
+  time_periods:
+    all_time: "Depuis toujours"
+    today: "Aujourd'hui"
+    week: "Cette semaine"
+    month: "Ce mois"
+    year: "Cette année"
+
   labels:
     <<: *attributes

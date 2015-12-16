@@ -143,5 +143,16 @@ en:
     messages:
       extension_white_list_error : "This file type is not supported"
 
+  filters:
+    all_customers: "All customers"
+
+  time_periods:
+    all_time: "All time"
+    today: "Today"
+    week: "This week"
+    month: "This month"
+    year: "This year"
+
+
   labels:
     <<: *attributes

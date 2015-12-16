@@ -23,5 +23,19 @@ module Dorsale
         icon(icon) + " " + text
       end
     end
+
+    def filter_buttons
+      filter_reset_button + filter_submit_button
+    end
+
+    def dorsale_time_periods_for_select
+      {
+        t("time_periods.all_time") => "",
+        t("time_periods.today")    => "today",
+        t("time_periods.week")     => "week" ,
+        t("time_periods.month")    => "month",
+      }
+    end
+
   end
 end

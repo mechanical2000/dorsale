@@ -11,12 +11,15 @@ en:
 
     attributes:
       dorsale/billing_machine/invoice/payment_status:
+        all: "All statuses"
         pending: "Pending"
         paid: "Paid"
         on_alert: "On alert"
         late: "Late"
+        unpaid: "Unpaid"
 
       dorsale/billing_machine/quotation/state:
+        all: "All states"
         pending: "Pending"
         accepted: "Accepted"
         refused: "Refused"
