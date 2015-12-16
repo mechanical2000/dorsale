@@ -1,6 +1,6 @@
 fr:
   actions:
-    create_invoice: "Créer facture"
+    create_invoice: "Facturer"
 
   activerecord:
     models:
