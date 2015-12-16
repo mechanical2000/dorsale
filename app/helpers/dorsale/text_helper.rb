@@ -70,6 +70,8 @@ module Dorsale
 
       value = text
       value = object.public_send(attribute)     if value.nil?
+      value = t("yes")                          if value === true
+      value = t("no")                           if value === false
       value = object.t("#{attribute}.#{value}") if nested
       value = send(helper, value)               if helper
       value = number(value)                     if value.is_a?(Numeric)

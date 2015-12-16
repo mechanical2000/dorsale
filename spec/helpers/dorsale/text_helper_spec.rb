@@ -52,6 +52,7 @@ describe Dorsale::TextHelper, type: :helper do
 
       def l.date; Date.parse("2015-01-25"); end
       def l.time; Time.parse("2015-01-25  17:09:23"); end
+      def l.paid?; true end
       l
     }
 
@@ -85,6 +86,10 @@ describe Dorsale::TextHelper, type: :helper do
 
     it "should work with time" do
       expect(info quotation_line, :time).to include "25/01/2015 à 17:09"
+    end
+
+    it "should work with booleans" do
+      expect(info quotation_line, :paid?).to include "Oui"
     end
 
     it "should accept helper" do
