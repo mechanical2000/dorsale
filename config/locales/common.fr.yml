@@ -134,6 +134,7 @@ fr:
     message               : "Message"
     skype                 : "Skype"
     is_active             : "Actif ?"
+    short_name            : "Initiales"
 
     # BillingMachine
     unit                  : "Unité"

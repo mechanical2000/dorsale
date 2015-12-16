@@ -2,13 +2,14 @@
   = f.input :name
   = f.input :tag_list, collection: @tags, input_html: {multiple: true}
   = f.input :email
-  = f.input :www
   = f.input :phone
+  = f.input :www
   = f.input :fax
   = f.input :capital
   = f.input :immatriculation_number_1
   = f.input :immatriculation_number_2
   = f.input :legal_form
+  = f.input :short_name
 
   / Temporaire - A refactoriser
   = f.simple_fields_for :address do |af|
