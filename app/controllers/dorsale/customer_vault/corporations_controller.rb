@@ -79,6 +79,7 @@ module Dorsale
           :capital,
           :immatriculation_number_1,
           :immatriculation_number_2,
+          :european_union_vat_number,
           :legal_form,
           :tag_list => [],
           :address_attributes => [

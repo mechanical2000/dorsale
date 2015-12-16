@@ -59,6 +59,7 @@ en:
         capital: "Capital"
         immatriculation_number_1: "Immatriculation number 1"
         immatriculation_number_2: "Immatriculation number 2"
+        european_union_vat_number: "European union VAT number"
         legal_form: "Legal form"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes

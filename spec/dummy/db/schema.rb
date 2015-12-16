@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216104428) do
+ActiveRecord::Schema.define(version: 20151216124705) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -178,8 +178,9 @@ ActiveRecord::Schema.define(version: 20151216104428) do
     t.integer  "capital"
     t.string   "immatriculation_number_1"
     t.string   "immatriculation_number_2"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "european_union_vat_number"
   end
 
   create_table "dorsale_customer_vault_individuals", force: :cascade do |t|

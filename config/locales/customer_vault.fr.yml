@@ -59,6 +59,7 @@ fr:
         capital: "Capital"
         immatriculation_number_1: "SIREN"
         immatriculation_number_2: "RCS"
+        european_union_vat_number: "Numéro TVA européenne"
         legal_form: "Forme juridique"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
