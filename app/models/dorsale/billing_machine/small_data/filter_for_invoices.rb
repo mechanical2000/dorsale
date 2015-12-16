@@ -3,9 +3,9 @@ module Dorsale
     module SmallData
       class FilterForInvoices < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          "customer_guid"  => FilterStrategyByCustomer.new("invoices"),
-          "time_period"    => FilterStrategyByTimePeriod.new("invoices"),
-          "payment_status" => FilterStrategyByPaymentStatus.new("invoices"),
+          "customer_guid"     => FilterStrategyByCustomer.new("invoices"),
+          "bm_time_period"    => FilterStrategyByTimePeriod.new("invoices"),
+          "bm_payment_status" => FilterStrategyByPaymentStatus.new("invoices"),
         }
 
         def strategy key
@@ -20,11 +20,11 @@ module Dorsale
           get("customer_guid")
         end
 
-        def time_period
+        def bm_time_period
           get("time_period")
         end
 
-        def payment_status
+        def bm_payment_status
           get("payment_status")
         end
 

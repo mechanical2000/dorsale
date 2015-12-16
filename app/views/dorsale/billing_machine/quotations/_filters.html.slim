@@ -4,12 +4,12 @@
     :include_blank => t("filters.all_customers"),
   )
 
-  = f.input(:time_period,
+  = f.input(:bm_time_period,
     :collection    => dorsale_time_periods_for_select,
     :include_blank => false,
   )
 
-  = f.input(:quotation_state,
+  = f.input(:bm_quotation_state,
     :collection    => billing_machine_quotation_states_for_filter_select,
     :include_blank => false,
   )
