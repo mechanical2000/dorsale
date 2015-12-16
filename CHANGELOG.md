@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.8
+
+- Rebuild gem
+
 ## 2.2.7
 
 - Send invoices by email
