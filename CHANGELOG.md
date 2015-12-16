@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.7
+
+- Send invoices by email
+- Add colors to quotations
+- Add filter by status to quotations
+- Small fixes
+
 ## 2.2.6
 
 - Quotation to invoice : edit before save
