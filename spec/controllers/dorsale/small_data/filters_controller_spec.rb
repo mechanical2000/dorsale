@@ -34,5 +34,22 @@ module Dorsale
         expect(response.cookies["filters"]).to eq({key: "value", other_key: "value2"}.to_json)
       end
     end
+
+    describe "back_url" do
+      it "should reset page" do
+        post :create, filters: {}, back_url: "/dorsale/flyboy/tasks"
+        expect(response).to redirect_to "/dorsale/flyboy/tasks"
+
+        post :create, filters: {}, back_url: "/dorsale/flyboy/tasks?&sort=term&page=3"
+        expect(response).to redirect_to "/dorsale/flyboy/tasks?&sort=term"
+
+        post :create, filters: {}, back_url: "/dorsale/flyboy/tasks?&sort=term&page=3&a=b"
+        expect(response).to redirect_to "/dorsale/flyboy/tasks?&sort=term&a=b"
+
+        post :create, filters: {}, back_url: "/dorsale/flyboy/tasks?page=3&a=b"
+        expect(response).to redirect_to "/dorsale/flyboy/tasks?a=b"
+      end
+    end
+
   end
 end

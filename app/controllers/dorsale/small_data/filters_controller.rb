@@ -20,13 +20,25 @@ module Dorsale
           :path     => "/",
         }
 
+        redirect_to back_url
+      end
+
+      def back_url
         urls = [
           params[:back_url],
           request.referer,
           (main_app.root_path rescue nil)
         ]
 
-        redirect_to urls.select(&:present?).first
+        url = urls.select(&:present?).first
+
+        # Delete page page
+        base, query_string = url.split("?")
+        query_string = query_string.to_s.split("&").delete_if { |p| p.include?("page=") }.join("&")
+        query_string = "?#{query_string}" if query_string.present?
+        url = base + query_string
+
+        url
       end
 
     end

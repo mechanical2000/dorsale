@@ -8,5 +8,4 @@
         option value="open" selected=(@filters.get("status") == "open") = t("messages.folders.status.open")
         option value="closed" selected=(@filters.get("status") == "closed") = t("messages.folders.status.closed")
 
-    = filter_reset_button
-    = filter_submit_button
+    = filter_buttons

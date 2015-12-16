@@ -3,6 +3,7 @@ module Dorsale
     def filter_submit_button(options = {})
       options[:class] ||= "btn submit filter-submit"
       options[:type]  ||= "submit"
+      options[:value] ||= "submit"
 
       text = options.delete(:text) || t("actions.filter")
       icon = options.delete(:icon) || "filter"
@@ -15,6 +16,7 @@ module Dorsale
     def filter_reset_button(options = {})
       options[:class] ||= "btn reset filter-reset"
       options[:type]  ||= "submit"
+      options[:value] ||= "reset"
 
       text = options.delete(:text) || t("actions.reset")
       icon = options.delete(:icon) || "rotate-left"
