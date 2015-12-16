@@ -165,6 +165,17 @@ Feature: Quotation Management
     When he filters by date on today
     Then only the quotations of today do appear
 
+  Scenario: Filter by state
+    Given an existing "billing_machine_quotation" having "state" set to "accepted"
+    Given an existing "billing_machine_quotation" having "state" set to "canceled"
+    When the user goes to the quotations page
+    When he filters by "accepted" state
+    Then only the "accepted" quotations appear
+    When he filters by "canceled" state
+    Then only the "canceled" quotations appear
+    When he filters by "not_canceled" state
+    Then only the "accepted" quotations appear
+
   Scenario: Quotations data
     Given existing "100" quotations with "123" amount
     When the user goes to the quotations page

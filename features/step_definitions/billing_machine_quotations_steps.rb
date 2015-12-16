@@ -30,14 +30,42 @@ Given(/^a bunch of existing quotations$/) do
   i2 = create(:customer_vault_individual, first_name: 'Ah')
   i3 = create(:customer_vault_individual, first_name: 'Eh')
 
-  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c2, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c3, date: Date.today)
-  create(:billing_machine_quotation, id_card: @id_card, customer: c1, date: Date.today - 2.days)
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => c1,
+    :date     => Date.today,
+  )
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => c2,
+    :date     => Date.today,
+  )
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => c3,
+    :date     => Date.today,
+  )
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => c1,
+    :date     => Date.today - 2.days,
+  )
 
-  create(:billing_machine_quotation, id_card: @id_card, customer: i1, date: Date.today - 3.days)
-  create(:billing_machine_quotation, id_card: @id_card, customer: i2, date: Date.today - 3.days)
-  create(:billing_machine_quotation, id_card: @id_card, customer: i3, date: Date.today - 3.days)
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => i1,
+    :date     => Date.today - 3.days,
+  )
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => i2,
+    :date     => Date.today - 3.days,
+  )
+  create(:billing_machine_quotation,
+    :id_card  => @id_card,
+    :customer => i3,
+    :date     => Date.today - 3.days,
+  )
 end
 
 Given(/^existing "(.*?)" quotations with "(.*?)" amount$/) do |n, amount|
@@ -205,3 +233,16 @@ end
 Then(/^the document is in the quotation details$/) do
   expect(page).to have_content "pdf.pdf"
 end
+
+When(/^he filters by "(.*?)" state$/) do |state|
+  select find("option[value=#{state}]").text
+  find(".filter-submit").click
+end
+
+Then(/^only the "(.*?)" quotations appear$/) do |state|
+  state_i18n = find("option[value=#{state}]").text
+
+  expect(page).to have_selector("tr.quotation", count: 1)
+  expect(find("tr.quotation")).to have_content(state_i18n)
+end
+

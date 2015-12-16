@@ -175,7 +175,7 @@ end
 
 When(/^he filters by status on paid$/) do
   within('.filters') do
-    select('Payées')
+    select('Payée')
     find(".filter-submit").click
   end
 end

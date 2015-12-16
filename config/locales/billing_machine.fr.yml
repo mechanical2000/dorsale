@@ -24,6 +24,7 @@ fr:
         accepted: "Accepté"
         refused: "Refusé"
         canceled: "Annulé"
+        not_canceled: "Non annulé"
 
       dorsale/billing_machine/id_card:
         id_card_name: "nom de la carte"
