@@ -23,7 +23,7 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
 
       it 'should filter by status closed' do
         Dorsale::Flyboy::SmallData::FilterForFolders.new(request.cookies)
-          .store(status: "closed")
+          .store(fb_status: "closed")
 
         get :index
         expect(assigns(:folders)).to eq [@folder2]
@@ -31,7 +31,7 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
 
       it 'should filter by status open' do
         Dorsale::Flyboy::SmallData::FilterForFolders.new(request.cookies)
-          .store(status: "open")
+          .store(fb_status: "open")
 
         get :index
         expect(assigns(:folders)).to eq [@folder1]
