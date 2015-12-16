@@ -27,6 +27,14 @@ module Dorsale
         }
       end
 
+      def quotation_state_classes(quotation)
+        if quotation.state == "pending" && quotation.date < 1.month.ago
+          return "pending late"
+        else
+          return quotation.state
+        end
+      end
+
     end
   end
 end
