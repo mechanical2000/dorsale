@@ -1,30 +1,50 @@
 .billing_machine
-  .actions
+  > .actions
     text-align: right
 
     .btn
       margin: 0 0 0.5em 0.5em
 
-  tr.paid td
-    background: $state-success-bg
+  tr.invoice.paid td,
+  tr.quotation.accepted td,
+    background: darken($state-success-bg, 5)
 
-  tr.late td
-    background: $state-warning-bg
+  tr.quotation.pending td,
+    background: white
 
-  tr.on_alert td
-    background: $state-danger-bg
+  tr.invoice.late td,
+  tr.quotation.pending.late td,
+    background: darken($state-warning-bg, 5)
 
-  .label.pending
+  tr.invoice.on_alert td,
+  tr.quotation.refused td,
+    background: darken($state-danger-bg, 5)
+
+  tr.quotation.canceled td,
+    background: #DDDDDD
+
+
+
+  .label.invoice.pending,
+  .label.quotation.pending
     @extend .label-info
 
-  .label.paid
+  .label.invoice.paid,
+  .label.quotation.accepted,
     @extend .label-success
 
-  .label.late
+  .label.invoice.late,
+  .label.quotation.late,
     @extend .label-warning
 
-  .label.on_alert
+  .label.invoice.on_alert,
+  .label.quotation.refused,
     @extend .label-danger
+
+
+  .label.quotation.canceled,
+    @extend .label-default
+
 
   .label
     font-size: 50%

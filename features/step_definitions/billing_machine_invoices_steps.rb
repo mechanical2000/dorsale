@@ -175,7 +175,7 @@ end
 
 When(/^he filters by status on paid$/) do
   within('.filters') do
-    select('Payées')
+    select('Payée')
     find(".filter-submit").click
   end
 end
@@ -340,4 +340,27 @@ end
 
 Then(/^data total amount is "(.*?)"$/) do |text|
   expect(find(".context")).to have_content text
+end
+
+
+When(/^he send invoice to customer by email$/) do
+  ActionMailer::Base.deliveries.clear
+
+  @invoice.customer = create(:customer_vault_corporation, email: "aaa@example.org")
+  @invoice.save!
+
+  find("[href$=email]").click
+  fill_in :email_subject, with: "abc"
+  fill_in :email_body, with: "def"
+  find("[type=submit]").click
+end
+
+Then(/^an invoice is sent to customer$/) do
+  expect(ActionMailer::Base.deliveries.count).to eq 1
+  email = ActionMailer::Base.deliveries.first
+
+  expect(email.to).to include "aaa@example.org"
+  expect(email.subject).to eq "abc"
+  expect(email.parts.first.body).to eq "def"
+  expect(email.attachments.count).to eq 1
 end

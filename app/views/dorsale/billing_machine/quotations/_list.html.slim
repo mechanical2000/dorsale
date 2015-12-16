@@ -24,7 +24,7 @@ table.default.quotations
 
   tbody
     - quotations.each do |quotation|
-      tr.quotation
+      tr class="quotation #{quotation_state_classes(quotation)}"
         td.hidden-sm.hidden-xs.date
           = date(quotation.date)
 

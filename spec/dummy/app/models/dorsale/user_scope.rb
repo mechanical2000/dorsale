@@ -8,7 +8,7 @@ class Dorsale::UserScope
   # Common
 
   def colleagues(context = nil)
-    [user]
+    User.all
   end
 
   def comments

@@ -4,23 +4,27 @@ en:
 
   activerecord:
     models:
-      dorsale/billing_machine/invoice: "invoice"
-      dorsale/billing_machine/quotation: "quotation"
-      dorsale/billing_machine/id_card: "id card"
-      dorsale/billing_machine/payment_term: "payment term"
+      dorsale/billing_machine/invoice: "Invoice"
+      dorsale/billing_machine/quotation: "Quotation"
+      dorsale/billing_machine/id_card: "Id card"
+      dorsale/billing_machine/payment_term: "Payment term"
 
     attributes:
       dorsale/billing_machine/invoice/payment_status:
+        all: "All statuses"
         pending: "Pending"
         paid: "Paid"
         on_alert: "On alert"
         late: "Late"
+        unpaid: "Unpaid"
 
       dorsale/billing_machine/quotation/state:
+        all: "All states"
         pending: "Pending"
         accepted: "Accepted"
         refused: "Refused"
         canceled: "Canceled"
+        not_canceled: "Not canceled"
 
       dorsale/billing_machine/id_card:
         id_card_name: "id card name"
@@ -79,6 +83,10 @@ en:
     tva: "TVA "
     expires_at: "Expires at : "
 
+  emails:
+    invoices:
+      send_invoice_to_customer: ""
+
   messages:
     invoices:
       create_ok : "Invoice successfully created."
@@ -87,6 +95,9 @@ en:
       update_error : "Impossible to update this invoice."
       pay_ok    : "This invoice has been marked payed."
       pay_error : "Impossible to mark this invoice as payed."
+      email_ok : "Invoice successfully sent to customer."
+      email_error : "Unable to send invoice to customer, please verify customer email."
+
     quotations:
       create_ok : "Quotation successfully created."
       update_ok : "Quotation successfully created."

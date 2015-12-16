@@ -37,6 +37,7 @@ Dorsale::Engine.routes.draw do
       member do
         get :copy
         patch :pay
+        match :email, via: [:get, :post]
       end
     end
 

@@ -3,14 +3,18 @@
 
 #billing_machine-show
   h1
-    = document.class.t.capitalize
+    = document.class.t
     - if document.tracking_id.present?
       = " n° "
       = document.tracking_id
 
     - if document_type == :invoice
-      .label class=document.payment_status
+      .label class="invoice #{document.payment_status}"
         = document.t("payment_status.#{document.payment_status}")
+
+    - if document_type == :quotation
+      .label class="quotation #{quotation_state_classes(document)}"
+        = document.t("state.#{document.state}")
 
   .row
     .col-md-6
@@ -59,11 +63,8 @@
 
         - if document_type == :invoice
           = info document, :due_date
-          = info document, :paid
 
         - if document_type == :quotation
-          = info document, :state
-          br
 
           = info document, :expires_at
           br

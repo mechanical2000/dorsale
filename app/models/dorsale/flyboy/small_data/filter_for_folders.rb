@@ -3,7 +3,7 @@ module Dorsale
     module SmallData
       class FilterForFolders < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          'status' => FilterStrategyByStatus.new("folders")
+          "fb_status" => FilterStrategyByStatus.new("folders")
         }
 
         def strategy key

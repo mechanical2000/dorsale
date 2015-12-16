@@ -2,10 +2,13 @@
   .actions
     - if can?(:update, @quotation)
       = update_button dorsale.edit_billing_machine_quotation_path(@quotation)
+
     - if can?(:download, @quotation)
       = download_button dorsale.billing_machine_quotation_path(@quotation, format: :pdf)
+
     - if can?(:copy, @quotation)
       = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
+
     - if can?(:create, @quotation)
       = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 

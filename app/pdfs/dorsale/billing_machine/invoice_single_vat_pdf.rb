@@ -177,15 +177,21 @@ module Dorsale
           if @main_document.tracking_id.present?
             table_customer << [I18n.t("pdfs.tracking_number") , @main_document.tracking_id.to_s]
           end
+
           if @main_document.date.present?
             table_customer << [I18n.t("pdfs.date") , date(@main_document.date)]
           end
+
           if @main_document.customer.present?
             name = "#{@main_document.customer.name}\n" if @main_document.customer.name.present?
             street = "#{@main_document.customer.address.street}\n" if @main_document.customer.address.street?
             street_bis = "#{@main_document.customer.address.street_bis}\n" if @main_document.customer.address.street_bis.present?
             zip_country = "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}" if @main_document.customer.address.city.present?
-            table_customer << [I18n.t("pdfs.customer") , "#{name} #{street} #{street_bis} #{zip_country}" ] if @main_document.customer.name.present?
+
+            european_union_vat_number = @main_document.customer.try(:european_union_vat_number)
+            european_union_vat_number = "#{@main_document.customer.t :european_union_vat_number} :\n#{european_union_vat_number}\n" if european_union_vat_number
+
+            table_customer << [I18n.t("pdfs.customer") , "#{name} #{street} #{street_bis} #{zip_country} #{european_union_vat_number}" ] if @main_document.customer.name.present?
           end
 
           table table_customer,

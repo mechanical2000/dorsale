@@ -31,3 +31,7 @@ end
 Given(/^an inactive user$/) do
   @user = create(:user, is_active: false)
 end
+
+Given(/^an existing "(.*?)" having "(.*?)" set to "(.*?)"$/) do |factory, key, value|
+  create(factory, key => value)
+end
