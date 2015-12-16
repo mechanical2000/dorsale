@@ -7,6 +7,7 @@ module Dorsale
         :update,
         :copy,
         :pay,
+        :email,
       ]
 
       def index
@@ -137,6 +138,42 @@ module Dorsale
         end
 
         redirect_to dorsale.billing_machine_invoices_path
+      end
+
+      def email
+        authorize! :email, @invoice
+
+        @subject =
+        begin
+          params[:email][:subject]
+        rescue
+          "#{Invoice.t} #{@invoice.tracking_id} : #{@invoice.label}"
+        end
+
+        @body =
+        begin
+          params[:email][:body]
+        rescue
+          t("emails.invoices.send_invoice_to_customer",
+            :from => current_user.to_s,
+            :to   => @invoice.customer.to_s,
+          )
+        end
+
+        if request.get?
+          return
+        end
+
+        email = ::Dorsale::BillingMachine::InvoiceMailer
+          .send_invoice_to_customer(@invoice, @subject, @body, current_user)
+
+        if email.deliver_now
+          flash[:notice] = t("messages.invoices.email_ok")
+          redirect_to action: :show
+        else
+          flash.now[:alert] = t("messages.invoices.email_error")
+          render
+        end
       end
 
       private

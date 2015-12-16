@@ -78,6 +78,7 @@ fr:
     paid       : "Payée"
     continue   : "Continuer"
     rename     : "Renommer"
+    email      : "Envoyer par email"
 
   attributes: &attributes
     id                    : "Id"
@@ -135,6 +136,8 @@ fr:
     skype                 : "Skype"
     is_active             : "Actif ?"
     short_name            : "Initiales"
+    subject               : "Objet"
+    body                  : "Message"
 
     # BillingMachine
     unit                  : "Unité"

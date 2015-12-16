@@ -14,7 +14,7 @@ module Dorsale
         submit_action = :save
       end
 
-      content_tag("div", class: "actions cdiv") do
+      content_tag("div", class: "actions") do
         submit = content_tag(:button, type: :submit, class: "btn btn-sm btn-success") do
           icon(:save) + " " + t("actions.#{submit_action}")
         end

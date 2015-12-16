@@ -1,0 +1,30 @@
+.billing_machine
+  h1 = t("actions.email")
+  .well
+    = horizontal_form_for :email do |f|
+      = f.input(:subject,
+        :as => :string,
+        :label => t("attributes.subject"),
+        :input_html => {value: @subject},
+      )
+
+      = f.input(:body,
+        :as => :text,
+        :label => t("attributes.body"),
+        :input_html => {value: @body},
+      )
+
+      .actions
+        button.btn.btn-success type="submit"
+          = icon(:send)
+          = " "
+          = t("actions.send")
+
+        a.btn.btn-default href=dorsale.billing_machine_invoice_path(@invoice)
+          = icon(:times)
+          = " "
+          = t("actions.cancel")
+
+  hr
+
+  = render "dorsale/billing_machine/invoices/details", document: @invoice

@@ -4,10 +4,10 @@ fr:
 
   activerecord:
     models:
-      dorsale/billing_machine/invoice: "facture"
-      dorsale/billing_machine/quotation: "devis"
-      dorsale/billing_machine/id_card: "carte d'identité"
-      dorsale/billing_machine/payment_term: "conditions de paiement"
+      dorsale/billing_machine/invoice: "Facture"
+      dorsale/billing_machine/quotation: "Devis"
+      dorsale/billing_machine/id_card: "Carte d'identité"
+      dorsale/billing_machine/payment_term: "Conditions de paiement"
 
     attributes:
       dorsale/billing_machine/invoice/payment_status:
@@ -88,6 +88,10 @@ fr:
     total_including_taxes: "TOTAL TTC"
     expires_at: "Date d'expiration : "
 
+  emails:
+    invoices:
+      send_invoice_to_customer: "%{to},\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
+
   messages:
     invoices:
       create_ok : "La facture a été créée."
@@ -96,6 +100,9 @@ fr:
       update_error : "Erreur dans la modification de la facture."
       pay_ok    : "La facture a été marquée comme payée."
       pay_error : "Impossible de marquer la facture comme payée."
+      email_ok : "La facture a été envoyée au client."
+      email_error : "Impossible d'envoyer la facture au client, vérifiez son adresse email."
+
     quotations:
       create_ok : "Le devis a été créé."
       update_ok : "Le devis a été modifié."

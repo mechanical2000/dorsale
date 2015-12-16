@@ -31,6 +31,12 @@ Feature: Invoice Management
     And wants to copy it
     Then a new invoice is displayed with the informations
 
+  Scenario: Send invoice by email
+    And an existing invoice
+    When the user goes to the invoice details
+    And he send invoice to customer by email
+    Then an invoice is sent to customer
+
   Scenario: Empty invoice
     And an existing emtpy invoice
     When the user goes to the invoices page
