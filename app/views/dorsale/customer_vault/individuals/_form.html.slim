@@ -4,8 +4,8 @@
   = f.input :tag_list, collection: @tags, input_html: {multiple: true}
   = f.input :phone
   = f.input :mobile
-  = f.input :email
-  = f.input :www
+  = f.input :email, as: :string
+  = f.input :www, as: :string
   = f.input :fax
   = f.input :twitter
   = f.input :skype

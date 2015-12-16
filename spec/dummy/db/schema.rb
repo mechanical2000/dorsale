@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126142254) do
+ActiveRecord::Schema.define(version: 20151216104428) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -170,10 +170,10 @@ ActiveRecord::Schema.define(version: 20151126142254) do
   create_table "dorsale_customer_vault_corporations", force: :cascade do |t|
     t.string   "name"
     t.string   "short_name"
-    t.string   "email"
+    t.text     "email"
     t.string   "phone"
     t.string   "fax"
-    t.string   "www"
+    t.text     "www"
     t.string   "legal_form"
     t.integer  "capital"
     t.string   "immatriculation_number_1"
@@ -186,10 +186,10 @@ ActiveRecord::Schema.define(version: 20151126142254) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "short_name"
-    t.string   "email"
+    t.text     "email"
     t.string   "title"
     t.string   "twitter"
-    t.string   "www"
+    t.text     "www"
     t.text     "context"
     t.string   "phone"
     t.string   "fax"

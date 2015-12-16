@@ -1,9 +1,9 @@
 = horizontal_form_for @corporation, as: :corporation do |f|
   = f.input :name
   = f.input :tag_list, collection: @tags, input_html: {multiple: true}
-  = f.input :email
   = f.input :phone
-  = f.input :www
+  = f.input :email, as: :string
+  = f.input :www, as: :string
   = f.input :fax
   = f.input :capital
   = f.input :immatriculation_number_1
