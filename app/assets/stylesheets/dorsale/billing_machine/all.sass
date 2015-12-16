@@ -25,17 +25,26 @@
 
 
 
-  .label.pending
+  .label.invoice.pending,
+  .label.quotation.pending
     @extend .label-info
 
-  .label.paid
+  .label.invoice.paid,
+  .label.quotation.accepted,
     @extend .label-success
 
-  .label.late
+  .label.invoice.late,
+  .label.quotation.late,
     @extend .label-warning
 
-  .label.on_alert
+  .label.invoice.on_alert,
+  .label.quotation.refused,
     @extend .label-danger
+
+
+  .label.quotation.canceled,
+    @extend .label-default
+
 
   .label
     font-size: 50%
