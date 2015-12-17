@@ -1,6 +1,4 @@
-.filters
-  = form_tag dorsale.small_data_filters_path, class: "form-inline"
-
+= simple_form_for :filters, url: dorsale.small_data_filters_path, wrapper: :inline_form do |f|
     .form-group
       label.sr-only for="fb_status" Status
       select.form-control name="filters[fb_status]"
