@@ -8,11 +8,24 @@
         :input_html => {value: @subject},
       )
 
+      = f.input(:to,
+        :disabled => true,
+        :label => t("attributes.to"),
+        :input_html => {value: "#{@invoice.customer} <#{@invoice.customer.email}>"},
+      )
+
+      = f.input(:attachment,
+        :disabled => true,
+        :label => t("attributes.attachment"),
+        :input_html => {value: "#{@invoice.class.t}_#{@invoice.tracking_id}.pdf"},
+      )
+
       = f.input(:body,
         :as => :text,
         :label => t("attributes.body"),
         :input_html => {value: @body},
       )
+
 
       .actions
         button.btn.btn-success type="submit"

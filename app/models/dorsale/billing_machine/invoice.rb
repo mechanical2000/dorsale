@@ -123,6 +123,16 @@ module Dorsale
         end
       end
 
+      def t(*args)
+        return super if args.any?
+
+        if balance < 0
+          super(:credit_note)
+        else
+          self.class.t
+        end
+      end
+
       def total_excluding_taxes=(*); super; end
       private :total_excluding_taxes=
 

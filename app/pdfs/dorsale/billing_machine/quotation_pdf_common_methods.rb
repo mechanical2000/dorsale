@@ -19,10 +19,6 @@ module Dorsale
         end
       end
 
-      def main_document_type
-        Dorsale::BillingMachine::Quotation.model_name.human.humanize
-      end
-
       def build_bank_informations
       end
 

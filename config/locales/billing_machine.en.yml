@@ -10,6 +10,9 @@ en:
       dorsale/billing_machine/payment_term: "Payment term"
 
     attributes:
+      dorsale/billing_machine/invoice:
+        credit_note: "Credit note"
+
       dorsale/billing_machine/invoice/payment_status:
         all: "All statuses"
         pending: "Pending"

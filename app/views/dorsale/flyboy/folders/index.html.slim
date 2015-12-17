@@ -1,8 +1,14 @@
 .flyboy
+  - content_for :sub_header
+    = render "dorsale/flyboy/filters"
+
+    .actions.top
+      = create_button dorsale.new_flyboy_folder_path
+
+  = render_contextual
+
   .actions.top
-    = create_button dorsale.new_flyboy_folder_path
     = search_form
 
-  = render "dorsale/flyboy/filters"
   = render "dorsale/flyboy/folders/list", folders: @folders
   = paginate @folders

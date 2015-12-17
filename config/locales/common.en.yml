@@ -127,6 +127,7 @@ en:
     skype                 : "Skype"
     subject               : "Subject"
     body                  : "Message"
+    attachment            : "Attachment"
 
     # BillingMachine
     unit                  : "Unit"
