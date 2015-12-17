@@ -107,7 +107,7 @@ describe ::Dorsale::BillingMachine::InvoiceSingleVatPdf, pdfs: true do
   describe 'Header' do
     it "should write invoice tracking id" do
       expect(content).to include 'Facture'
-      expect(content).to include 'Numéro :'
+      expect(content).to include 'n°'
       expect(content).to include invoice.tracking_id
     end
 
@@ -128,7 +128,6 @@ describe ::Dorsale::BillingMachine::InvoiceSingleVatPdf, pdfs: true do
 
   describe 'customer information' do
     it "should write customer name" do
-      expect(content).to include 'Client :'
       expect(content).to include invoice.customer.name
     end
 
