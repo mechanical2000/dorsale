@@ -1,8 +1,11 @@
 module Dorsale
-  class ApplicationMailer < ActionMailer::Base
-    DEFAULT_FROM = "contact@example.org"
-    default from: DEFAULT_FROM
+  begin
+    ApplicationMailer = Class.new(::ApplicationMailer)
+  rescue NameError
+    ApplicationMailer = Class.new(::ActionMailer::Base)
+  end
 
+  class ApplicationMailer
     helper Dorsale::AllHelpers
   end
 end
