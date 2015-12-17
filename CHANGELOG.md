@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.9
+
+- Invoices small changes and fixes
+
 ## 2.2.8
 
 - Rebuild gem
