@@ -1,7 +1,7 @@
 module Dorsale
   module ModelI18n
     def t(*args)
-      self.class.human_attribute_name(*args)
+      self.class.t(*args)
     end
 
     def self.included(model)

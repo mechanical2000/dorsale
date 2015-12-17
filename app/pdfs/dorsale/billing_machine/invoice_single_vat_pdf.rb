@@ -107,7 +107,7 @@ module Dorsale
         height = 1.cm
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
-          text "<b>#{main_document_type}", inline_format: true, size: 20, align: :center
+          text "<b>#{main_document.t} n° #{@main_document.tracking_id}</b>", inline_format: true, size: 20, align: :center
         end
       end
 
@@ -150,11 +150,19 @@ module Dorsale
         top    = bounds.top - 7.5.cm
         left   = bounds.left
         width  = bounds.width / 2 - 1.1.cm
-        height = 1.cm
+        height = 15.mm
 
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
-          text "<b>#{I18n.t("pdfs.subject")}</b> #{@main_document.label}",   inline_format: true if @main_document.label.present?
+
+          if @main_document.label.present?
+            text "<b>#{I18n.t("pdfs.subject")}</b> #{@main_document.label}", inline_format: true
+          end
+
+          if @main_document.date.present?
+            move_down 3.mm
+            text "<b>#{@main_document.t :date} :</b> #{date @main_document.date}", inline_format: true
+          end
         end
       end
 
@@ -163,6 +171,7 @@ module Dorsale
         left   = bounds.width / 2 + 1.1.cm
         width  = bounds.width / 2 - 1.1.cm
         height = 4.5.cm
+        padding = 3.mm
 
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
@@ -172,35 +181,17 @@ module Dorsale
             fill_color BLACK
           end
 
-          table_customer = []
 
-          if @main_document.tracking_id.present?
-            table_customer << [I18n.t("pdfs.tracking_number") , @main_document.tracking_id.to_s]
+          bounding_box [bounds.left + padding, bounds.top - padding], height: bounds.height - padding, width: bounds.width - padding do
+            if @main_document.customer.present?
+              text @main_document.customer.name if @main_document.customer.name.present?
+              text @main_document.customer.address.street if @main_document.customer.address.street.present?
+              text @main_document.customer.address.street_bis if @main_document.customer.address.street_bis.present?
+              text "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}, #{@main_document.customer.address.country}" if @main_document.customer.address.zip.present? || @main_document.customer.address.city.present? || @main_document.customer.address.country.present?
+              text "#{@main_document.customer.t :european_union_vat_number} :\n#{european_union_vat_number}" if @main_document.customer.try(:european_union_vat_number).present?
+            end
           end
 
-          if @main_document.date.present?
-            table_customer << [I18n.t("pdfs.date") , date(@main_document.date)]
-          end
-
-          if @main_document.customer.present?
-            name = "#{@main_document.customer.name}\n" if @main_document.customer.name.present?
-            street = "#{@main_document.customer.address.street}\n" if @main_document.customer.address.street?
-            street_bis = "#{@main_document.customer.address.street_bis}\n" if @main_document.customer.address.street_bis.present?
-            zip_country = "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}" if @main_document.customer.address.city.present?
-
-            european_union_vat_number = @main_document.customer.try(:european_union_vat_number)
-            european_union_vat_number = "#{@main_document.customer.t :european_union_vat_number} :\n#{european_union_vat_number}\n" if european_union_vat_number
-
-            table_customer << [I18n.t("pdfs.customer") , "#{name} #{street} #{street_bis} #{zip_country} #{european_union_vat_number}" ] if @main_document.customer.name.present?
-          end
-
-          table table_customer,
-          :column_widths => [ width / 3 , width - (width / 3)],
-          :cell_style    => {border_width: [0, 0, 0.5, 0], padding: [2.mm, 2.mm]} do
-            row(2).border_width = 0
-            column(0).font_style    = :bold
-            column(1).row(2).valign = :center
-          end
         end
       end
 
@@ -216,10 +207,6 @@ module Dorsale
         build_expiry
         build_comments
         end
-      end
-
-      def main_document_type
-         Dorsale::BillingMachine::Invoice.model_name.human.humanize
       end
 
       def build_table

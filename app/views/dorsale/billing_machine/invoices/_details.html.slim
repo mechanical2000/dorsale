@@ -3,7 +3,7 @@
 
 #billing_machine-show
   h1
-    = document.class.t
+    = document.t
     - if document.tracking_id.present?
       = " n° "
       = document.tracking_id
@@ -25,20 +25,25 @@
       .well
         = info document, :date
         hr
-          - if document.customer.present?
-            = document.customer.name
-            br
-            - if document.customer.address.present?
+        - if document.customer.present?
+          = document.customer.name
+          br
+
+          - if document.customer.address.street.present?
             = document.customer.address.street
-              - if document.customer.address.street_bis.present?
-                br
-                = document.customer.address.street_bis
-              br
-              = document.customer.address.zip
-              = " "
-              = document.customer.address.city
-              br
-              = document.customer.address.country
+            br
+
+          - if document.customer.address.street_bis.present?
+            = document.customer.address.street_bis
+            br
+
+          - if document.customer.address.zip.present? || document.customer.address.city.present?
+            = document.customer.address.zip
+            = " "
+            = document.customer.address.city
+
+          - if document.customer.address.country.present?
+            = document.customer.address.country
 
   table#lines-table
     thead

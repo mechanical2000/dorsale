@@ -138,6 +138,7 @@ fr:
     short_name            : "Initiales"
     subject               : "Objet"
     body                  : "Message"
+    attachment            : "Pièce jointe"
 
     # BillingMachine
     unit                  : "Unité"

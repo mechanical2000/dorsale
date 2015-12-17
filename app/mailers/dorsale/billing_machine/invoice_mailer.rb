@@ -8,6 +8,7 @@ module Dorsale
 
         mail(
           :to       => invoice.customer.email,
+          :cc       => sender.try(:email),
           :reply_to => sender.try(:email),
           :subject  => subject,
           :body     => body,

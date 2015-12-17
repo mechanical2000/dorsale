@@ -10,6 +10,9 @@ fr:
       dorsale/billing_machine/payment_term: "Conditions de paiement"
 
     attributes:
+      dorsale/billing_machine/invoice:
+        credit_note: "Facture d'avoir"
+
       dorsale/billing_machine/invoice/payment_status:
         all: "Tous les statuts"
         pending: "En attente"
@@ -90,7 +93,7 @@ fr:
 
   emails:
     invoices:
-      send_invoice_to_customer: "%{to},\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
+      send_invoice_to_customer: "Bonjour,\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
 
   messages:
     invoices:
