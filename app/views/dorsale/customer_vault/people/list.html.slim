@@ -15,6 +15,7 @@
 
     - else
       .people
+        p = "#{t("contact_count")} #{@people.count}"
         - @people.each do |person|
           - if person.instance_of? ::Dorsale::CustomerVault::Individual
               = render "dorsale/customer_vault/individuals/list_details", i: person
