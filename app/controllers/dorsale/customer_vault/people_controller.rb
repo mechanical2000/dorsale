@@ -29,7 +29,7 @@ module Dorsale
 
       def activity
         authorize! :list, Person
-
+        @people ||= current_user_scope.individuals + current_user_scope.corporations
         @comments ||= current_user_scope.comments
           .where("commentable_type LIKE ?", "%CustomerVault%")
           .order("created_at DESC, id DESC")
