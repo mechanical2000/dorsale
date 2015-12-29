@@ -23,6 +23,21 @@ module Dorsale
         @invoices_without_pagination = @invoices
         @invoices = @invoices.page(params[:page]).per(50)
 
+        @total_excluding_taxes = @invoices_without_pagination.to_a
+          .map(&:total_excluding_taxes)
+          .delete_if(&:blank?)
+          .sum
+
+        @vat_amount = @invoices_without_pagination.to_a
+          .map(&:vat_amount)
+          .delete_if(&:blank?)
+          .sum
+
+        @total_including_taxes = @invoices_without_pagination.to_a
+          .map(&:total_including_taxes)
+          .delete_if(&:blank?)
+          .sum
+
         respond_to do |format|
           format.csv {
             send_data generate_encoded_csv(@invoices_without_pagination), type: "text/csv"

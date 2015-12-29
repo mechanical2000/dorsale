@@ -1,18 +1,8 @@
-- total_excluding_taxes = @invoices_without_pagination.map(&:total_excluding_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
-- vat_amount = @invoices_without_pagination.map(&:vat_amount).delete_if {|e| e.blank?}.inject(:+) || 0
-- total_including_taxes = @invoices_without_pagination.map(&:total_including_taxes).delete_if {|e| e.blank?}.inject(:+) || 0
-
 .well
   .row.text-center
     .col-md-4
-      b
-        = "#{::Dorsale::BillingMachine::Invoice.t(:total_excluding_taxes)} : "
-      = "#{euros(total_excluding_taxes)}"
+      = info ::Dorsale::BillingMachine::Quotation, :total_excluding_taxes, euros(@total_excluding_taxes)
     .col-md-4
-      b
-        = "#{::Dorsale::BillingMachine::Invoice.t(:vat_amount)} : "
-      = "#{euros(vat_amount)}"
+      = info ::Dorsale::BillingMachine::Quotation, :vat_amount, euros(@vat_amount)
     .col-md-4
-      b
-        = "#{::Dorsale::BillingMachine::Invoice.t(:total_including_taxes)} : "
-      = "#{euros(total_including_taxes)}"
+      = info ::Dorsale::BillingMachine::Quotation, :total_including_taxes, euros(@total_including_taxes)
