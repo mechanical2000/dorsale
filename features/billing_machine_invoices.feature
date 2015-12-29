@@ -183,6 +183,7 @@ Feature: Invoice Management
     When the user goes to the invoices page
     When he filters by status on paid
     Then only the invoices paid do appear
+    And the selected filter is "paid"
 
   Scenario: Existing invoice displayed in invoices page
     Given an existing invoice
