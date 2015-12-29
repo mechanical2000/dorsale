@@ -17,15 +17,15 @@ module Dorsale
         end
 
         def customer_guid
-          get("customer_guid")
+          get(__method__)
         end
 
         def bm_time_period
-          get("time_period")
+          get(__method__)
         end
 
         def bm_quotation_state
-          get("quotation_state")
+          get(__method__)
         end
 
       end

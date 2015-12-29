@@ -175,6 +175,7 @@ Feature: Quotation Management
     Then only the "canceled" quotations appear
     When he filters by "not_canceled" state
     Then only the "accepted" quotations appear
+    And the selected filter is "not_canceled"
 
   Scenario: Quotations data
     Given existing "100" quotations with "123" amount

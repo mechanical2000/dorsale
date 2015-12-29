@@ -35,3 +35,9 @@ end
 Given(/^an existing "(.*?)" having "(.*?)" set to "(.*?)"$/) do |factory, key, value|
   create(factory, key => value)
 end
+
+Then(/^the selected filter is "(.*?)"$/) do |value|
+  selected_values = all(".filters select").map(&:value)
+  expect(selected_values).to include value
+end
+
