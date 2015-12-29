@@ -95,6 +95,10 @@ describe Dorsale::TextHelper, type: :helper do
     it "should accept helper" do
       expect(info quotation_line, :quantity, helper: :euros).to include "1 000,17 €"
     end
+
+    it "should work with class" do
+      expect(info Dorsale::CustomerVault::Person, :count, 123).to eq %(<div class="info"><strong class="info-label">Nombre de contacts</strong> : <span class="info-value person-count">123</span></div>)
+    end
   end
 
 end

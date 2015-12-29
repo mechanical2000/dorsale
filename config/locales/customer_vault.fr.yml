@@ -1,6 +1,5 @@
 fr:
   customer_vault: "Annuaire"
-  contact_count: "Nombre de contacts"
 
   sections:
     activity: "Activité"
@@ -62,6 +61,7 @@ fr:
         immatriculation_number_2: "RCS"
         european_union_vat_number: "Numéro TVA européenne"
         legal_form: "Forme juridique"
+        count: "Nombre de contacts"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

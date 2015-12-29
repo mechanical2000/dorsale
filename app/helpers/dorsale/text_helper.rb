@@ -61,12 +61,14 @@ module Dorsale
         text = text_or_options
       end
 
-      label     = options[:label]     || object.t(attribute)
-      tag       = options[:tag]       || :div
-      separator = options[:separator] || " : "
-      helper    = options[:helper]
-      i18n_key  = "#{object.class.to_s.tableize.singularize}/#{attribute}"
-      nested    = I18n.t("activerecord.attributes.#{i18n_key}").is_a?(Hash)
+      label       = options[:label]     || object.t(attribute)
+      tag         = options[:tag]       || :div
+      separator   = options[:separator] || " : "
+      helper      = options[:helper]
+      i18n_key    = "#{object.class.to_s.tableize.singularize}/#{attribute}"
+      nested      = I18n.t("activerecord.attributes.#{i18n_key}").is_a?(Hash)
+      klass       = object.is_a?(Class) ? object : object.class
+      object_type = klass.to_s.split("::").last.underscore
 
       value = text
       value = object.public_send(attribute)     if value.nil?
@@ -80,7 +82,7 @@ module Dorsale
       value = value.to_s
 
       html_label     = content_tag(:strong, class: "info-label") { label }
-      span_css_class = "info-value #{object.class.model_name.element}-#{attribute}"
+      span_css_class = "info-value #{object_type}-#{attribute}"
       html_value     = content_tag(:span, class: span_css_class) { value }
 
       content_tag(tag, class: "info") do
