@@ -3,7 +3,7 @@
     = render "dorsale/customer_vault/breadcrumb"
 
   - content_for :context do
-    = render "dorsale/customer_vault/people/new_people_contexts"
+    = render "dorsale/customer_vault/people/new_people_contexts", people: @people
 
   - content_for :main do
     = render "dorsale/customer_vault/people/index_tabs"

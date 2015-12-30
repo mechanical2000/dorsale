@@ -339,9 +339,8 @@ Then(/^the PDF should have the filename "([^\"]*)"$/) do |filename|
 end
 
 Then(/^data total amount is "(.*?)"$/) do |text|
-  expect(find(".context")).to have_content text
+  expect(page).to have_content text
 end
-
 
 When(/^he send invoice to customer by email$/) do
   ActionMailer::Base.deliveries.clear

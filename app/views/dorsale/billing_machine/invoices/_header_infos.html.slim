@@ -1,0 +1,8 @@
+.well
+  .row.text-center
+    .col-md-4
+      = info ::Dorsale::BillingMachine::Quotation, :total_excluding_taxes, euros(@total_excluding_taxes)
+    .col-md-4
+      = info ::Dorsale::BillingMachine::Quotation, :vat_amount, euros(@vat_amount)
+    .col-md-4
+      = info ::Dorsale::BillingMachine::Quotation, :total_including_taxes, euros(@total_including_taxes)

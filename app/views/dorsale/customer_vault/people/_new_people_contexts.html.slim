@@ -1,3 +1,6 @@
+.well.text-center
+  = info ::Dorsale::CustomerVault::Person, :count, people.count
+
 .individual-context: .context
   = context_icon :user
   = link_to t("actions.new_individual"), dorsale.new_customer_vault_individual_path, class: "btn btn-success"
