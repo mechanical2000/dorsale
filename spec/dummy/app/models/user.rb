@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   include Dorsale::Users::Active
   include Dorsale::Users::PasswordGeneration
+  include Dorsale::Users::Avatar
 
   def name
     email

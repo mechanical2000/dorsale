@@ -1,6 +1,5 @@
 require "rails_helper"
 
-
 RSpec.describe User, type: :model do
 
   it "should have a valid factores" do
@@ -27,6 +26,32 @@ RSpec.describe User, type: :model do
 
     it 'should send a welcome message upon creation' do
       expect { create(:user)}.to change(ActionMailer::Base.deliveries, :count).by(1)
+    end
+  end
+
+  describe "avatar" do
+    before do
+      @user = create(:user,
+        :email  => "user@example.org",
+        :avatar => Dorsale::Engine.root.join("spec/files/avatar.png").open,
+      )
+    end
+
+    it "gravatar_url" do
+      expect(@user.gravatar_url).to include "gravatar"
+    end
+
+    it "local_avatar_url" do
+      expect(@user.local_avatar_url).to include "avatar.png"
+    end
+
+    it "avatar_url should return local_avatar_url if present" do
+      expect(@user.avatar_url).to include "avatar.png"
+    end
+    it "avatar_url should return gravatar_url if no local avatar" do
+      @user.remove_avatar!
+      @user.save!
+      expect(@user.avatar_url).to include "gravatar"
     end
   end
 

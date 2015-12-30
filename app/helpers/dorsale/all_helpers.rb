@@ -12,5 +12,6 @@ module Dorsale
 
     include ::Dorsale::Alexandrie::AttachmentsHelper
     include ::Dorsale::Flyboy::ApplicationHelper
+    include ::Dorsale::UsersHelper
   end
 end
