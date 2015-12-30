@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.11
+
+- Add avatar support
+
 ## 2.2.10
 
 - Fix filters
