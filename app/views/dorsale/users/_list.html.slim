@@ -1,17 +1,17 @@
 table.default
   thead
     tr
-      th.hidden-xs
-        = t("attributes.email")
-
-      th
-        = t("actions.actions")
+      th = t("attributes.avatar")
+      th = t("attributes.email")
+      th = t("actions.actions")
 
   tbody
     - users.each do |user|
-      tr.user-line
+      tr.user
+        td.user-avatar
+          = avatar_img(user)
 
-        td.hidden-xs.email
+        td.user-email
           = user
 
         td.actions

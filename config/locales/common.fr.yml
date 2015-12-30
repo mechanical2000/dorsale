@@ -139,6 +139,8 @@ fr:
     subject               : "Objet"
     body                  : "Message"
     attachment            : "Pièce jointe"
+    avatar                : "Avatar"
+    current_avatar        : "Avatar actuel"
 
     # BillingMachine
     unit                  : "Unité"
