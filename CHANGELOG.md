@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.10
+
+- Fix filters
+- Add CustomerVault infos in context
+- Move BillingMachine context to top
+- Improve `info` helper
+
 ## 2.2.9
 
 - Invoices small changes and fixes
