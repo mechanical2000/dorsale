@@ -62,6 +62,7 @@ en:
         european_union_vat_number: "European union VAT number"
         legal_form: "Legal form"
         count: "Number of people"
+        person_type: "Type"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:
