@@ -209,6 +209,7 @@ module Dorsale
           :vat_rate,
           :advance,
           :due_date,
+          :comments,
           :lines_attributes => [
             :_destroy,
             :id,

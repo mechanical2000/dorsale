@@ -35,21 +35,6 @@ module Dorsale
           end
         end
       end
-
-      def build_comments
-        return if @main_document.comments.blank?
-        top = bounds.top - 12.cm
-        height = 1.5.cm
-        width  = 10.cm
-
-        font_size 9 do
-          text_box @main_document.comments,
-            :at       => [bounds.left, top],
-            :height   => height,
-            :width    => width,
-            :overflow => :shrink_to_fit
-        end
-      end
     end
   end
 end

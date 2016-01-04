@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151230104012) do
+ActiveRecord::Schema.define(version: 20160104105725) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20151230104012) do
     t.datetime "updated_at",            null: false
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
+    t.text     "comments"
   end
 
   add_index "dorsale_billing_machine_invoices", ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id"
