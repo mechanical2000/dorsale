@@ -72,6 +72,10 @@ $(document).on "ready page:load cocoon:after-insert", ->
       $(this).val formatted_number
   $("#billing_machine-form input.number").blur()
 
+  # Empty number inputs on focus if value is 0
+  $("#billing_machine-form input.number").focus ->
+    $(this).val("") if str2num($(this).val()) == 0
+
   # Auto ajust line label textarea height
   $("#billing_machine-form textarea").keyup ->
      this.rows = this.value.split("\n").length
