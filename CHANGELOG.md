@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.12
+
+- CustomerVault : Move create actions to top
+- CustomerVault : Remove breadcrumbs
+- BillingMachine : Add invoices comments
+- BillingMachine : Empty 0 value inputs on focus
+- Small fixes
+
 ## 2.2.11
 
 - Add avatar support
