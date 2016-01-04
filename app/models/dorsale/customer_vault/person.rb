@@ -7,6 +7,10 @@ module Dorsale
 
       acts_as_taggable
 
+      def person_type
+        self.class.to_s.split("::").last.downcase.to_sym
+      end
+
       def tags_on(*args)
         super(*args).order(:name)
       end

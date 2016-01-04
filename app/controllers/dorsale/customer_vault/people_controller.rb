@@ -21,8 +21,9 @@ module Dorsale
         end
 
         @people ||= @individuals + @corporations
-
         @people = @people.sort_by(&:name)
+
+        @people_without_pagination = @people
 
         @people = Kaminari.paginate_array(@people).page(params[:page]).per(25)
       end

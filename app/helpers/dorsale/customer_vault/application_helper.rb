@@ -1,32 +1,6 @@
 module Dorsale
   module CustomerVault
     module ApplicationHelper
-      def customer_vault_breadcrumb
-        breadcrumb = []
-
-        breadcrumb << link_to(icon(:home), "/")
-
-        breadcrumb << link_to(t("customer_vault"), dorsale.customer_vault_people_path)
-
-        person = @person || @individual || @corporation
-        breadcrumb << link_to(person.name, person) if person.present? && person.persisted?
-
-        if params[:controller].to_s.include?("links")
-          breadcrumb << ::Dorsale::CustomerVault::Link.t.pluralize
-          breadcrumb << @link.title if @link.try(:title).present?
-        end
-
-        # Add action
-        action      = params[:action]
-        action_name = t("actions.#{action}")
-        breadcrumb << action_name unless action == "show"
-
-        # Last element is not a link
-        breadcrumb << strip_tags(breadcrumb.pop)
-
-        breadcrumb
-      end
-
       def person_tags(person)
         return if person.tag_list.empty?
 

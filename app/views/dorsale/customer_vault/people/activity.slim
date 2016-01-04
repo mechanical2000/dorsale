@@ -1,20 +1,12 @@
 .customer_vault
-  - content_for :sub_header do
-    = render "dorsale/customer_vault/breadcrumb"
+  = render "dorsale/customer_vault/people/actions"
+  = render "dorsale/customer_vault/people/index_tabs"
 
-  - content_for :context do
-    = render "dorsale/customer_vault/people/new_people_contexts", people: @people
+  - if @comments.empty?
+    p = t("messages.no_activity")
 
-  - content_for :main do
-    = render "dorsale/customer_vault/people/index_tabs"
+  - else
+    - @comments.map do |comment|
+      = render "dorsale/customer_vault/people/comment", comment: comment
 
-    - if @comments.empty?
-      p = t("messages.no_activity")
-
-    - else
-      - @comments.map do |comment|
-        = render "dorsale/customer_vault/people/comment", comment: comment
-
-      = paginate @comments
-
-  = render_contextual
+    = paginate @comments
