@@ -1,7 +1,4 @@
 .customer_vault
-  - content_for :sub_header do
-    = render "dorsale/customer_vault/breadcrumb"
-
   - content_for :context
     = render "dorsale/customer_vault/people/context", person: person
     = render "dorsale/customer_vault/people/data_context", person: person
