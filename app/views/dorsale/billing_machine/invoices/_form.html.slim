@@ -55,7 +55,8 @@
         - if document_type == :quotation
           = f.input :state, collection: billing_machine_quotation_states_for_select
           = f.input :expires_at, html5: true
-          = f.input :comments
+
+        = f.input :comments
 
       .col-sm-6
         table#totals-table

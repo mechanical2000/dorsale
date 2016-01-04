@@ -188,7 +188,7 @@ module Dorsale
               text @main_document.customer.address.street if @main_document.customer.address.street.present?
               text @main_document.customer.address.street_bis if @main_document.customer.address.street_bis.present?
               text "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}, #{@main_document.customer.address.country}" if @main_document.customer.address.zip.present? || @main_document.customer.address.city.present? || @main_document.customer.address.country.present?
-              text "#{@main_document.customer.t :european_union_vat_number} :\n#{european_union_vat_number}" if @main_document.customer.try(:european_union_vat_number).present?
+              text "#{@main_document.customer.t :european_union_vat_number} :\n#{@main_document.customer.european_union_vat_number}" if @main_document.customer.try(:european_union_vat_number).present?
             end
           end
 
@@ -200,12 +200,12 @@ module Dorsale
         top    = bounds.top - header_height
         width  = bounds.width - left
         bounding_box [left, top], width: width, height: middle_height do
-        build_table
-        build_total
-        build_payment_conditions
-        build_bank_informations
-        build_expiry
-        build_comments
+          build_table
+          build_total
+          build_payment_conditions
+          build_bank_informations
+          build_expiry
+          build_comments
         end
       end
 
@@ -308,9 +308,19 @@ module Dorsale
       end
 
       def build_comments
+        return if @main_document.comments.blank?
+        top = bounds.top - 13.cm
+        height = 1.5.cm
+        width  = 10.cm
+
+        font_size 9 do
+          text_box @main_document.comments,
+            :at       => [bounds.left, top],
+            :height   => height,
+            :width    => width,
+            :overflow => :shrink_to_fit
+        end
       end
-
-
 
       def build_payment_conditions
         top = bounds.top - 10.3.cm

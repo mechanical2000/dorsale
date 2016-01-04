@@ -74,9 +74,9 @@
           = info document, :expires_at
           br
 
-          - if document.comments.present?
-            = info document, :comments, text2html(document.comments), separator: " :<br />"
-            br
+        - if document.comments.present?
+          = info document, :comments, text2html(document.comments), separator: " :<br />"
+          br
 
 
     .col-sm-6
