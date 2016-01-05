@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.13
+
+- CustomerVault : Fix contact count
+
 ## 2.2.12
 
 - CustomerVault : Move create actions to top

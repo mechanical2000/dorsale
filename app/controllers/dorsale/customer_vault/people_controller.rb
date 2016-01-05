@@ -10,6 +10,8 @@ module Dorsale
       def list
         authorize! :list, Person
 
+        @total_contact = current_user_scope.people
+
         @filters      ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
         @tags         ||= customer_vault_tag_list
         @individuals  ||= current_user_scope.individuals.search(params[:q])
