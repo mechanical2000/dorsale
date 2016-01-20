@@ -156,5 +156,5 @@ describe Dorsale::Flyboy::Task do
         expect(tasks).to_not eq [task, task_1, task_4]
       end
     end
-  end  
+  end
 end

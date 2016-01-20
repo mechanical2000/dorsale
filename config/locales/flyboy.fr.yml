@@ -27,6 +27,11 @@ fr:
       complete_ok: "La tâche a été marquée comme terminée"
       complete_eror: "Impossible de terminer la tâche"
 
+  email:
+    task:
+      new:
+        title: "Une nouvelle tâche vous a été attribuée"
+
   actions:
     complete: "Fait"
     label: "Actions"
