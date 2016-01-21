@@ -167,28 +167,28 @@ describe ::Dorsale::BillingMachine::InvoiceSingleVatPdf, pdfs: true do
     end
 
     it 'is expected to print invoice line unit_price of each line' do
-      expect(content).to include '2,54 €'
-      expect(content).to include '42,54 €'
+      expect(content).to include '2,54 €'.gsub(" ", "\u00A0")
+      expect(content).to include '42,54 €'.gsub(" ", "\u00A0")
     end
 
     it 'is expected to print invoice line total of each line' do
-      expect(content).to include '7,98 €'
-      expect(content).to include '1 804,55 €'
+      expect(content).to include '7,98 €'.gsub(" ", "\u00A0")
+      expect(content).to include '1 804,55 €'.gsub(" ", "\u00A0")
     end
   end
 
   describe 'Total table' do
     it 'is expected to print all the invoice synthesis' do
       expect(content).to include 'REMISE'
-      expect(content).to include '- 100,23 €'
+      expect(content).to include '- '+'100,23 €'.gsub(" ", "\u00A0")
       expect(content).to include 'TOTAL HT'
-      expect(content).to include '1 712,29 €'
+      expect(content).to include '1 712,29 €'.gsub(" ", "\u00A0")
       expect(content).to include 'TVA 19,60 %'
-      expect(content).to include '335,61 €'
+      expect(content).to include '335,61 €'.gsub(" ", "\u00A0")
       expect(content).to include 'ACOMPTE'
-      expect(content).to include '1,79 €'
+      expect(content).to include '1,79 €'.gsub(" ", "\u00A0")
       expect(content).to include 'TOTAL TTC'
-      expect(content).to include '2 046,11 €'
+      expect(content).to include '2 046,11 €'.gsub(" ", "\u00A0")
     end
   end
 

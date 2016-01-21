@@ -1,0 +1,6 @@
+p = "#{@task.owner.to_s},"
+
+p
+  = t("email.task.the_task")
+  = link_to @task.name, flyboy_task_url(@task)
+  = t("email.task.new.attributed_by", author: @author.to_s)

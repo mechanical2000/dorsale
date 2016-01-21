@@ -19,14 +19,14 @@ describe Dorsale::TextHelper, type: :helper do
 
   it "percentage" do
     expect(percentage(nil)).to be nil
-    expect(percentage(1)).to eq "1 %"
-    expect(percentage(1.123)).to eq "1,12 %"
+    expect(percentage(1)).to eq "1\u00A0%"
+    expect(percentage(1.123)).to eq "1,12\u00A0%"
   end
 
   it "euros" do
     expect(euros(nil)).to be nil
-    expect(euros(1)).to eq "1 €"
-    expect(euros(1.123)).to eq "1,12 €"
+    expect(euros(1)).to eq "1\u00A0€"
+    expect(euros(1.123)).to eq "1,12\u00A0€"
   end
 
   it "date" do
@@ -93,7 +93,7 @@ describe Dorsale::TextHelper, type: :helper do
     end
 
     it "should accept helper" do
-      expect(info quotation_line, :quantity, helper: :euros).to include "1 000,17 €"
+      expect(info quotation_line, :quantity, helper: :euros).to include "1\u00A0000,17\u00A0€"
     end
 
     it "should work with class" do

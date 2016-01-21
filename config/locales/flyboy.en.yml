@@ -27,6 +27,16 @@ en:
       complete_ok: "Task completed"
       complete_eror: "One error occurs, task can't be completed"
 
+  email:
+    task:
+      the_task: "The task "
+      new:
+        subject: "A new Task has been attributed to you"
+        attributed_by: " has been attributed to you by %{author}"
+      term:
+        subject: "The task %{task} expire"
+        expire: "expire today, please delay it or close it"
+
   actions:
     complete: "Complete"
     label: "Actions"

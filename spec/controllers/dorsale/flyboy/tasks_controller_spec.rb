@@ -168,6 +168,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "POST create" do
     describe "with valid params" do
+
       it "creates a new Task" do
         expect {
           post :create, {:task => valid_attributes}
@@ -183,6 +184,30 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "redirects to the created task" do
         post :create, {:task => valid_attributes}
         expect(response).to redirect_to Dorsale::Flyboy::Task.order("id ASC").last
+      end
+
+      it "should send a mail to the owner" do
+        owner = create(:user)
+        ActionMailer::Base.deliveries.clear
+        post :create, {:task => valid_attributes.merge(owner_guid: owner.guid)}
+        expect(ActionMailer::Base.deliveries.count).to eq 1
+        email = ActionMailer::Base.deliveries.last
+        expect(email.to).to include owner.email
+        expect(email.subject).to include I18n.t("emails.task.new.subject")
+        expect(email.body).to include @user.to_s
+        expect(email.body).to include "http://"
+      end
+
+      it "should not send a mail if there is no owner" do
+        ActionMailer::Base.deliveries.clear
+        post :create, {:task => valid_attributes}
+        expect(ActionMailer::Base.deliveries.count).to eq 0
+      end
+
+      it "should not send a mail if the author is the owner" do
+        ActionMailer::Base.deliveries.clear
+        post :create, {:task => valid_attributes}
+        expect(ActionMailer::Base.deliveries.count).to eq 0
       end
     end
 

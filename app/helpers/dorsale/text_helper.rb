@@ -6,13 +6,13 @@ module Dorsale
     def euros(n)
       return if n.nil?
 
-      number(n) + " €"
+      (number(n) + " €").gsub(" ", "\u00A0")
     end
 
     def percentage(n)
       return if n.nil?
 
-      number(n) + " %"
+      (number(n) + " %").gsub(" ", "\u00A0")
     end
 
     def number(n)
