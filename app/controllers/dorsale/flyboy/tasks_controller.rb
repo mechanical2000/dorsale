@@ -93,7 +93,6 @@ module Dorsale
 
       def create
         @task ||= current_user_scope.new_task(task_params)
-        ap task_params
         authorize! :create, @task
 
         if @task.save

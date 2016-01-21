@@ -194,20 +194,21 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         email = ActionMailer::Base.deliveries.last
         expect(email.to).to include owner.email
         expect(email.subject).to include I18n.t("emails.task.new.subject")
+        expect(email.body).to include @user.to_s
+        expect(email.body).to include "http://"
       end
 
       it "should not send a mail if there is no owner" do
         ActionMailer::Base.deliveries.clear
-        create(:flyboy_task, owner: nil)
+        post :create, {:task => valid_attributes}
         expect(ActionMailer::Base.deliveries.count).to eq 0
       end
 
       it "should not send a mail if the author is the owner" do
         ActionMailer::Base.deliveries.clear
-        create(:flyboy_task, owner: @user)
+        post :create, {:task => valid_attributes}
         expect(ActionMailer::Base.deliveries.count).to eq 0
       end
-
     end
 
     describe "with invalid params" do

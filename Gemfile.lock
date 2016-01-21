@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (2.2.13)
+    dorsale (2.2.14)
       aasm
       acts-as-taggable-on
       awesome_print
@@ -25,6 +25,7 @@ PATH
       prawn-table
       rails (>= 4.0.0)
       rails-i18n
+      rake
       sass-rails
       selectize-rails
       simple_form

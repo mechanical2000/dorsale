@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.14
+
+- Improve number helpers
+- Add Emails for tasks creation
+
 ## 2.2.13
 
 - CustomerVault : Fix contact count

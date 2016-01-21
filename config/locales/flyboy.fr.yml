@@ -29,8 +29,13 @@ fr:
 
   email:
     task:
+      the_task: "La tâche "
       new:
-        title: "Une nouvelle tâche vous a été attribuée"
+        subject: "Une nouvelle tâche vous a été attribuée"
+        attributed_by: " vous a été attribuée par %{author}"
+      term:
+        subject: "La tâche "
+        expire: " est arrivé à terme, veuillez la reporter ou la clôturer"
 
   actions:
     complete: "Fait"
