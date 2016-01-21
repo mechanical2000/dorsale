@@ -93,12 +93,11 @@ module Dorsale
 
       def create
         @task ||= current_user_scope.new_task(task_params)
-
+        ap task_params
         authorize! :create, @task
 
         if @task.save
           flash[:success] = t("messages.tasks.create_ok")
-          ap @task
           notify_owner(current_user, @task)
           redirect_to @task
         else
@@ -171,7 +170,7 @@ module Dorsale
        def notify_owner(author, task)
         return if author == task.owner
         return if task.owner.nil?
-        Dorsale::Flyboy::TaskMailer.new_task(task , author).deliver_later
+        Dorsale::Flyboy::TaskMailer.new_task(author , task).deliver_later
       end
 
       def set_objects

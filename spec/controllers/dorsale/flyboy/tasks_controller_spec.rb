@@ -189,11 +189,10 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "should send a mail to the owner" do
         owner = create(:user)
         ActionMailer::Base.deliveries.clear
-        task = create(:flyboy_task, owner: owner )
-        ap task
+        post :create, {:task => valid_attributes.merge(owner_guid: owner.guid)}
         expect(ActionMailer::Base.deliveries.count).to eq 1
         email = ActionMailer::Base.deliveries.last
-        expect(email.to).to include task.owner.email
+        expect(email.to).to include owner.email
         expect(email.subject).to include I18n.t("emails.task.new.subject")
       end
 
