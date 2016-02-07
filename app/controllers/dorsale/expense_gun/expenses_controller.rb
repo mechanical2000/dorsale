@@ -34,7 +34,7 @@ module Dorsale
 
         if @expense.save
           flash[:success] = t("expense_gun.expense.flash.created")
-          redirect_to expense_path(@expense)
+          redirect_to dorsale.expense_gun_expense_path(@expense)
         else
           render :new
         end
@@ -55,7 +55,7 @@ module Dorsale
 
         if @expense.update_attributes(expense_params)
           flash[:success] = t("expense_gun.expense.flash.updated")
-          redirect_to expense_path(@expense)
+          redirect_to dorsale.expense_gun_expense_path(@expense)
         else
           render :edit
         end
@@ -66,7 +66,7 @@ module Dorsale
 
         @expense.submit!
         flash[:success] = t("expense_gun.expense.flash.submited")
-        redirect_to expenses_path
+        redirect_to dorsale.expense_gun_expenses_path
       end
 
       def accept
@@ -74,7 +74,7 @@ module Dorsale
 
         @expense.accept!
         flash[:success] = t("expense_gun.expense.flash.accepted")
-        redirect_to expense_path(@expense)
+        redirect_to dorsale.expense_gun_expense_path(@expense)
       end
 
       def refuse
@@ -82,7 +82,7 @@ module Dorsale
 
         @expense.refuse!
         flash[:success] = t("expense_gun.expense.flash.refused")
-        redirect_to expenses_path
+        redirect_to dorsale.expense_gun_expenses_path
       end
 
       def cancel
@@ -90,7 +90,7 @@ module Dorsale
 
         @expense.cancel!
         flash[:success] = t("expense_gun.expense.flash.canceled")
-        redirect_to expenses_path
+        redirect_to dorsale.expense_gun_expenses_path
       end
 
       private
@@ -100,7 +100,7 @@ module Dorsale
       end
 
       def expense_params
-        params.require(:expense).permit!
+        params.require(:expense_gun_expense).permit!
       end
     end
   end

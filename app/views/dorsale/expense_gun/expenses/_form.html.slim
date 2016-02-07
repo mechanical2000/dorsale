@@ -1,0 +1,5 @@
+.row: .col-md-6
+  = horizontal_form_for  @expense do |f|
+    = f.input :name
+    = f.input :date, as: :string, input_html: {type: :date}
+    = form_buttons back_url: false

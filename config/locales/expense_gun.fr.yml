@@ -1,0 +1,72 @@
+fr:
+  expense_gun:
+    expense:
+      label  : "Note de frais"
+      list   : "Liste des notes de frais"
+      new    : "Nouvelle note de frais"
+      edit   : "Modifier la note"
+      print  : "Imprimer"
+      show   : "Afficher"
+      edit   : "Modifier"
+      submit : "Soumettre"
+      accept : "Accepter"
+      refuse : "Refuser"
+      cancel : "Annuler"
+      flash:
+        created  : "La note de frais a été créée."
+        updated  : "La note de frais a été mise à jour."
+        submited : "La note de frais a été soumise."
+        accepted : "La note de frais a été acceptée."
+        refused  : "La note de frais a été refusée."
+        canceled : "La note de frais a été annulée."
+
+    expense_line:
+      label           : "Frais"
+      new             : "Nouveau frais"
+      edit            : "Modifier"
+      destroy         : "Supprimer"
+      back_to_expense : "Retour à la note"
+      flash:
+        created   : "Le frais a été ajouté."
+        updated   : "Le frais a été modifié."
+        destroyed : "Le frais a été supprimé."
+
+  labels: &labels
+      name             : "Nom"
+      date             : "Date"
+      category         : "Catégorie"
+      category_id      : "Catégorie"
+      total_all_taxes  : "Total TTC"
+      vat              : "TVA"
+      company_part     : "Part entreprise"
+      employee         : "Employé"
+      state            : "État"
+      employee_payback : "Remboursement employé"
+      deductible_vat   : "TVA déductible"
+      total            : "Total"
+
+      states:
+        all      : "Toutes"
+        new      : "Nouvelle"
+        submited : "Soumise"
+        accepted : "Accepée"
+        refused  : "Refusée"
+        canceled : "Annulée"
+
+  simple_form:
+    "yes" : 'Oui'
+    "no"  : 'Non'
+
+    required:
+      text: 'Requis'
+      mark: '*'
+
+    error_notification:
+      default_message: "Merci de vérifier les problèmes ci-desous :"
+
+    labels:
+      defaults:
+        <<: *labels
+
+    options:
+      defaults:

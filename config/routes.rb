@@ -62,4 +62,18 @@ Dorsale::Engine.routes.draw do
       get :list
     end
   end
+
+  namespace :expense_gun do
+    resources :expenses, except: [:destroy] do
+    resources :expense_lines
+      member do
+      %w(submit accept refuse cancel).map { |action| patch action }
+      end
+    end
+
+    get "/expenses/state/:state" => "expenses#index"
+    get "/expenses/state/:state/page/:page" => "expenses#index"
+
+    get "/" => redirect{ ExpenseGun::Engine.routes.url_helpers.expenses_path }
+  end
 end
