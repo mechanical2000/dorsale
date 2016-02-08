@@ -31,28 +31,34 @@ Given(/^(\d+) existing tasks$/) do |n|
 end
 
 Given(/^a task with an owner that's the term is today$/) do
-  @task = FactoryGirl.create(:flyboy_task, reminder: Date.today - 1, term: Date.today, owner: create(:user))
-  expect(ActionMailer::Base.deliveries.count).to eq 2
-  ActionMailer::Base.deliveries.clear
+  @task = FactoryGirl.create(:flyboy_task,
+    :reminder => Date.yesterday,
+    :term     => Date.today,
+    :owner    => create(:user),
+  )
 end
 
 Given(/^a task without owner$/) do
-  pending # express the regexp above with the code you wish you had
+  @task = FactoryGirl.create(:flyboy_task,
+    :reminder => Date.yesterday,
+    :term     => Date.today,
+    :owner    => nil,
+  )
 end
 
 Given(/^a closed task with an owner$/) do
-  pending # express the regexp above with the code you wish you had
+  @task = FactoryGirl.create(:flyboy_task,
+    :reminder => Date.yesterday,
+    :term     => Date.today,
+    :owner    => create(:user),
+    :progress => 100,
+    :done     => true,
+  )
 end
 
-When(/^the daily cron run at midnight$/) do
-  @rake = Rake::Application.new
-
-  Rake.application = @rake
-  # Ruse pour que cucumber recharge les tâches rake correctement!
-  loaded = $".reject {|file| file == Rails.root.join("lib", "tasks", "cron.rake").to_s }
-  Rake.application.rake_require("lib/tasks/cron", [Rails.root.to_s], loaded)
-  Rake::Task.define_task(:environment)
-  @rake['cron:daily'].execute
+When(/^the flyboy daily crons run$/) do
+  ActionMailer::Base.deliveries.clear
+  Dorsale::Flyboy::TaskCommands.send_daily_term_emails!
 end
 
 When(/^I create a task$/) do
@@ -203,7 +209,7 @@ Then(/^tasks are paginated$/) do
 end
 
 Then(/^no email is sent$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(ActionMailer::Base.deliveries.count).to eq 0
 end
 
 Then(/^the owner receive an email$/) do

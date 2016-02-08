@@ -84,22 +84,18 @@ Feature: Manage tasks
     Given 100 existing tasks
     When I go to the tasks section
     Then tasks are paginated
-  
-  #Scenario: Term email with owner
-    #Given a task with an owner that's the term is today
-    #When the daily cron run at midnight
-    #Then the owner receive an email
-    
-  #Scenario: Term email without owner
-   #Given a task without owner
-   #When the daily cron run at midnight
-   #Then no email is sent
-    
-  #Scenario: Term email for closed task
-   #Given a closed task with an owner
-   #When the daily cron run at midnight
-   #Then no email is sent
-    
-  
-  
-  
+
+  Scenario: Term email with owner
+    Given a task with an owner that's the term is today
+    When the flyboy daily crons run
+    Then the owner receive an email
+
+  Scenario: Term email without owner
+    Given a task without owner
+    When the flyboy daily crons run
+    Then no email is sent
+
+  Scenario: Term email for closed task
+    Given a closed task with an owner
+    When the flyboy daily crons run
+    Then no email is sent
