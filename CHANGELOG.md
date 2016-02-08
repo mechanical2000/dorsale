@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.15
+
+- Fix tasks cron
+
 ## 2.2.14
 
 - Improve number helpers
