@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.15
+## 2.2.16
 
 - Fix tasks cron
 
