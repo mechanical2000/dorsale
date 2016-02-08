@@ -12,5 +12,8 @@
     - if can?(:create, @quotation)
       = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 
+    - if can?(:delete, @quotation)
+      = delete_button dorsale.billing_machine_quotation_path(@quotation)
+
   = render "dorsale/billing_machine/invoices/details", document: @quotation
 
