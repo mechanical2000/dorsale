@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby File.read(File.join(__dir__, ".ruby-version")).strip
 
 gem "rails", "~> 4.2.1"
 gem 'devise'
