@@ -65,9 +65,10 @@ Dorsale::Engine.routes.draw do
 
   namespace :expense_gun do
     resources :expenses, except: [:destroy] do
-    resources :expense_lines
+      resources :expense_lines
+
       member do
-      %w(submit accept refuse cancel).map { |action| patch action }
+        %w(submit accept refuse cancel).map { |action| patch action }
       end
     end
 

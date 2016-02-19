@@ -5,12 +5,12 @@ h1 = t("expense_gun.expense.list")
     ul.nav.nav-pills.nav-stacked
       - for state in %w(submited new accepted refused canceled)
         li class=("active" if params[:state] == state)
-          a href=dorsale.url_for(expense_gun_state: state)
+          a href=dorsale.url_for(state: state)
             = t("labels.states.#{state}").pluralize
             span.badge.pull-right = @all_expenses.where(state: state).count
 
       li class=("active" if params[:state] == "all")
-        a href=dorsale.url_for(expense_gun_state: "all")
+        a href=dorsale.url_for(state: "all")
           = t("labels.states.all")
           span.badge.pull-right = @all_expenses.count
 

@@ -1,11 +1,11 @@
-= horizontal_form_for [@expense, @expense_line] do |f|
+= horizontal_form_for @expense_line, url: dorsale.expense_gun_expense_expense_lines_path(@expense), as: :expense_line do |f|
   .panel.panel-default
     .panel-body
       .row
         .col-md-6
           = f.input :name
           = f.input :date, as: :string, input_html: {type: :date}
-          = f.input :category_id, collection: ExpenseGun::Category.all
+          = f.input :category_id, collection: ::Dorsale::ExpenseGun::Category.all
         .col-md-6
           = f.input :total_all_taxes
           = f.input :vat

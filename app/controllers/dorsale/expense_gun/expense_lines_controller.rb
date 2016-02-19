@@ -4,7 +4,7 @@ module Dorsale
       before_action :set_objects
 
       def index
-        redirect_to expense_path(@expense)
+        redirect_to dorsale.expense_gun_expense_path(@expense)
       end
 
       def new
@@ -20,7 +20,7 @@ module Dorsale
 
         if @expense_line.save
           flash[:success] = t("expense_gun.expense_line.flash.created")
-          redirect_to expense_path(@expense)
+          redirect_to dorsale.expense_gun_expense_path(@expense)
         else
           render :new
         end
@@ -35,7 +35,7 @@ module Dorsale
 
         if @expense_line.update_attributes(expense_line_params)
           flash[:success] = t("expense_gun.expense_line.flash.created")
-          redirect_to expense_path(@expense)
+          redirect_to dorsale.expense_gun_expense_path(@expense)
         else
           render :edit
         end
@@ -46,7 +46,7 @@ module Dorsale
 
         @expense_line.destroy
         flash[:success] = t("expense_gun.expense_line.flash.created")
-        redirect_to expense_path(@expense)
+        redirect_to dorsale.expense_gun_expense_path(@expense)
       end
 
       private
