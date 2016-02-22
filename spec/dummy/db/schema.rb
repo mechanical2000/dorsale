@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104105725) do
+ActiveRecord::Schema.define(version: 20160125201025) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -215,6 +215,35 @@ ActiveRecord::Schema.define(version: 20160104105725) do
   add_index "dorsale_customer_vault_links", ["alice_type"], name: "index_dorsale_customer_vault_links_on_alice_type"
   add_index "dorsale_customer_vault_links", ["bob_id"], name: "index_dorsale_customer_vault_links_on_bob_id"
   add_index "dorsale_customer_vault_links", ["bob_type"], name: "index_dorsale_customer_vault_links_on_bob_type"
+
+  create_table "dorsale_expense_gun_categories", force: :cascade do |t|
+    t.string  "name"
+    t.string  "code"
+    t.boolean "vat_deductible"
+  end
+
+  create_table "dorsale_expense_gun_expense_lines", force: :cascade do |t|
+    t.integer  "expense_id"
+    t.integer  "category_id"
+    t.string   "name"
+    t.date     "date"
+    t.float    "total_all_taxes"
+    t.float    "vat"
+    t.float    "company_part"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "dorsale_expense_gun_expense_lines", ["category_id"], name: "index_dorsale_expense_gun_expense_lines_on_category_id"
+  add_index "dorsale_expense_gun_expense_lines", ["expense_id"], name: "index_dorsale_expense_gun_expense_lines_on_expense_id"
+
+  create_table "dorsale_expense_gun_expenses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "state"
+    t.date     "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "dorsale_flyboy_folders", force: :cascade do |t|
     t.integer  "folderable_id"

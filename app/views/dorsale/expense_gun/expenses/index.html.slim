@@ -1,0 +1,62 @@
+h1 = t("expense_gun.expense.list")
+
+.row.expenses
+  .col-md-4
+    ul.nav.nav-pills.nav-stacked
+      - for state in %w(submited new accepted refused canceled)
+        li class=("active" if params[:state] == state)
+          a href=dorsale.url_for(state: state)
+            = t("labels.states.#{state}").pluralize
+            span.badge.pull-right = @all_expenses.where(state: state).count
+
+      li class=("active" if params[:state] == "all")
+        a href=dorsale.url_for(state: "all")
+          = t("labels.states.all")
+          span.badge.pull-right = @all_expenses.count
+
+    hr
+
+    p = link_to t("expense_gun.expense.new"), dorsale.new_expense_gun_expense_path, class: "btn btn-success"
+
+  .col-md-8
+    - for expense in @expenses
+      .panel.panel-default
+        .panel-heading
+          .row
+            .col-md-8
+              h2.panel-title = expense.name
+            .col-md-4
+              .date = date expense.date
+        .panel-body
+          p
+            strong = t("labels.employee") + " : "
+            = expense.user.full_name if expense.respond_to?(:user)
+
+          p
+            strong = t("labels.state") + " : "
+            = t("labels.states.#{expense.current_state}")
+
+          p
+            strong = t("labels.total_all_taxes") + " : "
+            = euros expense.total_all_taxes
+
+        .panel-footer
+          = link_to t("expense_gun.expense.show"), dorsale.expense_gun_expense_path(expense), class: "btn btn-default"
+
+          - if can? :edit, expense
+            = link_to t("expense_gun.expense.edit"), dorsale.edit_expense_gun_expense_path(expense), class: "btn btn-default"
+
+          - if can? :submit, expense
+            = link_to t("expense_gun.expense.submit"), dorsale.submit_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-primary"
+
+          - if can? :accept, expense
+            = link_to t("expense_gun.expense.accept"), dorsale.accept_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-success"
+
+          - if can? :refuse, expense
+            = link_to t("expense_gun.expense.refuse"), dorsale.refuse_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-danger"
+
+          - if can? :cancel, expense
+            = link_to t("expense_gun.expense.cancel"), dorsale.cancel_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-warning"
+
+
+== paginate @expenses

@@ -5,6 +5,7 @@ class Ability
   include ::Dorsale::Flyboy::AbilityHelper
   include ::Dorsale::BillingMachine::AbilityHelper
   include ::Dorsale::CustomerVault::AbilityHelper
+  include ::Dorsale::ExpenseGun::AbilityHelper
 
   def initialize(*)
     define_alexandrie_abilities
@@ -13,5 +14,6 @@ class Ability
     define_dorsale_flyboy_abilities
     define_dorsale_billing_machine_abilities
     define_dorsale_customer_vault_abilities
+    define_dorsale_expense_gun_abilities
   end
 end
