@@ -32,7 +32,6 @@ module Dorsale
 
       def update
         authorize! :edit, @expense
-
         if @expense_line.update_attributes(expense_line_params)
           flash[:success] = t("expense_gun.expense_line.flash.created")
           redirect_to dorsale.expense_gun_expense_path(@expense)

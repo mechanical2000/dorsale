@@ -13,6 +13,7 @@ Dorsale::Engine.routes.draw do
     resources :attachments, only: [:create, :edit, :update, :destroy]
   end
 
+
   namespace :flyboy do
     resources :folders do
       member do
@@ -66,7 +67,6 @@ Dorsale::Engine.routes.draw do
   namespace :expense_gun do
     resources :expenses, except: [:destroy] do
       resources :expense_lines
-
       member do
         %w(submit accept refuse cancel).map { |action| patch action }
       end

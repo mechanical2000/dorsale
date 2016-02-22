@@ -1,5 +1,9 @@
 #encoding: utf-8
 
+Etantdonné(/^une categorie de fras$/) do
+  create(:expense_gun_category)
+end
+
 Lorsqu(/^il va dans l'espace de notes de frais$/) do
   visit dorsale.expense_gun_expenses_path(state: "all")
 end
@@ -11,7 +15,7 @@ end
 Lorsqu(/^il saisit le nom et la date de la note de frais puis valide$/) do
   fill_in "expense_gun_expense_name", with: "hello"
   fill_in "expense_gun_expense_date", with: "2012-12-21"
-  find("input[type=submit]").click
+  find("[type=submit]").click
 end
 
 Alors(/^la note de frais est créée$/) do
@@ -29,7 +33,7 @@ Alors(/^il saisit les informations de la ligne de frais puis valide$/) do
   fill_in "expense_line_total_all_taxes", with: 100
   fill_in "expense_line_vat", with: 20
   fill_in "expense_line_company_part", with: 50
-  find("input[type=submit]").click
+  find("[type=submit]").click
 end
 
 Alors(/^la ligne de frais est créée$/) do
@@ -42,7 +46,7 @@ Alors(/^le statut est à 'A soumettre'$/) do
 end
 
 Etantdonné(/^une note de frais$/) do
-  @expense = FactoryGirl.create(:exepense_gun_expense)
+  @expense = create(:expense_gun_expense)
 end
 
 Lorsqu(/^il va sur le détail de la note de frais$/) do
@@ -50,9 +54,9 @@ Lorsqu(/^il va sur le détail de la note de frais$/) do
 end
 
 Lorsqu(/^il modifie la note$/) do
-  visit dorsale.expense_gun_edit_expense_path(@expense)
-  fill_in "expense_name", with: "i-am-new-expense-name-value"
-  find("input[type=submit]").click
+  visit dorsale.edit_expense_gun_expense_path(@expense)
+  fill_in "expense_gun_expense_name", with: "i-am-new-expense-name-value"
+  find("[type=submit]").click
 end
 
 Alors(/^la modification de la note est prise en compte$/) do
@@ -60,9 +64,9 @@ Alors(/^la modification de la note est prise en compte$/) do
 end
 
 Lorsqu(/^il modifie une ligne de la note$/) do
-  visit dorsale.expense_gun_edit_expense_expense_line_path(@expense, @expense.expense_lines.first)
+  visit dorsale.edit_expense_gun_expense_expense_line_path(@expense, @expense.expense_lines.first)
   fill_in "expense_line_name", with: "i-am-new-expense-line-name-value"
-  find("input[type=submit]").click
+  find("[type=submit]").click
 end
 
 Alors(/^la modification de la ligne est prise en compte$/) do
@@ -78,7 +82,7 @@ Alors(/^il voit sa note$/) do
 end
 
 Lorsqu(/^il soumet sa note de frais$/) do
-  url = expense_gun.submit_expense_path(@expense)
+  url = dorsale.submit_expense_gun_expense_path(@expense)
   find("a[href='#{url}']").click
 end
 
@@ -92,7 +96,7 @@ Alors(/^la note de frais passe à l'état 'En attente de validation'$/) do
 end
 
 Lorsqu(/^il annule la note de frais$/) do
-  url = expense_gun.cancel_expense_path(@expense)
+  url = dorsale.cancel_expense_gun_expense_path(@expense)
   find("a[href='#{url}']").click
 end
 
@@ -102,11 +106,11 @@ Alors(/^celle\-ci passe à l'état annulée$/) do
 end
 
 Etantdonné(/^une note de frais soumise$/) do
-  @expense = FactoryGirl.create(:expense, state: "submited")
+  @expense = create(:expense_gun_expense, state: "submited")
 end
 
 Lorsqu(/^il va dans l'espace des notes à modérer$/) do
-  visit expense_gun.expenses_path(state: "submited")
+  visit dorsale.expense_gun_expenses_path(state: "submited")
 end
 
 Alors(/^la note de frais apparait$/) do

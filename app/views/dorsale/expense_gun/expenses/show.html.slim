@@ -16,7 +16,7 @@
   p
     span.date
       strong = t("labels.date") + " : "
-      = @expense.date
+      = date @expense.date
       br
     span.user
       strong = t("labels.employee") + " : "
@@ -39,7 +39,7 @@
               = expense_line.name
             p
               strong = t("labels.date") + " : "
-              = expense_line.date
+              = date expense_line.date
             p
               strong = t("labels.category") + " : "
               = expense_line.category.name
@@ -48,13 +48,13 @@
           .col-md-6
             p
               strong = t("labels.total_all_taxes") + " : "
-              = "#{expense_line.total_all_taxes} €"
+              = euros expense_line.total_all_taxes
             p
               strong = t("labels.vat") + " : "
-              = "#{expense_line.vat} €"
+              = euros expense_line.vat
             p
               strong = t("labels.company_part") + " : "
-              = "#{expense_line.company_part} %"
+              = percentage expense_line.company_part
 
       .panel-footer
         .row
@@ -65,10 +65,10 @@
           .col-md-6
             p
               strong = t("labels.employee_payback") + " : "
-              = "#{expense_line.employee_payback} €"
+              = euros expense_line.employee_payback
             p
               strong = t("labels.deductible_vat") + " : "
-              = "#{expense_line.total_vat_deductible} €"
+              = euros expense_line.total_vat_deductible
 
   hr
 
@@ -80,10 +80,10 @@
         .col-md-6
           p
             strong = t("labels.total_all_taxes") + " : "
-            = "#{@expense.total_all_taxes} €"
+            = euros @expense.total_all_taxes
           p
             strong = t("labels.employee_payback") + " : "
-            = "#{@expense.total_employee_payback} €"
+            = euros @expense.total_employee_payback
           p
             strong = t("labels.deductible_vat") + " : "
-            = "#{@expense.total_vat_deductible} €"
+            = euros @expense.total_vat_deductible

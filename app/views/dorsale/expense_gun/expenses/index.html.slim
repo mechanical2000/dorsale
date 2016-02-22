@@ -26,7 +26,7 @@ h1 = t("expense_gun.expense.list")
             .col-md-8
               h2.panel-title = expense.name
             .col-md-4
-              .date = expense.date
+              .date = date expense.date
         .panel-body
           p
             strong = t("labels.employee") + " : "
@@ -38,7 +38,7 @@ h1 = t("expense_gun.expense.list")
 
           p
             strong = t("labels.total_all_taxes") + " : "
-            = "#{expense.total_all_taxes} €"
+            = euros expense.total_all_taxes
 
         .panel-footer
           = link_to t("expense_gun.expense.show"), dorsale.expense_gun_expense_path(expense), class: "btn btn-default"

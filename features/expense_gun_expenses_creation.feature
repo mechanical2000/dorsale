@@ -12,6 +12,7 @@ Fonctionnalité: Déclaration d'une note de frais
   Une note refusée ou annulée ne peut plus être modifiée.
 
   Scénario: Déclaration d'une note de frais
+    Etant donné une categorie de fras
     Lorsqu'il va dans l'espace de notes de frais
     Et il déclare un frais
     Et il saisit le nom et la date de la note de frais puis valide
