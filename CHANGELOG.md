@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- Add ExpenseGun
+
 ## 2.2.16
 
 - Fix tasks cron
