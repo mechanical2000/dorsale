@@ -1,5 +1,11 @@
 source "https://rubygems.org"
-ruby File.read(File.join(__dir__, ".ruby-version")).strip
+
+ruby_version_file = File.join(__dir__, ".ruby-version")
+if File.exists?(ruby_version_file)
+  ruby File.read(ruby_version_file).strip
+else
+  puts ".ruby-version file not found"
+end
 
 gem "rails", "~> 4.2.1"
 gem 'devise'
