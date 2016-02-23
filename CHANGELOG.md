@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+
+- Fix path on expense status
+
 ## 2.3.0
 
 - Add ExpenseGun
