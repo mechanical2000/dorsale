@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+- Small changes on users list
+
 ## 2.3.1
 
 - Fix path on expense status
