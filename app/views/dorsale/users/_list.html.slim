@@ -1,8 +1,9 @@
 table.default
   thead
     tr
-      th = t("attributes.avatar")
-      th = t("attributes.email")
+      th = User.t(:avatar)
+      th = User.t(:name)
+      th = User.t(:email)
       th = t("actions.actions")
 
   tbody
@@ -11,8 +12,11 @@ table.default
         td.user-avatar
           = avatar_img(user)
 
+        td.user-name
+          = user.try(:name)
+
         td.user-email
-          = user
+          = user.email
 
         td.actions
           = update_button dorsale.edit_user_path(user)
