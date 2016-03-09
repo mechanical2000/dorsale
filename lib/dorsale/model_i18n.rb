@@ -4,6 +4,10 @@ module Dorsale
       self.class.t(*args)
     end
 
+    def ts
+      self.class.ts
+    end
+
     def self.included(model)
       model.instance_eval do
         def t(*args)
@@ -13,9 +17,14 @@ module Dorsale
             model_name.human
           end
         end
-      end
-    end
-  end
-end
+
+        def ts
+          model_name.human(count: 2)
+        end
+
+      end # instance_eval
+    end # def included
+  end # ModelI18n
+end # Dorsale
 
 ActiveRecord::Base.send(:include, ::Dorsale::ModelI18n)
