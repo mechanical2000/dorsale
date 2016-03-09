@@ -4,12 +4,14 @@ module Dorsale
       extend ActiveSupport::Concern
 
       def setup_tasks_summary
-        tasks = current_user_scope.tasks.where("(owner_id is null and owner_type is null) or (owner_id = ? and owner_type = ?)", current_user.id, current_user.class.name)
-        @delayed_tasks   = tasks.delayed
-        @today_tasks     = tasks.today
-        @tomorrow_tasks  = tasks.tomorrow
-        @this_week_tasks = tasks.this_week
-        @next_week_tasks = tasks.next_week
+        tasks = current_user_scope.tasks.where("(owner_id IS NULL and owner_type IS NULL) OR (owner_id = ? and owner_type = ?)", current_user.id, current_user.class)
+
+        @delayed_tasks        = tasks.delayed
+        @today_tasks          = tasks.today
+        @tomorrow_tasks       = tasks.tomorrow
+        @this_week_tasks      = tasks.this_week
+        @next_week_tasks      = tasks.next_week
+        @next_next_week_tasks = tasks.next_next_week
       end
 
     end

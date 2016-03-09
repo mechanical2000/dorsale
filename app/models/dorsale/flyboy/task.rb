@@ -16,11 +16,28 @@ module Dorsale
       polymorphic_id_for :taskable
       polymorphic_id_for :owner
 
-      scope :delayed, -> { where('term < ?', Date.today).where(done: false)}
-      scope :today, -> { where('term = ?', Date.today).where(done: false)}
-      scope :tomorrow, -> { where('term = ?', Date.tomorrow).where(done: false)}
-      scope :this_week, -> { where('term > ?', Date.tomorrow).where('term <= ?', Date.today.end_of_week).where(done: false)}
-      scope :next_week, -> { where('term > ?', Date.today.end_of_week).where('term <= ?', (Date.today.end_of_week+1).end_of_week).where(done: false)}
+      scope :delayed,  -> { where(done: false).where("term < ?", Date.today)    }
+      scope :today,    -> { where(done: false).where("term = ?", Date.today)    }
+      scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow) }
+
+      scope :this_week, -> {
+        min = Date.tomorrow
+        max = Date.today.end_of_week
+        where(done: false).where("term > ?", min).where("term <= ?", max)
+      }
+
+      scope :next_week, -> {
+        min = Date.today.end_of_week
+        max = Date.today.next_week.end_of_week
+        where(done: false).where("term > ?", min).where("term <= ?", max)
+      }
+
+      scope :next_next_week, -> {
+        min = Date.today.next_week.end_of_week
+        max = Date.today.next_week.next_week.end_of_week
+        where(done: false).where("term > ?", min).where("term <= ?", max)
+      }
+
 
       validates :taskable, presence: true
       validates :name,    presence: true

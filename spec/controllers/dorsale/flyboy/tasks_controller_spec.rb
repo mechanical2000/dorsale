@@ -273,59 +273,65 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   end
 
   describe "summary" do
-
     let(:summary_user) { create :user }
     let(:folder) { create(:flyboy_folder) }
 
     before(:each) do
       Dorsale::Flyboy::Task.destroy_all
       sign_in summary_user
-    end
 
-    it 'should return own and unasigned delayed tasks' do
-      create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today - 1)
-      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today - 1 )
-      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today )
+      Timecop.travel "2016-03-09 15:00:00" do
+        @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
+        @today_task          = create(:flyboy_task, term: Date.today)               # thursday - today
+        @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
+        @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
+        @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week
+        @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday next next week
+      end
+
       controller.setup_tasks_summary
-      expect(assigns(:delayed_tasks).count).to eq 2
     end
 
-    it 'should return own and unasigned today\'s tasks' do
-      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today)
-      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today-1)
-      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today)
-      controller.setup_tasks_summary
-      expect(assigns(:today_tasks).count).to eq 2
-    end
+    it "should not assign tasks when owner is an other person" do
+      other_user = create(:user)
+      Dorsale::Flyboy::Task.update_all(owner_id: other_user.id, owner_type: other_user.class)
 
-    it 'should return own and unasigned tomorrow\'s tasks' do
-      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today+1)
-      create(:flyboy_task, taskable: folder, owner: summary_user, done: false, term: Date.today)
-      create(:flyboy_task, taskable: folder, owner: nil, done: false, term: Date.today+1)
-      controller.setup_tasks_summary
-      expect(assigns(:tomorrow_tasks).count).to eq 2
-    end
-
-    it 'should return own and unasigned this week tasks' do
-      Timecop.travel(2015, 5, 21, 12, 0, 0) do
-        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today)
-        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today + 2)
-        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today+10)
-        create(:flyboy_task, taskable: folder, done: false, owner: nil, term: Date.today + 3)
-        controller.setup_tasks_summary
-        expect(assigns(:this_week_tasks).count).to eq 2
+      Timecop.travel "2016-03-09 15:00:00" do
+        expect(assigns(:delayed_tasks)).to        eq []
+        expect(assigns(:today_tasks)).to          eq []
+        expect(assigns(:tomorrow_tasks)).to       eq []
+        expect(assigns(:this_week_tasks)).to      eq []
+        expect(assigns(:next_week_tasks)).to      eq []
+        expect(assigns(:next_next_week_tasks)).to eq []
       end
     end
 
-    it 'should return own and unasigned next week tasks' do
-      Timecop.travel(2015, 5, 21, 12, 0, 0) do
-        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today)
-        create(:flyboy_task, taskable: folder, done: false, owner: summary_user, term: Date.today+7)
-        create(:flyboy_task, taskable: folder, done: false, owner: nil, term: Date.today+7)
-        controller.setup_tasks_summary
-        expect(assigns(:next_week_tasks).count).to eq 2
+    it "should assign tasks when owner is nil" do
+      Dorsale::Flyboy::Task.update_all(owner_id: nil, owner_type: nil)
+
+      Timecop.travel "2016-03-09 15:00:00" do
+        expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
+        expect(assigns(:today_tasks)).to          eq [@today_task]
+        expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
+        expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
+        expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
+        expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
       end
     end
-  end
+
+    it "should assign tasks when owner is me" do
+      Dorsale::Flyboy::Task.update_all(owner_id: summary_user.id, owner_type: summary_user.class)
+
+      Timecop.travel "2016-03-09 15:00:00" do
+        expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
+        expect(assigns(:today_tasks)).to          eq [@today_task]
+        expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
+        expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
+        expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
+        expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
+      end
+    end
+
+  end # describe summary
 
 end
