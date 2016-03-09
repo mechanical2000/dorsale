@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.3
+
+- Helpers small changes
+
 ## 2.3.2
 
 - Small changes on users list
