@@ -43,6 +43,10 @@ describe Dorsale::TextHelper, type: :helper do
     expect(text2html("<b>hello</b> world")).to eq "hello world"
   end
 
+  it "should work with module calls" do
+    expect(Dorsale::AllHelpers.number(1.2)).to eq "1,20"
+  end
+
   describe "#info" do
     let(:quotation_line) {
       l = create(:billing_machine_quotation_line,
