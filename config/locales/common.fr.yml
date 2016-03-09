@@ -141,6 +141,8 @@ fr:
     attachment            : "Pièce jointe"
     avatar                : "Avatar"
     current_avatar        : "Avatar actuel"
+    logo                  : "Logo"
+    active                : "Actif ?"
 
     # BillingMachine
     unit                  : "Unité"
@@ -167,9 +169,14 @@ fr:
   time_periods:
     all_time: "Depuis toujours"
     today: "Aujourd'hui"
+    tomorrow: "Demain"
     week: "Cette semaine"
     month: "Ce mois"
     year: "Cette année"
+    delayed: "En retard"
+    this_week: "Cette semaine"
+    next_week: "La semaine prochaine"
+    next_next_week: "Dans deux semaines"
 
   labels:
     <<: *attributes

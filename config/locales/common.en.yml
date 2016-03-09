@@ -130,6 +130,8 @@ en:
     attachment            : "Attachment"
     avatar                : "Avatar"
     current_avatar        : "Current avatar"
+    logo                  : "Logo"
+    active                : "Active ?"
 
     # BillingMachine
     unit                  : "Unit"
@@ -158,6 +160,10 @@ en:
     week: "This week"
     month: "This month"
     year: "This year"
+    delayed: "Delayed"
+    this_week: "This week"
+    next_week: "Next week"
+    next_next_week: "In two weeks"
 
 
   labels:
