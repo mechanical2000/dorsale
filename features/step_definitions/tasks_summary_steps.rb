@@ -15,16 +15,16 @@ When(/^he go to the tasks summary page$/) do
 end
 
 Then(/^the task is classed as 'expired'$/) do
-  expect(page).to have_content('Delayed')
+  expect(page).to have_content("En retard")
   expect(page).to have_content(@task.name)
 end
 
 Then(/^the task is classed as 'Expire Today'$/) do
-  expect(page).to have_content('Today')
+  expect(page).to have_content("Aujourd'hui")
   expect(page).to have_content(@task.name)
 end
 
 Then(/^the task is classed as 'Expire tommorow'$/) do
-  expect(page).to have_content('Tomorrow')
+  expect(page).to have_content("Demain")
   expect(page).to have_content(@task.name)
 end
