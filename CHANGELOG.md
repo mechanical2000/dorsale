@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.4
+
+- Use `polymorphic_path` instead of `url_for`
+
 ## 2.3.3
 
 - Helpers small changes
