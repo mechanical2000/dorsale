@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.5
+
+- Add "In two weeks" on tasks summary
+- Add Model::ts to i18n plural model name
+
 ## 2.3.4
 
 - Use `polymorphic_path` instead of `url_for`
