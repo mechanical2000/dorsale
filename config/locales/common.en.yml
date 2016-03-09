@@ -130,6 +130,8 @@ en:
     attachment            : "Attachment"
     avatar                : "Avatar"
     current_avatar        : "Current avatar"
+    logo                  : "Logo"
+    active                : "Active ?"
 
     # BillingMachine
     unit                  : "Unit"

@@ -141,6 +141,8 @@ fr:
     attachment            : "Pièce jointe"
     avatar                : "Avatar"
     current_avatar        : "Avatar actuel"
+    logo                  : "Logo"
+    active                : "Actif ?"
 
     # BillingMachine
     unit                  : "Unité"
