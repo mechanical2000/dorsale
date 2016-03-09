@@ -32,7 +32,7 @@ module Dorsale
 
         if @link.save
           flash[:notice] = t("messages.links.create_ok")
-          redirect_to url_for(@person) + "#links"
+          redirect_to polymorphic_path(@person) + "#links"
         else
           render :new
         end
@@ -45,7 +45,7 @@ module Dorsale
 
         if @link.update(link_params)
           flash[:notice] = t("messages.links.update_ok")
-          redirect_to url_for(@person) + "#links"
+          redirect_to polymorphic_path(@person) + "#links"
         else
           render :edit
         end
@@ -62,7 +62,7 @@ module Dorsale
           flash[:alert] = t("messages.links.destroy_error")
         end
 
-        redirect_to url_for(@person) + "#links"
+        redirect_to polymorphic_path(@person) + "#links"
       end
 
 

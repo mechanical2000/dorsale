@@ -20,7 +20,7 @@
   ul
     - person.links.map do |link|
       li
-        a href=dorsale.url_for(link[:person])
+        a href=dorsale.polymorphic_path(link[:person])
           = link[:person].name
         = " / "
         = link[:title]
