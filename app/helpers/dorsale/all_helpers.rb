@@ -1,5 +1,7 @@
 module Dorsale
   module AllHelpers
+    include ::ActionView::Helpers::NumberHelper
+
     include ::Dorsale::ButtonHelper
     include ::Dorsale::CommentsHelper
     include ::Dorsale::ContextHelper
@@ -13,5 +15,7 @@ module Dorsale
     include ::Dorsale::Alexandrie::AttachmentsHelper
     include ::Dorsale::Flyboy::ApplicationHelper
     include ::Dorsale::UsersHelper
+
+    extend self
   end
 end

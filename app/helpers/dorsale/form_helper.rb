@@ -2,7 +2,8 @@ module Dorsale
   module FormHelper
     def form_buttons(opts = {})
      back_url = opts[:back_url]
-     back_url = url_for(:back).html_safe if back_url.nil?
+     back_url = url_for(:back).html_safe if back_url.blank?
+     back_url = URI(back_url).path       if back_url.include?("://")
 
       if opts[:obj].present?
         if opts[:obj].new_record?
@@ -16,11 +17,11 @@ module Dorsale
 
       content_tag("div", class: "actions") do
         submit = content_tag(:button, type: :submit, class: "btn btn-sm btn-success") do
-          icon(:save) + " " + t("actions.#{submit_action}")
+          content_tag(:span, class: "fa fa-save") {} + " " + t("actions.#{submit_action}")
         end
 
         cancel = content_tag("a", href: back_url, class: "btn btn-primary btn-sm") do
-          icon(:times) + " " + t("actions.cancel")
+          content_tag(:span, class: "fa fa-times"){} + " " + t("actions.cancel")
         end
 
         cancel = "" if back_url == false

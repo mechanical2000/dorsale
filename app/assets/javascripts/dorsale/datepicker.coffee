@@ -1,5 +1,7 @@
 $(document).on "ready page:load", ->
   $("input[type*=date], input[name*=date], input[name$=_at]").map ->
+    return if this.type == "hidden"
+
     this.type = "text"
 
     if this.value.match("-")
