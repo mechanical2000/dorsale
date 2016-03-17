@@ -11,6 +11,10 @@ module Dorsale
         :dependent  => :destroy,
         :class_name => ::Dorsale::Alexandrie::Attachment
 
+
+      belongs_to :user, class_name: User
+      validates :user, presence: true
+
       validates :name, presence: true
       validates :date, presence: true
 
