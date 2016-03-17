@@ -55,4 +55,15 @@ class Dorsale::UserScope
     (individuals + corporations).sort_by { |e| e.name.downcase }
   end
 
+  # ExpenseGun
+
+  def expenses
+    Dorsale::ExpenseGun::Expense.all
+  end
+
+  def new_expense(attributes = {})
+    attributes = attributes.merge(user: user)
+    expenses.new(attributes)
+  end
+
 end

@@ -4,6 +4,9 @@ Fonctionnalité: Modération des notes de frais
   En tant que manager
   Je veux modérer les notes de frais de mes collaborateurs
   Afin de les rembourser
+  
+  Contexte:
+    Etant donné un utilisateur connecté
 
   Scénario: Validation d'une note de frais
     Etant donné une note de frais soumise

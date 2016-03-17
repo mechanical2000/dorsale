@@ -55,4 +55,14 @@ class Dorsale::UserScope
     raise NotImplementedError
   end
 
+  #ExpenseGun
+
+  def expenses
+    raise NotImplementedError
+  end
+
+  def new_expense(attributes = {})
+    raise NotImplementedError
+  end
+
 end
