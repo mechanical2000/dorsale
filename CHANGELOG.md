@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.0
+
+- Change filters - break compatibility but easy to fix
+- Add documents on expenses
+
 ## 2.3.5
 
 - Add "In two weeks" on tasks summary
