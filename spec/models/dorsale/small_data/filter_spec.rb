@@ -18,11 +18,13 @@ module Dorsale
         f.store(filter)
         expect(f.read).to eq(filter)
       end
+
       it "should return empty hash by default" do
         expect(f.read).to eq({})
       end
+
       it "should return empty hash on invalid json" do
-        jar["filters"] = "ce json est invalide"
+        jar["filters"] = "i am invalid"
         expect(f.read).to eq({})
       end
     end

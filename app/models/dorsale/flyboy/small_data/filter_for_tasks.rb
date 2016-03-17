@@ -3,17 +3,9 @@ module Dorsale
     module SmallData
       class FilterForTasks < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          "fb_status" => FilterStrategyByDone.new("tasks"),
-          "owner"     => FilterStrategyByOwner.new("tasks")
+          "fb_status" => FilterStrategyByDone.new,
+          "owner"     => ::Dorsale::SmallData::FilterStrategyByKeyValue.new("owner_id")
         }
-
-        def strategy key
-          STRATEGIES[key]
-        end
-
-        def target
-          "tasks"
-        end
       end
     end
   end

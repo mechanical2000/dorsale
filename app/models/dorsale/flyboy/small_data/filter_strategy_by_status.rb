@@ -2,8 +2,8 @@ module Dorsale
   module Flyboy
     module SmallData
       class FilterStrategyByStatus < ::Dorsale::SmallData::FilterStrategy
-        def do_apply query
-          if @value == "closed"
+        def apply(query, value)
+          if value == "closed"
             query.where(status: "closed")
           else
             query.where.not(status: "closed")
