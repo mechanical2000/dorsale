@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   it "expense factory should be valid?" do
-    expect(FactoryGirl.build(:expense_gun_expense)).to be_valid
+    expect(build(:expense_gun_expense)).to be_valid
   end
 
   it "shoud validates presence of name" do
-    expect(FactoryGirl.build(:expense_gun_expense)).to validate_presence_of :name
+    expect(build(:expense_gun_expense)).to validate_presence_of :name
   end
 
   it "shoud validates presence of date" do
-    expect(FactoryGirl.build(:expense_gun_expense)).to validate_presence_of :date
+    expect(build(:expense_gun_expense)).to validate_presence_of :date
   end
 
   it "default #date should be tody" do
@@ -23,7 +23,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
 
   describe "new state" do
     before :each do
-      @expense = FactoryGirl.build(:expense_gun_expense)
+      @expense = build(:expense_gun_expense)
     end
 
     it "new expense can be submited" do
@@ -94,7 +94,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
 
   describe "refused state" do
     before :each do
-      @expense = FactoryGirl.build(:expense_gun_expense)
+      @expense = build(:expense_gun_expense)
       @expense.submit
       @expense.refuse
     end
@@ -138,25 +138,25 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "#total_all_taxes should return sum of lines" do
-    expense = FactoryGirl.build(:expense_gun_expense, expense_lines: [])
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, total_all_taxes: 10)
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, total_all_taxes: 10)
+    expense = build(:expense_gun_expense, expense_lines: [])
+    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10)
+    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10)
     expect(expense.total_all_taxes).to eq 20.0
   end
 
   it "#total_employee_payback should return sum of lines" do
     expense = FactoryGirl.build(:expense_gun_expense, expense_lines: [])
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 100)
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 50)
+    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 100)
+    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 50)
     expect(expense.total_employee_payback).to eq 15.0
   end
 
   it "#total_vat_deductible should return sum of lines" do
-    expense = FactoryGirl.build(:expense_gun_expense, expense_lines: [])
-    category1 = FactoryGirl.build(:expense_gun_category, vat_deductible: true)
-    category2 = FactoryGirl.build(:expense_gun_category, vat_deductible: false)
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, vat: 10, category: category1, company_part: 50)
-    expense.expense_lines << FactoryGirl.build(:expense_gun_expense_line, vat: 10, category: category2, company_part: 50)
+    expense = build(:expense_gun_expense, expense_lines: [])
+    category1 = build(:expense_gun_category, vat_deductible: true)
+    category2 = build(:expense_gun_category, vat_deductible: false)
+    expense.expense_lines << build(:expense_gun_expense_line, vat: 10, category: category1, company_part: 50)
+    expense.expense_lines << build(:expense_gun_expense_line, vat: 10, category: category2, company_part: 50)
     expect(expense.total_vat_deductible).to eq 5.0
   end
 
@@ -169,7 +169,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "destroy an expense should destroy associated expense lines" do
-    expense          = FactoryGirl.create(:expense_gun_expense)
+    expense          = create(:expense_gun_expense)
     expense_line_ids = expense.expense_lines.map(&:id)
     expect(expense_line_ids.any?).to be true
     expense.destroy

@@ -20,7 +20,7 @@
       br
     span.user
       strong = t("labels.employee") + " : "
-      = @expense.user.full_name if @expense.respond_to?(:user)
+      = @expense.user.to_s if @expense.respond_to?(:user)
       br
     span.state class="#{@expense.state}"
       strong = t("labels.state") + " : "
@@ -87,3 +87,8 @@
           p
             strong = t("labels.deductible_vat") + " : "
             = euros @expense.total_vat_deductible
+
+  .attachments-panel
+    = panel title: @expense.t(:documents)
+      .panel-body
+        = attachments_for @expense
