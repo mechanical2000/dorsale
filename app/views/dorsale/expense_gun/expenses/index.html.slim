@@ -30,7 +30,7 @@ h1 = t("expense_gun.expense.list")
         .panel-body
           p
             strong = t("labels.employee") + " : "
-            = expense.user.full_name if expense.respond_to?(:user)
+            = expense.user.to_s if expense.respond_to?(:user)
 
           p
             strong = t("labels.state") + " : "

@@ -12,13 +12,13 @@ module Dorsale
         end
 
         if params[:state] == "all"
-          @expenses ||= current_user.expenses
+          @expenses ||= current_user_scope.expenses
         else
-          @expenses ||= current_user.expenses.where(state: params[:state])
+          @expenses ||= current_user_scope.expenses.where(state: params[:state])
         end
 
         @expenses = @expenses.page(params[:page])
-        @all_expenses ||=  current_user.expenses
+        @all_expenses ||=  current_user_scope.expenses
       end
 
       def new
@@ -30,7 +30,7 @@ module Dorsale
       def create
         authorize! :create, Expense
 
-        @expense = current_user.expenses.new(expense_params)
+        @expense = current_user_scope.new_expense(expense_params)
 
         if @expense.save
           flash[:success] = t("expense_gun.expense.flash.created")

@@ -24,6 +24,11 @@ Given(/^an existing user$/) do
   sign_in @user
 end
 
+Etantdonné(/^un utilisateur connecté$/) do
+  @user = create(:user)
+  sign_in @user
+end
+
 Given(/^an active user$/) do
   @user = create(:user)
 end

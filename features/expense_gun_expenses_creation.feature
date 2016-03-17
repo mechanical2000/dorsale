@@ -10,6 +10,9 @@ Fonctionnalité: Déclaration d'une note de frais
   Une note en attente de soumission ne peut plus être modifiée par le collaborateur et ne peut être qu'annulée.
   Une note validée ne peut plus être modifiée par personne et peut être téléchargée au format PDF.
   Une note refusée ou annulée ne peut plus être modifiée.
+  
+  Contexte:
+    Etant donné un utilisateur connecté
 
   Scénario: Déclaration d'une note de frais
     Etant donné une categorie de fras
