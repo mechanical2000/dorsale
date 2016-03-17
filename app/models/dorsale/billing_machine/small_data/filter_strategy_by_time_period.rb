@@ -1,21 +1,15 @@
 module Dorsale
   module BillingMachine
     module SmallData
-      class FilterStrategyByTimePeriod < ::Dorsale::SmallData::FilterStrategy
-        def do_apply query
-          if query.model.attribute_names.include?("day")
-            field = :day
-          else
-            field = :date
-          end
+      class FilterStrategyByTimePeriod < ::Dorsale::SmallData::FilterStrategyByKeyValue
+        def apply(query, value)
+          criteria = "#{query.model.table_name}.#{key}"
 
-          criteria = "#{query.model.table_name}.#{field}"
-
-          if @value == "today"
+          if value == "today"
             return query.where("#{criteria} >= ?", Date.today)
-          elsif @value == "week"
+          elsif value == "week"
             return query.where("#{criteria} >= ?", Date.today.at_beginning_of_week)
-          elsif @value == "month"
+          elsif value == "month"
             return query.where("#{criteria} >= ?", Date.today.at_beginning_of_month)
           else
             return query

@@ -1,25 +1,18 @@
 module Dorsale
   module SmallData
     class Filter
-
       def initialize(jar)
         @jar = jar
       end
 
       def store(filters)
-        @jar['filters'] = filters.to_json
+        @jar["filters"] = filters.to_json
       end
 
       def read
-        if @jar['filters']
-          begin
-            JSON.parse @jar['filters']
-          rescue JSON::ParserError
-            {}
-          end
-        else
-          {}
-        end
+        JSON.parse @jar["filters"].to_s
+      rescue JSON::ParserError
+        {}
       end
 
       def get(key)
@@ -32,19 +25,31 @@ module Dorsale
         store(array)
       end
 
-      def apply(query)
-        read.each do |key, value|
-          filter = strategy(key)
+      def strategies
+        self.class::STRATEGIES
+      end
 
-          if filter && filter.applies?(self.target)
-            filter.set(key, value)
-            query = filter.apply(query)
-          end
+      def apply(query)
+        strategies.each do |key, strategy|
+          value = get(key)
+
+          next if value.blank?
+
+          query = strategy.apply(query, value)
         end
 
         return query
       end
 
-    end
-  end
-end
+      def method_missing(method, *args)
+        key = method.to_s
+
+        if strategies.key?(key)
+          get(key)
+        else
+          super
+        end
+      end
+    end # Filter
+  end # SmallData
+end # Dorsale

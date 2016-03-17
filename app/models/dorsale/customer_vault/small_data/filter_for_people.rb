@@ -3,16 +3,8 @@ module Dorsale
     module SmallData
       class FilterForPeople < ::Dorsale::SmallData::Filter
         STRATEGIES = {
-          "tags" => ::Dorsale::CustomerVault::SmallData::FilterStrategyByTags.new("people")
+          "tags" => ::Dorsale::CustomerVault::SmallData::FilterStrategyByTags.new
         }
-
-        def strategy key
-          STRATEGIES[key]
-        end
-
-        def target
-          "people"
-        end
       end
     end
   end

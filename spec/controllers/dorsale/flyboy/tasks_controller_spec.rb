@@ -288,8 +288,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week
         @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday next next week
       end
-
-      controller.setup_tasks_summary
     end
 
     it "should not assign tasks when owner is an other person" do
@@ -297,6 +295,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       Dorsale::Flyboy::Task.update_all(owner_id: other_user.id, owner_type: other_user.class)
 
       Timecop.travel "2016-03-09 15:00:00" do
+        controller.setup_tasks_summary
         expect(assigns(:delayed_tasks)).to        eq []
         expect(assigns(:today_tasks)).to          eq []
         expect(assigns(:tomorrow_tasks)).to       eq []
@@ -310,6 +309,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       Dorsale::Flyboy::Task.update_all(owner_id: nil, owner_type: nil)
 
       Timecop.travel "2016-03-09 15:00:00" do
+        controller.setup_tasks_summary
         expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
         expect(assigns(:today_tasks)).to          eq [@today_task]
         expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
@@ -323,6 +323,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       Dorsale::Flyboy::Task.update_all(owner_id: summary_user.id, owner_type: summary_user.class)
 
       Timecop.travel "2016-03-09 15:00:00" do
+        controller.setup_tasks_summary
         expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
         expect(assigns(:today_tasks)).to          eq [@today_task]
         expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
