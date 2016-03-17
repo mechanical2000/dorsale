@@ -6,6 +6,11 @@ module Dorsale
 
       has_many :expense_lines, inverse_of: :expense, dependent: :destroy, class_name: ::Dorsale::ExpenseGun::ExpenseLine
 
+       has_many :attachments,
+        :as         => :attachable,
+        :dependent  => :destroy,
+        :class_name => ::Dorsale::Alexandrie::Attachment
+
       validates :name, presence: true
       validates :date, presence: true
 
