@@ -181,19 +181,25 @@ module Dorsale
             fill_color BLACK
           end
 
+          customer_text = []
+          customer_text << @main_document.customer.name
+          customer_text << @main_document.customer.address.street
+          customer_text <<  @main_document.customer.address.street_bis
+          customer_text << "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}"
+          customer_text << @main_document.customer.address.country
 
-          bounding_box [bounds.left + padding, bounds.top - padding], height: bounds.height - padding, width: bounds.width - padding do
-            if @main_document.customer.present?
-              text @main_document.customer.name if @main_document.customer.name.present?
-              text @main_document.customer.address.street if @main_document.customer.address.street.present?
-              text @main_document.customer.address.street_bis if @main_document.customer.address.street_bis.present?
-              text "#{@main_document.customer.address.zip} #{@main_document.customer.address.city}, #{@main_document.customer.address.country}" if @main_document.customer.address.zip.present? || @main_document.customer.address.city.present? || @main_document.customer.address.country.present?
-              text "#{@main_document.customer.t :european_union_vat_number} :\n#{@main_document.customer.european_union_vat_number}" if @main_document.customer.try(:european_union_vat_number).present?
-            end
+          if @main_document.customer.try(:european_union_vat_number).present?
+            customer_text << @main_document.customer.t(:european_union_vat_number)
+            customer_text << @main_document.customer.european_union_vat_number
           end
 
+          customer_text = customer_text.select(&:present?).join("\n")
+
+          bounding_box [bounds.left + padding, bounds.top - padding], height: bounds.height - padding, width: bounds.width - padding do
+            text customer_text
+          end
         end
-      end
+      end # def build_customer
 
       def build_middle
         left   = bounds.left
