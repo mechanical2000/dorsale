@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.2
+
+- Minor fix in invoice PDF
+
 ## 2.4.1
 
 - ExpenseGun small fixes
