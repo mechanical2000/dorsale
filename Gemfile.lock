@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (2.4.2)
+    dorsale (2.4.3)
       aasm
       acts-as-taggable-on
       awesome_print

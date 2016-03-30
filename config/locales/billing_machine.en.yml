@@ -60,7 +60,7 @@ en:
         custom_info_2: "custom informations (2)"
         custom_info_3: "custom informations (3)"
         logo: "logo"
-  pdf:
+  pdfs:
     your_contact: "Your contact : "
     contact_phone: "Phone : "
     contact_email: "Email : "
@@ -83,7 +83,12 @@ en:
     capital: "capital :"
     registration: "registration :"
     siret: "SIRET "
-    tva: "TVA "
+    vat: "VAT "
+    vat_amount: "VAT AMOUNT"
+    commercial_discount: "DISCOUNT"
+    total_excluding_taxes: "SUBTOTAL"
+    advance: "ADVANCE"
+    total_including_taxes: "TOTAL"
     expires_at: "Expires at : "
 
   emails:
