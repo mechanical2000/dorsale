@@ -51,12 +51,14 @@ module Dorsale
           repeat :all do
             build_line
           end
-          table_products = [[I18n.t("pdfs.designation"),
-            I18n.t("pdfs.quantity"),
-            I18n.t("pdfs.unity"),
-            I18n.t("pdfs.tax"),
-            I18n.t("pdfs.unit_price"),
-            I18n.t("pdfs.line_total")]]
+          table_products = [[
+            main_document.t(:designation),
+            main_document.t(:quantity),
+            main_document.t(:unit),
+            main_document.t(:tax),
+            main_document.t(:unit_price),
+            main_document.t(:line_total),
+          ]]
 
 
           @main_document.lines.each do |line|
@@ -93,18 +95,37 @@ module Dorsale
           table_totals = [[]]
 
           if has_discount
-            table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", "\- #{euros(@main_document.commercial_discount)}"]
+            table_totals.push [
+              main_document.t(:commercial_discount).upcase,
+              "\- #{euros(@main_document.commercial_discount)}",
+            ]
           end
 
-          table_totals.push ["#{I18n.t("pdfs.total_excluding_taxes")}", euros(@main_document.total_excluding_taxes)]
+          table_totals.push [
+            main_document.t(:total_excluding_taxes).upcase,
+            euros(@main_document.total_excluding_taxes),
+          ]
 
-          table_totals.push ["#{I18n.t("pdfs.vat_amount")}", euros(@main_document.vat_amount)]
+          table_totals.push [
+            main_document.t(:vat_amount).upcase,
+            euros(@main_document.vat_amount),
+          ]
 
           if has_advance
-            table_totals.push ["#{I18n.t("pdfs.advance")}", euros(@main_document.advance)]
-            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.balance)]
+            table_totals.push [
+              main_document.t(:advance).upcase,
+              euros(@main_document.advance),
+            ]
+
+            table_totals.push [
+              main_document.t(:total_including_taxes).upcase,
+              euros(@main_document.balance),
+            ]
           else
-            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.total_including_taxes)]
+            table_totals.push [
+              main_document.t(:total_including_taxes).upcase,
+              euros(@main_document.total_including_taxes),
+            ]
           end
 
           table table_totals,

@@ -122,8 +122,13 @@ module Dorsale
         end
       end
 
-      def address_line
-        [@id_card.address1,@id_card.address2, @id_card.zip, @id_card.city].select(&:present?).join(", ")
+      def contact_address_line
+        [
+          @id_card.address1,
+          @id_card.address2,
+          @id_card.zip,
+          @id_card.city,
+        ].select(&:present?).join(", ")
       end
 
       def build_contact
@@ -132,16 +137,20 @@ module Dorsale
         width  = bounds.width / 2 - 1.1.cm
         height = 2.5.cm
 
+        contact_text = []
+        contact_text << "<b>#{@id_card.entity_name}</b>"                                           if @id_card.entity_name.present?
+        contact_text << "<b>#{contact_address_line}</b>"                                           if contact_address_line.present?
+        contact_text << " "
+        contact_text << "<b>#{main_document.t(:your_contact)} : #{@id_card.contact_full_name}</b>" if @id_card.contact_full_name.present?
+        contact_text << "<b>#{main_document.t(:contact_phone)} : </b> #{@id_card.contact_phone}"   if @id_card.contact_phone.present?
+        contact_text << "<b>#{main_document.t(:contact_fax)} : </b> #{@id_card.contact_fax}"       if @id_card.contact_fax.present?
+        contact_text << "<b>#{main_document.t(:contact_email)} : </b> #{@id_card.contact_email}"   if @id_card.contact_email.present?
+        contact_text = contact_text.join("\n")
+
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
           font_size 8 do
-          text "<b>#{@id_card.entity_name}</b>", inline_format: true if @id_card.entity_name.present?
-          text "<b>#{address_line} </b>", inline_format: true
-          text " "
-          text "<b>#{I18n.t("pdfs.your_contact")} : #{@id_card.contact_full_name}</b>", inline_format: true if @id_card.contact_full_name.present?
-          text "<b>#{I18n.t("pdfs.contact_phone")}</b>  #{@id_card.contact_phone}", inline_format: true if @id_card.contact_phone.present?
-          text "<b>#{I18n.t("pdfs.contact_fax")}</b> #{@id_card.contact_fax}",   inline_format: true if @id_card.contact_fax.present?
-          text "<b>#{I18n.t("pdfs.contact_email")}</b> #{@id_card.contact_email}",   inline_format: true if @id_card.contact_email.present?
+            text contact_text, inline_format: true
           end
         end
       end
@@ -156,12 +165,12 @@ module Dorsale
           draw_bounds_debug
 
           if @main_document.label.present?
-            text "<b>#{I18n.t("pdfs.subject")}</b> #{@main_document.label}", inline_format: true
+            text "<b>#{main_document.t(:label)} : </b> #{@main_document.label}", inline_format: true
           end
 
           if @main_document.date.present?
             move_down 3.mm
-            text "<b>#{@main_document.t :date} :</b> #{date @main_document.date}", inline_format: true
+            text "<b>#{main_document.t(:date)} : </b> #{date @main_document.date}", inline_format: true
           end
         end
       end
@@ -237,15 +246,18 @@ module Dorsale
 
         bounding_box [left, top], width: width, height: 8.8.cm do
           draw_bounds_debug
+
           repeat :all do
             build_line
           end
-          table_products = [[I18n.t("pdfs.designation"),
-            I18n.t("pdfs.quantity"),
-            I18n.t("pdfs.unity"),
-            I18n.t("pdfs.unit_price"),
-            I18n.t("pdfs.line_total")]]
 
+          table_products = [[
+            main_document.t(:designation),
+            main_document.t(:quantity),
+            main_document.t(:unit),
+            main_document.t(:unit_price),
+            main_document.t(:line_total),
+          ]]
 
           @main_document.lines.each do |line|
             table_products.push [line.label,
@@ -280,19 +292,38 @@ module Dorsale
           table_totals = [[]]
 
           if has_discount
-            table_totals.push ["#{I18n.t("pdfs.commercial_discount")}", "\- #{euros(@main_document.commercial_discount)}"]
+            table_totals.push [
+              "#{main_document.t(:commercial_discount).upcase}",
+              "\- #{euros(main_document.commercial_discount)}",
+            ]
           end
 
-          table_totals.push ["#{I18n.t("pdfs.total_excluding_taxes")}", euros(@main_document.total_excluding_taxes)]
+          table_totals.push [
+            "#{main_document.t(:total_excluding_taxes).upcase}",
+            euros(main_document.total_excluding_taxes),
+          ]
 
-          vat_rate = number(@main_document.vat_rate)
-          table_totals.push ["#{I18n.t("pdfs.vat")}#{vat_rate} %", euros(@main_document.vat_amount)]
+          vat_rate = number(main_document.vat_rate)
+          table_totals.push [
+            "#{main_document.t(:vat).upcase} #{percentage vat_rate}",
+            euros(main_document.vat_amount),
+          ]
 
           if has_advance
-            table_totals.push ["#{I18n.t("pdfs.advance")}", euros(@main_document.advance)]
-            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.balance)]
+            table_totals.push [
+              "#{main_document.t(:advance).upcase}",
+              euros(main_document.advance),
+            ]
+
+            table_totals.push [
+              "#{main_document.t(:total_including_taxes).upcase}",
+              euros(main_document.balance),
+            ]
           else
-            table_totals.push ["#{I18n.t("pdfs.total_including_taxes")}", euros(@main_document.total_including_taxes)]
+            table_totals.push [
+              "#{main_document.t(:total_including_taxes).upcase}",
+              euros(main_document.total_including_taxes),
+            ]
           end
 
           table table_totals,
@@ -336,7 +367,7 @@ module Dorsale
         bounding_box [bounds.left, top], height: height, width: width do
           draw_bounds_debug
           font_size 9 do
-            text I18n.t("pdfs.payment_terms"), style: :bold if @main_document.payment_term.present?
+            text main_document.t(:payment_terms), style: :bold if @main_document.payment_term.present?
             text @main_document.payment_term.try(:label)
           end
         end
@@ -353,20 +384,19 @@ module Dorsale
         bounding_box [bounds.left, top], height: height, width: width do
           draw_bounds_debug
           font_size 9 do
-            text "#{I18n.t("pdfs.iban")} #{@id_card.iban}" if @id_card.iban.present?
-            text "#{I18n.t("pdfs.bic_swift")} #{@id_card.bic_swift}"  if @id_card.bic_swift.present?
+            text "#{main_document.t(:iban)} : #{@id_card.iban}"           if @id_card.iban.present?
+            text "#{main_document.t(:bic_swift)} : #{@id_card.bic_swift}" if @id_card.bic_swift.present?
           end
         end
       end
 
       def build_footer
         top = bounds.bottom + footer_height
-        bounding_box [0, top], width: bounds.width, height: footer_height do
 
+        bounding_box [0, top], width: bounds.width, height: footer_height do
           builds_legals
           build_line
           builds_id_card_informations
-
         end
       end
 
@@ -392,15 +422,21 @@ module Dorsale
         top = bounds.top - 1.8.cm
         height = 1.1.cm
         width  = bounds.width
-        tel = "#{I18n.t("pdfs.info_phone")} #{@id_card.contact_phone} - " if @id_card.contact_phone.present?
-        fax = "#{I18n.t("pdfs.info_fax")} #{@id_card.contact_fax} -" if @id_card.contact_fax.present?
-        email = "#{@id_card.contact_email}" if @id_card.contact_email.present?
-        capital = "#{ @id_card.legal_form.to_s} #{I18n.t("pdfs.capital")} " + number_with_delimiter(@id_card.capital, :delimiter => '.').to_s + " €" if @id_card.legal_form.present? && @id_card.capital.present?
-        registration = I18n.t("pdfs.registration") + @id_card.registration_city.to_s + ' ' + @id_card.registration_number.to_s if @id_card.registration_number.present?
-        siret = I18n.t("pdfs.siret") + @id_card.siret.to_s if @id_card.siret.present?
-        tva = I18n.t("pdfs.vat") + @id_card.intracommunity_vat.to_s if @id_card.intracommunity_vat.present?
+
+        infos_text = []
+        infos_text << @id_card.entity_name                                                                                if @id_card.entity_name.present?
+        infos_text << "#{main_document.t(:info_phone)} : #{@id_card.contact_phone}"                                       if @id_card.contact_phone.present?
+        infos_text << "#{main_document.t(:info_fax)} : #{@id_card.contact_fax}"                                           if @id_card.contact_fax.present?
+        infos_text << "#{@id_card.contact_email}"                                                                         if @id_card.contact_email.present?
+        infos_text << "#{@id_card.legal_form.to_s}"                                                                       if @id_card.legal_form.present?
+        infos_text << "#{main_document.t(:capital)} : #{euros @id_card.capital}"                                          if @id_card.capital.present?
+        infos_text << "#{main_document.t(:registration)} : #{@id_card.registration_city} #{@id_card.registration_number}" if @id_card.registration_number.present?
+        infos_text << "#{main_document.t(:siret)} : #{@id_card.siret}"                                                    if @id_card.siret.present?
+        infos_text << "#{main_document.t(:intracommunity_vat)} : #{@id_card.intracommunity_vat}"                          if @id_card.intracommunity_vat.present?
+        infos_text = infos_text.join(" - ")
+
         font_size 9 do
-          text_box "#{@id_card.entity_name} #{address_line}\n#{tel} #{fax} #{email}\n#{capital} #{registration} #{siret} #{tva}",
+          text_box infos_text,
             :at       => [bounds.left, top],
             :height   => height,
             :width    => width,
@@ -409,15 +445,14 @@ module Dorsale
       end
 
       def build_page_numbers
-        top = bounds.bottom + footer_height - 1.8.cm
-        bounding_box [0, top], height: footer_height, width: bounds.width do
+        height = 5.mm
+        top    = bounds.bottom + height
+        width  = bounds.width
+
+        bounding_box [0, top], height: height, width: bounds.width do
           font_size 9 do
             float do
-              options = {
-              :align => :right,
-              :start_count_at => 1
-              }
-              number_pages "page <page>/<total>", options
+              number_pages "page <page>/<total>", align: :right
             end
           end
         end
