@@ -126,7 +126,7 @@ module Dorsale
       def t(*args)
         return super if args.any?
 
-        if balance < 0
+        if balance && balance < 0
           super(:credit_note)
         else
           self.class.t

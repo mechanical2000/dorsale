@@ -2,26 +2,11 @@ module Dorsale
   module BillingMachine
     class InvoiceMultipleVatPdf < ::Dorsale::BillingMachine::InvoiceSingleVatPdf
 
-      def first_column_width
-        6.4.cm
-      end
-
-      def second_column_width
-        2.cm
-      end
-
-      def third_column_width
-        second_column_width
-      end
-
-      def fourth_column_width
-       second_column_width
-      end
-
-      def fifth_column_width
-        2.9.cm
-      end
-
+      def first_column_width;  64.mm; end
+      def second_column_width; 22.mm; end
+      def third_column_width;  20.mm; end
+      def fourth_column_width; 20.mm; end
+      def fifth_column_width;  29.mm; end
       def last_column_width
         bounds.width - first_column_width - second_column_width - third_column_width - fourth_column_width - fifth_column_width
       end
@@ -31,12 +16,12 @@ module Dorsale
         top    = bounds.top
         width  = bounds.width - left
 
-        bounding_box [left, top], width: width, height: 9.5.cm do
+        bounding_box [left, top], width: width, height: products_table_height do
           repeat :all do
             float do
                 table [["","","","","",""]],
                     :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, fifth_column_width, last_column_width],
-                    :cell_style => {:height => 9.5.cm} do
+                    :cell_style => {height: products_table_height} do
                       row(0).style :text_color       => BLACK
                       row(0).style :font_style       => :bold
                       column(0).style :align => :left
@@ -46,22 +31,20 @@ module Dorsale
               end
           end
 
-        bounding_box [left, top], width: width, height: 8.8.cm do
+        bounding_box [left, top], width: width, height: products_table_height do
           draw_bounds_debug
-          repeat :all do
-            build_line
-          end
+
           table_products = [[
-            main_document.t(:designation),
-            main_document.t(:quantity),
-            main_document.t(:unit),
-            main_document.t(:tax),
-            main_document.t(:unit_price),
-            main_document.t(:line_total),
+            main_document.t(:designation).mb_chars.upcase.to_s,
+            main_document.t(:quantity).mb_chars.upcase.to_s,
+            main_document.t(:unit).mb_chars.upcase.to_s,
+            main_document.t(:tax).mb_chars.upcase.to_s,
+            main_document.t(:unit_price).mb_chars.upcase.to_s,
+            main_document.t(:line_total).mb_chars.upcase.to_s,
           ]]
 
 
-          @main_document.lines.each do |line|
+          main_document.lines.each do |line|
             table_products.push [line.label,
                 number(line.quantity).gsub(",00","").gsub(".00",""),
                 line.unit,
@@ -84,47 +67,47 @@ module Dorsale
       end
 
       def build_total
-
         left   = bounds.left
-        top    = bounds.top - 10.3.cm
+        top    = bounds.top - products_table_height - 5.mm
         width  = bounds.width - left
+        height = middle_height - products_table_height
 
-        bounding_box [left, top], width: width, height: middle_height - 9.5.cm do
+        bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
 
           table_totals = [[]]
 
           if has_discount
             table_totals.push [
-              main_document.t(:commercial_discount).upcase,
-              "\- #{euros(@main_document.commercial_discount)}",
+              main_document.t(:commercial_discount).mb_chars.upcase.to_s,
+              euros(-main_document.commercial_discount),
             ]
           end
 
           table_totals.push [
-            main_document.t(:total_excluding_taxes).upcase,
-            euros(@main_document.total_excluding_taxes),
+            main_document.t(:total_excluding_taxes).mb_chars.upcase.to_s,
+            euros(main_document.total_excluding_taxes),
           ]
 
           table_totals.push [
-            main_document.t(:vat_amount).upcase,
-            euros(@main_document.vat_amount),
+            main_document.t(:vat_amount).mb_chars.upcase.to_s,
+            euros(main_document.vat_amount),
           ]
 
           if has_advance
             table_totals.push [
-              main_document.t(:advance).upcase,
-              euros(@main_document.advance),
+              main_document.t(:advance).mb_chars.upcase.to_s,
+              euros(main_document.advance),
             ]
 
             table_totals.push [
-              main_document.t(:total_including_taxes).upcase,
-              euros(@main_document.balance),
+              main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
+              euros(main_document.balance),
             ]
           else
             table_totals.push [
-              main_document.t(:total_including_taxes).upcase,
-              euros(@main_document.total_including_taxes),
+              main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
+              euros(main_document.total_including_taxes),
             ]
           end
 

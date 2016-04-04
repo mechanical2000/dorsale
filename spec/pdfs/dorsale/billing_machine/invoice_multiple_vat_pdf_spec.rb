@@ -29,9 +29,18 @@ describe ::Dorsale::BillingMachine::InvoiceMultipleVatPdf, pdfs: true do
   }
 
   it "should not display global vat rate" do
-    expect(content).to_not include "TVA 19,60 %"
+    expect(content).to_not include "TVA 19,60 %"
     expect(content).to include "MONTANT TVA"
     expect(content).to include "TVA %"
+  end
+
+  it "should work with empty invoice" do
+    id_card = Dorsale::BillingMachine::IdCard.new
+    invoice = ::Dorsale::BillingMachine::Invoice.new(id_card: id_card)
+
+    expect {
+      invoice.pdf.render
+    }.to_not raise_error
   end
 
 end
