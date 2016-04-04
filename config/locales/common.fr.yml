@@ -144,21 +144,6 @@ fr:
     logo                  : "Logo"
     active                : "Actif ?"
 
-    # BillingMachine
-    unit                  : "Unité"
-    unit_price            : "Prix unitaire"
-    payment_term          : "Conditions de paiement"
-    payment_term_id       : "Conditions de paiement"
-    vat_rate              : "Taux TVA"
-    vat_amount            : "Montant TVA"
-    advance               : "Avance"
-    total_including_taxes : "Total TTC"
-    total_excluding_taxes : "Total HT"
-    balance               : "Total à payer"
-    expires_at            : "Date d'expiration"
-    commercial_discount   : "Remise commerciale"
-    id_card               : "Carte d'identité"
-
   errors:
     messages:
       extension_white_list_error : "Ce type de fichier n'est pas prit en charge"

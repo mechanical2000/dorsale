@@ -133,20 +133,6 @@ en:
     logo                  : "Logo"
     active                : "Active ?"
 
-    # BillingMachine
-    unit                  : "Unit"
-    unit_price            : "Unit price"
-    payment_term          : "Payment term"
-    payment_term_id       : "Payment term"
-    vat_rate              : "VAT rate"
-    vat_amount            : "VAT amount"
-    advance               : "Advance"
-    total_excluding_taxes : "Total excluding taxes"
-    total_including_taxes : "Total including taxes"
-    balance               : "Balance"
-    expires_at            : "Expires at"
-    commercial_discount   : "Commercial discount"
-
   errors:
     messages:
       extension_white_list_error : "This file type is not supported"
