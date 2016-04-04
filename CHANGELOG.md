@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- Changes/refactor on invoice/quotation PDFs - it can break extended PDFs
+
 ## 2.4.3
 
 - Fix i18n
