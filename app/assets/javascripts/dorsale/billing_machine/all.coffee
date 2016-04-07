@@ -3,7 +3,7 @@
 accounting.settings =
   number:
     precision : 2
-    thousand: " "
+    thousand: " " # nbsp
     decimal : ","
 
 window.str2num = (str) ->
