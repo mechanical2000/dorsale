@@ -7,7 +7,11 @@ accounting.settings =
     decimal : ","
 
 window.str2num = (str) ->
-  parseFloat(String(str).replace(",", ".").replace(" ", "")) || 0.0
+  parseFloat(
+    String(str)
+      .replace(",", ".")
+      .replace(/[^0-9\.]+/g, "")
+  ) || 0.0
 
 window.num2str = (num) ->
   num = parseFloat(num)
