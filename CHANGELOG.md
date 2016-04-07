@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+
+- Add currencies support in BillingMachine (default is €)
+
 ## 2.5.0
 
 - Changes/refactor on invoice/quotation PDFs - it can break extended PDFs
