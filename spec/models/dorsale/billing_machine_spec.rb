@@ -24,5 +24,13 @@ RSpec.describe Dorsale::BillingMachine do
     }.to raise_error(RuntimeError)
   end
 
+  it "default currency should be €" do
+    expect(bm.default_currency).to eq "€"
+  end
+
+  it "assign an other default currency" do
+    bm.default_currency = "$"
+    expect(bm.default_currency).to eq "$"
+  end
 
 end

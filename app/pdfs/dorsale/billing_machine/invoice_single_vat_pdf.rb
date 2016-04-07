@@ -14,6 +14,10 @@ module Dorsale
       BLACK      = "000000"
       BLUE       = "005F9E"
 
+      def bm_currency(n)
+        currency(n, Dorsale::BillingMachine.default_currency)
+      end
+
       def has_advance
         main_document.try(:advance) && main_document.advance != 0.0
       end
@@ -266,8 +270,8 @@ module Dorsale
               line.label,
               number(line.quantity).gsub(",00","").gsub(".00",""),
               line.unit,
-              euros(line.unit_price),
-              euros(line.total),
+              bm_currency(line.unit_price),
+              bm_currency(line.total),
             ]
           end
 
@@ -303,35 +307,35 @@ module Dorsale
           if has_discount
             table_totals.push [
               main_document.t(:commercial_discount).mb_chars.upcase.to_s,
-              euros(-main_document.commercial_discount),
+              bm_currency(-main_document.commercial_discount),
             ]
           end
 
           table_totals.push [
             main_document.t(:total_excluding_taxes).mb_chars.upcase.to_s,
-            euros(main_document.total_excluding_taxes),
+            bm_currency(main_document.total_excluding_taxes),
           ]
 
           vat_rate = number(main_document.vat_rate)
           table_totals.push [
             "#{main_document.t(:vat).mb_chars.upcase.to_s} #{percentage vat_rate}",
-            euros(main_document.vat_amount),
+            bm_currency(main_document.vat_amount),
           ]
 
           if has_advance
             table_totals.push [
               main_document.t(:advance).mb_chars.upcase.to_s,
-              euros(main_document.advance),
+              bm_currency(main_document.advance),
             ]
 
             table_totals.push [
               main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
-              euros(main_document.balance),
+              bm_currency(main_document.balance),
             ]
           else
             table_totals.push [
               main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
-              euros(main_document.total_including_taxes),
+              bm_currency(main_document.total_including_taxes),
             ]
           end
 
@@ -446,7 +450,7 @@ module Dorsale
         infos_text << "#{main_document.t(:info_fax)} : #{@id_card.contact_fax}"                                           if @id_card.contact_fax.present?
         infos_text << "#{@id_card.contact_email}"                                                                         if @id_card.contact_email.present?
         infos_text << "#{@id_card.legal_form.to_s}"                                                                       if @id_card.legal_form.present?
-        infos_text << "#{main_document.t(:capital)} : #{euros @id_card.capital}"                                          if @id_card.capital.present?
+        infos_text << "#{main_document.t(:capital)} : #{bm_currency @id_card.capital}"                                          if @id_card.capital.present?
         infos_text << "#{main_document.t(:registration)} : #{@id_card.registration_city} #{@id_card.registration_number}" if @id_card.registration_number.present?
         infos_text << "#{main_document.t(:siret)} : #{@id_card.siret}"                                                    if @id_card.siret.present?
         infos_text << "#{main_document.t(:intracommunity_vat)} : #{@id_card.intracommunity_vat}"                          if @id_card.intracommunity_vat.present?

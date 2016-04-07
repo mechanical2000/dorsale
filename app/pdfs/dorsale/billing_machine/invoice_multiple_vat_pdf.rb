@@ -49,8 +49,8 @@ module Dorsale
                 number(line.quantity).gsub(",00","").gsub(".00",""),
                 line.unit,
                 percentage(line.vat_rate),
-                euros(line.unit_price),
-                euros(line.total),]
+                bm_currency(line.unit_price),
+                bm_currency(line.total),]
           end
 
         table table_products,
@@ -80,34 +80,34 @@ module Dorsale
           if has_discount
             table_totals.push [
               main_document.t(:commercial_discount).mb_chars.upcase.to_s,
-              euros(-main_document.commercial_discount),
+              bm_currency(-main_document.commercial_discount),
             ]
           end
 
           table_totals.push [
             main_document.t(:total_excluding_taxes).mb_chars.upcase.to_s,
-            euros(main_document.total_excluding_taxes),
+            bm_currency(main_document.total_excluding_taxes),
           ]
 
           table_totals.push [
             main_document.t(:vat_amount).mb_chars.upcase.to_s,
-            euros(main_document.vat_amount),
+            bm_currency(main_document.vat_amount),
           ]
 
           if has_advance
             table_totals.push [
               main_document.t(:advance).mb_chars.upcase.to_s,
-              euros(main_document.advance),
+              bm_currency(main_document.advance),
             ]
 
             table_totals.push [
               main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
-              euros(main_document.balance),
+              bm_currency(main_document.balance),
             ]
           else
             table_totals.push [
               main_document.t(:total_including_taxes).mb_chars.upcase.to_s,
-              euros(main_document.total_including_taxes),
+              bm_currency(main_document.total_including_taxes),
             ]
           end
 

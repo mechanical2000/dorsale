@@ -126,19 +126,19 @@ Feature: Invoice Management
     And he fills a line with "Bidule", "2", "€", "50"
     Then the new line total is "100,00"
     And he fills a line with "Bidule", "10", "€", "100"
-    Then the new line total is "1 000,00"
-    And the total excluding taxes is "1 000,00"
+    Then the new line total is "1 000,00"
+    And the total excluding taxes is "1 000,00"
     And he changes the commercial discount to "100"€
     Then the total excluding taxes is "900,00"
     And the VAT due is "180,00"
-    And the total including taxes is "1 080,00"
+    And the total including taxes is "1 080,00"
     And he changes the commercial discount to "0"€
-    Then the total excluding taxes is "1 000,00"
+    Then the total excluding taxes is "1 000,00"
     And the VAT due is "200,00"
-    And the total including taxes is "1 200,00"
+    And the total including taxes is "1 200,00"
     And he changes the VAT rate to "19.6"
     And the VAT due is "196,00"
-    And the total including taxes is "1 196,00"
+    And the total including taxes is "1 196,00"
 
   Scenario: Export invoices in CSV
     And an existing invoice
@@ -234,4 +234,4 @@ Feature: Invoice Management
   Scenario: Invoices data
     Given existing "100" invoices with "123" amount
     When the user goes to the invoices page
-    Then data total amount is "12 300"
+    Then data total amount is "12 300"

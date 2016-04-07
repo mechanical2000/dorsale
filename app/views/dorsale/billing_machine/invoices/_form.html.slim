@@ -67,7 +67,7 @@
 
               td.commercial_discount
                 = f.text_field :commercial_discount, class: "number"
-                span.unit = "€"
+                span.unit = Dorsale::BillingMachine.default_currency
 
             tr
               th.total_excluding_taxes-label
@@ -75,7 +75,7 @@
 
               td.total_excluding_taxes
                 = f.text_field :total_excluding_taxes, class: "number", disabled: true
-                span.unit = "€"
+                span.unit = Dorsale::BillingMachine.default_currency
 
             - if vat_mode == :single
               tr
@@ -92,7 +92,7 @@
 
               td.vat_amount
                 = f.text_field :vat_amount, class: "number", disabled: true
-                span.unit = "€"
+                span.unit = Dorsale::BillingMachine.default_currency
 
             tr
               th.total_including_taxes-label
@@ -100,7 +100,7 @@
 
               td.total_including_taxes
                 = f.text_field :total_including_taxes, class: "number", disabled: true
-                span.unit = "€"
+                span.unit = Dorsale::BillingMachine.default_currency
 
             - if document.respond_to?(:advance)
               tr
@@ -109,7 +109,7 @@
 
                 td.advance
                   = f.text_field :advance, class: "number"
-                  span.unit = "€"
+                  span.unit = Dorsale::BillingMachine.default_currency
 
               tr
                 th.balance-label
@@ -117,6 +117,6 @@
 
                 td.balance
                   = f.text_field :balance, class: "number", disabled: true
-                  span.unit = "€"
+                  span.unit = Dorsale::BillingMachine.default_currency
 
     = form_buttons

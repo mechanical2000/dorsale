@@ -110,18 +110,18 @@ Feature: Quotation Management
     And he fills a line with "Bidule", "2", "€", "50"
     Then the new line total is "100,00"
     And he fills a line with "Bidule", "10", "€", "100"
-    Then the new line total is "1 000,00"
+    Then the new line total is "1 000,00"
     And the VAT due is "200,00"
     And he fill the commercial discount with "100,00"
     And the total excluding taxes is "900,00"
     And the VAT due is "180,00"
-    And the total including taxes is "1 080,00"
+    And the total including taxes is "1 080,00"
     And he fill the commercial discount with "0,00"
-    And the total excluding taxes is "1 000,00"
-    And the total including taxes is "1 200,00"
+    And the total excluding taxes is "1 000,00"
+    And the total including taxes is "1 200,00"
     And he changes the quotation VAT rate to "19.6"
     And the VAT due is "196,00"
-    And the total including taxes is "1 196,00"
+    And the total including taxes is "1 196,00"
 
   Scenario: Existing quotation has is associated documents shown on the show page
     And an existing quotation
@@ -180,4 +180,4 @@ Feature: Quotation Management
   Scenario: Quotations data
     Given existing "100" quotations with "123" amount
     When the user goes to the quotations page
-    Then data total amount is "12 300"
+    Then data total amount is "12 300"
