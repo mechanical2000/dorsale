@@ -20,8 +20,8 @@ tr.line
 
   td.line-unit_price
     = f.text_field :unit_price, class: "number"
-    span.unit = "€"
+    span.unit = Dorsale::BillingMachine.default_currency
 
   td.line-total
     = f.text_field :total, class: "number", disabled: true
-    span.unit = "€"
+    span.unit = Dorsale::BillingMachine.default_currency

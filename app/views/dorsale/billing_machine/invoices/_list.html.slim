@@ -32,10 +32,10 @@ table.default.invoices
           = invoice.customer.try(:name)
 
         td.total_excluding_taxes
-          = euros(invoice.total_excluding_taxes)
+          = bm_currency invoice.total_excluding_taxes
 
         td.hidden-xs.total_including_taxes
-          = euros(invoice.total_including_taxes)
+          = bm_currency invoice.total_including_taxes
 
         td.actions
           = read_button dorsale.billing_machine_invoice_path(invoice)

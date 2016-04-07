@@ -88,7 +88,7 @@
                   = document.class.t(:commercial_discount)
 
                 td.commercial_discount
-                  = " - #{euros document.commercial_discount}"
+                  = " - #{bm_currency document.commercial_discount}"
 
 
             tr
@@ -96,7 +96,7 @@
                 = document.class.t(:total_excluding_taxes)
 
               td.total_excluding_taxes
-                = euros document.total_excluding_taxes
+                = bm_currency document.total_excluding_taxes
 
             - if vat_mode == :single
               tr
@@ -111,14 +111,14 @@
                 = document.class.t(:vat_amount)
 
               td.vat_amount
-                = euros document.vat_amount
+                = bm_currency document.vat_amount
 
             tr
               th.total_including_taxes-label
                 = document.class.t(:total_including_taxes)
 
               td.total_including_taxes
-                = euros document.total_including_taxes
+                = bm_currency document.total_including_taxes
 
             - if document.respond_to?(:advance)
               - document.advance.present?
@@ -127,14 +127,14 @@
                     = document.class.t(:advance)
 
                   td.advance
-                    = euros document.advance
+                    = bm_currency document.advance
 
               tr
                 th.balance-label
                   = document.class.t(:balance)
 
                 td.balance
-                  = euros document.balance
+                  = bm_currency document.balance
 
 - if document_type == :quotation
   .attachments-panel

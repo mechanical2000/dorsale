@@ -4,9 +4,16 @@ module Dorsale
     include ::ActionView::Helpers::SanitizeHelper
 
     def euros(n)
+      currency(n, "€")
+    end
+
+    def currency(n, u)
       return if n.nil?
 
-      (number(n) + " €").gsub(" ", "\u00A0")
+      I18n.t("number.currency.format.format")
+        .gsub("%n", number(n))
+        .gsub("%u", u)
+        .gsub(" ", "\u00A0")
     end
 
     def percentage(n)
@@ -29,7 +36,7 @@ module Dorsale
       opts[:delimiter] = I18n.t("number.format.delimiter")
       opts[:separator] = I18n.t("number.format.separator")
 
-      number_with_precision(n, opts)
+      number_with_precision(n, opts).gsub(" ", "\u00A0")
     end
 
     def date(d)
