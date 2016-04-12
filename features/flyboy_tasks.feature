@@ -1,7 +1,7 @@
 @javascript
 Feature: Manage tasks
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: Create a task
     Given an existing folder

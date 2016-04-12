@@ -6,7 +6,8 @@ require "database_cleaner"
 DatabaseCleaner.strategy = :truncation
 DatabaseCleaner.clean
 
-user = User.create(email: "demo@agilidee.com", password: "bidule", password_confirmation: "bidule")
+user = User.create!(email: "demo@agilidee.com", password: "password")
+
 id_card = Dorsale::BillingMachine::IdCard.create!(id_card_name: "Bidule Corp", entity_name: "Bidule Corp")
 payment_term = Dorsale::BillingMachine::PaymentTerm.create!(label: "A réception")
 

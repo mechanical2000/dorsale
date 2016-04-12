@@ -18,13 +18,9 @@ describe Dorsale::Alexandrie::AttachmentsController, type: :controller do
     }
   }
 
-  let(:user) {
-    create(:user)
-  }
+  let(:user) { create(:user) }
 
-  before :each do
-    sign_in user
-  end
+  before(:each) { sign_in(user) }
 
   describe "create" do
     it "should create attachment" do

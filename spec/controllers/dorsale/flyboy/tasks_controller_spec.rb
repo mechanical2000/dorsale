@@ -2,10 +2,10 @@ require "rails_helper"
 
 describe Dorsale::Flyboy::TasksController, type: :controller do
   routes { Dorsale::Engine.routes }
-  before(:each) do
-    @user = create(:user)
-    sign_in @user
-  end
+
+  let(:user) { create(:user) }
+
+  before(:each) { sign_in(user) }
 
   let!(:task) {
     create(:flyboy_task, done: false)
@@ -48,12 +48,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   end
 
   describe "GET index" do
-    it "assigns all tasks as @tasks" do
-      Dorsale::UserScope.any_instance.stub(:tasks).and_return(Dorsale::Flyboy::Task.where(id: task.id))
-      get :index, {}
-      expect(assigns(:tasks).sort).to eq [task]
-    end
-
     context "when applying filter" do
       before do
         Dorsale::Flyboy::Task.destroy_all

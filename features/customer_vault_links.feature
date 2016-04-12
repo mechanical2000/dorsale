@@ -5,7 +5,7 @@ Feature: Manage links
   In order to identify the people responsible for corporations
 
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: Add a new link on individual
     Given an existing corporation

@@ -1,7 +1,7 @@
 @javascript
 Feature: Filter people
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: Filter by tags
     Given an existing corporation with tags hello and world

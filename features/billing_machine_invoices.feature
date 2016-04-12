@@ -5,6 +5,7 @@ Feature: Invoice Management
   In order to get paid!
 
   Background:
+    Given an authenticated user
     Given an existing id card
     Given billing machine in single vat mode
 

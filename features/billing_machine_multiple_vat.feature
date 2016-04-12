@@ -5,11 +5,12 @@ Feature: Invoice Management
   In order to get paid!
 
   Background:
+    Given an authenticated user
     Given an existing id card
     Given billing machine in multiple vat mode
     And an existing customer
     And an existing payment term
-    
+
  Scenario: New invoice for existing customer
     When the user goes to the invoices page
     And he creates a new invoice
@@ -28,7 +29,7 @@ Feature: Invoice Management
     When he saves the invoice
     Then a message signals the success of the creation
     Then it's added to the invoice list
- 
+
  Scenario: New quotation for existing customer
     And an existing customer
     And an existing payment term

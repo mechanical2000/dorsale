@@ -1,7 +1,7 @@
 @javascript
 Feature: People
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: Export people
     Given an existing individual

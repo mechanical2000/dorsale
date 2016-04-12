@@ -1,6 +1,7 @@
 @javascript
 Feature: People search
   Background:
+    Given an authenticated user
     Given existing individuals
     And existing corporations
     When he go to the people list

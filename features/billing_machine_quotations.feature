@@ -5,7 +5,7 @@ Feature: Quotation Management
   In order to give them to my future customers
 
   Background:
-    Given an existing user
+    Given an authenticated user
     Given an existing id card
     Given billing machine in single vat mode
 
