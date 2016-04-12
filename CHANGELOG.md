@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1
+
+- Add modals css/js
+
 ## 2.6.0
 
 - Add currencies support in BillingMachine (default is €)

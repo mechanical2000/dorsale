@@ -26,6 +26,7 @@ window.modal =
     $("#modal").remove()
     $("body").removeClass("modal-open")
     $(document).trigger("modal:close")
+    return false
 
   openUrl: (url, type = "GET", data = {}) ->
     modal.open(modal.i18n.loading)
