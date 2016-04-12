@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.2
+
+- Invoices small changes and refactor
+
 ## 2.6.1
 
 - Add modals css/js
