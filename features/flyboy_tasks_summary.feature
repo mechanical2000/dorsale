@@ -4,7 +4,7 @@ Feature: Homepage
   Classified on the homepage
 
   Background:
-    Given an existing user
+    Given an authenticated user
     Given an existing folder
 
   Scenario: Expired tasks

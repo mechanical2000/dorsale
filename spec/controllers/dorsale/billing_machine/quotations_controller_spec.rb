@@ -3,6 +3,10 @@ require "rails_helper"
 describe Dorsale::BillingMachine::QuotationsController, type: :controller do
   routes { Dorsale::Engine.routes }
 
+  let(:user) { create(:user) }
+
+  before(:each) { sign_in(user) }
+
   describe "#index" do
     it "stats should not include canceled quotations" do
       q1 = create(:billing_machine_quotation_line, quantity: 1, unit_price: 10)

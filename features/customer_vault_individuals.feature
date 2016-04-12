@@ -5,7 +5,7 @@ Feature: Manage individuals
   In order to follow up on the relationship
 
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: New individual
     When I create an new individual

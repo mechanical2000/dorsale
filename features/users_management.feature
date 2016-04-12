@@ -5,7 +5,7 @@ Feature: Manage users
   In order to provide them an access
 
   Background:
-    Given an existing user
+    Given an authenticated user
     When he goes to the users section
 
   Scenario: Create a User

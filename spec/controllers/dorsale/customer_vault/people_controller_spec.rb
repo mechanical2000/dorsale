@@ -2,7 +2,11 @@ require "rails_helper"
 
 RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   routes { Dorsale::Engine.routes }
+
   let(:user) { create(:user) }
+
+  before(:each) { sign_in(user) }
+
   describe "#index" do
     it "should redirect to activity" do
       get :index

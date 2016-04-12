@@ -1,8 +1,12 @@
 require "rails_helper"
 
 describe Dorsale::Flyboy::FoldersController, type: :controller do
-  render_views
   routes { Dorsale::Engine.routes }
+  render_views
+
+  let(:user) { create(:user) }
+
+  before(:each) { sign_in(user) }
 
   let(:folder){
     create(:flyboy_folder)

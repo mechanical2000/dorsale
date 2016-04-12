@@ -1,7 +1,7 @@
 @javascript
 Feature: Manage folders
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: Create a folder
     When I go to the folders section

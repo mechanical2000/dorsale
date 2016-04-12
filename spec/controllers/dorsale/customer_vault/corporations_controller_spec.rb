@@ -1,8 +1,11 @@
 require "rails_helper"
 
 RSpec.describe ::Dorsale::CustomerVault::CorporationsController, type: :controller do
-
   routes { ::Dorsale::Engine.routes }
+
+  let(:user) { create(:user) }
+
+  before(:each) { sign_in(user) }
 
   let(:valid_attributes) {
     FactoryGirl.attributes_for(:customer_vault_corporation)

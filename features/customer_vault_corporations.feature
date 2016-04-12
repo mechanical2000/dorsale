@@ -5,7 +5,7 @@ Feature: Manage corporations
   In order to track oppotunities of business
 
   Background:
-    Given an existing user
+    Given an authenticated user
 
   Scenario: New corporation
     When I create an new corporation
