@@ -37,6 +37,7 @@ module Dorsale
 
       def header_height;         90.mm; end
       def logo_height;           32.mm; end
+      def logo_width;            50.mm; end
 
       def footer_height;         40.mm; end
       def footer_top_height;     15.mm; end
@@ -107,12 +108,12 @@ module Dorsale
       def build_logo
         return if logo_path.nil?
 
-        width  = 3.2.cm
         height = logo_height
+        width  = logo_width
 
         bounding_box [bounds.left, bounds.top], width: width, height: height do
           draw_bounds_debug
-          image logo_path, width: (bounds.width - 1.cm)
+          image logo_path, fit: [width, height]
         end
       end
 
@@ -125,27 +126,27 @@ module Dorsale
         ].select(&:present?).join(", ")
       end
 
+      def contact_content
+        content = []
+        content << "<b>#{@id_card.entity_name}</b>"                                           if @id_card.entity_name.present?
+        content << "<b>#{contact_address_line}</b>"                                           if contact_address_line.present?
+        content << " "
+        content << "<b>#{main_document.t(:your_contact)} : #{@id_card.contact_full_name}</b>" if @id_card.contact_full_name.present?
+        content << "<b>#{main_document.t(:contact_phone)} : </b> #{@id_card.contact_phone}"   if @id_card.contact_phone.present?
+        content << "<b>#{main_document.t(:contact_fax)} : </b> #{@id_card.contact_fax}"       if @id_card.contact_fax.present?
+        content << "<b>#{main_document.t(:contact_email)} : </b> #{@id_card.contact_email}"   if @id_card.contact_email.present?
+        content.join("\n")
+      end
+
       def build_contact
         top    = bounds.top - 4.cm
         left   = bounds.left
         width  = bounds.width / 2 - 1.1.cm
         height = 2.5.cm
 
-        contact_text = []
-        contact_text << "<b>#{@id_card.entity_name}</b>"                                           if @id_card.entity_name.present?
-        contact_text << "<b>#{contact_address_line}</b>"                                           if contact_address_line.present?
-        contact_text << " "
-        contact_text << "<b>#{main_document.t(:your_contact)} : #{@id_card.contact_full_name}</b>" if @id_card.contact_full_name.present?
-        contact_text << "<b>#{main_document.t(:contact_phone)} : </b> #{@id_card.contact_phone}"   if @id_card.contact_phone.present?
-        contact_text << "<b>#{main_document.t(:contact_fax)} : </b> #{@id_card.contact_fax}"       if @id_card.contact_fax.present?
-        contact_text << "<b>#{main_document.t(:contact_email)} : </b> #{@id_card.contact_email}"   if @id_card.contact_email.present?
-        contact_text = contact_text.join("\n")
-
         bounding_box [left, top], width: width, height: height do
           draw_bounds_debug
-          font_size 8 do
-            text contact_text, inline_format: true
-          end
+          text contact_content, inline_format: true, size: 8
         end
       end
 
@@ -364,27 +365,30 @@ module Dorsale
         height = top - bounds.bottom
         width  = 10.cm
 
-        font_size 9 do
-          text_box main_document.comments,
-            :at       => [bounds.left, top],
-            :height   => height,
-            :width    => width,
-            :overflow => :shrink_to_fit
-        end
+        text_box main_document.comments,
+          :at       => [bounds.left, top],
+          :height   => height,
+          :width    => width,
+          :overflow => :shrink_to_fit,
+          :size     => 9
       end
 
       def build_payment_conditions
-        top = bounds.top - products_table_height - 5.mm
-        height = 1.cm
+        return if main_document.payment_term.blank?
+
+        top    = bounds.top - products_table_height - 5.mm
+        height = 15.mm
         width  = 7.5.cm
 
-        bounding_box [bounds.left, top], height: height, width: width do
-          draw_bounds_debug
-          font_size 9 do
-            text main_document.t(:payment_terms), style: :bold if main_document.payment_term.present?
-            text main_document.payment_term.try(:label)
-          end
-        end
+        txt = "<b>#{main_document.t(:payment_terms)}</b> : #{main_document.payment_term}"
+
+        text_box txt,
+          :at            => [bounds.left, top],
+          :height        => height,
+          :width         => width,
+          :overflow      => :shrink_to_fit,
+          :inline_format => true,
+          :size          => 9
       end
 
       def build_expiry
@@ -424,13 +428,12 @@ module Dorsale
         height = footer_top_height
         width  = bounds.width
 
-        font_size 9 do
-          text_box footer_top_content,
-            :at       => [bounds.left, top],
-            :height   => height,
-            :width    => width,
-            :overflow => :shrink_to_fit
-        end
+        text_box footer_top_content,
+          :at       => [bounds.left, top],
+          :height   => height,
+          :width    => width,
+          :overflow => :shrink_to_fit,
+          :size          => 9
       end
 
       def build_footer_line
@@ -462,13 +465,12 @@ module Dorsale
         top    = bounds.bottom + height
         width  = bounds.width
 
-        font_size 9 do
-          text_box footer_bottom_content,
-            :at       => [bounds.left, top],
-            :height   => height,
-            :width    => width,
-            :overflow => :shrink_to_fit
-        end
+        text_box footer_bottom_content,
+          :at       => [bounds.left, top],
+          :height   => height,
+          :width    => width,
+          :overflow => :shrink_to_fit,
+          :size     => 9
       end
 
       def build_page_numbers
@@ -477,10 +479,8 @@ module Dorsale
         width  = bounds.width
 
         bounding_box [0, top], height: height, width: bounds.width do
-          font_size 9 do
-            float do
-              number_pages "page <page>/<total>", align: :right
-            end
+          float do
+            number_pages "page <page>/<total>", align: :right, size: 9
           end
         end
       end
