@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.3
+
+- Add generic filters
+
 ## 2.6.2
 
 - Invoices small changes and refactor
