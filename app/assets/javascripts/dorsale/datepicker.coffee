@@ -1,4 +1,4 @@
-$(document).on "ready page:load", ->
+window.setupDatepickers = ->
   $("input[type*=date], input[name*=date], input[name$=_at]").map ->
     return if this.type == "hidden"
 
@@ -10,3 +10,6 @@ $(document).on "ready page:load", ->
 
     $(this).datepicker
       language: "fr"
+
+$(document).on "ready page:load cocoon:after-insert", ->
+  setupDatepickers()
