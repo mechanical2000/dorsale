@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.4
+
+- Add datepicker setup after cocoon insert
+
 ## 2.6.3
 
 - Add generic filters
