@@ -46,4 +46,5 @@ Gem::Specification.new do |s|
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "mini_magick"
   s.add_dependency "rake"
+  s.add_dependency "axlsx"
 end

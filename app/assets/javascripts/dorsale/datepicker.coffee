@@ -1,15 +1,20 @@
+# Doc : http://bootstrap-datepicker.readthedocs.io/en/stable/index.html
+
 window.setupDatepickers = ->
   $("input[type*=date], input[name*=date], input[name$=_at]").map ->
     return if this.type == "hidden"
 
     this.type = "text"
 
+    # 2015-06-12 to 15/06/2015
     if this.value.match("-")
-      date = this.value.split("-")
-      this.value = date[2] + "/" + date[1] + "/" + date[0]
+      this.value = this.value.split("-").reverse().join("/")
 
     $(this).datepicker
       language: "fr"
+      format: "dd/mm/yyyy"
+      todayBtn: true
+      autoclose: true
 
-$(document).on "ready page:load cocoon:after-insert", ->
+$(document).on "ready page:load", ->
   setupDatepickers()
