@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.5
+
+- Add XLSX serializer
+- Datepicker : add today button + autoclose
+
 ## 2.6.4
 
 - Add datepicker setup after cocoon insert
