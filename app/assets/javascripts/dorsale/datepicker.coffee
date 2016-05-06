@@ -13,7 +13,7 @@ window.setupDatepickers = ->
     $(this).datepicker
       language: "fr"
       format: "dd/mm/yyyy"
-      todayBtn: true
+      todayBtn: "linked"
       autoclose: true
 
 $(document).on "ready page:load", ->
