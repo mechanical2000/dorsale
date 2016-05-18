@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.6.7
+
+- Update Ruby development version to 2.2.5
+- Update Rails developement version
+- Remove Gemfile.lock from Git
+- Add zip-zip gem for compabibility
+
 ## 2.6.6
 
 - Fix negative amount on BillingMachine
