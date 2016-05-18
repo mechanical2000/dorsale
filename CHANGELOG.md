@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.6
+
+- Fix negative amount on BillingMachine
+
 ## 2.6.5
 
 - Add XLSX serializer
