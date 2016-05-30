@@ -1,6 +1,7 @@
 $nav-left-width: 200px !default
 $nav-left-background: #E8E8E8 !default
 $nav-left-font-size: 12px !default
+$nav-left-items-padding: 15px !default
 
 @media (min-width: $screen-sm-min)
   #nav
@@ -14,11 +15,12 @@ $nav-left-font-size: 12px !default
       left: 0
       top: 50px
       bottom: 0
-      height: 2000px
+      height: 100vh
       width: $nav-left-width
       background: $nav-left-background
       z-index: 5
       font-size: $nav-left-font-size
+      overflow: auto
 
       li
         float: none
@@ -26,6 +28,11 @@ $nav-left-font-size: 12px !default
         border-bottom: 1px solid darken($nav-left-background, 10)
         position: relative
         z-index: 999
+        padding: 0
+
+        a
+          line-height: 1em
+          padding: $nav-left-items-padding
 
       li.active
         font-weight: bold
