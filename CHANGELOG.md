@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.8
+
+- Small changes to bootstrap_nav_left.sass
+
 ## 2.6.7
 
 - Update Ruby development version to 2.2.5
