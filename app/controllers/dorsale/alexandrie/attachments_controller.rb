@@ -1,11 +1,19 @@
 module Dorsale
   module Alexandrie
     class AttachmentsController < ::Dorsale::ApplicationController
+      layout false
+
       before_action :set_objects, only: [
         :edit,
         :update,
         :destroy,
       ]
+
+      def index
+        @attachable = find_attachable
+
+        authorize! :read, @attachable
+      end
 
       def create
         @attachment = ::Dorsale::Alexandrie::Attachment.new(attachment_params_for_create)
@@ -18,13 +26,11 @@ module Dorsale
           flash[:alert] = t("messages.attachments.create_error")
         end
 
-        redirect_to_back_url
+        render_or_redirect
       end
 
       def edit
         authorize! :update, @attachment
-
-        render layout: false
       end
 
       def update
@@ -36,7 +42,7 @@ module Dorsale
           flash[:alert] = t("messages.attachments.update_error")
         end
 
-        redirect_to_back_url
+        render_or_redirect
       end
 
       def destroy
@@ -48,13 +54,27 @@ module Dorsale
           flash[:alert] = t("messages.attachments.delete_error")
         end
 
-        redirect_to_back_url
+        render_or_redirect
       end
 
       private
 
       def set_objects
         @attachment = ::Dorsale::Alexandrie::Attachment.find params[:id]
+      end
+
+      def attachable_type
+        params[:attachable_type] || @attachment.attachable_type
+      end
+
+      def attachable_id
+        params[:attachable_id] || @attachment.attachable_id
+      end
+
+      def find_attachable
+        attachable_type.to_s.constantize.find(attachable_id)
+      rescue NameError
+        raise ActiveRecord::RecordNotFound
       end
 
       def permitted_params_for_create
@@ -85,9 +105,14 @@ module Dorsale
           .permit(permitted_params_for_update)
       end
 
-      def redirect_to_back_url
-        redirect_to params[:back_url] || request.referer
+      def render_or_redirect
+        if request.xhr?
+          render nothing: true
+        else
+          redirect_to params[:back_url] || request.referer
+        end
       end
+
     end
   end
 end

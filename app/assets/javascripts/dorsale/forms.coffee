@@ -1,3 +1,29 @@
+# Fake file input (bootstrap style)s
+window.setupUploadInputs = (scope = document) ->
+  $(scope).find(".form-group.upload").map ->
+    group    = $(this)
+    form     = group.parents("form")
+    input    = group.find("[type=file]")
+    submit   = group.find("[type=submit]")
+    label    = group.find("label")
+    progress = group.find(".progress")
+
+    progress.hide() if not xhr2_available()
+
+    label.map ->
+      this.dataset.defaultValue = $(this).html()
+
+    input.change ->
+      if this.value == ""
+        submit.prop(disabled: true)
+        label_value = label.data("defaultValue")
+      else
+        submit.prop(disabled: false)
+        label_value = this.value.split("/").pop().split("\\").pop()
+
+      label.html(label_value)
+    input.change()
+
 $(document).on "ready page:load", ->
   $("button.reset").click ->
     form = $(this).parents("form")
@@ -26,14 +52,4 @@ $(document).on "ready page:load", ->
     input.value = location.href
     $(this).append(input)
 
-  # Fake file input (bootstrap style)
-  $(".form-group.upload").map ->
-    $(this).find("label").map ->
-      this.dataset.defaultValue = $(this).html()
-
-    $(this).find("input").change ->
-      if this.value != ""
-        $(this).parents(".upload").find("label").html(this.value)
-      else
-        $(this).parents(".upload").find("label").map ->
-          $(this).html(this.dataset.defaultValue)
+  setupUploadInputs()

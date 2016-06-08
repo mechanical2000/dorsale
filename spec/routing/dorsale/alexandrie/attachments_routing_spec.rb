@@ -4,6 +4,10 @@ RSpec.describe Dorsale::Alexandrie::AttachmentsController, type: :routing do
   routes { Dorsale::Engine.routes }
 
   describe "routing" do
+    it "#create" do
+      expect(get "/alexandrie/attachments").to \
+      route_to("dorsale/alexandrie/attachments#index")
+    end
 
     it "#create" do
       expect(post "/alexandrie/attachments").to \
@@ -24,6 +28,5 @@ RSpec.describe Dorsale::Alexandrie::AttachmentsController, type: :routing do
       expect(delete "/alexandrie/attachments/3").to \
       route_to("dorsale/alexandrie/attachments#destroy", id: "3")
     end
-
   end
 end
