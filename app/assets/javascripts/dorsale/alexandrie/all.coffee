@@ -31,15 +31,16 @@ window.alexandrie =
       data = new FormData(this)
 
       xhr.upload.addEventListener "progress", (e) ->
-        if e.lengthComputable
-          percentComplete = Math.round(e.loaded * 100 / e.total)
-          percentComplete = 1  if percentComplete == 0
-          percentComplete = 99 if percentComplete == 100
+        return unless e.lengthComputable
 
-          bar = form.find(".progress-bar")
-          bar.html percentComplete+"%"
-          bar.css  "width":         percentComplete+"%"
-          bar.attr "aria-valuenow": percentComplete
+        percentComplete = Math.round(e.loaded * 100 / e.total)
+        percentComplete = 1  if percentComplete == 0
+        percentComplete = 99 if percentComplete == 100
+
+        bar = form.find(".progress-bar")
+        bar.html percentComplete+"%"
+        bar.css  "width":         percentComplete+"%"
+        bar.attr "aria-valuenow": percentComplete
 
       xhr.addEventListener "load", (e) ->
         alexandrie.reload()
@@ -55,13 +56,13 @@ window.alexandrie =
 
   setupEditButtons: ->
     $("#dorsale-attachments [href$=edit]").click ->
-      li  = $(this).parents("li")
-      url = this.href
+      container = $(this).parents("li")
+      url       = this.href
 
       $.ajax
         url: url
         success: (data) ->
-          li.html(data)
+          container.html(data)
           alexandrie.setupEditForm()
 
       return false
