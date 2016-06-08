@@ -13,6 +13,10 @@ module Dorsale
 
       before_save :set_default_name
 
+      default_scope -> {
+        order(id: :desc)
+      }
+
       def set_default_name
         self.name = file_identifier if name.blank?
       end
