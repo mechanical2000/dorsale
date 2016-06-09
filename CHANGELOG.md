@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.0
+
+- Add ajax to attachments + progress bar
+- Small CSS fixes
+
 ## 2.6.8
 
 - Small changes to bootstrap_nav_left.sass
