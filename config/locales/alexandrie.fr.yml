@@ -8,3 +8,9 @@ fr:
       delete_ok    : "Le fichier a été supprimé."
       delete_error : "Impossible de supprimer le fichier."
       no_file_selected: "Pas de fichier selectionné"
+
+  activerecord:
+    models:
+      dorsale/alexandrie/attachment:
+        one: "Document"
+        other: "Documents"

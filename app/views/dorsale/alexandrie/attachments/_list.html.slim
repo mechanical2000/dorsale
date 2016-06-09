@@ -10,4 +10,4 @@ ul.list-group.attachments
         = " "
 
         - if can?(:delete, a)
-          = delete_button dorsale.alexandrie_attachment_path(a)
+          = delete_button dorsale.alexandrie_attachment_path(a), remote: true

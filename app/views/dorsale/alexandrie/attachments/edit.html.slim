@@ -1,6 +1,6 @@
-= form_for @attachment, as: :attachment do |f|
+= form_for(@attachment, as: :attachment, remote: true) do |f|
   .input-group
-    = f.text_field :name, class: "form-control"
+    = f.text_field :name, class: "form-control input-sm"
     span.input-group-btn
-      button.btn.btn-success type="submit"
+      button.btn.btn-success.btn-sm type="submit"
         = t("actions.save")

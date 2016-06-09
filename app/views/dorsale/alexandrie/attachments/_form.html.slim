@@ -1,4 +1,8 @@
-= simple_form_for [dorsale, Dorsale::Alexandrie::Attachment.new], as: :attachment, multipart: true do |f|
+= simple_form_for([dorsale, Dorsale::Alexandrie::Attachment.new],
+  :as        => :attachment,
+  :multipart => true,
+) do |f|
+
   = f.hidden_field :attachable_id,   value: attachable.id.to_s
   = f.hidden_field :attachable_type, value: attachable.class.to_s
 
@@ -6,8 +10,17 @@
     .input-group
       .form-control
         = f.file_field :file
-        label = t("actions.browse")
+        label.nostyle = t("actions.browse")
 
       span.input-group-btn
         button.btn.btn-success type="submit"
           = t("actions.upload")
+
+    .progress
+      .progress-bar(
+        style="width: 0%"
+        role="progressbar"
+        aria-valuenow=0
+        aria-valuemin=0
+        aria-valuemax=100
+      ) = percentage(0)

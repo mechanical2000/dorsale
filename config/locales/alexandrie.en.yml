@@ -8,3 +8,9 @@ en:
       delete_ok    : "File deleted."
       delete_error : "Impossible to delete the file."
       no_file_selected: "No file selected."
+
+  activerecord:
+    models:
+      dorsale/alexandrie/attachment:
+        one: "Document"
+        other: "Documents"
