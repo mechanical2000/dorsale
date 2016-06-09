@@ -11,6 +11,7 @@ When(/^he update the document$/) do
   find(".attachment [href$=edit]").click
   fill_in :attachment_name, with: "new document name"
   find("#edit_attachment [type$=submit]").click
+  sleep 1 # ajax
 end
 
 Then(/^the document is updated$/) do
