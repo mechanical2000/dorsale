@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+- Modals improvements
+
 ## 2.7.0
 
 - Add ajax to attachments + progress bar
