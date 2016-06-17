@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.2
+
+- Small refactor on ExpenseGun
+
 ## 2.7.1
 
 - Modals improvements
