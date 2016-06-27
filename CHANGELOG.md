@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.3
+
+- Fix Fix ActiveRecordCommaTypeCast to accept NBSP
+
 ## 2.7.2
 
 - Small refactor on ExpenseGun
