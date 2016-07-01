@@ -49,9 +49,9 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   describe "activity" do
     before do
       @person = create(:customer_vault_corporation)
-      @comment1 = @person.comments.create!(text: "ABC", created_at: Time.now - 3.days, author: user)
-      @comment2 = @person.comments.create!(text: "DEF", created_at: Time.now - 2.days, author: user)
-      @comment3 = @person.comments.create!(text: "DEF", created_at: Time.now - 9.days, author: user)
+      @comment1 = @person.comments.create!(text: "ABC", created_at: Time.zone.now - 3.days, author: user)
+      @comment2 = @person.comments.create!(text: "DEF", created_at: Time.zone.now - 2.days, author: user)
+      @comment3 = @person.comments.create!(text: "DEF", created_at: Time.zone.now - 9.days, author: user)
     end
 
     it "should assigns all comments ordered by created_at DESC" do

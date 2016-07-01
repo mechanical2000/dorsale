@@ -112,8 +112,8 @@ module Dorsale
           @invoice.lines << line.dup
         end
 
-        @invoice.date         = Date.today
-        @invoice.due_date     = Date.today + 30.days
+        @invoice.date         = Time.zone.now.to_date
+        @invoice.due_date     = Time.zone.now.to_date + 30.days
         @invoice.unique_index = nil
         @invoice.paid         = false
 

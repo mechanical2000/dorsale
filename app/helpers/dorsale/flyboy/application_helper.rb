@@ -31,14 +31,14 @@ module Dorsale
 
       def task_color(task)
         return "finished" if task.done
-        return "ontime"   if task.reminder > Date.today
-        return "onalert"  if task.term <  Date.today
+        return "ontime"   if task.reminder > Time.zone.now.to_date
+        return "onalert"  if task.term     < Time.zone.now.to_date
         return "onwarning"
       end
 
       def folder_color(folder)
-        return "onalert"   if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term < ?', false, Date.today).count > 0
-        return "onwarning" if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term > ? AND reminder < ?', false, Date.today, Date.today).count > 0
+        return "onalert"   if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term < ?', false, Time.zone.now.to_date).count > 0
+        return "onwarning" if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term > ? AND reminder < ?', false, Time.zone.now.to_date, Time.zone.now.to_date).count > 0
         return "finished"  if folder.closed?
         return "ontime"
       end

@@ -24,7 +24,7 @@ describe ::Dorsale::BillingMachine::Quotation do
 
   describe "default values" do
     it "default date should be today" do
-      expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Date.today
+      expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Time.zone.now.to_date
     end
 
     it "default expires_at should be date + 1 month" do
@@ -182,8 +182,8 @@ describe ::Dorsale::BillingMachine::Quotation do
 
     it "should reset date" do
       q = create(:billing_machine_quotation, date: 3.days.ago)
-      expect(q.date).to_not eq Date.today
-      expect(q.create_copy!.date).to eq Date.today
+      expect(q.date).to_not eq Time.zone.now.to_date
+      expect(q.create_copy!.date).to eq Time.zone.now.to_date
     end
 
     it "should reset unique_index, tracking_id, created_at, updated_at" do
@@ -220,8 +220,8 @@ describe ::Dorsale::BillingMachine::Quotation do
 
     it "should reset date" do
       q = create(:billing_machine_quotation, date: 3.days.ago)
-      expect(q.date).to_not eq Date.today
-      expect(q.to_new_invoice.date).to eq Date.today
+      expect(q.date).to_not eq Time.zone.now.to_date
+      expect(q.to_new_invoice.date).to eq Time.zone.now.to_date
     end
 
     it "should reset unique_index, tracking_id, created_at, updated_at" do

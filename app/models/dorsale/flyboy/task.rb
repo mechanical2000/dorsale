@@ -16,25 +16,25 @@ module Dorsale
       polymorphic_id_for :taskable
       polymorphic_id_for :owner
 
-      scope :delayed,  -> { where(done: false).where("term < ?", Date.today)    }
-      scope :today,    -> { where(done: false).where("term = ?", Date.today)    }
+      scope :delayed,  -> { where(done: false).where("term < ?", Time.zone.now.to_date)    }
+      scope :today,    -> { where(done: false).where("term = ?", Time.zone.now.to_date)    }
       scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow) }
 
       scope :this_week, -> {
         min = Date.tomorrow
-        max = Date.today.end_of_week
+        max = Time.zone.now.to_date.end_of_week
         where(done: false).where("term > ?", min).where("term <= ?", max)
       }
 
       scope :next_week, -> {
-        min = Date.today.end_of_week
-        max = Date.today.next_week.end_of_week
+        min = Time.zone.now.to_date.end_of_week
+        max = Time.zone.now.to_date.next_week.end_of_week
         where(done: false).where("term > ?", min).where("term <= ?", max)
       }
 
       scope :next_next_week, -> {
-        min = Date.today.next_week.end_of_week
-        max = Date.today.next_week.next_week.end_of_week
+        min = Time.zone.now.to_date.next_week.end_of_week
+        max = Time.zone.now.to_date.next_week.next_week.end_of_week
         where(done: false).where("term > ?", min).where("term <= ?", max)
       }
 
@@ -56,8 +56,8 @@ module Dorsale
       def initialize(*args)
         super
         self.done = false                                    if done.nil?
-        self.reminder = Date.today + snooze_default_reminder if reminder.nil?
-        self.term     = Date.today + snooze_default_term     if term.nil?
+        self.reminder = Time.zone.now.to_date + snooze_default_reminder if reminder.nil?
+        self.term     = Time.zone.now.to_date + snooze_default_term     if term.nil?
         self.progress = 0                                    if progress.nil?
       end
 
@@ -70,15 +70,15 @@ module Dorsale
 
       def snooze
         if term_not_passed_yet
-          if self.reminder + snooze_default_reminder > Date.today
+          if self.reminder + snooze_default_reminder > Time.zone.now.to_date
             self.reminder += snooze_default_reminder
             self.term     += snooze_default_term
           else
-            self.reminder = Date.today + 1
+            self.reminder = Time.zone.now.to_date + 1
           end
         else
-          self.reminder = Date.today + snooze_default_reminder
-          self.term     = Date.today + snooze_default_term
+          self.reminder = Time.zone.now.to_date + snooze_default_reminder
+          self.term     = Time.zone.now.to_date + snooze_default_term
         end
       end
 
@@ -115,7 +115,7 @@ module Dorsale
       end
 
       def term_not_passed_yet
-        self.term > Date.today
+        self.term > Time.zone.now.to_date
       end
     end
   end

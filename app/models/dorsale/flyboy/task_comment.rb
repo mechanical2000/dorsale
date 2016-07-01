@@ -17,7 +17,7 @@ module Dorsale
       def initialize(*args)
         super
 
-        self.date     = Time.now if date.nil?
+        self.date = Time.zone.now if date.nil?
 
         if progress.nil?
           self.progress = task ? task.progress : 0

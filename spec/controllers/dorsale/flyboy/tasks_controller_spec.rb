@@ -16,7 +16,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   }
 
   let(:valid_attributes) {
-    { name: "New Task" , taskable_id: task.taskable.id, taskable_type: task.taskable.class, reminder: Date.today, term: Date.today}
+    { name: "New Task" , taskable_id: task.taskable.id, taskable_type: task.taskable.class, reminder: Time.zone.now.to_date, term: Time.zone.now.to_date}
   }
 
   describe "#complete" do
@@ -276,7 +276,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       Timecop.travel "2016-03-09 15:00:00" do
         @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
-        @today_task          = create(:flyboy_task, term: Date.today)               # thursday - today
+        @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)               # thursday - today
         @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
         @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
         @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week

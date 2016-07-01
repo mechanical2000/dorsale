@@ -16,7 +16,7 @@ module Dorsale
 
       def build
         font_size 10
-        text "Plan d'actions au #{I18n.l(Date.today)}", :size => 20
+        text "Plan d'actions au #{I18n.l(Time.zone.now.to_date)}", :size => 20
         move_down(10)
         display_tasks(@tasks)
       end

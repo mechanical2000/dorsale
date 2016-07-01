@@ -14,7 +14,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "default #date should be tody" do
-    expect(::Dorsale::ExpenseGun::Expense.new.date).to eq Date.today
+    expect(::Dorsale::ExpenseGun::Expense.new.date).to eq Time.zone.now.to_date
   end
 
   it "new expense should have new state" do
