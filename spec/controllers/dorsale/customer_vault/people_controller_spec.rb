@@ -40,7 +40,7 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
         corporation1 = create(:customer_vault_corporation, tag_list: "abc", name: "aaa")
         corporation2 = create(:customer_vault_corporation, tag_list: "xyz", name: "bbb")
         @request.cookies["filters"] = {tags: ["abc"]}.to_json
-        get :list, q: "bbb"
+        get :list, params: {q: "bbb"}
         expect(assigns(:people)).to eq [corporation2]
       end
     end
