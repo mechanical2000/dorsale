@@ -1,4 +1,4 @@
-$(document).on "ready page:load", ->
+$(document).on "ready turbolinks:load page:load", ->
   $(".customer_vault select[name*=tag]").map ->
     $(this).selectize
       create: true
