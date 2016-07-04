@@ -6,11 +6,11 @@ module Dorsale
           criteria = "#{query.model.table_name}.#{key}"
 
           if value == "today"
-            return query.where("#{criteria} >= ?", Date.today)
+            return query.where("#{criteria} >= ?", Time.zone.now.to_date)
           elsif value == "week"
-            return query.where("#{criteria} >= ?", Date.today.at_beginning_of_week)
+            return query.where("#{criteria} >= ?", Time.zone.now.to_date.at_beginning_of_week)
           elsif value == "month"
-            return query.where("#{criteria} >= ?", Date.today.at_beginning_of_month)
+            return query.where("#{criteria} >= ?", Time.zone.now.to_date.at_beginning_of_month)
           else
             return query
           end

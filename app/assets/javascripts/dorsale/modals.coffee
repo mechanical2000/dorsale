@@ -113,5 +113,5 @@ window.modal =
       .on("submit", modal._callbacks.forms)
 
 
-$(document).on "ready page:load modal:open", ->
+$(document).on "ready turbolinks:load page:load modal:open", ->
   modal.setup()

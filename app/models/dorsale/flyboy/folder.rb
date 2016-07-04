@@ -48,8 +48,8 @@ module Dorsale
       before_create :create_tracking
 
       def create_tracking
-        dailycounter  = Folder.where("DATE(created_at) = ?", Date.today).count + 1
-        self.tracking = "#{Time.now.strftime("%y%m%d")}-#{dailycounter}"
+        dailycounter  = Folder.where("DATE(created_at) = ?", Time.zone.now.to_date).count + 1
+        self.tracking = "#{Time.zone.now.strftime("%y%m%d")}-#{dailycounter}"
       end
 
       before_save :update_version

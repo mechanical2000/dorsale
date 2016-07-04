@@ -1,7 +1,7 @@
 module Dorsale
   module BillingMachine
     class InvoicesController < ::Dorsale::BillingMachine::ApplicationController
-      before_filter :set_objects, only: [
+      before_action :set_objects, only: [
         :show,
         :edit,
         :update,
@@ -112,8 +112,8 @@ module Dorsale
           @invoice.lines << line.dup
         end
 
-        @invoice.date         = Date.today
-        @invoice.due_date     = Date.today + 30.days
+        @invoice.date         = Time.zone.now.to_date
+        @invoice.due_date     = Time.zone.now.to_date + 30.days
         @invoice.unique_index = nil
         @invoice.paid         = false
 
@@ -182,7 +182,7 @@ module Dorsale
         email = ::Dorsale::BillingMachine::InvoiceMailer
           .send_invoice_to_customer(@invoice, @subject, @body, current_user)
 
-        if email.deliver_now
+        if email.deliver_later
           flash[:notice] = t("messages.invoices.email_ok")
           redirect_to action: :show
         else

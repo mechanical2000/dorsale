@@ -1,4 +1,4 @@
-$(document).on "ready page:load", ->
+$(document).on "ready turbolinks:load page:load", ->
   if window.location.hash
     activeTab = $('[href="' + window.location.hash + '"]')
     activeTab && activeTab.tab('show')

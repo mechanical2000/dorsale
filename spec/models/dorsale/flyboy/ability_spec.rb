@@ -132,7 +132,7 @@ describe ::Ability do
     end
 
     it "can't snooze if reminder >= today" do
-      task = create(:flyboy_task, reminder: Date.today, term: Date.tomorrow)
+      task = create(:flyboy_task, reminder: Time.zone.now.to_date, term: Date.tomorrow)
       expect(ability.can?(:snooze, task)).to be false
     end
 

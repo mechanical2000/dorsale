@@ -1,7 +1,7 @@
 module Dorsale
   module BillingMachine
     class QuotationsController < ::Dorsale::BillingMachine::ApplicationController
-      before_filter :set_objects, only: [
+      before_action :set_objects, only: [
         :show,
         :edit,
         :update,

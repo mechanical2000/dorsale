@@ -23,7 +23,7 @@ module Dorsale
         super
         assign_default_values
         self.due_date              = 30.days.from_now if due_date.nil?
-        self.date                  = Date.today       if date.nil?
+        self.date                  = Time.zone.now.to_date       if date.nil?
       end
 
       before_create :assign_unique_index
@@ -114,9 +114,9 @@ module Dorsale
           return :paid
         elsif due_date == nil
           return :on_alert
-        elsif Date.today >= due_date + 15
+        elsif Time.zone.now.to_date >= due_date + 15
           return :on_alert
-        elsif Date.today > due_date
+        elsif Time.zone.now.to_date > due_date
           return :late
         else
           return :pending

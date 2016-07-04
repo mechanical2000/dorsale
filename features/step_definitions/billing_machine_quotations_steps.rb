@@ -33,38 +33,38 @@ Given(/^a bunch of existing quotations$/) do
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => c1,
-    :date     => Date.today,
+    :date     => Time.zone.now.to_date,
   )
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => c2,
-    :date     => Date.today,
+    :date     => Time.zone.now.to_date,
   )
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => c3,
-    :date     => Date.today,
+    :date     => Time.zone.now.to_date,
   )
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => c1,
-    :date     => Date.today - 2.days,
+    :date     => Time.zone.now.to_date - 2.days,
   )
 
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => i1,
-    :date     => Date.today - 3.days,
+    :date     => Time.zone.now.to_date - 3.days,
   )
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => i2,
-    :date     => Date.today - 3.days,
+    :date     => Time.zone.now.to_date - 3.days,
   )
   create(:billing_machine_quotation,
     :id_card  => @id_card,
     :customer => i3,
-    :date     => Date.today - 3.days,
+    :date     => Time.zone.now.to_date - 3.days,
   )
 end
 
@@ -184,7 +184,7 @@ Then(/^he can see all the quotation informations$/) do
 end
 
 Then(/^the quotation default date is set to today's date\.$/) do
-  page.should have_field('quotation_date', with: I18n.l(Date.today))
+  page.should have_field('quotation_date', with: I18n.l(Time.zone.now.to_date))
 end
 
 Then(/^he should see (\d+) quotations$/) do |arg1|

@@ -20,7 +20,7 @@ end
 Given(/^an existing snoozable task$/) do
   create(:flyboy_task,
     :reminder => Date.yesterday,
-    :term     => Date.today
+    :term     => Time.zone.now.to_date
   )
 end
 
@@ -33,7 +33,7 @@ end
 Given(/^a task with an owner that's the term is today$/) do
   @task = FactoryGirl.create(:flyboy_task,
     :reminder => Date.yesterday,
-    :term     => Date.today,
+    :term     => Time.zone.now.to_date,
     :owner    => create(:user),
   )
 end
@@ -41,7 +41,7 @@ end
 Given(/^a task without owner$/) do
   @task = FactoryGirl.create(:flyboy_task,
     :reminder => Date.yesterday,
-    :term     => Date.today,
+    :term     => Time.zone.now.to_date,
     :owner    => nil,
   )
 end
@@ -49,7 +49,7 @@ end
 Given(/^a closed task with an owner$/) do
   @task = FactoryGirl.create(:flyboy_task,
     :reminder => Date.yesterday,
-    :term     => Date.today,
+    :term     => Time.zone.now.to_date,
     :owner    => create(:user),
     :progress => 100,
     :done     => true,

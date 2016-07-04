@@ -55,7 +55,7 @@ module Dorsale
 
           format.csv do
             send_data @tasks_without_pagination.to_csv,
-              filename:    "feuille_de_route_#{Date.today}.csv",
+              filename:    "feuille_de_route_#{Time.zone.now.to_date}.csv",
               disposition: "attachment"
           end
 
@@ -65,7 +65,7 @@ module Dorsale
             pdf = Roadmap.new(@tasks_without_pagination)
             pdf.build
             send_data pdf.render,
-              filename:    "feuille_de_route_#{Date.today}.pdf",
+              filename:    "feuille_de_route_#{Time.zone.now.to_date}.pdf",
               disposition: "inline"
           end
         end
@@ -135,7 +135,7 @@ module Dorsale
         @task_comment ||= @task.comments.new(
           :progress    => 100,
           :description => t("messages.tasks.complete_ok"),
-          :date        => DateTime.now,
+          :date        => Time.zone.now,
           :author      => current_user
         )
 

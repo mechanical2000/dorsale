@@ -20,7 +20,7 @@ module Dorsale
 
       def initialize(*args)
         super
-        self.date = Date.today if self.date.nil?
+        self.date = Time.zone.now.to_date if self.date.nil?
       end
 
       # Sum of line amounts

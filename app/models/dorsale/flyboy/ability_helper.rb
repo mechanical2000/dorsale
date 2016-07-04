@@ -35,7 +35,7 @@ module Dorsale
         end
 
         cannot :snooze, ::Dorsale::Flyboy::Task do |task|
-          task.done? || task.reminder >= Date.today
+          task.done? || task.reminder >= Time.zone.now.to_date
         end
       end
     end

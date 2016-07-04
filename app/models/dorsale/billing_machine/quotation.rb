@@ -31,8 +31,8 @@ module Dorsale
 
       def initialize(*)
         super
-        self.state                 = STATES.first   if state.nil?
-        self.date                  = Date.today     if date.nil?
+        self.state                 = STATES.first          if state.nil?
+        self.date                  = Time.zone.now.to_date if date.nil?
         assign_default_values
       end
 
@@ -140,7 +140,7 @@ module Dorsale
         new_quotation.unique_index = nil
         new_quotation.created_at   = nil
         new_quotation.updated_at   = nil
-        new_quotation.date         = Date.today
+        new_quotation.date         = Time.zone.now.to_date
         new_quotation.state        = Quotation::STATES.first
 
         new_quotation.save!
@@ -179,7 +179,7 @@ module Dorsale
           end
         end
 
-        new_invoice.date = Date.today
+        new_invoice.date = Time.zone.now.to_date
 
         new_invoice
       end

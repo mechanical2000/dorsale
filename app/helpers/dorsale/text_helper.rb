@@ -74,7 +74,7 @@ module Dorsale
       helper      = options[:helper]
       i18n_key    = "#{object.class.to_s.tableize.singularize}/#{attribute}"
       nested      = I18n.t("activerecord.attributes.#{i18n_key}").is_a?(Hash)
-      klass       = object.is_a?(Class) ? object : object.class
+      klass       = object.is_a?(Module) ? object : object.class
       object_type = klass.to_s.split("::").last.underscore
 
       value = text
