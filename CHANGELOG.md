@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.0
+
+- Rails 5 + Turbolinks 5 compatible
+
 ## 2.7.3
 
 - Fix Fix ActiveRecordCommaTypeCast to accept NBSP
