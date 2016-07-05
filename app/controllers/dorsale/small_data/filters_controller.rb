@@ -3,7 +3,7 @@ module Dorsale
     class FiltersController < ::Dorsale::ApplicationController
 
       def create
-        new_filters = params.fetch(:filters, {}).to_h
+        new_filters = params.fetch(:filters, {}).permit!.to_h
 
         new_filters.each do |key, value|
           new_filters[key] = "" if value == "0"
