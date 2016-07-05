@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.1
+
+- Rails 4 strong params fix
+
 ## 2.8.0
 
 - Rails 5 + Turbolinks 5 compatible
