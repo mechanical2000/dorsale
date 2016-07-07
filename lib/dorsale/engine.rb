@@ -54,6 +54,12 @@ module Dorsale
       end
     end
 
+    initializer "check_rails_version" do
+      if Rails.version < "5.0.0"
+        warn "Dorsale 3 supports only Rails 5, please update Rails."
+      end
+    end
+
     Mime::Type.register "application/vnd.ms-excel", :xls
     Mime::Type.register "application/vnd.ms-excel", :xlsx
   end

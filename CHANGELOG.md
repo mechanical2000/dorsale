@@ -1,12 +1,10 @@
 # Changelog
 
-## 2.8.1
+## 3.0.0
 
-- Rails 4 strong params fix
-
-## 2.8.0
-
-- Rails 5 + Turbolinks 5 compatible
+- Migrate to Rails 5
+- Drop Rails 4 support
+- Delete 2.8.x versions
 
 ## 2.7.3
 
