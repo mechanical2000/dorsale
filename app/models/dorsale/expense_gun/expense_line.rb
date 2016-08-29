@@ -13,9 +13,9 @@ module Dorsale
       validates :name,            presence: true
       validates :date,            presence: true
       validates :category,        presence: true
-      validates :total_all_taxes, presence: true, numericality: {greater_than_or_equal_to: 1.0}
+      validates :total_all_taxes, presence: true, numericality: {greater_than_or_equal_to: 0}
       validates :vat,             presence: true, numericality: {greater_than_or_equal_to: 0}
-      validates :company_part,    presence: true, numericality: {greater_than_or_equal_to: 1.0, less_than_or_equal_to: 100.0}
+      validates :company_part,    presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100.0}
 
       # simple_form
       validates :category_id, presence: true

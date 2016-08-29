@@ -29,7 +29,7 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpenseLine, type: :model do
   end
 
   it "#total_all_taxes should be >0" do
-    expect(FactoryGirl.build(:expense_gun_expense_line)).to validate_numericality_of(:total_all_taxes).is_greater_than_or_equal_to(1.0)
+    expect(FactoryGirl.build(:expense_gun_expense_line)).to validate_numericality_of(:total_all_taxes).is_greater_than_or_equal_to(0)
   end
 
   it "#vat should be present" do
@@ -47,7 +47,7 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpenseLine, type: :model do
   end
 
   it "#company_part should be >=0 and <= 100" do
-    expect(FactoryGirl.build(:expense_gun_expense_line)).to validate_numericality_of(:company_part).is_greater_than_or_equal_to(1.0).is_less_than_or_equal_to(100.0)
+    expect(FactoryGirl.build(:expense_gun_expense_line)).to validate_numericality_of(:company_part).is_greater_than_or_equal_to(0).is_less_than_or_equal_to(100.0)
   end
 
   it "#company_part should be 100 as default" do

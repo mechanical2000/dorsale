@@ -300,23 +300,16 @@ ActiveRecord::Schema.define(version: 20160701220436) do
 
   create_table "dummy_models", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "string_field"
-    t.text     "text_field"
-    t.integer  "integer_field"
-    t.decimal  "decimal_field"
-    t.date     "date_field"
-    t.datetime "datetime_field"
-    t.boolean  "boolean_field"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.integer  "taggable_id"
     t.string   "taggable_type"
-    t.integer  "tagger_id"
+    t.integer  "taggable_id"
     t.string   "tagger_type"
+    t.integer  "tagger_id"
     t.string   "context",       limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
