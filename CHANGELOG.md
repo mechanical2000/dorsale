@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Fix ExpenseGun min amounts
+
 ## 3.0.0
 
 - Migrate to Rails 5
