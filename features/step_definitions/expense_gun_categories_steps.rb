@@ -20,11 +20,11 @@ end
 Then(/^the category is added to the category list$/) do
   expect(page).to have_content "Category Name"
   expect(page).to have_content "Category Code"
-  expect(page).to have_css(".glyphicon-ok")
+  expect(page).to have_css(".fa-check")
 end
 
 Given(/^an existing category$/) do
-  @category = ::Dorsale::ExpenseGun::Category.create(name: "Existing Category", code: "Existing Code", vat_deductible: true)
+  @category = create(:expense_gun_category, vat_deductible: true)
 end
 
 When(/^the user edits the category$/) do
@@ -48,8 +48,7 @@ Then(/^he is redirected on the categories page$/) do
 end
 
 Then(/^the category's label is updated$/) do
-  reload_the_page
   expect(page).to have_content "New Category Name"
   expect(page).to have_content "New Category Code"
-  expect(page).to have_css(".glyphicon-remove")
+  expect(page).to have_css(".fa-remove")
 end

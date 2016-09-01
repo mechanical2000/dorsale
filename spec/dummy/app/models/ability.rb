@@ -15,5 +15,6 @@ class Ability
     define_dorsale_billing_machine_abilities
     define_dorsale_customer_vault_abilities
     define_dorsale_expense_gun_abilities
+    define_dorsale_expense_gun_categories
   end
 end

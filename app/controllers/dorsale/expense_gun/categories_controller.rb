@@ -2,19 +2,19 @@ module Dorsale
   module ExpenseGun
     class CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
       def index
-        #cancan
-        @categories = ::Dorsale::ExpenseGun::Category.all
+        authorize! :index, Category
+        @categories ||= ::Dorsale::ExpenseGun::Category.all
       end
 
       def new
         @category = ::Dorsale::ExpenseGun::Category.new
-        #cancan
+        authorize! :create, Category
       end
 
       def create
-        @catgory = ::Dorsale::ExpenseGun::Category.new(category_params)
-        #cancan
-        if @catgory.save
+        @category = ::Dorsale::ExpenseGun::Category.new(category_params)
+        authorize! :create, Category
+        if @category.save
           flash[:notice] = "Category successfully added"
           redirect_to expense_gun_categories_url
         else
@@ -24,14 +24,15 @@ module Dorsale
 
       def edit
         @category = ::Dorsale::ExpenseGun::Category.find(params[:id])
-        #cancan
+        authorize! :update, Category
       end
 
       def update
         @category = ::Dorsale::ExpenseGun::Category.find(params[:id])
-        #cancan
+        authorize! :update, Category
         if @category.update_attributes(category_params)
-          redirect_to expense_gun_categories_path, notice: "Category successfully updated"
+          flash[:notice] = "Category successfully updated"
+          redirect_to expense_gun_categories_path
         else
           render action: "edit"
         end
