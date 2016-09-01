@@ -15,7 +15,7 @@ module Dorsale
         @idcard = ::Dorsale::BillingMachine::IdCard.new(idcard_params)
         authorize! :create, IdCard
         if @idcard.save
-          flash[:notice] = "Card successfully added"
+          flash[:notice] = "Id Card successfully added"
           redirect_to billing_machine_id_cards_path
         else
           render action: "new"
@@ -31,7 +31,7 @@ module Dorsale
         @idcard = ::Dorsale::BillingMachine::IdCard.find(params[:id])
         authorize! :update, IdCard
         if @idcard.update_attributes(idcard_params)
-          flash[:notice] = "Card successfully updated"
+          flash[:notice] = "Id Card successfully updated"
           redirect_to billing_machine_id_cards_path
         else
           render action: "edit"

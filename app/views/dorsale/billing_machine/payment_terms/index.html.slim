@@ -1,0 +1,19 @@
+.actions
+  = create_button new_billing_machine_payment_term_path, action: :create
+  p
+
+  table.table.default#paymentterm
+    thead
+      tr
+        th.actions.paymentterm-label
+          = ::Dorsale::BillingMachine::PaymentTerm.t(:label)
+        th.actions.paymentterm-action
+          = "Action"
+
+    tbody
+      - @paymentterms.each do |paymentterm|
+        tr.actions.paymentterm
+          td.actions.paymentterm-label
+            = paymentterm.label
+          td.actions.paymentterm-action
+            = update_button edit_billing_machine_payment_term_path(paymentterm), id: "edit-#{paymentterm.id}"

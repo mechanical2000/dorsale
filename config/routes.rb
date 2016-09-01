@@ -35,6 +35,7 @@ Dorsale::Engine.routes.draw do
 
   namespace :billing_machine do
     resources :id_cards, except: [:destroy, :show]
+    resources :payment_terms, except: [:destroy, :show]
 
     resources :invoices, except: [:destroy] do
       member do
