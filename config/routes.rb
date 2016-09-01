@@ -65,6 +65,8 @@ Dorsale::Engine.routes.draw do
   end
 
   namespace :expense_gun do
+    resources :categories, except: [:destroy, :show]
+
     resources :expenses, except: [:destroy] do
       resources :expense_lines
       member do

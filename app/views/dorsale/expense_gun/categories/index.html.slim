@@ -1,0 +1,30 @@
+.actions
+  = create_button new_expense_gun_category_path, action: :create
+  p
+
+  table.table.default#category
+    thead
+      tr
+        th.category-name
+          = ::Dorsale::ExpenseGun::Category.t(:name)
+        th.category-code
+          = ::Dorsale::ExpenseGun::Category.t(:code)
+        th.category-vat_deductible
+          = ::Dorsale::ExpenseGun::Category.t(:vat_deductible)
+        th.category-action
+          = "Action"
+
+    tbody align="center"
+      - @categories.each do |category|
+        tr.category
+          td.category-name
+            = category.name
+          td.category-code
+            = category.code
+          td.category-vat_deductible
+            - if category.vat_deductible?
+              span.glyphicon.glyphicon-ok
+            - else
+              span.glyphicon.glyphicon-remove
+          td.category-action
+            = update_button edit_expense_gun_category_path(category), id: "edit-#{category.id}"
