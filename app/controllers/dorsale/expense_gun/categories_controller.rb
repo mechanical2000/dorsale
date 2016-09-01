@@ -15,7 +15,7 @@ module Dorsale
         @category = ::Dorsale::ExpenseGun::Category.new(category_params)
         authorize! :create, Category
         if @category.save
-          flash[:notice] = "Category successfully added"
+          flash[:notice] = t("categories.create_ok")
           redirect_to expense_gun_categories_url
         else
           render action: "new"
@@ -31,7 +31,7 @@ module Dorsale
         @category = ::Dorsale::ExpenseGun::Category.find(params[:id])
         authorize! :update, Category
         if @category.update_attributes(category_params)
-          flash[:notice] = "Category successfully updated"
+          flash[:notice] = t("categories.update_ok")
           redirect_to expense_gun_categories_path
         else
           render action: "edit"

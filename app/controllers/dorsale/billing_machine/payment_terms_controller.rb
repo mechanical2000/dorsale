@@ -3,19 +3,19 @@ module Dorsale
     class PaymentTermsController < ::Dorsale::BillingMachine::ApplicationController
       def index
         authorize! :index, PaymentTerm
-        @paymentterms ||= ::Dorsale::BillingMachine::PaymentTerm.all
+        @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
       end
 
       def new
-        @paymentterm = ::Dorsale::BillingMachine::PaymentTerm.new
+        @payment_term = ::Dorsale::BillingMachine::PaymentTerm.new
         authorize! :create, PaymentTerm
       end
 
       def create
-        @paymentterm = ::Dorsale::BillingMachine::PaymentTerm.new(paymentterm_params)
+        @payment_term = ::Dorsale::BillingMachine::PaymentTerm.new(payment_term_params)
         authorize! :create, PaymentTerm
-        if @paymentterm.save
-          flash[:notice] = "Payment Term successfully added"
+        if @payment_term.save
+          flash[:notice] = t("payment_terms.create_ok")
           redirect_to billing_machine_payment_terms_path
         else
           render action: "new"
@@ -23,15 +23,15 @@ module Dorsale
       end
 
       def edit
-        @paymentterm = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
+        @payment_term = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
         authorize! :update, PaymentTerm
       end
 
       def update
-        @paymentterm = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
+        @payment_term = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
         authorize! :update, PaymentTerm
-        if @paymentterm.update_attributes(paymentterm_params)
-          flash[:notice] = "Payment Term successfully updated"
+        if @payment_term.update_attributes(payment_term_params)
+          flash[:notice] = t("payment_terms.update_ok")
           redirect_to billing_machine_payment_terms_path
         else
           render action: "edit"
@@ -46,7 +46,7 @@ module Dorsale
         ]
       end
 
-      def paymentterm_params
+      def payment_term_params
         params.require(:billing_machine_payment_term).permit(permitted_params)
       end
     end

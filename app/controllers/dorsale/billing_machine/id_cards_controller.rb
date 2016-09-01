@@ -3,19 +3,19 @@ module Dorsale
     class IdCardsController < ::Dorsale::BillingMachine::ApplicationController
       def index
         authorize! :index, IdCard
-        @idcards ||= ::Dorsale::BillingMachine::IdCard.all
+        @id_cards ||= ::Dorsale::BillingMachine::IdCard.all
       end
 
       def new
-        @idcard = ::Dorsale::BillingMachine::IdCard.new
+        @id_card = ::Dorsale::BillingMachine::IdCard.new
         authorize! :create, IdCard
       end
 
       def create
-        @idcard = ::Dorsale::BillingMachine::IdCard.new(idcard_params)
+        @id_card = ::Dorsale::BillingMachine::IdCard.new(id_card_params)
         authorize! :create, IdCard
-        if @idcard.save
-          flash[:notice] = "Id Card successfully added"
+        if @id_card.save
+          flash[:notice] = t("id_cards.create_ok")
           redirect_to billing_machine_id_cards_path
         else
           render action: "new"
@@ -23,15 +23,15 @@ module Dorsale
       end
 
       def edit
-        @idcard = ::Dorsale::BillingMachine::IdCard.find(params[:id])
+        @id_card = ::Dorsale::BillingMachine::IdCard.find(params[:id])
         authorize! :update, IdCard
       end
 
       def update
-        @idcard = ::Dorsale::BillingMachine::IdCard.find(params[:id])
+        @id_card = ::Dorsale::BillingMachine::IdCard.find(params[:id])
         authorize! :update, IdCard
-        if @idcard.update_attributes(idcard_params)
-          flash[:notice] = "Id Card successfully updated"
+        if @id_card.update_attributes(id_card_params)
+          flash[:notice] = t("id_cards.update_ok")
           redirect_to billing_machine_id_cards_path
         else
           render action: "edit"
@@ -76,7 +76,7 @@ module Dorsale
         ]
       end
 
-      def idcard_params
+      def id_card_params
         params.require(:billing_machine_id_card).permit(permitted_params)
       end
     end

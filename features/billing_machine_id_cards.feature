@@ -1,19 +1,19 @@
 @javascript
 Feature: IdCards
 
-  Scenario: New idcard
+  Scenario: New id_card
     Given an authenticated user
-    And the user goes on the new idcard page
-    When he fills the idcard's information
-    And creates a new idcard
-    Then he is redirected on the idcards page
-    And the idcard is added to the idcard list
+    And the user goes on the new id_card page
+    When he fills the id_card's information
+    And creates a new id_card
+    Then he is redirected on the id_cards page
+    And the id_card is added to the id_card list
 
-  Scenario: Update idcard
+  Scenario: Update id_card
     Given an authenticated user
-    And an existing idcard
-    When the user edits the idcard
-    Then the current idcard's label should be pre-filled
-    When he validates the new idcard
-    Then he is redirected on the idcards page
-    And the idcard's label is updated
+    And an existing id_card
+    When the user edits the id_card
+    Then the current id_card's label should be pre-filled
+    When he validates the new id_card
+    Then he is redirected on the id_cards page
+    And the id_card's label is updated
