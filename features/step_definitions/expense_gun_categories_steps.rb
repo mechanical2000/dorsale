@@ -6,7 +6,7 @@ end
 When(/^he fills the category's information$/) do
   fill_in 'expense_gun_category_name', with: "Category Name"
   fill_in 'expense_gun_category_code', with: "Category Code"
-  find(:css, "#expense_gun_category_vat_deductible").set(true)
+  select "Oui"
 end
 
 When(/^creates a new category$/) do
@@ -39,7 +39,7 @@ end
 When(/^he validates the new category$/) do
   fill_in "expense_gun_category_name", with: "New Category Name"
   fill_in "expense_gun_category_code", with: "New Category Code"
-  find(:css, "#expense_gun_category_vat_deductible").set(false)
+  select "Non"
   find("[type=submit]").click
 end
 

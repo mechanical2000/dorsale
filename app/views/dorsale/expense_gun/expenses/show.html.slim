@@ -67,7 +67,7 @@
               strong = t("labels.employee_payback") + " : "
               = euros expense_line.employee_payback
             p
-              strong = t("labels.deductible_vat") + " : "
+              strong = t("labels.vat_deductible") + " : "
               = euros expense_line.total_vat_deductible
 
   hr
@@ -85,7 +85,7 @@
             strong = t("labels.employee_payback") + " : "
             = euros @expense.total_employee_payback
           p
-            strong = t("labels.deductible_vat") + " : "
+            strong = t("labels.vat_deductible") + " : "
             = euros @expense.total_vat_deductible
 
   .attachments-panel

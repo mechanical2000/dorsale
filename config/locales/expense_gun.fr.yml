@@ -42,7 +42,7 @@ fr:
       employee         : "Employé"
       state            : "État"
       employee_payback : "Remboursement employé"
-      deductible_vat   : "TVA déductible"
+      vat_deductible   : "TVA déductible"
       total            : "Total"
 
       states:
