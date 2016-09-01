@@ -36,7 +36,7 @@ Then(/^the current category's label should be pre\-filled$/) do
   expect(page).to have_field("expense_gun_category_name", with: @category.name)
 end
 
-When(/^he validates the new label$/) do
+When(/^he validates the new category$/) do
   fill_in "expense_gun_category_name", with: "New Category Name"
   fill_in "expense_gun_category_code", with: "New Category Code"
   find(:css, "#expense_gun_category_vat_deductible").set(false)
