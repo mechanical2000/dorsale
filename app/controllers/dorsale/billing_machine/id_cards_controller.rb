@@ -12,7 +12,7 @@ module Dorsale
       end
 
       def create
-        @id_card = ::Dorsale::BillingMachine::IdCard.new(id_card_params)
+        @id_card ||= ::Dorsale::BillingMachine::IdCard.new(id_card_params)
         authorize! :create, IdCard
         if @id_card.save
           flash[:notice] = t("id_cards.create_ok")
