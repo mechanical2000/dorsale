@@ -8,12 +8,12 @@ module Dorsale
 
       def new
         @id_card = ::Dorsale::BillingMachine::IdCard.new
-        authorize! :create, IdCard
+        authorize! :create, @id_card
       end
 
       def create
         @id_card ||= ::Dorsale::BillingMachine::IdCard.new(id_card_params)
-        authorize! :create, IdCard
+        authorize! :create, @id_card
         if @id_card.save
           flash[:notice] = t("id_cards.create_ok")
           redirect_to billing_machine_id_cards_path
@@ -24,12 +24,12 @@ module Dorsale
 
       def edit
         @id_card = ::Dorsale::BillingMachine::IdCard.find(params[:id])
-        authorize! :update, IdCard
+        authorize! :update, @id_card
       end
 
       def update
         @id_card = ::Dorsale::BillingMachine::IdCard.find(params[:id])
-        authorize! :update, IdCard
+        authorize! :update, @id_card
         if @id_card.update_attributes(id_card_params)
           flash[:notice] = t("id_cards.update_ok")
           redirect_to billing_machine_id_cards_path

@@ -8,12 +8,12 @@ module Dorsale
 
       def new
         @payment_term = ::Dorsale::BillingMachine::PaymentTerm.new
-        authorize! :create, PaymentTerm
+        authorize! :create, @payment_term
       end
 
       def create
-        @payment_term = ::Dorsale::BillingMachine::PaymentTerm.new(payment_term_params)
-        authorize! :create, PaymentTerm
+        @payment_term ||= ::Dorsale::BillingMachine::PaymentTerm.new(payment_term_params)
+        authorize! :create, @payment_term
         if @payment_term.save
           flash[:notice] = t("payment_terms.create_ok")
           redirect_to billing_machine_payment_terms_path
@@ -24,12 +24,12 @@ module Dorsale
 
       def edit
         @payment_term = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
-        authorize! :update, PaymentTerm
+        authorize! :update, @payment_term
       end
 
       def update
         @payment_term = ::Dorsale::BillingMachine::PaymentTerm.find(params[:id])
-        authorize! :update, PaymentTerm
+        authorize! :update, @payment_term
         if @payment_term.update_attributes(payment_term_params)
           flash[:notice] = t("payment_terms.update_ok")
           redirect_to billing_machine_payment_terms_path
