@@ -143,6 +143,13 @@ fr:
     current_avatar        : "Avatar actuel"
     logo                  : "Logo"
     active                : "Actif ?"
+    administrator         : "Administrateur?"
+    billing_machine       : "Accès Facturation?"
+    time_machine          : "Accès Gestion Du Temps?"
+    expense_gun           : "Accès Note de Frais?"
+    customer_vault        : "Accès Annuaire?"
+    flyboy                : "Accès Taches?"
+    notify_invoices_late_payments: "Notifications de Retard de Paiement?"
 
   errors:
     messages:
