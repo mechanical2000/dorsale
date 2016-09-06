@@ -12,11 +12,11 @@ module Dorsale
     def index
       authorize! :list, User
 
-      @users = User.all
+      @users ||= User.all
     end
 
     def new
-      @user = User.new
+      @user ||= User.new
 
       authorize! :create, @user
     end
@@ -26,7 +26,7 @@ module Dorsale
     end
 
     def create
-      @user = User.new(user_params)
+      @user ||= User.new(user_params)
 
       authorize! :create, @user
 
@@ -68,7 +68,7 @@ module Dorsale
     end
 
     def user_params
-      params.require(:user).permit(permitted_params)
+      params.fetch(:user, {}).permit(permitted_params)
     end
   end
 end
