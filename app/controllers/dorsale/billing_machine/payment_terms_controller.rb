@@ -2,7 +2,7 @@ module Dorsale
   module BillingMachine
     class PaymentTermsController < ::Dorsale::BillingMachine::ApplicationController
       def index
-        authorize! :index, PaymentTerm
+        authorize! :list, PaymentTerm
         @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
       end
 

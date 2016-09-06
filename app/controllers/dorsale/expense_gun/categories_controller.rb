@@ -2,7 +2,7 @@ module Dorsale
   module ExpenseGun
     class CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
       def index
-        authorize! :index, Category
+        authorize! :list, Category
 
         @categories ||= ::Dorsale::ExpenseGun::Category.all
       end

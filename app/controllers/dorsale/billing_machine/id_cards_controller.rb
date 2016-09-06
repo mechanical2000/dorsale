@@ -2,7 +2,7 @@ module Dorsale
   module BillingMachine
     class IdCardsController < ::Dorsale::BillingMachine::ApplicationController
       def index
-        authorize! :index, IdCard
+        authorize! :list, IdCard
         @id_cards ||= ::Dorsale::BillingMachine::IdCard.all
       end
 

@@ -3,7 +3,7 @@ module Dorsale
     module AbilityHelper
       def define_dorsale_expense_gun_abilities
         can [:list, :create, :show, :edit, :submit , :accept, :refuse, :cancel], ::Dorsale::ExpenseGun::Expense
-        can [:index, :create, :update], ::Dorsale::ExpenseGun::Category
+        can [:list, :create, :update], ::Dorsale::ExpenseGun::Category
       end
     end
   end
