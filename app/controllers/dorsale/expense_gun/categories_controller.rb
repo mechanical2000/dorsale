@@ -20,7 +20,7 @@ module Dorsale
 
         if @category.save
           flash[:notice] = t("categories.create_ok")
-          redirect_to expense_gun_categories_url
+          redirect_to expense_gun_categories_path
         else
           render action: "new"
         end
