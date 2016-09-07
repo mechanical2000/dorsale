@@ -15,6 +15,7 @@ end
 Lorsqu(/^il saisit le nom et la date de la note de frais puis valide$/) do
   fill_in "expense_gun_expense_name", with: "hello"
   fill_in "expense_gun_expense_date", with: "2012-12-21"
+  find("body").click # close datepicker
   find("[type=submit]").click
 end
 
@@ -29,6 +30,7 @@ end
 Alors(/^il saisit les informations de la ligne de frais puis valide$/) do
   fill_in "expense_line_name", with: "taxi"
   fill_in "expense_line_date", with: "2012-12-21"
+  find("body").click # close datepicker
   select ::Dorsale::ExpenseGun::Category.first.name, from: "expense_line_category_id"
   fill_in "expense_line_total_all_taxes", with: 100
   fill_in "expense_line_vat", with: 20

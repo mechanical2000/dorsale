@@ -39,6 +39,7 @@ require "dorsale/simple_form_bootstrap"
 require "dorsale/model_i18n"
 require "dorsale/model_to_s"
 require "dorsale/alexandrie/prawn"
+require "dorsale/form_back_url"
 
 require "acts-as-taggable-on"
 require "active_record_comma_type_cast"

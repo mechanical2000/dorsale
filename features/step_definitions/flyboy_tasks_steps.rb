@@ -14,7 +14,8 @@ Given(/^an existing task named "(.*?)"$/) do |name|
 end
 
 Given(/^an existing task$/) do
-  @task = create(:flyboy_task)
+  @task   = create(:flyboy_task)
+  @folder = @task.taskable
 end
 
 Given(/^an existing snoozable task$/) do
@@ -132,7 +133,6 @@ end
 
 Then(/^the task is created$/) do
   expect(page).to have_content "I-am-the-task-title"
-  expect(page).to have_content "I-am-the-task-description"
 end
 
 Then(/^I see this task$/) do

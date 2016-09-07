@@ -1,62 +1,67 @@
-module Dorsale
-  module ExpenseGun
-    class CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
-      def index
-        authorize! :list, Category
+class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
+  def index
+    authorize! :list, model
 
-        @categories ||= ::Dorsale::ExpenseGun::Category.all
-      end
+    @categories ||= model.all
+  end
 
-      def new
-        @category = ::Dorsale::ExpenseGun::Category.new
+  def new
+    @category = model.new
 
-        authorize! :create, @category
-      end
+    authorize! :create, @category
+  end
 
-      def create
-        @category ||= ::Dorsale::ExpenseGun::Category.new(category_params)
+  def create
+    @category ||= model.new(category_params)
 
-        authorize! :create, @category
+    authorize! :create, @category
 
-        if @category.save
-          flash[:notice] = t("categories.create_ok")
-          redirect_to expense_gun_categories_path
-        else
-          render action: "new"
-        end
-      end
-
-      def edit
-        @category = ::Dorsale::ExpenseGun::Category.find(params[:id])
-        authorize! :update, @category
-      end
-
-      def update
-        @category ||= ::Dorsale::ExpenseGun::Category.find(params[:id])
-
-        authorize! :update, @category
-
-        if @category.update_attributes(category_params)
-          flash[:notice] = t("categories.update_ok")
-          redirect_to expense_gun_categories_path
-        else
-          render action: "edit"
-        end
-      end
-
-      private
-
-      def permitted_params
-        [
-          :name,
-          :code,
-          :vat_deductible,
-        ]
-      end
-
-      def category_params
-        params.require(:expense_gun_category).permit(permitted_params)
-      end
+    if @category.save
+      flash[:notice] = t("categories.create_ok")
+      redirect_to back_url
+    else
+      render action: "new"
     end
   end
+
+  def edit
+    @category = model.find(params[:id])
+    authorize! :update, @category
+  end
+
+  def update
+    @category ||= model.find(params[:id])
+
+    authorize! :update, @category
+
+    if @category.update_attributes(category_params)
+      flash[:notice] = t("categories.update_ok")
+      redirect_to back_url
+    else
+      render action: "edit"
+    end
+  end
+
+  private
+
+  def model
+    ::Dorsale::ExpenseGun::Category
+  end
+
+  def back_url
+    expense_gun_categories_path
+  end
+
+  def permitted_params
+    [
+      :name,
+      :code,
+      :vat_deductible,
+    ]
+  end
+
+  def category_params
+    params.fetch(:expense_gun_category, {}).permit(permitted_params)
+  end
+
 end

@@ -262,7 +262,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     it "should redirect to the task list to refresh it" do
       task = Dorsale::Flyboy::Task.create! valid_attributes
       patch :snooze, params: {:id => task.to_param}
-      expect(response).to redirect_to(flyboy_tasks_path)
+      expect(response).to redirect_to(task)
     end
   end
 

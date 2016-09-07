@@ -1,15 +1,16 @@
-module Dorsale
-  class ApplicationController < ::ApplicationController
-    def current_user_scope
-      @current_user_scope ||= UserScope.new(current_user)
-    end
+class Dorsale::ApplicationController < ::ApplicationController
+  include Dorsale::BackUrlConcern
 
-    layout -> {
-      if request.xhr?
-        false
-      else
-        "application"
-      end
-    }
+  def current_user_scope
+    @current_user_scope ||= ::Dorsale::UserScope.new(current_user)
   end
+
+  layout -> {
+    if request.xhr?
+      false
+    else
+      "application"
+    end
+  }
+
 end

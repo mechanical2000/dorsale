@@ -21,6 +21,7 @@ gem "acts-as-taggable-on", github: "mbleigh/acts-as-taggable-on"
 gemspec
 
 group :development, :test do
+  gem "byebug"
   gem "faker"
   gem "database_cleaner"
 end
@@ -30,6 +31,7 @@ group :test do
   gem "thor"
   gem "sqlite3"
   gem "rspec-rails"
+  gem "rspec-wait"
   gem "shoulda-matchers", "2.5.0"
   gem "rails-controller-testing"
   gem "cucumber-rails", require: false
