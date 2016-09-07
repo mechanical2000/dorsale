@@ -6,6 +6,10 @@ module Dorsale
         can [:list, :create, :read, :update, :delete, :copy, :download], ::Dorsale::BillingMachine::Quotation
         can [:list, :create, :update], Dorsale::BillingMachine::IdCard
         can [:list, :create, :update], Dorsale::BillingMachine::PaymentTerm
+
+        cannot :pay, Dorsale::BillingMachine::Invoice do |invoice|
+          invoice.paid?
+        end
       end
     end
   end

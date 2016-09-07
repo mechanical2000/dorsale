@@ -243,7 +243,7 @@ Then(/^the invoice is marked paid$/) do
 end
 
 Then(/^can't set the invoice as paid again$/) do
-  expect(all("[href$=pay]").count).to eq 0
+  expect(page).to_not have_selector("[href$=pay]")
 end
 
 Then(/^the invoice is marked unpaid$/) do

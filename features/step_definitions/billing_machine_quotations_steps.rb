@@ -169,12 +169,9 @@ Then(/^the quotation's label has changed$/) do
   page.should have_field('quotation_label', with: @new_label)
 end
 
-Then(/^it's added to the quotation list$/) do
-  page.should have_selector '.date', text: @date
-  @quotation = ::Dorsale::BillingMachine::Quotation.unscoped.order(:id).last
-  page.should have_selector '.tracking_id', text: @quotation.tracking_id
-  page.should have_selector '.customer_name', text: @customer.name
-  page.should have_selector '.total_excluding_taxes', text: '180,00 €'
+Then(/^I am on the created quotation$/) do
+  @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
+  expect(current_path).to eq dorsale.billing_machine_quotation_path(@quotation)
 end
 
 Then(/^he can see all the quotation informations$/) do

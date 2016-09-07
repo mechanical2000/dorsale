@@ -24,21 +24,18 @@ module Dorsale
       end
 
       def back_url
-        urls = [
-          params[:back_url],
+        url = [
+          params[:form_url],
           request.referer,
-          (main_app.root_path rescue nil)
-        ]
-
-        url = urls.select(&:present?).first
+          (main_app.root_path rescue nil),
+          "/",
+        ].select(&:present?).first
 
         # Delete page page
         base, query_string = url.split("?")
         query_string = query_string.to_s.split("&").delete_if { |p| p.include?("page=") }.join("&")
         query_string = "?#{query_string}" if query_string.present?
-        url = base + query_string
-
-        url
+        base + query_string
       end
 
     end

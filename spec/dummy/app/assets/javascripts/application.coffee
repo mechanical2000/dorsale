@@ -4,6 +4,7 @@
 //= require bootstrap
 //= require cocoon
 //= require accounting
+//= require url.min
 //= require selectize
 //= require dorsale/all
 //= require dorsale/billing_machine/all
