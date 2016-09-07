@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2
+
+- Add new controllers :
+  - Expense Categories
+  - Payment Terms
+  - Id Cards
+- Fix Expenses VAT min amount
+
 ## 3.0.1
 
 - Fix ExpenseGun min amounts
