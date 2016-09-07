@@ -1,4 +1,19 @@
 fr:
+  activerecord:
+    models:
+      dorsale/expense_gun/expense:
+        one: "Note de frais"
+        other: "Notes de frais"
+
+      dorsale/expense_gun/expense_line:
+        one: "Dépense"
+        other: "Dépenses"
+
+      dorsale/expense_gun/category:
+        one: "Catégorie"
+        other: "Catégories"
+
+
   expense_gun:
     expense:
       label  : "Note de frais"
