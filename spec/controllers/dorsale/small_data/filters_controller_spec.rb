@@ -24,7 +24,7 @@ describe Dorsale::SmallData::FiltersController, type: :controller do
     end
 
     it "should redirect to call back url if defined" do
-      post :create, params: {filters: {key: "value"}, back_url: "xxx"}
+      post :create, params: {filters: {key: "value"}, form_url: "xxx"}
       expect(response).to redirect_to "xxx"
     end
 
@@ -40,18 +40,18 @@ describe Dorsale::SmallData::FiltersController, type: :controller do
     end
   end
 
-  describe "back_url" do
+  describe "form_url" do
     it "should reset page" do
-      post :create, params: {filters: {}, back_url: "/dorsale/flyboy/tasks"}
+      post :create, params: {filters: {}, form_url: "/dorsale/flyboy/tasks"}
       expect(response).to redirect_to "/dorsale/flyboy/tasks"
 
-      post :create, params: {filters: {}, back_url: "/dorsale/flyboy/tasks?&sort=term&page=3"}
+      post :create, params: {filters: {}, form_url: "/dorsale/flyboy/tasks?&sort=term&page=3"}
       expect(response).to redirect_to "/dorsale/flyboy/tasks?&sort=term"
 
-      post :create, params: {filters: {}, back_url: "/dorsale/flyboy/tasks?&sort=term&page=3&a=b"}
+      post :create, params: {filters: {}, form_url: "/dorsale/flyboy/tasks?&sort=term&page=3&a=b"}
       expect(response).to redirect_to "/dorsale/flyboy/tasks?&sort=term&a=b"
 
-      post :create, params: {filters: {}, back_url: "/dorsale/flyboy/tasks?page=3&a=b"}
+      post :create, params: {filters: {}, form_url: "/dorsale/flyboy/tasks?page=3&a=b"}
       expect(response).to redirect_to "/dorsale/flyboy/tasks?a=b"
     end
   end
