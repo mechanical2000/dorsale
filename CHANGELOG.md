@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.3
+
+- Refactor controllers
+- Refactor back url
+- Update config cucumber
+- Rename abilities (index => list, show => read)
+- Change some redirects after create/update
+
 ## 3.0.2
 
 - Add new controllers :
