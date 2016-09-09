@@ -11,7 +11,7 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
     authorize @person, :update?
 
     @link   ||= scope.new
-    @people ||= policy_scope(::Dorsale::CustomerVault::Person)
+    @people ||= person_policy_scope
   end
 
   def create

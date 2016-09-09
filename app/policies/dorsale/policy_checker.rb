@@ -13,8 +13,6 @@ class Dorsale::PolicyChecker
     check_policy! "Dorsale::BillingMachine::QuotationPolicy"
     check_policy! "Dorsale::CommentPolicy"
     check_policy! "Dorsale::CustomerVault::PersonPolicy"
-    check_policy! "Dorsale::CustomerVault::CorporationPolicy"
-    check_policy! "Dorsale::CustomerVault::IndividualPolicy"
     check_policy! "Dorsale::CustomerVault::LinkPolicy"
     check_policy! "Dorsale::ExpenseGun::CategoryPolicy"
     check_policy! "Dorsale::ExpenseGun::ExpensePolicy"

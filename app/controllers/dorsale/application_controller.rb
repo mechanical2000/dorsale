@@ -13,4 +13,11 @@ class Dorsale::ApplicationController < ::ApplicationController
     end
   }
 
+  private
+
+  def person_policy_scope
+    policy_scope(::Dorsale::CustomerVault::Corporation).all +
+    policy_scope(::Dorsale::CustomerVault::Individual).all
+  end
+
 end

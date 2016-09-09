@@ -34,7 +34,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def activity
     authorize model, :list?
 
-    @people ||= policy_scope(model)
+    @people ||= person_policy_scope
 
     @comments ||= policy_scope(::Dorsale::Comment)
       .where("commentable_type LIKE ?", "%CustomerVault%")
