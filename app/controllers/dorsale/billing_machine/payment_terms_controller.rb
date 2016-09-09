@@ -1,18 +1,20 @@
 class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachine::ApplicationController
+  before_action :set_objects, only: [:edit, :update]
+
   def index
     authorize model, :list?
 
-    @payment_terms ||= model.all
+    @payment_terms ||= scope.all
   end
 
   def new
-    @payment_term = model.new
+    @payment_term ||= scope.new
 
     authorize @payment_term, :create?
   end
 
   def create
-    @payment_term ||= model.new(payment_term_params)
+    @payment_term ||= scope.new(payment_term_params)
 
     authorize @payment_term, :create?
     if @payment_term.save
@@ -20,33 +22,37 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
       flash[:notice] = t("payment_terms.create_ok")
       redirect_to back_url
     else
-      render action: "new"
+      render action: :new
     end
   end
 
   def edit
-    @payment_term = model.find(params[:id])
-
     authorize @payment_term, :update?
   end
 
   def update
-    @payment_term = model.find(params[:id])
-
     authorize @payment_term, :update?
 
-    if @payment_term.update_attributes(payment_term_params)
+    if @payment_term.update(payment_term_params)
       flash[:notice] = t("payment_terms.update_ok")
       redirect_to back_url
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
   private
 
+  def set_objects
+    @payment_term ||= scope.find(params[:id])
+  end
+
   def model
     ::Dorsale::BillingMachine::PaymentTerm
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def back_url

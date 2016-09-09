@@ -13,7 +13,7 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   def new
     authorize model, :create?
 
-    @corporation ||= current_user_scope.new_corporation
+    @corporation ||= scope.new
 
     @corporation.build_address if @corporation.address.nil?
   end
@@ -21,7 +21,7 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   def create
     authorize model, :create?
 
-    @corporation ||= current_user_scope.new_corporation(corporation_params)
+    @corporation ||= scope.new(corporation_params)
 
     if @corporation.save
       flash[:notice] = t("messages.corporations.create_ok")
@@ -66,12 +66,16 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
     ::Dorsale::CustomerVault::Corporation
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def back_url
     url_for(@corporation)
   end
 
   def set_corporation
-    @corporation = model.find(params[:id])
+    @corporation ||= scope.find(params[:id])
   end
 
   def permitted_params

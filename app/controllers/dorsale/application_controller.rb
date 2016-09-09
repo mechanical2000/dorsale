@@ -3,10 +3,7 @@ class Dorsale::ApplicationController < ::ApplicationController
   include Dorsale::BackUrlConcern
 
   after_action :verify_authorized
-
-  def current_user_scope
-    @current_user_scope ||= ::Dorsale::UserScope.new(current_user)
-  end
+  after_action :verify_policy_scoped
 
   layout -> {
     if request.xhr?

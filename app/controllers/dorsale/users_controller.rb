@@ -1,5 +1,5 @@
 class Dorsale::UsersController < ::Dorsale::ApplicationController
-  before_action :set_user, only: [
+  before_action :set_objects, only: [
     :show,
     :edit,
     :update,
@@ -11,11 +11,11 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   def index
     authorize User, :list?
 
-    @users ||= User.all
+    @users ||= scope.all
   end
 
   def new
-    @user ||= User.new
+    @user ||= scope.new
 
     authorize @user, :create?
   end
@@ -25,7 +25,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   end
 
   def create
-    @user ||= User.new(user_params)
+    @user ||= scope.new(user_params)
 
     authorize @user, :create?
 
@@ -52,8 +52,16 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def model
+    User
+  end
+
+  def scope
+    policy_scope(model)
+  end
+
+  def set_objects
+    @user = scope.find(params[:id])
   end
 
   def permitted_params

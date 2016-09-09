@@ -12,7 +12,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     # callback in BillingMachine::ApplicationController
     authorize model, :list?
 
-    @quotations ||= model.all
+    @quotations ||= scope.all
     @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
     @order      ||= {unique_index: :desc}
 
@@ -54,9 +54,9 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def new
     # callback in BillingMachine::ApplicationController
-    @quotation ||= model.new
-    @quotation.lines.build if @quotation.lines.empty?
+    @quotation ||= scope.new
 
+    @quotation.lines.build               if @quotation.lines.empty?
     @quotation.id_card = @id_cards.first if @id_cards.one?
 
     authorize @quotation, :create?
@@ -64,7 +64,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def create
     # callback in BillingMachine::ApplicationController
-    @quotation ||= model.new(quotation_params)
+    @quotation ||= scope.new(quotation_params)
 
     authorize @quotation, :create?
 
@@ -160,6 +160,10 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     ::Dorsale::BillingMachine::Quotation
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def default_back_url
     if @quotation
       url_for(action: :show, id: @quotation.to_param)
@@ -169,7 +173,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def set_objects
-    @quotation = model.find params[:id]
+    @quotation ||= scope.find(params[:id])
   end
 
   def permitted_params

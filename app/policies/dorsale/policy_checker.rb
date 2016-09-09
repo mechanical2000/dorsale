@@ -13,6 +13,9 @@ class Dorsale::PolicyChecker
     check_policy! "Dorsale::BillingMachine::QuotationPolicy"
     check_policy! "Dorsale::CommentPolicy"
     check_policy! "Dorsale::CustomerVault::PersonPolicy"
+    check_policy! "Dorsale::CustomerVault::CorporationPolicy"
+    check_policy! "Dorsale::CustomerVault::IndividualPolicy"
+    check_policy! "Dorsale::CustomerVault::LinkPolicy"
     check_policy! "Dorsale::ExpenseGun::CategoryPolicy"
     check_policy! "Dorsale::ExpenseGun::ExpensePolicy"
     check_policy! "Dorsale::Flyboy::FolderPolicy"
@@ -34,12 +37,28 @@ class Dorsale::PolicyChecker
 
   def check_policy!(policy)
     begin
-     policy_klass = policy.constantize
+      policy_klass = policy.constantize
     rescue NameError
       errors << "#{policy} does not exist"
+      return
     end
 
-    helper_klass = "#{policy}Helper".constantize
+    begin
+      helper_klass = "#{policy}Helper".constantize
+    rescue NameError
+      errors << "#{policy}Helper does not exist"
+      return
+    end
+
+    begin
+      scope_klass = "#{policy}::Scope".constantize
+
+      unless scope_klass.public_instance_methods.include?(:resolve)
+        errors << "#{policy}::Scope#resolve is not defined"
+      end
+    rescue NameError
+      errors << "#{policy}::Scope does not exist"
+    end
 
     unless policy_klass < helper_klass
       errors << "#{policy_klass} does not prepend #{helper_klass}"

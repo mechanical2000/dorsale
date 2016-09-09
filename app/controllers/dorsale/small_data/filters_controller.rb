@@ -1,6 +1,7 @@
 class Dorsale::SmallData::FiltersController < ::Dorsale::ApplicationController
   def create
     skip_authorization
+    skip_policy_scope
 
     new_filters = params.fetch(:filters, {}).permit!.to_h
 

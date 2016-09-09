@@ -12,7 +12,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     # callback in BillingMachine::ApplicationController
     authorize model, :list?
 
-    @invoices ||= model.all
+    @invoices ||= scope.all
     @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
     @order    ||= {unique_index: :desc}
 
@@ -51,9 +51,9 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def new
     # callback in BillingMachine::ApplicationController
-    @invoice ||= model.new
-    @invoice.lines.build if @invoice.lines.empty?
+    @invoice ||= scope.new
 
+    @invoice.lines.build               if @invoice.lines.empty?
     @invoice.id_card = @id_cards.first if @id_cards.one?
 
     authorize @invoice, :create?
@@ -61,7 +61,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def create
     # callback in BillingMachine::ApplicationController
-    @invoice ||= model.new(invoice_params)
+    @invoice ||= scope.new(invoice_params)
 
     authorize model, :create?
 
@@ -100,7 +100,8 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def copy
     # callback in BillingMachine::ApplicationController
-    @original = @invoice
+    @original ||= @invoice
+
     authorize @original, :copy?
 
     @invoice = @original.dup
@@ -120,6 +121,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def edit
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :update?
+
     if ::Dorsale::BillingMachine.vat_mode == :single
       @invoice.lines.build(vat_rate: @invoice.vat_rate) if @invoice.lines.empty?
     else
@@ -143,7 +145,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :update?
 
-    if @invoice.update_attributes(paid: true)
+    if @invoice.update(paid: true)
       flash[:notice] = t("messages.invoices.pay_ok")
     else
       flash[:alert] = t("messages.invoices.pay_error")
@@ -194,6 +196,10 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     ::Dorsale::BillingMachine::Invoice
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def default_back_url
     if @invoice
       url_for(action: :show, id: @invoice.to_param)
@@ -203,7 +209,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def set_objects
-    @invoice = model.find params[:id]
+    @invoice ||= scope.find(params[:id])
   end
 
   def permitted_params

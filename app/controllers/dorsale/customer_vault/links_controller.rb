@@ -10,14 +10,8 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   def new
     authorize @person, :update?
 
-    @link   ||= model.new
-    @people ||= current_user_scope.people
-  end
-
-  def edit
-    authorize @person, :update?
-
-    @link = model.find(params[:id])
+    @link   ||= scope.new
+    @people ||= policy_scope(::Dorsale::CustomerVault::Person)
   end
 
   def create
@@ -26,7 +20,13 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
     params = link_params
     bob = params[:bob].split("-")
 
-    @link ||= model.new(title: params[:title], alice_id: @person.id, alice_type: @person.class.to_s, bob_id: bob[1], bob_type: bob[0])
+    @link ||= scope.new(
+      :title      => params[:title],
+      :alice_id   => @person.id,
+      :alice_type => @person.class.to_s,
+      :bob_id     => bob[1],
+      :bob_type   => bob[0],
+    )
 
     if @link.save
       flash[:notice] = t("messages.links.create_ok")
@@ -36,10 +36,16 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
     end
   end
 
+  def edit
+    authorize @person, :update?
+
+    @link = scope.find(params[:id])
+  end
+
   def update
     authorize @person, :update?
 
-    @link = model.find(params[:id])
+    @link = scope.find(params[:id])
 
     if @link.update(link_params)
       flash[:notice] = t("messages.links.update_ok")
@@ -52,7 +58,7 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   def destroy
     authorize @person, :update?
 
-    @link = model.find(params[:id])
+    @link = scope.find(params[:id])
 
     if @link.destroy
       flash[:notice] = t("messages.links.delete_ok")
@@ -72,6 +78,10 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
 
   def back_url
     polymorphic_path(@person) + "#links"
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def load_linkable

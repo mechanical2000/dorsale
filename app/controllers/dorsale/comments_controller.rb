@@ -1,7 +1,12 @@
 class Dorsale::CommentsController < ::Dorsale::ApplicationController
+  before_action :set_objects, only: [
+    :edit,
+    :update,
+    :destroy,
+  ]
+
   def create
-    @comment = model.new(comment_params)
-    @comment.author = try(:current_user)
+    @comment ||= scope.new(comment_params_for_create)
 
     authorize @comment, :create?
 
@@ -15,19 +20,15 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   end
 
   def edit
-    @comment = model.find params[:id]
-
     authorize @comment, :update?
 
     render layout: false
   end
 
   def update
-    @comment = model.find params[:id]
-
     authorize @comment, :update?
 
-    if @comment.update_attributes(comment_params)
+    if @comment.update(comment_params_for_update)
       flash[:notice] = t("messages.comments.update_ok")
     else
       flash[:alert] = t("messages.comments.update_error")
@@ -37,8 +38,6 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   end
 
   def destroy
-    @comment = model.find params[:id]
-
     authorize @comment, :delete?
 
     if @comment.destroy
@@ -54,6 +53,14 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
 
   def model
     ::Dorsale::Comment
+  end
+
+  def scope
+    policy_scope(model)
+  end
+
+  def set_objects
+    @comment ||= scope.find(params[:id])
   end
 
   def permitted_params_for_comment
@@ -72,6 +79,14 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
 
   def comment_params
     params.fetch(:comment, {}).permit(permitted_params_for_comment)
+  end
+
+  def comment_params_for_create
+    comment_params.merge(author: current_user)
+  end
+
+  def comment_params_for_update
+    comment_params
   end
 
 end

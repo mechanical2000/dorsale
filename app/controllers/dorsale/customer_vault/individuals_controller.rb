@@ -13,7 +13,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   def new
     authorize model, :create?
 
-    @individual ||= current_user_scope.new_individual
+    @individual ||= scope.new
     @individual.build_address if @individual.address.nil?
 
     @tags ||= customer_vault_tag_list
@@ -30,7 +30,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   def create
     authorize model, :create?
 
-    @individual ||= current_user_scope.new_individual(individual_params)
+    @individual ||= scope.new(individual_params)
 
     if @individual.save
       flash[:notice] = t("messages.individuals.create_ok")
@@ -69,12 +69,16 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
     ::Dorsale::CustomerVault::Individual
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def back_url
     url_for(@individual)
   end
 
   def set_individual
-    @individual = model.find(params[:id])
+    @individual ||= scope.find(params[:id])
   end
 
   def permitted_params

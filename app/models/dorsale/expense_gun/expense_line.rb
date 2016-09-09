@@ -5,8 +5,9 @@ module Dorsale
       belongs_to :expense, class_name: ::Dorsale::ExpenseGun::Expense
       belongs_to :category, class_name: ::Dorsale::ExpenseGun::Category
 
-      def initialize(h = {})
-        super({company_part: 100}.merge(h))
+      def initialize(*)
+        super
+        self.company_part = 100 if company_part.nil?
       end
 
       validates :expense,         presence: true

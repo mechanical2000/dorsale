@@ -20,7 +20,7 @@ class Dorsale::ApplicationPolicy
 
   def self.define_accessor
     # Dorsale::BillingMachine::InvoicePolicy -> :invoice
-    object_type = self.to_s.split("::").last.gsub("Policy", "").underscore.to_sym
+    object_type = self.to_s.demodulize.gsub("Policy", "").underscore.to_sym
 
     # Avoid user/subject conflict
     object_type = :other_user if object_type == :user
@@ -36,10 +36,6 @@ class Dorsale::ApplicationPolicy
     def initialize(user, scope)
       @user  = user
       @scope = scope
-    end
-
-    def resolve
-      raise NotImplementedError
     end
   end
 end

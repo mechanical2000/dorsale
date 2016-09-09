@@ -8,13 +8,13 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   def new
     authorize @expense, :update?
 
-    @expense_line = @expense.expense_lines.new
+    @expense_line ||= @expense.expense_lines.new
   end
 
   def create
     authorize @expense, :update?
 
-    @expense_line = @expense.expense_lines.new(expense_line_params)
+    @expense_line ||= @expense.expense_lines.new(expense_line_params)
 
     if @expense_line.save
       flash[:success] = t("expense_gun.expense_line.flash.created")
@@ -31,7 +31,7 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   def update
     authorize @expense, :update?
 
-    if @expense_line.update_attributes(expense_line_params)
+    if @expense_line.update(expense_line_params)
       flash[:success] = t("expense_gun.expense_line.flash.created")
       redirect_to back_url
     else
@@ -54,8 +54,8 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def set_objects
-    @expense      = ::Dorsale::ExpenseGun::Expense.find params[:expense_id]
-    @expense_line = ::Dorsale::ExpenseGun::ExpenseLine.find params[:id] if params[:id].present?
+    @expense      ||= policy_scope(::Dorsale::ExpenseGun::Expense).find(params[:expense_id])
+    @expense_line ||= @expense.expense_lines.find params[:id] if params[:id].present?
   end
 
   def expense_line_params

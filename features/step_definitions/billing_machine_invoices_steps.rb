@@ -50,19 +50,19 @@ Given(/^an existing unpaid invoice$/) do
 end
 
 Given(/^its due date is not yet passed$/) do
-  @invoice.update(due_date: (Time.zone.now.to_date + 1))
+  @invoice.update!(due_date: (Time.zone.now.to_date + 1))
 end
 
 Given(/^its due date is the same day$/) do
-  @invoice.update(due_date: (Time.zone.now.to_date))
+  @invoice.update!(due_date: (Time.zone.now.to_date))
 end
 
 Given(/^its due date is yesterday$$/) do
-  @invoice.update(due_date: (Time.zone.now.to_date - 1))
+  @invoice.update!(due_date: (Time.zone.now.to_date - 1))
 end
 
 Given(/^its due date is (\d+) days ago$/) do |days|
-  @invoice.update(due_date: (Time.zone.now.to_date - days.to_i))
+  @invoice.update!(due_date: (Time.zone.now.to_date - days.to_i))
 end
 
 Given(/^existing "(.*?)" invoices with "(.*?)" amount$/) do |n, amount|

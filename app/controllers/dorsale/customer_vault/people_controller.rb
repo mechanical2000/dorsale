@@ -3,6 +3,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
 
   def index
     skip_authorization
+    skip_policy_scope
 
     redirect_to dorsale.customer_vault_people_activity_path
   end
@@ -10,12 +11,12 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def list
     authorize model, :list?
 
-    @total_contact = current_user_scope.people
+    @total_contact = policy_scope(::Dorsale::CustomerVault::Individual).count + policy_scope(::Dorsale::CustomerVault::Corporation).count
 
     @filters      ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
     @tags         ||= customer_vault_tag_list
-    @individuals  ||= current_user_scope.individuals.search(params[:q])
-    @corporations ||= current_user_scope.corporations.search(params[:q])
+    @individuals  ||= policy_scope(::Dorsale::CustomerVault::Individual).search(params[:q])
+    @corporations ||= policy_scope(::Dorsale::CustomerVault::Corporation).search(params[:q])
 
     if params[:q].blank?
       @individuals  = @filters.apply(@individuals)
@@ -33,8 +34,9 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def activity
     authorize model, :list?
 
-    @people ||= current_user_scope.individuals + current_user_scope.corporations
-    @comments ||= current_user_scope.comments
+    @people ||= policy_scope(model)
+
+    @comments ||= policy_scope(::Dorsale::Comment)
       .where("commentable_type LIKE ?", "%CustomerVault%")
       .order("created_at DESC, id DESC")
 

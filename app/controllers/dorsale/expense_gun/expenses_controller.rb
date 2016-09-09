@@ -18,26 +18,27 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
       return
     end
 
+    @all_expenses ||= scope.all
+
     if params[:state] == "all"
-      @expenses ||= current_user_scope.expenses
+      @expenses ||= @all_expenses
     else
-      @expenses ||= current_user_scope.expenses.where(state: params[:state])
+      @expenses ||= @all_expenses.where(state: params[:state])
     end
 
     @expenses = @expenses.page(params[:page])
-    @all_expenses ||=  current_user_scope.expenses
   end
 
   def new
     authorize model, :create?
 
-    @expense ||= model.new
+    @expense ||= scope.new
   end
 
   def create
     authorize model, :create?
 
-    @expense = current_user_scope.new_expense(expense_params)
+    @expense ||= scope.new(expense_params_for_create)
 
     if @expense.save
       flash[:success] = t("expense_gun.expense.flash.created")
@@ -60,7 +61,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
   def update
     authorize @expense, :update?
 
-    if @expense.update_attributes(expense_params)
+    if @expense.update(expense_params_for_update)
       flash[:success] = t("expense_gun.expense.flash.updated")
       redirect_to dorsale.expense_gun_expense_path(@expense)
     else
@@ -106,12 +107,24 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     ::Dorsale::ExpenseGun::Expense
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def set_expense
-    @expense = model.find(params[:id])
+    @expense = scope.find(params[:id])
   end
 
   def expense_params
     params.fetch(:expense_gun_expense, {}).permit!
+  end
+
+  def expense_params_for_create
+    expense_params.merge(user: current_user)
+  end
+
+  def expense_params_for_update
+    expense_params
   end
 
 end

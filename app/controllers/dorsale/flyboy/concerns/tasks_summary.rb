@@ -4,7 +4,8 @@ module Dorsale
       extend ActiveSupport::Concern
 
       def setup_tasks_summary
-        tasks = current_user_scope.tasks.where("(owner_id IS NULL and owner_type IS NULL) OR (owner_id = ? and owner_type = ?)", current_user.id, current_user.class)
+        tasks = policy_scope(::Dorsale::Flyboy::Task)
+          .where("(owner_id IS NULL and owner_type IS NULL) OR (owner_id = ? and owner_type = ?)", current_user.id, current_user.class)
 
         @delayed_tasks        = tasks.delayed
         @today_tasks          = tasks.today

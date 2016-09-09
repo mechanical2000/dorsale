@@ -1,18 +1,20 @@
 class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
+  before_action :set_objects, only: [:edit, :update]
+
   def index
     authorize model, :list?
 
-    @categories ||= model.all
+    @categories ||= scope.all
   end
 
   def new
-    @category = model.new
+    @category ||= scope.new
 
     authorize @category, :create?
   end
 
   def create
-    @category ||= model.new(category_params)
+    @category ||= scope.new(category_params)
 
     authorize @category, :create?
 
@@ -20,32 +22,37 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
       flash[:notice] = t("categories.create_ok")
       redirect_to back_url
     else
-      render action: "new"
+      render action: :new
     end
   end
 
   def edit
-    @category = model.find(params[:id])
     authorize @category, :update?
   end
 
   def update
-    @category ||= model.find(params[:id])
-
     authorize @category, :update?
 
-    if @category.update_attributes(category_params)
+    if @category.update(category_params)
       flash[:notice] = t("categories.update_ok")
       redirect_to back_url
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
   private
 
+  def set_objects
+    @category ||= scope.find(params[:id])
+  end
+
   def model
     ::Dorsale::ExpenseGun::Category
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def back_url

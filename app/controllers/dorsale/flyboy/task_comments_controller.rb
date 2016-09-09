@@ -1,9 +1,9 @@
 class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationController
   def create
-    @task_comment ||= model.new(task_comment_params)
-    @task_comment.author = current_user
+    skip_policy_scope
 
-    @task = @task_comment.task
+    @task_comment ||= model.new(task_comment_params_for_create)
+    @task         ||= @task_comment.task
 
     authorize @task, :update?
 
@@ -30,6 +30,10 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
 
   def task_comment_params
     params.fetch(:task_comment, {}).permit(permitted_params)
+  end
+
+  def task_comment_params_for_create
+    task_comment_params.merge(author: current_user)
   end
 
 end

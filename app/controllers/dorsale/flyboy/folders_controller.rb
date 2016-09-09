@@ -11,7 +11,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   def index
     authorize model, :list?
 
-    @folders ||= current_user_scope.folders
+    @folders ||= scope.all
 
     @order ||= sortable_column_order do |column, direction|
       case column
@@ -38,13 +38,13 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def new
-    @folder ||= current_user_scope.new_folder
+    @folder ||= scope.new
 
     authorize @folder, :create?
   end
 
   def create
-    @folder ||= current_user_scope.new_folder(folder_params)
+    @folder ||= scope.new(folder_params)
 
     authorize @folder, :create?
 
@@ -63,7 +63,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   def update
     authorize @folder, :update?
 
-    if @folder.update_attributes(folder_params)
+    if @folder.update(folder_params)
       flash[:success] = t("messages.folders.update_ok")
 
       if @folder.closed?
@@ -114,8 +114,12 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
     ::Dorsale::Flyboy::Folder
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def set_objects
-    @folder = model.find(params[:id])
+    @folder = scope.find(params[:id])
   end
 
   def permitted_params

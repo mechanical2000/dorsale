@@ -34,7 +34,7 @@ describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
     line2 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 2.minutes)
     line3 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 3.minutes)
     line4 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 4.minutes)
-    line3.update(:created_at => Time.zone.now + 5.minutes)
+    line3.update!(:created_at => Time.zone.now + 5.minutes)
 
     lines = ::Dorsale::BillingMachine::InvoiceLine.all
     expect(lines).to eq [line1, line2, line4, line3]

@@ -1,5 +1,4 @@
 module Dorsale::CustomerVault::PersonPolicyHelper
-
   POLICY_METHODS = [
     :list?,
     :create?,

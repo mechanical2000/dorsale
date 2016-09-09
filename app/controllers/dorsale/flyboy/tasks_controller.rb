@@ -13,7 +13,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def index
     authorize model, :list?
 
-    @tasks ||= current_user_scope.tasks
+    @tasks ||= scope.all
 
     @order ||= sortable_column_order do |column, direction|
       case column
@@ -71,13 +71,11 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def show
-    @task = model.find(params[:id])
-
     authorize @task, :read?
   end
 
   def new
-    @task = current_user_scope.new_task
+    @task ||= scope.new
     @task.taskable_guid = params[:taskable_guid]
 
     set_owners
@@ -86,7 +84,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def create
-    @task ||= current_user_scope.new_task(task_params)
+    @task ||= scope.new(task_params)
 
     authorize @task, :create?
 
@@ -109,8 +107,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def update
     authorize @task, :update?
 
-
-    if @task.update_attributes(task_params)
+    if @task.update(task_params)
       flash[:success] = t("messages.tasks.update_ok")
       redirect_to back_url
     else
@@ -176,6 +173,10 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     ::Dorsale::Flyboy::Task
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def default_back_url
     if @task
       url_for(action: :show, id: @task.to_param)
@@ -197,12 +198,12 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def set_objects
-    @task     = model.find params[:id]
-    @taskable = @task.taskable
+    @task     ||= scope.find(params[:id])
+    @taskable ||= @task.taskable
   end
 
   def set_owners
-    @owners ||= current_user_scope.colleagues(@task.taskable)
+    @owners ||= policy_scope(User).all
   end
 
   def permitted_params
