@@ -71,7 +71,6 @@ Dorsale::Engine.routes.draw do
     resources :categories, except: [:destroy, :show]
 
     resources :expenses, except: [:destroy] do
-      resources :expense_lines
       member do
         %w(submit accept refuse cancel).map { |action| patch action }
       end

@@ -26,6 +26,17 @@ module Dorsale
       link_to(text, url, options)
     end
 
+    def print_button(options = {})
+      options = {
+        :icon    => :print,
+        :action  => :print,
+        :class   => "btn btn-xs btn-default",
+        :onclick => "print(); return false;",
+      }.merge(options)
+
+      dorsale_button("#", options)
+    end
+
     def create_button(url, options = {})
       options = {
         :icon   => :plus,
