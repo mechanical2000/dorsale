@@ -68,7 +68,7 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
   end
 
   def category_params
-    params.fetch(:expense_gun_category, {}).permit(permitted_params)
+    params.fetch(:category, {}).permit(permitted_params)
   end
 
   def category_params_for_create

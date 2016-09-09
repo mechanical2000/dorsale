@@ -1,19 +1,19 @@
 @javascript
-Feature: Categories
+Feature: Expense Categories
 
-  Scenario: New category
+  Scenario: New expense category
     Given an authenticated user
-    And the user goes on the new category page
+    And the user goes on the new expense category page
     When he fills the category's information
-    And creates a new category
-    Then he is redirected on the activities page
+    And creates a new expense category
+    Then he is redirected on the expense categories page
     And the category is added to the category list
 
-  Scenario: Update category
+  Scenario: Update expense category
     Given an authenticated user
-    And an existing category
-    When the user edits the category
-    Then the current category's label should be pre-filled
-    When he validates the new category
-    Then he is redirected on the categories page
-    And the category's label is updated
+    And an existing expense category
+    When I edit the expense category
+    Then the current expense category's label should be pre-filled
+    When he validates the new expense category
+    Then he is redirected on the expense categories page
+    And the expense category's label is updated

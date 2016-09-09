@@ -79,6 +79,7 @@ fr:
     continue   : "Continuer"
     rename     : "Renommer"
     email      : "Envoyer par email"
+    print      : "Imprimer"
 
   attributes: &attributes
     id                    : "Id"
@@ -143,6 +144,10 @@ fr:
     current_avatar        : "Avatar actuel"
     logo                  : "Logo"
     active                : "Actif ?"
+    user                  : "Utilisateur"
+    category              : "Catégorie"
+
+    # TODO : Move to bakkbone
     administrator         : "Administrateur?"
     billing_machine       : "Accès Facturation?"
     time_machine          : "Accès Gestion Du Temps?"
@@ -172,3 +177,11 @@ fr:
 
   labels:
     <<: *attributes
+
+  simple_form:
+    "yes" : 'Oui'
+    "no"  : 'Non'
+
+    required:
+      text: 'Requis'
+      mark: '*'

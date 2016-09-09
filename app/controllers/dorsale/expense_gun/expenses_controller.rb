@@ -14,7 +14,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     authorize model, :list?
 
     if params[:state].blank?
-      redirect_to state: "submited"
+      redirect_to state: "all"
       return
     end
 
@@ -26,13 +26,14 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
       @expenses ||= @all_expenses.where(state: params[:state])
     end
 
-    @expenses = @expenses.page(params[:page])
+    @expenses = @expenses.page(params[:page]).per(25)
   end
 
   def new
     authorize model, :create?
 
     @expense ||= scope.new
+    @expense.expense_lines.build if @expense.expense_lines.empty?
   end
 
   def create
@@ -41,7 +42,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expense ||= scope.new(expense_params_for_create)
 
     if @expense.save
-      flash[:success] = t("expense_gun.expense.flash.created")
+      flash[:success] = t("expense_gun.expense.messages.created")
       redirect_to dorsale.expense_gun_expense_path(@expense)
     else
       render :new
@@ -55,14 +56,14 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
   def edit
     authorize @expense, :update?
 
-    @expense_line ||= ::Dorsale::ExpenseGun::ExpenseLine.new
+    @expense.expense_lines.build if @expense.expense_lines.empty?
   end
 
   def update
     authorize @expense, :update?
 
     if @expense.update(expense_params_for_update)
-      flash[:success] = t("expense_gun.expense.flash.updated")
+      flash[:success] = t("expense_gun.expense.messages.updated")
       redirect_to dorsale.expense_gun_expense_path(@expense)
     else
       render :edit
@@ -72,32 +73,32 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
   def submit
     authorize @expense, :submit?
 
-    @expense.submit!
-    flash[:success] = t("expense_gun.expense.flash.submited")
+    @expense.go_to_submited!
+    flash[:success] = t("expense_gun.expense.messages.submited")
     redirect_to dorsale.expense_gun_expenses_path
   end
 
   def accept
     authorize @expense, :accept?
 
-    @expense.accept!
-    flash[:success] = t("expense_gun.expense.flash.accepted")
+    @expense.go_to_accepted!
+    flash[:success] = t("expense_gun.expense.messages.accepted")
     redirect_to dorsale.expense_gun_expense_path(@expense)
   end
 
   def refuse
     authorize @expense, :refuse?
 
-    @expense.refuse!
-    flash[:success] = t("expense_gun.expense.flash.refused")
+    @expense.go_to_refused!
+    flash[:success] = t("expense_gun.expense.messages.refused")
     redirect_to dorsale.expense_gun_expenses_path
   end
 
   def cancel
     authorize @expense, :cancel?
 
-    @expense.cancel!
-    flash[:success] = t("expense_gun.expense.flash.canceled")
+    @expense.go_to_canceled!
+    flash[:success] = t("expense_gun.expense.messages.canceled")
     redirect_to dorsale.expense_gun_expenses_path
   end
 
@@ -115,8 +116,25 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expense = scope.find(params[:id])
   end
 
+  def permitted_params
+    [
+      :name,
+      :date,
+      :expense_lines_attributes => [
+        :id,
+        :_destroy,
+        :name,
+        :date,
+        :category_id,
+        :total_all_taxes,
+        :vat,
+        :company_part,
+      ],
+    ]
+  end
+
   def expense_params
-    params.fetch(:expense_gun_expense, {}).permit!
+    params.fetch(:expense, {}).permit(permitted_params)
   end
 
   def expense_params_for_create
