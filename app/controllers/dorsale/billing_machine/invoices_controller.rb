@@ -10,7 +10,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def index
     # callback in BillingMachine::ApplicationController
-    authorize! :list, model
+    authorize model, :list?
 
     @invoices ||= model.all
     @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
@@ -56,14 +56,14 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
     @invoice.id_card = @id_cards.first if @id_cards.one?
 
-    authorize! :create, @invoice
+    authorize @invoice, :create?
   end
 
   def create
     # callback in BillingMachine::ApplicationController
     @invoice ||= model.new(invoice_params)
 
-    authorize! :create, model
+    authorize model, :create?
 
     if @invoice.save
       flash[:notice] = t("messages.invoices.create_ok")
@@ -75,11 +75,11 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def show
     # callback in BillingMachine::ApplicationController
-    authorize! :read, @invoice
+    authorize @invoice, :read?
 
     respond_to do |format|
       format.pdf {
-          authorize! :download, @invoice
+          authorize @invoice, :download?
           pdf_data  = @invoice.pdf.render
 
           file_name = [
@@ -101,7 +101,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def copy
     # callback in BillingMachine::ApplicationController
     @original = @invoice
-    authorize! :copy, @original
+    authorize @original, :copy?
 
     @invoice = @original.dup
 
@@ -119,7 +119,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def edit
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
     if ::Dorsale::BillingMachine.vat_mode == :single
       @invoice.lines.build(vat_rate: @invoice.vat_rate) if @invoice.lines.empty?
     else
@@ -129,7 +129,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def update
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
 
     if @invoice.update(invoice_params)
       flash[:notice] = t("messages.invoices.update_ok")
@@ -141,7 +141,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def pay
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
 
     if @invoice.update_attributes(paid: true)
       flash[:notice] = t("messages.invoices.pay_ok")
@@ -153,7 +153,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def email
-    authorize! :email, @invoice
+    authorize @invoice, :email?
 
     @subject =
     begin

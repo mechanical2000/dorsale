@@ -3,7 +3,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
     @comment = model.new(comment_params)
     @comment.author = try(:current_user)
 
-    authorize! :create, @comment
+    authorize @comment, :create?
 
     if @comment.save
       flash[:success] = t("messages.comments.create_ok")
@@ -17,7 +17,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   def edit
     @comment = model.find params[:id]
 
-    authorize! :update, @comment
+    authorize @comment, :update?
 
     render layout: false
   end
@@ -25,7 +25,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   def update
     @comment = model.find params[:id]
 
-    authorize! :update, @comment
+    authorize @comment, :update?
 
     if @comment.update_attributes(comment_params)
       flash[:notice] = t("messages.comments.update_ok")
@@ -39,7 +39,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   def destroy
     @comment = model.find params[:id]
 
-    authorize! :delete, @comment
+    authorize @comment, :delete?
 
     if @comment.destroy
       flash[:notice] = t("messages.comments.delete_ok")

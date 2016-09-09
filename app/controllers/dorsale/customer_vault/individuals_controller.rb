@@ -7,11 +7,11 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   ]
 
   def show
-    authorize! :read, @individual
+    authorize @individual, :read?
   end
 
   def new
-    authorize! :create, model
+    authorize model, :create?
 
     @individual ||= current_user_scope.new_individual
     @individual.build_address if @individual.address.nil?
@@ -20,7 +20,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def edit
-    authorize! :update, @individual
+    authorize @individual, :update?
 
     @individual.build_address if @individual.address.nil?
 
@@ -28,7 +28,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def create
-    authorize! :create, model
+    authorize model, :create?
 
     @individual ||= current_user_scope.new_individual(individual_params)
 
@@ -41,7 +41,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def update
-    authorize! :update, @individual
+    authorize @individual, :update?
 
     if @individual.update(individual_params)
       flash[:notice] = t("messages.individuals.update_ok")
@@ -52,12 +52,12 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def destroy
-    authorize! :delete, @individual
+    authorize @individual, :delete?
 
     if @individual.destroy
-      flash[:notice] = t("messages.individuals.destroy_ok")
+      flash[:notice] = t("messages.individuals.delete_ok")
     else
-      flash[:alert] = t("messages.individuals.destroy_error")
+      flash[:alert] = t("messages.individuals.delete_error")
     end
 
     redirect_to customer_vault_people_path

@@ -1,18 +1,18 @@
 .billing_machine
   .actions
-    - if can?(:update, @invoice)
+    - if policy(@invoice).update?
       = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
 
-    - if can?(:download, @invoice)
+      - unless @invoice.paid?
+        = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :paid, method: :patch
+
+    - if policy(@invoice).download?
       = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
 
-    - if can?(:copy, @invoice)
+    - if policy(@invoice).copy?
       = copy_button dorsale.copy_billing_machine_invoice_path(@invoice), confirm: true
 
-    - if can?(:pay, @invoice)
-      = dorsale_button dorsale.pay_billing_machine_invoice_path(@invoice), icon: :check, action: :paid, method: :patch
-
-    - if can?(:email, @invoice)
+    - if policy(@invoice).email?
       = dorsale_button dorsale.email_billing_machine_invoice_path(@invoice), icon: :send, action: :email
 
   = render "dorsale/billing_machine/invoices/details", document: @invoice

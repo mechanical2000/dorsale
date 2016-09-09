@@ -11,7 +11,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   ]
 
   def index
-    authorize! :list, model
+    authorize model, :list?
 
     @tasks ||= current_user_scope.tasks
 
@@ -73,7 +73,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def show
     @task = model.find(params[:id])
 
-    authorize! :read, @task
+    authorize @task, :read?
   end
 
   def new
@@ -82,13 +82,13 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
     set_owners
 
-    authorize! :create, @task
+    authorize @task, :create?
   end
 
   def create
     @task ||= current_user_scope.new_task(task_params)
 
-    authorize! :create, @task
+    authorize @task, :create?
 
     if @task.save
       flash[:success] = t("messages.tasks.create_ok")
@@ -101,13 +101,13 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def edit
-    authorize! :update, @task
+    authorize @task, :update?
 
     set_owners
   end
 
   def update
-    authorize! :update, @task
+    authorize @task, :update?
 
 
     if @task.update_attributes(task_params)
@@ -120,7 +120,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def destroy
-    authorize! :delete, @task
+    authorize @task, :delete?
 
     if @task.destroy
       flash[:success] = t("messages.tasks.delete_ok")
@@ -132,7 +132,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def complete
-    authorize! :complete, @task
+    authorize @task, :complete?
 
     @task_comment ||= @task.comments.new(
       :progress    => 100,
@@ -151,6 +151,8 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def snooze
+    authorize @task, :snooze?
+
     @task.snooze
 
     if @task.save
@@ -163,6 +165,8 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def summary
+    authorize model, :list?
+
     setup_tasks_summary
   end
 

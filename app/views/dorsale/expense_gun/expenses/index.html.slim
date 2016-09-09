@@ -43,19 +43,19 @@ h1 = t("expense_gun.expense.list")
         .panel-footer
           = link_to t("expense_gun.expense.show"), dorsale.expense_gun_expense_path(expense), class: "btn btn-default"
 
-          - if can? :edit, expense
+          - if policy(expense).update?
             = link_to t("expense_gun.expense.edit"), dorsale.edit_expense_gun_expense_path(expense), class: "btn btn-default"
 
-          - if can? :submit, expense
+          - if policy(expense).submit?
             = link_to t("expense_gun.expense.submit"), dorsale.submit_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-primary"
 
-          - if can? :accept, expense
+          - if policy(expense).accept?
             = link_to t("expense_gun.expense.accept"), dorsale.accept_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-success"
 
-          - if can? :refuse, expense
+          - if policy(expense).refuse?
             = link_to t("expense_gun.expense.refuse"), dorsale.refuse_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-danger"
 
-          - if can? :cancel, expense
+          - if policy(expense).cancel?
             = link_to t("expense_gun.expense.cancel"), dorsale.cancel_expense_gun_expense_path(expense), data: {method: "patch"}, class: "btn btn-warning"
 
 

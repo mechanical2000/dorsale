@@ -18,13 +18,13 @@ table
       tr.task id="task_#{task.id}" class=task_color(task)
         - unless nested
           td.taskable.hidden-xs
-            - if can?(:read, task.taskable)
+            - if policy(task.taskable).read?
               = link_to task.taskable.name, engine_polymorphic_path(task.taskable)
             - else
               = task.taskable.name
 
         td.name
-          - if can?(:read, task)
+          - if policy(task).read?
             = link_to task.name, dorsale.flyboy_task_path(task)
           - else
             = task.name
@@ -36,8 +36,8 @@ table
           = l(task.term)
 
         td.actions
-          - if can?(:snooze, task)
+          - if policy(task).snooze?
             = snooze_button dorsale.snooze_flyboy_task_path(task)
 
-          - if can?(:complete, task)
+          - if policy(task).complete?
             = complete_button dorsale.complete_flyboy_task_path(task)

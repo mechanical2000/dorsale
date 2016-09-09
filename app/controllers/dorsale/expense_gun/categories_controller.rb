@@ -1,6 +1,6 @@
 class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
   def index
-    authorize! :list, model
+    authorize model, :list?
 
     @categories ||= model.all
   end
@@ -8,13 +8,13 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
   def new
     @category = model.new
 
-    authorize! :create, @category
+    authorize @category, :create?
   end
 
   def create
     @category ||= model.new(category_params)
 
-    authorize! :create, @category
+    authorize @category, :create?
 
     if @category.save
       flash[:notice] = t("categories.create_ok")
@@ -26,13 +26,13 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
 
   def edit
     @category = model.find(params[:id])
-    authorize! :update, @category
+    authorize @category, :update?
   end
 
   def update
     @category ||= model.find(params[:id])
 
-    authorize! :update, @category
+    authorize @category, :update?
 
     if @category.update_attributes(category_params)
       flash[:notice] = t("categories.update_ok")

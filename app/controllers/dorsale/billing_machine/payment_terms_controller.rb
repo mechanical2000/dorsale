@@ -1,6 +1,6 @@
 class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachine::ApplicationController
   def index
-    authorize! :list, model
+    authorize model, :list?
 
     @payment_terms ||= model.all
   end
@@ -8,13 +8,13 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
   def new
     @payment_term = model.new
 
-    authorize! :create, @payment_term
+    authorize @payment_term, :create?
   end
 
   def create
     @payment_term ||= model.new(payment_term_params)
 
-    authorize! :create, @payment_term
+    authorize @payment_term, :create?
     if @payment_term.save
 
       flash[:notice] = t("payment_terms.create_ok")
@@ -27,13 +27,13 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
   def edit
     @payment_term = model.find(params[:id])
 
-    authorize! :update, @payment_term
+    authorize @payment_term, :update?
   end
 
   def update
     @payment_term = model.find(params[:id])
 
-    authorize! :update, @payment_term
+    authorize @payment_term, :update?
 
     if @payment_term.update_attributes(payment_term_params)
       flash[:notice] = t("payment_terms.update_ok")

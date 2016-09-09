@@ -9,7 +9,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   end
 
   def index
-    authorize! :list, User
+    authorize User, :list?
 
     @users ||= User.all
   end
@@ -17,17 +17,17 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   def new
     @user ||= User.new
 
-    authorize! :create, @user
+    authorize @user, :create?
   end
 
   def edit
-    authorize! :update, @user
+    authorize @user, :update?
   end
 
   def create
     @user ||= User.new(user_params)
 
-    authorize! :create, @user
+    authorize @user, :create?
 
     if @user.save
       flash[:notice] = t("messages.users.create_ok")
@@ -39,7 +39,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   end
 
   def update
-    authorize! :update, @user
+    authorize @user, :update?
 
     if @user.update(user_params)
       flash[:notice] = t("messages.users.update_ok")

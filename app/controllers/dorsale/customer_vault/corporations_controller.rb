@@ -7,11 +7,11 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   ]
 
   def show
-    authorize! :read, @corporation
+    authorize @corporation, :read?
   end
 
   def new
-    authorize! :create, model
+    authorize model, :create?
 
     @corporation ||= current_user_scope.new_corporation
 
@@ -19,7 +19,7 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   end
 
   def create
-    authorize! :create, model
+    authorize model, :create?
 
     @corporation ||= current_user_scope.new_corporation(corporation_params)
 
@@ -32,13 +32,13 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   end
 
   def edit
-    authorize! :update, @corporation
+    authorize @corporation, :update?
 
     @corporation.build_address if @corporation.address.nil?
   end
 
   def update
-    authorize! :update, @corporation
+    authorize @corporation, :update?
 
     if @corporation.update(corporation_params)
       flash[:notice] = t("messages.corporations.update_ok")
@@ -49,12 +49,12 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   end
 
   def destroy
-    authorize! :delete, @corporation
+    authorize @corporation, :delete?
 
     if @corporation.destroy
-      flash[:notice] = t("messages.corporations.destroy_ok")
+      flash[:notice] = t("messages.corporations.delete_ok")
     else
-      flash[:alert] = t("messages.corporations.destroy_error")
+      flash[:alert] = t("messages.corporations.delete_error")
     end
 
     redirect_to customer_vault_people_path

@@ -9,7 +9,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   ]
 
   def index
-    authorize! :list, model
+    authorize model, :list?
 
     @folders ||= current_user_scope.folders
 
@@ -34,19 +34,19 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def show
-    authorize! :read, @folder
+    authorize @folder, :read?
   end
 
   def new
     @folder ||= current_user_scope.new_folder
 
-    authorize! :create, @folder
+    authorize @folder, :create?
   end
 
   def create
     @folder ||= current_user_scope.new_folder(folder_params)
 
-    authorize! :create, @folder
+    authorize @folder, :create?
 
     if @folder.save
       flash[:success] = t("messages.folders.create_ok")
@@ -57,11 +57,11 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def edit
-    authorize! :update, @folder
+    authorize @folder, :update?
   end
 
   def update
-    authorize! :update, @folder
+    authorize @folder, :update?
 
     if @folder.update_attributes(folder_params)
       flash[:success] = t("messages.folders.update_ok")
@@ -77,7 +77,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def destroy
-    authorize! :delete, @folder
+    authorize @folder, :delete?
 
     @folder.destroy
 
@@ -85,7 +85,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def open
-    authorize! :open, @folder
+    authorize @folder, :open?
 
     if @folder.open!
       flash[:success] = t("messages.folders.open_ok")
@@ -97,7 +97,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def close
-    authorize! :close, @folder
+    authorize @folder, :close?
 
     if @folder.close!
       flash[:success] = t("messages.folders.close_ok")

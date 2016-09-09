@@ -10,7 +10,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def index
     # callback in BillingMachine::ApplicationController
-    authorize! :list, model
+    authorize model, :list?
 
     @quotations ||= model.all
     @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
@@ -59,14 +59,14 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
     @quotation.id_card = @id_cards.first if @id_cards.one?
 
-    authorize! :create, @quotation
+    authorize @quotation, :create?
   end
 
   def create
     # callback in BillingMachine::ApplicationController
     @quotation ||= model.new(quotation_params)
 
-    authorize! :create, @quotation
+    authorize @quotation, :create?
 
     if @quotation.save
       flash[:notice] = t("messages.quotations.create_ok")
@@ -78,11 +78,11 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def show
     # callback in BillingMachine::ApplicationController
-    authorize! :read, @quotation
+    authorize @quotation, :read?
 
     respond_to do |format|
       format.pdf {
-          authorize! :download, @quotation
+          authorize @quotation, :download?
           pdf_data  = @quotation.pdf.render_with_attachments
 
           file_name = [
@@ -103,7 +103,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def edit
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @quotation
+    authorize @quotation, :update?
     if ::Dorsale::BillingMachine.vat_mode == :single
       @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
     else
@@ -113,7 +113,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def update
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @quotation
+    authorize @quotation, :update?
 
     if @quotation.update(quotation_params)
       flash[:notice] = t("messages.quotations.update_ok")
@@ -125,7 +125,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def destroy
     # callback in BillingMachine::ApplicationController
-    authorize! :delete, @quotation
+    authorize @quotation, :delete?
 
     if @quotation.destroy
       flash[:notice] = t("messages.quotations.update_ok")
@@ -137,7 +137,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def copy
-    authorize! :copy, @quotation
+    authorize @quotation, :copy?
 
     new_quotation = @quotation.create_copy!
     flash[:notice] = t("messages.quotations.copy_ok")
@@ -146,8 +146,8 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def create_invoice
-    authorize! :read, @quotation
-    authorize! :create, ::Dorsale::BillingMachine::Invoice
+    authorize @quotation, :read?
+    authorize ::Dorsale::BillingMachine::Invoice, :create?
 
     @invoice = @quotation.to_new_invoice
 

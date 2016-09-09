@@ -14,7 +14,7 @@ table
     - folders.each do |folder|
       tr.folder class=folder_color(folder)
         td.name
-          - if can? :read, folder
+          - if policy(folder).read?
             = link_to folder.name, dorsale.flyboy_folder_path(folder)
           - else
             = folder.name
@@ -26,5 +26,5 @@ table
           = t("messages.folders.status.#{folder.status}")
 
         td.actions
-          - if can? :create, Dorsale::Flyboy::Task.new(taskable: folder)
+          - if policy(Dorsale::Flyboy::Task.new(taskable: folder)).create?
             = create_button dorsale.new_flyboy_task_path(taskable_guid: folder.guid), text: t("actions.folders.new_task")

@@ -10,13 +10,13 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   def index
     @attachable = find_attachable
 
-    authorize! :read, @attachable
+    authorize @attachable, :read?
   end
 
   def create
     @attachment = model.new(attachment_params_for_create)
 
-    authorize! :create, @attachment
+    authorize @attachment, :create?
 
     if @attachment.save
       flash[:notice] = t("messages.attachments.create_ok")
@@ -28,11 +28,11 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   end
 
   def edit
-    authorize! :update, @attachment
+    authorize @attachment, :update?
   end
 
   def update
-    authorize! :update, @attachment
+    authorize @attachment, :update?
 
     if @attachment.update_attributes(attachment_params_for_update)
       flash[:notice] = t("messages.attachments.update_ok")
@@ -44,7 +44,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   end
 
   def destroy
-    authorize! :delete, @attachment
+    authorize @attachment, :delete?
 
     if @attachment.destroy
       flash[:notice] = t("messages.attachments.delete_ok")

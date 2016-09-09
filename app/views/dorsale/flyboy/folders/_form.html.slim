@@ -4,7 +4,7 @@
 
     - if @folder.persisted?
       = context_title(t("update") + " " + @folder.name)
-      - if can?(:delete, @folder)
+      - if policy(@folder).delete?
         = delete_button dorsale.flyboy_folder_path(@folder)
 
     - else

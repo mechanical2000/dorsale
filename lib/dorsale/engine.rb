@@ -14,7 +14,7 @@ require "cocoon"
 require "selectize-rails"
 
 require "rails-i18n"
-require "cancan"
+require "pundit"
 require "awesome_print"
 require "kaminari-i18n"
 require "carrierwave"
@@ -26,7 +26,7 @@ require "prawn"
 require "prawn/table"
 require "combine_pdf"
 
-if %w(development test).include?(Rails.env)
+if Rails.env.test? || Rails.env.development?
   require "pry"
   require "factory_girl_rails"
   require "factory_girl"
@@ -50,7 +50,7 @@ module Dorsale
     isolate_namespace Dorsale
 
     initializer "factory_girl" do
-      if %w(development test).include?(Rails.env)
+      if Rails.env.test? || Rails.env.development?
         FactoryGirl.definition_file_paths.unshift Dorsale::Engine.root.join("spec/factories/").to_s
       end
     end
@@ -58,6 +58,12 @@ module Dorsale
     initializer "check_rails_version" do
       if Rails.version < "5.0.0"
         warn "Dorsale 3 supports only Rails 5, please update Rails."
+      end
+    end
+
+    initializer "check_pundit_policies" do
+      if Rails.env.test? || Rails.env.development?
+        Dorsale::PolicyChecker.check!
       end
     end
 

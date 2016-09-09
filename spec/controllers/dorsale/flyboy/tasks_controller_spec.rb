@@ -15,9 +15,13 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     create(:flyboy_task, taskable: task.taskable, done: true)
   }
 
-  let(:valid_attributes) {
-    { name: "New Task" , taskable_id: task.taskable.id, taskable_type: task.taskable.class, reminder: Time.zone.now.to_date, term: Time.zone.now.to_date}
-  }
+  let(:valid_attributes) {{
+    :name          => "New Task" ,
+    :taskable_id   => task.taskable.id,
+    :taskable_type => task.taskable.class,
+    :reminder      => (Time.zone.now.to_date - 3.days),
+    :term          => Time.zone.now.to_date,
+  }}
 
   describe "#complete" do
     before(:each) do

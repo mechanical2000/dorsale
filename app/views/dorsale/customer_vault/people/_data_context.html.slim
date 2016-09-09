@@ -7,7 +7,7 @@
         a href=dorsale.flyboy_task_path(task)
           = task.name
 
-        - if can?(:complete, task)
+        - if policy(task).complete?
           span.pull-right
             = complete_button dorsale.complete_flyboy_task_path(task)
 

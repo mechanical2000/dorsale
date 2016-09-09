@@ -1,6 +1,6 @@
 class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::ApplicationController
   def index
-    authorize! :list, model
+    authorize model, :list?
 
     @id_cards ||= model.all
   end
@@ -8,13 +8,13 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
   def new
     @id_card = model.new
 
-    authorize! :create, @id_card
+    authorize @id_card, :create?
   end
 
   def create
     @id_card ||= model.new(id_card_params)
 
-    authorize! :create, @id_card
+    authorize @id_card, :create?
 
     if @id_card.save
       flash[:notice] = t("id_cards.create_ok")
@@ -27,13 +27,13 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
   def edit
     @id_card = model.find(params[:id])
 
-    authorize! :update, @id_card
+    authorize @id_card, :update?
   end
 
   def update
     @id_card = model.find(params[:id])
 
-    authorize! :update, @id_card
+    authorize @id_card, :update?
 
     if @id_card.update_attributes(id_card_params)
       flash[:notice] = t("id_cards.update_ok")

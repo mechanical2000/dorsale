@@ -6,13 +6,13 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def new
-    authorize! :update, @expense
+    authorize @expense, :update?
 
     @expense_line = @expense.expense_lines.new
   end
 
   def create
-    authorize! :update, @expense
+    authorize @expense, :update?
 
     @expense_line = @expense.expense_lines.new(expense_line_params)
 
@@ -25,11 +25,11 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def edit
-    authorize! :update, @expense
+    authorize @expense, :update?
   end
 
   def update
-    authorize! :update, @expense
+    authorize @expense, :update?
 
     if @expense_line.update_attributes(expense_line_params)
       flash[:success] = t("expense_gun.expense_line.flash.created")
@@ -40,7 +40,7 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def destroy
-    authorize! :update, @expense
+    authorize @expense, :update?
 
     @expense_line.destroy
     flash[:success] = t("expense_gun.expense_line.flash.created")
