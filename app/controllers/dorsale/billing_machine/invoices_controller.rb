@@ -10,9 +10,9 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def index
     # callback in BillingMachine::ApplicationController
-    authorize! :list, model
+    authorize model, :list?
 
-    @invoices ||= model.all
+    @invoices ||= scope.all
     @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
     @order    ||= {unique_index: :desc}
 
@@ -51,19 +51,19 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def new
     # callback in BillingMachine::ApplicationController
-    @invoice ||= model.new
-    @invoice.lines.build if @invoice.lines.empty?
+    @invoice ||= scope.new
 
+    @invoice.lines.build               if @invoice.lines.empty?
     @invoice.id_card = @id_cards.first if @id_cards.one?
 
-    authorize! :create, @invoice
+    authorize @invoice, :create?
   end
 
   def create
     # callback in BillingMachine::ApplicationController
-    @invoice ||= model.new(invoice_params)
+    @invoice ||= scope.new(invoice_params_for_create)
 
-    authorize! :create, model
+    authorize model, :create?
 
     if @invoice.save
       flash[:notice] = t("messages.invoices.create_ok")
@@ -75,11 +75,11 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def show
     # callback in BillingMachine::ApplicationController
-    authorize! :read, @invoice
+    authorize @invoice, :read?
 
     respond_to do |format|
       format.pdf {
-          authorize! :download, @invoice
+          authorize @invoice, :download?
           pdf_data  = @invoice.pdf.render
 
           file_name = [
@@ -100,8 +100,9 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def copy
     # callback in BillingMachine::ApplicationController
-    @original = @invoice
-    authorize! :copy, @original
+    @original ||= @invoice
+
+    authorize @original, :copy?
 
     @invoice = @original.dup
 
@@ -119,7 +120,8 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def edit
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
+
     if ::Dorsale::BillingMachine.vat_mode == :single
       @invoice.lines.build(vat_rate: @invoice.vat_rate) if @invoice.lines.empty?
     else
@@ -129,9 +131,9 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def update
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
 
-    if @invoice.update(invoice_params)
+    if @invoice.update(invoice_params_for_update)
       flash[:notice] = t("messages.invoices.update_ok")
       redirect_to default_back_url
     else
@@ -141,9 +143,9 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def pay
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @invoice
+    authorize @invoice, :update?
 
-    if @invoice.update_attributes(paid: true)
+    if @invoice.update(paid: true)
       flash[:notice] = t("messages.invoices.pay_ok")
     else
       flash[:alert] = t("messages.invoices.pay_error")
@@ -153,7 +155,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def email
-    authorize! :email, @invoice
+    authorize @invoice, :email?
 
     @subject =
     begin
@@ -194,6 +196,10 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     ::Dorsale::BillingMachine::Invoice
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def default_back_url
     if @invoice
       url_for(action: :show, id: @invoice.to_param)
@@ -203,7 +209,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def set_objects
-    @invoice = model.find params[:id]
+    @invoice ||= scope.find(params[:id])
   end
 
   def permitted_params
@@ -233,6 +239,14 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def invoice_params
     params.fetch(:invoice, {}).permit(permitted_params)
+  end
+
+  def invoice_params_for_create
+    invoice_params
+  end
+
+  def invoice_params_for_update
+    invoice_params
   end
 
   def generate_encoded_csv(invoices)

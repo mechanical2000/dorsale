@@ -1,52 +1,58 @@
 class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachine::ApplicationController
-  def index
-    authorize! :list, model
+  before_action :set_objects, only: [:edit, :update]
 
-    @payment_terms ||= model.all
+  def index
+    authorize model, :list?
+
+    @payment_terms ||= scope.all
   end
 
   def new
-    @payment_term = model.new
+    @payment_term ||= scope.new
 
-    authorize! :create, @payment_term
+    authorize @payment_term, :create?
   end
 
   def create
-    @payment_term ||= model.new(payment_term_params)
+    @payment_term ||= scope.new(payment_term_params_for_create)
 
-    authorize! :create, @payment_term
+    authorize @payment_term, :create?
     if @payment_term.save
 
       flash[:notice] = t("payment_terms.create_ok")
       redirect_to back_url
     else
-      render action: "new"
+      render action: :new
     end
   end
 
   def edit
-    @payment_term = model.find(params[:id])
-
-    authorize! :update, @payment_term
+    authorize @payment_term, :update?
   end
 
   def update
-    @payment_term = model.find(params[:id])
+    authorize @payment_term, :update?
 
-    authorize! :update, @payment_term
-
-    if @payment_term.update_attributes(payment_term_params)
+    if @payment_term.update(payment_term_params_for_update)
       flash[:notice] = t("payment_terms.update_ok")
       redirect_to back_url
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
   private
 
+  def set_objects
+    @payment_term ||= scope.find(params[:id])
+  end
+
   def model
     ::Dorsale::BillingMachine::PaymentTerm
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def back_url
@@ -61,6 +67,14 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
 
   def payment_term_params
     params.fetch(:billing_machine_payment_term, {}).permit(permitted_params)
+  end
+
+  def payment_term_params_for_create
+    payment_term_params
+  end
+
+  def payment_term_params_for_update
+    payment_term_params
   end
 
 end

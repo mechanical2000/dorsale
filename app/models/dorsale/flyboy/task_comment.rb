@@ -27,7 +27,7 @@ module Dorsale
       after_create :update_task_progress
 
       def update_task_progress
-        task.update_attributes!(
+        task.update!(
           :progress => progress,
           :done     => progress.equal?(100)
         )

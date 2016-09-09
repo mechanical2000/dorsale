@@ -9,14 +9,15 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
   def index
     @attachable = find_attachable
+    skip_policy_scope
 
-    authorize! :read, @attachable
+    authorize @attachable, :read?
   end
 
   def create
-    @attachment = model.new(attachment_params_for_create)
+    @attachment = scope.new(attachment_params_for_create)
 
-    authorize! :create, @attachment
+    authorize @attachment, :create?
 
     if @attachment.save
       flash[:notice] = t("messages.attachments.create_ok")
@@ -28,13 +29,13 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   end
 
   def edit
-    authorize! :update, @attachment
+    authorize @attachment, :update?
   end
 
   def update
-    authorize! :update, @attachment
+    authorize @attachment, :update?
 
-    if @attachment.update_attributes(attachment_params_for_update)
+    if @attachment.update(attachment_params_for_update)
       flash[:notice] = t("messages.attachments.update_ok")
     else
       flash[:alert] = t("messages.attachments.update_error")
@@ -44,7 +45,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   end
 
   def destroy
-    authorize! :delete, @attachment
+    authorize @attachment, :delete?
 
     if @attachment.destroy
       flash[:notice] = t("messages.attachments.delete_ok")
@@ -61,8 +62,12 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     ::Dorsale::Alexandrie::Attachment
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def set_objects
-    @attachment = model.find params[:id]
+    @attachment = scope.find(params[:id])
   end
 
   def attachable_type

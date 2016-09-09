@@ -6,15 +6,15 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def new
-    authorize! :update, @expense
+    authorize @expense, :update?
 
-    @expense_line = @expense.expense_lines.new
+    @expense_line ||= @expense.expense_lines.new
   end
 
   def create
-    authorize! :update, @expense
+    authorize @expense, :update?
 
-    @expense_line = @expense.expense_lines.new(expense_line_params)
+    @expense_line ||= @expense.expense_lines.new(expense_line_params_for_create)
 
     if @expense_line.save
       flash[:success] = t("expense_gun.expense_line.flash.created")
@@ -25,13 +25,13 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def edit
-    authorize! :update, @expense
+    authorize @expense, :update?
   end
 
   def update
-    authorize! :update, @expense
+    authorize @expense, :update?
 
-    if @expense_line.update_attributes(expense_line_params)
+    if @expense_line.update(expense_line_params_for_update)
       flash[:success] = t("expense_gun.expense_line.flash.created")
       redirect_to back_url
     else
@@ -40,7 +40,7 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def destroy
-    authorize! :update, @expense
+    authorize @expense, :update?
 
     @expense_line.destroy
     flash[:success] = t("expense_gun.expense_line.flash.created")
@@ -54,12 +54,20 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   end
 
   def set_objects
-    @expense      = ::Dorsale::ExpenseGun::Expense.find params[:expense_id]
-    @expense_line = ::Dorsale::ExpenseGun::ExpenseLine.find params[:id] if params[:id].present?
+    @expense      ||= policy_scope(::Dorsale::ExpenseGun::Expense).find(params[:expense_id])
+    @expense_line ||= @expense.expense_lines.find params[:id] if params[:id].present?
   end
 
   def expense_line_params
     params.fetch(:expense_line, {}).permit!
+  end
+
+  def expense_line_params_for_create
+    expense_line_params
+  end
+
+  def expense_line_params_for_update
+    expense_line_params
   end
 
 end

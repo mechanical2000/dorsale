@@ -226,7 +226,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
       invoice1 = invoice0.dup
 
-      invoice1.update(label: 'çé"à;ç\";,@\\', date: "2014-08-01", commercial_discount:0, unique_index: 2, advance: 3.0)
+      invoice1.update!(label: 'çé"à;ç\";,@\\', date: "2014-08-01", commercial_discount:0, unique_index: 2, advance: 3.0)
 
       invoice1.lines.create(quantity: 1, unit_price: 13.0 , vat_rate: 20)
 

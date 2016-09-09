@@ -15,9 +15,9 @@ class Dorsale::BillingMachine::ApplicationController < ::Dorsale::ApplicationCon
   helper_method :bm_currency
 
   def set_common_variables
-    @payment_terms ||= ::Dorsale::BillingMachine::PaymentTerm.all
-    @id_cards      ||= ::Dorsale::BillingMachine::IdCard.all
-    @people        ||= current_user_scope.people
+    @payment_terms ||= policy_scope(::Dorsale::BillingMachine::PaymentTerm)
+    @id_cards      ||= policy_scope(::Dorsale::BillingMachine::IdCard)
+    @people        ||= person_policy_scope
   end
 
 end

@@ -5,7 +5,15 @@ module Dorsale::CustomerVault::Person
     ::Dorsale::CustomerVault::Corporation.t(*args)
   end
 
+  def self.policy_class
+    Dorsale::CustomerVault::PersonPolicy
+  end
+
   included do
+    def self.policy_class
+      Dorsale::CustomerVault::PersonPolicy
+    end
+
     acts_as_taggable
 
     has_many :comments, -> { order("id DESC") }, class_name: ::Dorsale::Comment, as: :commentable, dependent: :destroy

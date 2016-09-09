@@ -2,6 +2,6 @@ class Dorsale::ExpenseGun::ApplicationController < ::Dorsale::ApplicationControl
   before_action :set_form_variables
 
   def set_form_variables
-    @categories ||= ::Dorsale::ExpenseGun::Category.all
+    @categories ||= policy_scope(::Dorsale::ExpenseGun::Category).all
   end
 end

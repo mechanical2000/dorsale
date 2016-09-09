@@ -1,6 +1,6 @@
 .expenses
   .actions-block.hidden-print
-    - if can? :edit, @expense
+    - if policy(@expense).update?
       = link_to t("expense_gun.expense_line.new"), dorsale.new_expense_gun_expense_expense_line_path(@expense), class: "btn btn-success"
       = link_to t("expense_gun.expense.edit"), dorsale.edit_expense_gun_expense_path(@expense), class: "btn btn-default"
 
@@ -59,7 +59,7 @@
       .panel-footer
         .row
           .col-md-6.hidden-print
-            - if can? :edit, @expense
+            - if policy(@expense).update?
               = link_to t("expense_gun.expense_line.edit"), dorsale.edit_expense_gun_expense_expense_line_path(expense_line.expense, expense_line), class: "btn btn-default"
               = link_to t("expense_gun.expense_line.destroy"), dorsale.expense_gun_expense_expense_line_path(expense_line.expense, expense_line), class: "btn btn-danger", "data-method" => "delete", "data-confirm" => "Confirm ?"
           .col-md-6

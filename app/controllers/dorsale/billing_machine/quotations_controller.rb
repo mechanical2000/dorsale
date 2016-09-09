@@ -10,9 +10,9 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def index
     # callback in BillingMachine::ApplicationController
-    authorize! :list, model
+    authorize model, :list?
 
-    @quotations ||= model.all
+    @quotations ||= scope.all
     @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
     @order      ||= {unique_index: :desc}
 
@@ -54,19 +54,19 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def new
     # callback in BillingMachine::ApplicationController
-    @quotation ||= model.new
-    @quotation.lines.build if @quotation.lines.empty?
+    @quotation ||= scope.new
 
+    @quotation.lines.build               if @quotation.lines.empty?
     @quotation.id_card = @id_cards.first if @id_cards.one?
 
-    authorize! :create, @quotation
+    authorize @quotation, :create?
   end
 
   def create
     # callback in BillingMachine::ApplicationController
-    @quotation ||= model.new(quotation_params)
+    @quotation ||= scope.new(quotation_params_for_create)
 
-    authorize! :create, @quotation
+    authorize @quotation, :create?
 
     if @quotation.save
       flash[:notice] = t("messages.quotations.create_ok")
@@ -78,11 +78,11 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def show
     # callback in BillingMachine::ApplicationController
-    authorize! :read, @quotation
+    authorize @quotation, :read?
 
     respond_to do |format|
       format.pdf {
-          authorize! :download, @quotation
+          authorize @quotation, :download?
           pdf_data  = @quotation.pdf.render_with_attachments
 
           file_name = [
@@ -103,7 +103,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def edit
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @quotation
+    authorize @quotation, :update?
     if ::Dorsale::BillingMachine.vat_mode == :single
       @quotation.lines.build(vat_rate: @quotation.vat_rate) if @quotation.lines.empty?
     else
@@ -113,9 +113,9 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def update
     # callback in BillingMachine::ApplicationController
-    authorize! :update, @quotation
+    authorize @quotation, :update?
 
-    if @quotation.update(quotation_params)
+    if @quotation.update(quotation_params_for_update)
       flash[:notice] = t("messages.quotations.update_ok")
       redirect_to default_back_url
     else
@@ -125,7 +125,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def destroy
     # callback in BillingMachine::ApplicationController
-    authorize! :delete, @quotation
+    authorize @quotation, :delete?
 
     if @quotation.destroy
       flash[:notice] = t("messages.quotations.update_ok")
@@ -137,7 +137,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def copy
-    authorize! :copy, @quotation
+    authorize @quotation, :copy?
 
     new_quotation = @quotation.create_copy!
     flash[:notice] = t("messages.quotations.copy_ok")
@@ -146,8 +146,8 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def create_invoice
-    authorize! :read, @quotation
-    authorize! :create, ::Dorsale::BillingMachine::Invoice
+    authorize @quotation, :read?
+    authorize ::Dorsale::BillingMachine::Invoice, :create?
 
     @invoice = @quotation.to_new_invoice
 
@@ -160,6 +160,10 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     ::Dorsale::BillingMachine::Quotation
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def default_back_url
     if @quotation
       url_for(action: :show, id: @quotation.to_param)
@@ -169,7 +173,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def set_objects
-    @quotation = model.find params[:id]
+    @quotation ||= scope.find(params[:id])
   end
 
   def permitted_params
@@ -198,6 +202,14 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def quotation_params
     params.fetch(:quotation, {}).permit(permitted_params)
+  end
+
+  def quotation_params_for_create
+    quotation_params
+  end
+
+  def quotation_params_for_update
+    quotation_params
   end
 
 end

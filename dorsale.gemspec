@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bootstrap-kaminari-views"
   s.add_dependency "bh"
   s.add_dependency "rails-i18n"
-  s.add_dependency "cancancan"
+  s.add_dependency "pundit"
   s.add_dependency "kaminari-i18n"
   s.add_dependency "bootstrap-datepicker-rails"
   s.add_dependency "carrierwave"

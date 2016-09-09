@@ -6,14 +6,14 @@
         th = Dorsale::Flyboy::TaskComment.t(:description)
         th
     tbody
-      - if can?(:update, @task)
+      - if policy(@task).update?
         tr
           td.task_progress
             = f.input :progress, label: false
-  
+
           td.description
             = f.input :description, label: false
-  
+
           td.actions
             = f.hidden_field :task_id
             input.btn.btn-success type="submit" value=t("actions.create")

@@ -7,21 +7,21 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   ]
 
   def show
-    authorize! :read, @corporation
+    authorize @corporation, :read?
   end
 
   def new
-    authorize! :create, model
+    authorize model, :create?
 
-    @corporation ||= current_user_scope.new_corporation
+    @corporation ||= scope.new
 
     @corporation.build_address if @corporation.address.nil?
   end
 
   def create
-    authorize! :create, model
+    authorize model, :create?
 
-    @corporation ||= current_user_scope.new_corporation(corporation_params)
+    @corporation ||= scope.new(corporation_params_for_create)
 
     if @corporation.save
       flash[:notice] = t("messages.corporations.create_ok")
@@ -32,15 +32,15 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   end
 
   def edit
-    authorize! :update, @corporation
+    authorize @corporation, :update?
 
     @corporation.build_address if @corporation.address.nil?
   end
 
   def update
-    authorize! :update, @corporation
+    authorize @corporation, :update?
 
-    if @corporation.update(corporation_params)
+    if @corporation.update(corporation_params_for_update)
       flash[:notice] = t("messages.corporations.update_ok")
       redirect_to back_url
     else
@@ -49,12 +49,12 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   end
 
   def destroy
-    authorize! :delete, @corporation
+    authorize @corporation, :delete?
 
     if @corporation.destroy
-      flash[:notice] = t("messages.corporations.destroy_ok")
+      flash[:notice] = t("messages.corporations.delete_ok")
     else
-      flash[:alert] = t("messages.corporations.destroy_error")
+      flash[:alert] = t("messages.corporations.delete_error")
     end
 
     redirect_to customer_vault_people_path
@@ -66,12 +66,16 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
     ::Dorsale::CustomerVault::Corporation
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def back_url
     url_for(@corporation)
   end
 
   def set_corporation
-    @corporation = model.find(params[:id])
+    @corporation ||= scope.find(params[:id])
   end
 
   def permitted_params
@@ -100,6 +104,14 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
 
   def corporation_params
     params.fetch(:corporation, {}).permit(permitted_params)
+  end
+
+  def corporation_params_for_create
+    corporation_params
+  end
+
+  def corporation_params_for_update
+    corporation_params
   end
 
 end

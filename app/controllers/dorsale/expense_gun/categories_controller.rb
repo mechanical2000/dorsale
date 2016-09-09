@@ -1,51 +1,58 @@
 class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::ApplicationController
-  def index
-    authorize! :list, model
+  before_action :set_objects, only: [:edit, :update]
 
-    @categories ||= model.all
+  def index
+    authorize model, :list?
+
+    @categories ||= scope.all
   end
 
   def new
-    @category = model.new
+    @category ||= scope.new
 
-    authorize! :create, @category
+    authorize @category, :create?
   end
 
   def create
-    @category ||= model.new(category_params)
+    @category ||= scope.new(category_params_for_create)
 
-    authorize! :create, @category
+    authorize @category, :create?
 
     if @category.save
       flash[:notice] = t("categories.create_ok")
       redirect_to back_url
     else
-      render action: "new"
+      render action: :new
     end
   end
 
   def edit
-    @category = model.find(params[:id])
-    authorize! :update, @category
+    authorize @category, :update?
   end
 
   def update
-    @category ||= model.find(params[:id])
+    authorize @category, :update?
 
-    authorize! :update, @category
-
-    if @category.update_attributes(category_params)
+    if @category.update(category_params_for_update)
       flash[:notice] = t("categories.update_ok")
       redirect_to back_url
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
   private
 
+  def set_objects
+    @category ||= scope.find(params[:id])
+  end
+
   def model
     ::Dorsale::ExpenseGun::Category
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def back_url
@@ -62,6 +69,14 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
 
   def category_params
     params.fetch(:expense_gun_category, {}).permit(permitted_params)
+  end
+
+  def category_params_for_create
+    category_params
+  end
+
+  def category_params_for_update
+    category_params
   end
 
 end

@@ -4,13 +4,13 @@
 
     - if @task.persisted?
       = context_title (t("update") + " " + @task.name)
-      - if can?(:delete, @task)
+      - if policy(@task).delete?
         = delete_button dorsale.flyboy_task_path(@task)
 
     - else
       = context_title t('messages.folders.new_task')
 
-  - if can?(:read, @task.taskable)
+  - if policy(@task.taskable).read?
     = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
 
 - content_for :main do

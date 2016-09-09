@@ -1,52 +1,58 @@
 class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::ApplicationController
-  def index
-    authorize! :list, model
+  before_action :set_objects, only: [:edit, :update]
 
-    @id_cards ||= model.all
+  def index
+    authorize model, :list?
+
+    @id_cards ||= scope.all
   end
 
   def new
-    @id_card = model.new
+    @id_card ||= scope.new
 
-    authorize! :create, @id_card
+    authorize @id_card, :create?
   end
 
   def create
-    @id_card ||= model.new(id_card_params)
+    @id_card ||= scope.new(id_card_params_for_create)
 
-    authorize! :create, @id_card
+    authorize @id_card, :create?
 
     if @id_card.save
       flash[:notice] = t("id_cards.create_ok")
       redirect_to back_url
     else
-      render action: "new"
+      render action: :new
     end
   end
 
   def edit
-    @id_card = model.find(params[:id])
-
-    authorize! :update, @id_card
+    authorize @id_card, :update?
   end
 
   def update
-    @id_card = model.find(params[:id])
+    authorize @id_card, :update?
 
-    authorize! :update, @id_card
-
-    if @id_card.update_attributes(id_card_params)
+    if @id_card.update(id_card_params_for_update)
       flash[:notice] = t("id_cards.update_ok")
       redirect_to back_url
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
   private
 
+  def set_objects
+    @id_card ||= scope.find(params[:id])
+  end
+
   def model
     ::Dorsale::BillingMachine::IdCard
+  end
+
+  def scope
+    policy_scope(model)
   end
 
   def back_url
@@ -91,6 +97,14 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
 
   def id_card_params
     params.fetch(:billing_machine_id_card, {}).permit(permitted_params)
+  end
+
+  def id_card_params_for_create
+    id_card_params
+  end
+
+  def id_card_params_for_update
+    id_card_params
   end
 
 end

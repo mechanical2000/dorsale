@@ -7,20 +7,20 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   ]
 
   def show
-    authorize! :read, @individual
+    authorize @individual, :read?
   end
 
   def new
-    authorize! :create, model
+    authorize model, :create?
 
-    @individual ||= current_user_scope.new_individual
+    @individual ||= scope.new
     @individual.build_address if @individual.address.nil?
 
     @tags ||= customer_vault_tag_list
   end
 
   def edit
-    authorize! :update, @individual
+    authorize @individual, :update?
 
     @individual.build_address if @individual.address.nil?
 
@@ -28,9 +28,9 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def create
-    authorize! :create, model
+    authorize model, :create?
 
-    @individual ||= current_user_scope.new_individual(individual_params)
+    @individual ||= scope.new(individual_params_for_create)
 
     if @individual.save
       flash[:notice] = t("messages.individuals.create_ok")
@@ -41,9 +41,9 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def update
-    authorize! :update, @individual
+    authorize @individual, :update?
 
-    if @individual.update(individual_params)
+    if @individual.update(individual_params_for_update)
       flash[:notice] = t("messages.individuals.update_ok")
       redirect_to back_url
     else
@@ -52,12 +52,12 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   end
 
   def destroy
-    authorize! :delete, @individual
+    authorize @individual, :delete?
 
     if @individual.destroy
-      flash[:notice] = t("messages.individuals.destroy_ok")
+      flash[:notice] = t("messages.individuals.delete_ok")
     else
-      flash[:alert] = t("messages.individuals.destroy_error")
+      flash[:alert] = t("messages.individuals.delete_error")
     end
 
     redirect_to customer_vault_people_path
@@ -69,12 +69,16 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
     ::Dorsale::CustomerVault::Individual
   end
 
+  def scope
+    policy_scope(model)
+  end
+
   def back_url
     url_for(@individual)
   end
 
   def set_individual
-    @individual = model.find(params[:id])
+    @individual ||= scope.find(params[:id])
   end
 
   def permitted_params
@@ -104,6 +108,14 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
 
   def individual_params
     params.fetch(:individual, {}).permit(permitted_params)
+  end
+
+  def individual_params_for_create
+    individual_params
+  end
+
+  def individual_params_for_update
+    individual_params
   end
 
 end

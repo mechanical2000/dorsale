@@ -90,6 +90,12 @@ module Dorsale
         30
       end
 
+      def snoozable?
+        return false if done?
+        return false if reminder >= Time.zone.now.to_date
+        return true
+      end
+
       def self.to_csv(options = {})
         CSV.generate(options) do |csv|
           csv << [
