@@ -4,8 +4,8 @@ Given(/^the user goes on the new expense category page$/) do
 end
 
 When(/^he fills the category's information$/) do
-  fill_in 'expense_gun_category_name', with: "Category Name"
-  fill_in 'expense_gun_category_code', with: "Category Code"
+  fill_in 'category_name', with: "Category Name"
+  fill_in 'category_code', with: "Category Code"
   select "Oui"
 end
 
@@ -29,12 +29,12 @@ When(/^I edit the expense category$/) do
 end
 
 Then(/^the current expense category's label should be pre\-filled$/) do
-  expect(page).to have_field("expense_gun_category_name", with: @category.name)
+  expect(page).to have_field("category_name", with: @category.name)
 end
 
 When(/^he validates the new expense category$/) do
-  fill_in "expense_gun_category_name", with: "New Category Name"
-  fill_in "expense_gun_category_code", with: "New Category Code"
+  fill_in "category_name", with: "New Category Name"
+  fill_in "category_code", with: "New Category Code"
   select "Non"
   find("[type=submit]").click
 end
