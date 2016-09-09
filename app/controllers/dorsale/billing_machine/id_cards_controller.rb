@@ -14,7 +14,7 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
   end
 
   def create
-    @id_card ||= scope.new(id_card_params)
+    @id_card ||= scope.new(id_card_params_for_create)
 
     authorize @id_card, :create?
 
@@ -33,7 +33,7 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
   def update
     authorize @id_card, :update?
 
-    if @id_card.update(id_card_params)
+    if @id_card.update(id_card_params_for_update)
       flash[:notice] = t("id_cards.update_ok")
       redirect_to back_url
     else
@@ -97,6 +97,14 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
 
   def id_card_params
     params.fetch(:billing_machine_id_card, {}).permit(permitted_params)
+  end
+
+  def id_card_params_for_create
+    id_card_params
+  end
+
+  def id_card_params_for_update
+    id_card_params
   end
 
 end

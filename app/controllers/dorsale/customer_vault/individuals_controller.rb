@@ -30,7 +30,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   def create
     authorize model, :create?
 
-    @individual ||= scope.new(individual_params)
+    @individual ||= scope.new(individual_params_for_create)
 
     if @individual.save
       flash[:notice] = t("messages.individuals.create_ok")
@@ -43,7 +43,7 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
   def update
     authorize @individual, :update?
 
-    if @individual.update(individual_params)
+    if @individual.update(individual_params_for_update)
       flash[:notice] = t("messages.individuals.update_ok")
       redirect_to back_url
     else
@@ -108,6 +108,14 @@ class Dorsale::CustomerVault::IndividualsController < ::Dorsale::CustomerVault::
 
   def individual_params
     params.fetch(:individual, {}).permit(permitted_params)
+  end
+
+  def individual_params_for_create
+    individual_params
+  end
+
+  def individual_params_for_update
+    individual_params
   end
 
 end

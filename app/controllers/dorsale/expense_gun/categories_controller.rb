@@ -14,7 +14,7 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
   end
 
   def create
-    @category ||= scope.new(category_params)
+    @category ||= scope.new(category_params_for_create)
 
     authorize @category, :create?
 
@@ -33,7 +33,7 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
   def update
     authorize @category, :update?
 
-    if @category.update(category_params)
+    if @category.update(category_params_for_update)
       flash[:notice] = t("categories.update_ok")
       redirect_to back_url
     else
@@ -69,6 +69,14 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
 
   def category_params
     params.fetch(:expense_gun_category, {}).permit(permitted_params)
+  end
+
+  def category_params_for_create
+    category_params
+  end
+
+  def category_params_for_update
+    category_params
   end
 
 end

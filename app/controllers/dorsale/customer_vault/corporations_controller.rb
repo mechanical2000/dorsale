@@ -21,7 +21,7 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   def create
     authorize model, :create?
 
-    @corporation ||= scope.new(corporation_params)
+    @corporation ||= scope.new(corporation_params_for_create)
 
     if @corporation.save
       flash[:notice] = t("messages.corporations.create_ok")
@@ -40,7 +40,7 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
   def update
     authorize @corporation, :update?
 
-    if @corporation.update(corporation_params)
+    if @corporation.update(corporation_params_for_update)
       flash[:notice] = t("messages.corporations.update_ok")
       redirect_to back_url
     else
@@ -104,6 +104,14 @@ class Dorsale::CustomerVault::CorporationsController < ::Dorsale::CustomerVault:
 
   def corporation_params
     params.fetch(:corporation, {}).permit(permitted_params)
+  end
+
+  def corporation_params_for_create
+    corporation_params
+  end
+
+  def corporation_params_for_update
+    corporation_params
   end
 
 end

@@ -44,7 +44,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   end
 
   def create
-    @folder ||= scope.new(folder_params)
+    @folder ||= scope.new(folder_params_for_create)
 
     authorize @folder, :create?
 
@@ -63,7 +63,7 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
   def update
     authorize @folder, :update?
 
-    if @folder.update(folder_params)
+    if @folder.update(folder_params_for_update)
       flash[:success] = t("messages.folders.update_ok")
 
       if @folder.closed?
@@ -131,6 +131,14 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
 
   def folder_params
     params.fetch(:folder, {}).permit(permitted_params)
+  end
+
+  def folder_params_for_create
+    folder_params
+  end
+
+  def folder_params_for_update
+    folder_params
   end
 
 end

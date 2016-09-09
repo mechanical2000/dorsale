@@ -25,7 +25,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   end
 
   def create
-    @user ||= scope.new(user_params)
+    @user ||= scope.new(user_params_for_create)
 
     authorize @user, :create?
 
@@ -41,7 +41,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   def update
     authorize @user, :update?
 
-    if @user.update(user_params)
+    if @user.update(user_params_for_update)
       flash[:notice] = t("messages.users.update_ok")
       redirect_to dorsale.users_path
     else
@@ -76,6 +76,14 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
 
   def user_params
     params.fetch(:user, {}).permit(permitted_params)
+  end
+
+  def user_params_for_create
+    user_params
+  end
+
+  def user_params_for_update
+    user_params
   end
 
 end

@@ -14,7 +14,7 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
   end
 
   def create
-    @payment_term ||= scope.new(payment_term_params)
+    @payment_term ||= scope.new(payment_term_params_for_create)
 
     authorize @payment_term, :create?
     if @payment_term.save
@@ -33,7 +33,7 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
   def update
     authorize @payment_term, :update?
 
-    if @payment_term.update(payment_term_params)
+    if @payment_term.update(payment_term_params_for_update)
       flash[:notice] = t("payment_terms.update_ok")
       redirect_to back_url
     else
@@ -67,6 +67,14 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
 
   def payment_term_params
     params.fetch(:billing_machine_payment_term, {}).permit(permitted_params)
+  end
+
+  def payment_term_params_for_create
+    payment_term_params
+  end
+
+  def payment_term_params_for_update
+    payment_term_params
   end
 
 end

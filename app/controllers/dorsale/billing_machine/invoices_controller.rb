@@ -61,7 +61,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def create
     # callback in BillingMachine::ApplicationController
-    @invoice ||= scope.new(invoice_params)
+    @invoice ||= scope.new(invoice_params_for_create)
 
     authorize model, :create?
 
@@ -133,7 +133,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :update?
 
-    if @invoice.update(invoice_params)
+    if @invoice.update(invoice_params_for_update)
       flash[:notice] = t("messages.invoices.update_ok")
       redirect_to default_back_url
     else
@@ -239,6 +239,14 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def invoice_params
     params.fetch(:invoice, {}).permit(permitted_params)
+  end
+
+  def invoice_params_for_create
+    invoice_params
+  end
+
+  def invoice_params_for_update
+    invoice_params
   end
 
   def generate_encoded_csv(invoices)

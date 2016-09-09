@@ -14,7 +14,7 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   def create
     authorize @expense, :update?
 
-    @expense_line ||= @expense.expense_lines.new(expense_line_params)
+    @expense_line ||= @expense.expense_lines.new(expense_line_params_for_create)
 
     if @expense_line.save
       flash[:success] = t("expense_gun.expense_line.flash.created")
@@ -31,7 +31,7 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
   def update
     authorize @expense, :update?
 
-    if @expense_line.update(expense_line_params)
+    if @expense_line.update(expense_line_params_for_update)
       flash[:success] = t("expense_gun.expense_line.flash.created")
       redirect_to back_url
     else
@@ -60,6 +60,14 @@ class Dorsale::ExpenseGun::ExpenseLinesController < ::Dorsale::ExpenseGun::Appli
 
   def expense_line_params
     params.fetch(:expense_line, {}).permit!
+  end
+
+  def expense_line_params_for_create
+    expense_line_params
+  end
+
+  def expense_line_params_for_update
+    expense_line_params
   end
 
 end

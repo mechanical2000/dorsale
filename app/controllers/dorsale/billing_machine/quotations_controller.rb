@@ -64,7 +64,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def create
     # callback in BillingMachine::ApplicationController
-    @quotation ||= scope.new(quotation_params)
+    @quotation ||= scope.new(quotation_params_for_create)
 
     authorize @quotation, :create?
 
@@ -115,7 +115,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     # callback in BillingMachine::ApplicationController
     authorize @quotation, :update?
 
-    if @quotation.update(quotation_params)
+    if @quotation.update(quotation_params_for_update)
       flash[:notice] = t("messages.quotations.update_ok")
       redirect_to default_back_url
     else
@@ -202,6 +202,14 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def quotation_params
     params.fetch(:quotation, {}).permit(permitted_params)
+  end
+
+  def quotation_params_for_create
+    quotation_params
+  end
+
+  def quotation_params_for_update
+    quotation_params
   end
 
 end
