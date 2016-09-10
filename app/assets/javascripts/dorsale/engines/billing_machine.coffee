@@ -1,5 +1,3 @@
-//= require_tree .
-
 accounting.settings =
   number:
     precision : 2
