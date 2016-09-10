@@ -11,7 +11,7 @@ require "turbolinks"
 require "bootstrap-kaminari-views"
 require "bootstrap-datepicker-rails"
 require "cocoon"
-require "selectize-rails"
+require "select2-rails"
 
 require "rails-i18n"
 require "pundit"

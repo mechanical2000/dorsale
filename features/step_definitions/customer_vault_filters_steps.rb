@@ -15,9 +15,7 @@ When(/^I go the to people list$/) do
 end
 
 When(/^I filter with tag hello$/) do
-  page.execute_script %(
-    $("#filter-tags")[0].selectize.addItem("hello");
-  )
+  select("hello")
   find(".filter-submit").click
 end
 
@@ -28,9 +26,7 @@ Then(/^only first and second corporation appear$/) do
 end
 
 When(/^I add the second tag world$/) do
-  page.execute_script %(
-    $("#filter-tags")[0].selectize.addItem("world");
-  )
+  select "world"
   find(".filter-submit").click
 end
 

@@ -40,6 +40,7 @@ $(document).on "ready turbolinks:load page:load", ->
 
     form.find("select").map ->
       this.selectize.clear() if this.selectize
+      $(this).val("").trigger("change")
 
   # Referer with anchor
   $("form").submit ->

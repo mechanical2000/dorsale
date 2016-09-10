@@ -39,9 +39,12 @@ end
 
 When(/^I add tags to this individual$/) do
   page.execute_script %(
-    $(".individual_tag_list select")[0].selectize.createItem("mytag1");
-    $(".individual_tag_list select")[0].selectize.createItem("mytag2");
+    $("#individual_tag_list").append("<option value='mytag1'>mytag1</option>")
+    $("#individual_tag_list").append("<option value='mytag2'>mytag2</option>")
   )
+
+  select "mytag1"
+  select "mytag2"
 end
 
 When(/^I submit this individual$/) do
@@ -49,13 +52,11 @@ When(/^I submit this individual$/) do
 end
 
 Given(/^an existing individual with tags$/) do
-  @individual = FactoryGirl.create(:customer_vault_individual, tag_list: "mytag1, mytag2")
+  @individual = create(:customer_vault_individual, tag_list: "mytag1, mytag2")
 end
 
 When(/^I remove tags to this individual$/) do
-  page.execute_script %(
-    $(".individual_tag_list select")[0].selectize.removeItem("mytag1");
-  )
+  unselect "mytag1"
 end
 
 When(/^I go on this individual$/) do

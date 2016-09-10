@@ -2,7 +2,11 @@
   @extend .well
   padding: 8px
 
-  select, button, input
+  select,
+  button,
+  input,
+  .form-control,
+  .select2-container,
     margin: 0 5px 0 0
 
   .form-group
@@ -17,3 +21,7 @@
 
   input[id*=date]
     width: 8em
+
+  .select2-container
+    display: inline-block !important
+    width: 30em !important
