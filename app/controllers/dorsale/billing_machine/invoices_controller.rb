@@ -100,20 +100,10 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def copy
     # callback in BillingMachine::ApplicationController
-    @original ||= @invoice
+    authorize @invoice, :copy?
 
-    authorize @original, :copy?
-
-    @invoice = @original.dup
-
-    @original.lines.each do |line|
-      @invoice.lines << line.dup
-    end
-
-    @invoice.date         = Time.zone.now.to_date
-    @invoice.due_date     = Time.zone.now.to_date + 30.days
-    @invoice.unique_index = nil
-    @invoice.paid         = false
+    @original = @invoice
+    @invoice  = Dorsale::BillingMachine::Invoice::Copy.(@original)
 
     render :new
   end
