@@ -135,6 +135,7 @@ en:
     active                : "Active ?"
     user                  : "User"
     category              : "Category"
+    corporation_name      : "Name"
 
   errors:
     messages:

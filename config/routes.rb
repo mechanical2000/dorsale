@@ -52,20 +52,27 @@ Dorsale::Engine.routes.draw do
   end
 
   namespace :customer_vault do
-    resources :corporations, except: [:index] do
-      resources :links, except: [:index]
-    end
-
-    resources :individuals, :except => [:index] do
-      resources :links, except: [:index]
-    end
-
     namespace :people do
-      get "/", action: "index"
       get :activity
       get :list
     end
+
+    resources :people do
+      resources :links, except: [:index]
+    end
+
+    resources :corporations, path: "people", except: [:new] do
+      resources :links, except: [:index]
+    end
+
+    resources :individuals,  path: "people", except: [:new] do
+      resources :links, except: [:index]
+    end
   end
+
+  get "customer_vault/people/new/corporation" => "customer_vault/people#new", type: "corporation", as: :new_customer_vault_corporation
+  get "customer_vault/people/new/individual"  => "customer_vault/people#new", type: "individual",  as: :new_customer_vault_individual
+
 
   namespace :expense_gun do
     resources :categories, except: [:destroy, :show]

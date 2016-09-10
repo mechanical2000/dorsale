@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe ActiveRecordCommaTypeCast, type: :model do
-  let(:line) { FactoryGirl.create(:billing_machine_invoice_line) }
+  let(:line) { create(:billing_machine_invoice_line) }
 
   it "should accept , as decimal separator" do
     line.update!(quantity: "12,34")

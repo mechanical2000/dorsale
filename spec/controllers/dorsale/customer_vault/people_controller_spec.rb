@@ -12,28 +12,21 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
       get :index
       expect(response).to redirect_to customer_vault_people_activity_path
     end
-  end
+  end # describe "#index"
 
-  describe '#list' do
-    describe 'sorting' do
-      let!(:alice) {
-        create(:customer_vault_individual, first_name: 'Alice', last_name: 'Zarston')
-      }
+  describe "#list" do
+    describe "sorting" do
+      it "should sort people by name by default" do
+        abc   = create(:customer_vault_corporation, name: 'Abc Corp')
+        bob   = create(:customer_vault_individual, last_name: 'Bob')
+        alice = create(:customer_vault_individual, last_name: 'Alice')
+        zorg  = create(:customer_vault_corporation, name: 'Zorg Corp')
 
-      let!(:bob) {
-        create(:customer_vault_individual, first_name: 'Bob', last_name: 'Tilan')
-      }
-
-      let!(:corporation) {
-        create(:customer_vault_corporation, name: 'Zorg Corp')
-      }
-
-
-      it 'should sort people by name by default' do
         get :list
-        expect(assigns(:people)).to eq([bob, alice, corporation])
+
+        expect(assigns(:people)).to eq([abc, alice, bob, zorg])
       end
-    end
+    end # describe "sorting"
 
     describe "search" do
       it "search should ignore filters" do
@@ -43,10 +36,10 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
         get :list, params: {q: "bbb"}
         expect(assigns(:people)).to eq [corporation2]
       end
-    end
-  end
+    end # describe "search"
+  end # describe "#liwt"
 
-  describe "activity" do
+  describe "#activity" do
     before do
       @person = create(:customer_vault_corporation)
       @comment1 = @person.comments.create!(text: "ABC", created_at: Time.zone.now - 3.days, author: user)
@@ -58,6 +51,6 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
       get :activity
       expect(assigns(:comments)).to eq [@comment2, @comment1, @comment3]
     end
-  end
+  end # describe "#activity"
 
 end

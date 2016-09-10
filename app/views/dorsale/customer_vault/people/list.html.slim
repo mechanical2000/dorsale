@@ -9,13 +9,9 @@
   - else
     .people
       - @people.each do |person|
-        - if person.instance_of? ::Dorsale::CustomerVault::Individual
-            = render "dorsale/customer_vault/individuals/list_details", i: person
-
-        - if person.instance_of? ::Dorsale::CustomerVault::Corporation
-            = render "dorsale/customer_vault/corporations/list_details", c: person
+        = render "dorsale/customer_vault/people/list_item", person: person
 
     = paginate @people
 
     .text-center
-      = info ::Dorsale::CustomerVault::Person, :count, @total_contact
+      = info ::Dorsale::CustomerVault::Person, :count, @people_without_pagination.count

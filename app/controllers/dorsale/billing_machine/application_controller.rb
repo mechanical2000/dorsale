@@ -17,7 +17,7 @@ class Dorsale::BillingMachine::ApplicationController < ::Dorsale::ApplicationCon
   def set_common_variables
     @payment_terms ||= policy_scope(::Dorsale::BillingMachine::PaymentTerm)
     @id_cards      ||= policy_scope(::Dorsale::BillingMachine::IdCard)
-    @people        ||= person_policy_scope
+    @people        ||= policy_scope(::Dorsale::CustomerVault::Person)
   end
 
 end
