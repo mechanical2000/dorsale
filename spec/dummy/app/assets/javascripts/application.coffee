@@ -1,13 +1,1 @@
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require bootstrap
-//= require cocoon
-//= require accounting
-//= require url.min
-//= require select2
-//= require select2_locale_fr
 //= require dorsale/all
-//= require dorsale/billing_machine/all
-//= require dorsale/customer_vault/all
-//= require dorsale/alexandrie/all
