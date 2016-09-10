@@ -72,7 +72,11 @@ Dorsale::Engine.routes.draw do
 
     resources :expenses, except: [:destroy] do
       member do
-        %w(submit accept refuse cancel).map { |action| patch action }
+        get :copy
+        patch :submit
+        patch :accept
+        patch :refuse
+        patch :cancel
       end
     end
 

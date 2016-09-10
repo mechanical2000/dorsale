@@ -15,6 +15,9 @@
         - if policy(@expense).update?
           = update_button dorsale.edit_expense_gun_expense_path(@expense)
 
+        - if policy(@expense).copy?
+          = copy_button dorsale.copy_expense_gun_expense_path(@expense)
+
         - if policy(@expense).submit?
           = link_to t("expense_gun.expense.actions.submit"), dorsale.submit_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-xs btn-primary"
 
