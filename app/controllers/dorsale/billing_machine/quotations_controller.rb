@@ -38,18 +38,6 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
       .map(&:total_including_taxes)
       .delete_if(&:blank?)
       .sum
-
-    respond_to do |format|
-      format.csv {
-        send_data generate_encoded_csv(@quotations_without_pagination), type: "text/csv"
-      }
-
-      format.json {
-        respond_with @quotations_without_pagination
-      }
-
-      format.html
-    end
   end
 
   def new

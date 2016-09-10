@@ -133,6 +133,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     context "export" do
       render_views
+
       it "should not paginate the CSV" do
         50.times { task.dup.save }
         get :index, params: {format: :csv}

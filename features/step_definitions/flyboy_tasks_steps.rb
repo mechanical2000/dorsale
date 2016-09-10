@@ -165,12 +165,12 @@ end
 
 Then(/^I download PDF file$/) do
   expect(page.status_code).to eq 200
-  expect(page.response_headers['Content-Type']).to eq "application/pdf"
+  expect(page.response_headers['Content-Type']).to match "application/pdf"
 end
 
 Then(/^I download CSV file$/) do
   expect(page.status_code).to eq 200
-  expect(page.response_headers['Content-Type']).to eq "text/csv"
+  expect(page.response_headers['Content-Type']).to match "text/csv"
 end
 
 Then(/^I download XLS file$/) do

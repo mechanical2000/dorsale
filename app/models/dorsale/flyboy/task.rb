@@ -94,30 +94,6 @@ class Dorsale::Flyboy::Task < ActiveRecord::Base
     return true
   end
 
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << [
-        "Taskable",
-        "Type",
-        "Avancement taskable",
-        "Tâche",
-        "Avancement tâche",
-        "Echéance"
-      ]
-
-      all.each do |task|
-        csv << [
-          task.taskable.name,
-          task.taskable.class.t,
-          "#{task.taskable.try(:progress)} %",
-          task.name,
-          "#{task.progress} %",
-          I18n.l(task.term),
-        ]
-      end
-    end
-  end
-
   def term_not_passed_yet
     self.term > Time.zone.now.to_date
   end

@@ -47,27 +47,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       @tasks_without_pagination = @tasks
       @tasks = @tasks.page(params[:page])
     end
-
-    respond_to do |format|
-      format.html
-
-      format.csv do
-        send_data @tasks_without_pagination.to_csv,
-          filename:    "feuille_de_route_#{Time.zone.now.to_date}.csv",
-          disposition: "attachment"
-      end
-
-      format.xls
-
-      format.pdf do
-        pdf = Roadmap.new(@tasks_without_pagination)
-        pdf.build
-        send_data pdf.render,
-          filename:    "feuille_de_route_#{Time.zone.now.to_date}.pdf",
-          disposition: "inline"
-      end
-    end
-
   end
 
   def show
