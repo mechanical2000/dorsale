@@ -71,7 +71,3 @@ module Dorsale
     Mime::Type.register "application/vnd.ms-excel", :xlsx
   end
 end
-
-Dir.glob Dorsale::Engine.root.join("app/**/concerns/*.rb") do |f|
-  require f
-end
