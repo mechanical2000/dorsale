@@ -130,60 +130,6 @@ module Dorsale
         pdf
       end
 
-      def create_copy!
-        new_quotation = self.dup
-
-        self.lines.each do |line|
-          new_quotation.lines << line.dup
-        end
-
-        new_quotation.unique_index = nil
-        new_quotation.created_at   = nil
-        new_quotation.updated_at   = nil
-        new_quotation.date         = Time.zone.now.to_date
-        new_quotation.state        = Quotation::STATES.first
-
-        new_quotation.save!
-
-        self.attachments.each do |attachment|
-          new_attachment            = attachment.dup
-          new_attachment.attachable = new_quotation
-          new_attachment.file       = File.open(attachment.file.path)
-          new_attachment.save!
-        end
-
-        new_quotation
-      end
-
-      def to_new_invoice
-        new_invoice = Dorsale::BillingMachine::Invoice.new
-
-        self.attributes.each do |k, v|
-          next if k.to_s == "id"
-          next if k.to_s.match /index|tracking|_at/
-
-          if new_invoice.respond_to?("#{k}=")
-            new_invoice.public_send("#{k}=", v)
-          end
-        end
-
-        self.lines.each do |line|
-          new_line = new_invoice.lines.new
-          line.attributes.each do |k, v|
-            next if k.to_s == "id"
-            next if k.to_s.match /index|tracking|_at/
-
-          if new_line.respond_to?("#{k}=")
-            new_line.public_send("#{k}=", v)
-          end
-          end
-        end
-
-        new_invoice.date = Time.zone.now.to_date
-
-        new_invoice
-      end
-
     end # Quotation
   end # BillingMachine
 end # Dorsale

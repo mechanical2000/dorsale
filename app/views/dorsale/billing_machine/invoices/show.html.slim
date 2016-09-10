@@ -10,7 +10,7 @@
       = download_button dorsale.billing_machine_invoice_path(@invoice, format: :pdf)
 
     - if policy(@invoice).copy?
-      = copy_button dorsale.copy_billing_machine_invoice_path(@invoice), confirm: true
+      = copy_button dorsale.copy_billing_machine_invoice_path(@invoice)
 
     - if policy(@invoice).email?
       = dorsale_button dorsale.email_billing_machine_invoice_path(@invoice), icon: :send, action: :email
