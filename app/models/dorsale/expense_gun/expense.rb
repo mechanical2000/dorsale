@@ -19,6 +19,10 @@ class Dorsale::ExpenseGun::Expense < ActiveRecord::Base
     :allow_destroy => true,
     :reject_if => proc { |attr| attr["name"].blank? }
 
+  default_scope -> {
+    order(id: :desc)
+  }
+
   def initialize(*args)
     super
     self.date = Time.zone.now.to_date if self.date.nil?

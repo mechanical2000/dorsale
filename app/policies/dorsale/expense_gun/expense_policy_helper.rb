@@ -4,6 +4,7 @@ module Dorsale::ExpenseGun::ExpensePolicyHelper
     :create?,
     :read?,
     :update?,
+    :copy?,
     :submit?,
     :accept?,
     :refuse?,

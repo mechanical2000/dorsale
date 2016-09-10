@@ -3,7 +3,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     :show,
     :edit,
     :update,
-    :destroy,
+    :copy,
     :submit,
     :accept,
     :refuse,
@@ -68,6 +68,15 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     else
       render :edit
     end
+  end
+
+  def copy
+    authorize @expense, :copy?
+
+    @original = @expense
+    @expense  = ::Dorsale::ExpenseGun::Expense::Copy.(@original)
+
+    render :new
   end
 
   def submit

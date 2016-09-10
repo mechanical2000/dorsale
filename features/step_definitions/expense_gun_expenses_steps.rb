@@ -114,3 +114,22 @@ end
 When(/^I go on the expense page$/) do
   visit dorsale.expense_gun_expense_path(@expense)
 end
+
+When(/^I copy the expense$/) do
+  @expenses_count = Dorsale::ExpenseGun::Expense.count
+
+  find("[href$=copy]").click
+
+  all(".nested-fields").each do |line|
+    within line do
+      find("input[id$='_date']").set "12/06/2015"
+    end
+  end
+
+  find("[type=submit]").click
+end
+
+Then(/^an expense copy is created$/) do
+  expect(Dorsale::ExpenseGun::Expense.count).to eq(@expenses_count + 1)
+  @expense = Dorsale::ExpenseGun::Expense.reorder(:id).last
+end

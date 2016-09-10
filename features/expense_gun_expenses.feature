@@ -22,6 +22,13 @@ Feature: Expenses
     Then the expense is update
     And I am redirected on the expense page
 
+  Scenario: Copy expense
+    Given an existing expense
+    When I go on the expense page
+    When I copy the expense
+    Then an expense copy is created
+    And I am redirected on the expense page
+
   Scenario: Submit expense
     Given an existing expense
     When I go on the expense page
