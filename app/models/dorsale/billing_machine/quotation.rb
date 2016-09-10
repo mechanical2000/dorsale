@@ -122,10 +122,9 @@ class Dorsale::BillingMachine::Quotation < ActiveRecord::Base
     end
   end
 
-  def pdf
-    pdf = ::Dorsale::BillingMachine.quotation_pdf_model.new(self)
-    pdf.build
-    pdf
+  def to_pdf
+    ::Dorsale::BillingMachine.quotation_pdf_model.new(self)
+      .tap(&:build)
+      .render_with_attachments
   end
-
 end

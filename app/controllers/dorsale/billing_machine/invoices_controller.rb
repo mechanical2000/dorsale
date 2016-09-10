@@ -35,18 +35,6 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
       .map(&:total_including_taxes)
       .delete_if(&:blank?)
       .sum
-
-    respond_to do |format|
-      format.csv {
-        send_data generate_encoded_csv(@invoices_without_pagination), type: "text/csv"
-      }
-
-      format.json {
-        respond_with @invoices_without_pagination
-      }
-
-      format.html
-    end
   end
 
   def new
@@ -76,26 +64,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def show
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :read?
-
-    respond_to do |format|
-      format.pdf {
-          authorize @invoice, :download?
-          pdf_data  = @invoice.pdf.render
-
-          file_name = [
-            model.t.capitalize,
-            @invoice.tracking_id,
-            @invoice.customer.try(:short_name),
-          ].join("_").concat(".pdf")
-
-          send_data pdf_data,
-            :type        => "application/pdf",
-            :filename    => file_name,
-            :disposition => "inline"
-      }
-
-      format.html
-    end
+    authorize @invoice, :download? if request.format.pdf?
   end
 
   def copy
@@ -237,15 +206,6 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def invoice_params_for_update
     invoice_params
-  end
-
-  def generate_encoded_csv(invoices)
-    invoices.to_csv.encode("WINDOWS-1252",
-      :crlf_newline => true,
-      :invalid      => :replace,
-      :undef        => :replace,
-      :replace      => "?"
-    )
   end
 
 end

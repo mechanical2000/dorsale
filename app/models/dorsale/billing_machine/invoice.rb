@@ -71,12 +71,6 @@ class Dorsale::BillingMachine::Invoice < ActiveRecord::Base
     self.balance               = total_including_taxes - advance
   end
 
-  def pdf
-    pdf = ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
-    pdf.build
-    pdf
-  end
-
   def vat_rate
     if ::Dorsale::BillingMachine.vat_mode == :multiple
       raise "Invoice#vat_rate is not available in multiple vat mode"
@@ -143,53 +137,10 @@ class Dorsale::BillingMachine::Invoice < ActiveRecord::Base
   def balance=(*); super; end
   private :balance=
 
-  def self.to_csv(options = { :force_quotes => true, :col_sep => ";" })
-    CSV.generate(options) do |csv|
-      column_names = [
-        "Date",
-        "Numéro",
-        "Objet",
-        "Client",
-        "Adresse 1",
-        "Adresse 2",
-        "Code postal",
-        "Ville",
-        "Pays",
-        "Remise commerciale",
-        "Montant HT",
-        "Montant TVA",
-        "Montant TTC",
-        "Acompte",
-        "Solde à payer"
-      ]
-
-      csv << column_names
-
-      all.each do |invoice|
-        csv << [
-          invoice.date,
-          invoice.tracking_id,
-          invoice.label,
-          invoice.customer.try(:name),
-          invoice.customer.try(:address).try(:street),
-          invoice.customer.try(:address).try(:street_bis),
-          invoice.customer.try(:address).try(:zip),
-          invoice.customer.try(:address).try(:city),
-          invoice.customer.try(:address).try(:country),
-          french_number(invoice.commercial_discount),
-          french_number(invoice.total_excluding_taxes),
-          french_number(invoice.vat_amount),
-          french_number(invoice.total_including_taxes),
-          french_number(invoice.advance),
-          french_number(invoice.balance)
-        ]
-      end
-    end
-  end
-
-  def self.french_number amount
-    extend ActionView::Helpers::NumberHelper
-    number_with_precision(amount, :delimiter => '', :separator => ",", :precision => 2)
+  def to_pdf
+    ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
+      .tap(&:build)
+      .render
   end
 
 end
