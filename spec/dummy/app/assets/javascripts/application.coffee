@@ -5,7 +5,8 @@
 //= require cocoon
 //= require accounting
 //= require url.min
-//= require selectize
+//= require select2
+//= require select2_locale_fr
 //= require dorsale/all
 //= require dorsale/billing_machine/all
 //= require dorsale/customer_vault/all

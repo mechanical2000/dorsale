@@ -43,6 +43,14 @@ module Dorsale
         return "ontime"
       end
 
+      def flyboy_status_for_filters_select
+        {
+          t("messages.folders.status.all")    => "",
+          t("messages.folders.status.open")   => "open",
+          t("messages.folders.status.closed") => "closed",
+        }
+      end
+
     end
   end
 end

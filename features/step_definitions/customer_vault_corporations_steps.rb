@@ -121,9 +121,12 @@ end
 
 When(/^I add tags to this corporation$/) do
   page.execute_script %(
-    $(".corporation_tag_list select")[0].selectize.createItem("mytag1");
-    $(".corporation_tag_list select")[0].selectize.createItem("mytag2");
+    $("#corporation_tag_list").append("<option value='mytag1'>mytag1</option>")
+    $("#corporation_tag_list").append("<option value='mytag2'>mytag2</option>")
   )
+
+  select "mytag1"
+  select "mytag2"
 end
 
 When(/^I submit this corporation$/) do
@@ -137,13 +140,11 @@ Then(/^tags are added$/) do
 end
 
 Given(/^an existing corporation with tags$/) do
-  @corporation = FactoryGirl.create(:customer_vault_corporation, tag_list: "mytag1, mytag2")
+  @corporation = create(:customer_vault_corporation, tag_list: "mytag1, mytag2")
 end
 
 When(/^I remove tags to this corporation$/) do
-  page.execute_script %(
-    $(".corporation_tag_list select")[0].selectize.removeItem("mytag1");
-  )
+  unselect "mytag1"
 end
 
 Then(/^tags are removed$/) do
