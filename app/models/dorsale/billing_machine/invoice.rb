@@ -71,12 +71,6 @@ class Dorsale::BillingMachine::Invoice < ActiveRecord::Base
     self.balance               = total_including_taxes - advance
   end
 
-  def pdf
-    pdf = ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
-    pdf.build
-    pdf
-  end
-
   def vat_rate
     if ::Dorsale::BillingMachine.vat_mode == :multiple
       raise "Invoice#vat_rate is not available in multiple vat mode"
@@ -142,6 +136,12 @@ class Dorsale::BillingMachine::Invoice < ActiveRecord::Base
 
   def balance=(*); super; end
   private :balance=
+
+  def to_pdf
+    ::Dorsale::BillingMachine.invoice_pdf_model.new(self)
+      .tap(&:build)
+      .render
+  end
 
   def self.to_csv(options = { :force_quotes => true, :col_sep => ";" })
     CSV.generate(options) do |csv|

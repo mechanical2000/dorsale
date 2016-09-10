@@ -76,26 +76,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def show
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :read?
-
-    respond_to do |format|
-      format.pdf {
-          authorize @invoice, :download?
-          pdf_data  = @invoice.pdf.render
-
-          file_name = [
-            model.t.capitalize,
-            @invoice.tracking_id,
-            @invoice.customer.try(:short_name),
-          ].join("_").concat(".pdf")
-
-          send_data pdf_data,
-            :type        => "application/pdf",
-            :filename    => file_name,
-            :disposition => "inline"
-      }
-
-      format.html
-    end
+    authorize @invoice, :download? if request.format.pdf?
   end
 
   def copy

@@ -79,26 +79,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   def show
     # callback in BillingMachine::ApplicationController
     authorize @quotation, :read?
-
-    respond_to do |format|
-      format.pdf {
-          authorize @quotation, :download?
-          pdf_data  = @quotation.pdf.render_with_attachments
-
-          file_name = [
-            model.t,
-            @quotation.tracking_id,
-            @quotation.customer.try(:short_name),
-          ].join("_").concat(".pdf")
-
-          send_data pdf_data,
-            :type        => "application/pdf",
-            :filename    => file_name,
-            :disposition => "inline"
-      }
-
-      format.html
-    end
+    authorize @quotation, :download? if request.format.pdf?
   end
 
   def edit
