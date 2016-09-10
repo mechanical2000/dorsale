@@ -114,7 +114,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
   def render_or_redirect
     if request.xhr?
-      render nothing: true
+      head :ok
     else
       redirect_to back_url
     end
