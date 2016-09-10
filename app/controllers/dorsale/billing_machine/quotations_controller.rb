@@ -139,10 +139,12 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   def copy
     authorize @quotation, :copy?
 
-    new_quotation = @quotation.create_copy!
+    @original  = @quotation
+    @quotation = Dorsale::BillingMachine::Quotation::Copy.(@original)
+
     flash[:notice] = t("messages.quotations.copy_ok")
 
-    redirect_to dorsale.edit_billing_machine_quotation_path(new_quotation)
+    redirect_to dorsale.edit_billing_machine_quotation_path(@quotation)
   end
 
   def create_invoice

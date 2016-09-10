@@ -130,31 +130,6 @@ module Dorsale
         pdf
       end
 
-      def create_copy!
-        new_quotation = self.dup
-
-        self.lines.each do |line|
-          new_quotation.lines << line.dup
-        end
-
-        new_quotation.unique_index = nil
-        new_quotation.created_at   = nil
-        new_quotation.updated_at   = nil
-        new_quotation.date         = Time.zone.now.to_date
-        new_quotation.state        = Quotation::STATES.first
-
-        new_quotation.save!
-
-        self.attachments.each do |attachment|
-          new_attachment            = attachment.dup
-          new_attachment.attachable = new_quotation
-          new_attachment.file       = File.open(attachment.file.path)
-          new_attachment.save!
-        end
-
-        new_quotation
-      end
-
       def to_new_invoice
         new_invoice = Dorsale::BillingMachine::Invoice.new
 
