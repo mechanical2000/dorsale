@@ -10,6 +10,7 @@ module Dorsale::AllHelpers
   include ::Dorsale::PaginationHelper
   include ::Dorsale::RoutesHelper
   include ::Dorsale::TextHelper
+  include ::Dorsale::BootstrapHelper
 
   include ::Dorsale::Alexandrie::AttachmentsHelper
   include ::Dorsale::Flyboy::ApplicationHelper

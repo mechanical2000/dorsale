@@ -123,7 +123,7 @@ end
 When(/^I delete this task$/) do
   visit dorsale.flyboy_task_path(@task)
   find("a[href$='tasks/#{@task.id}/edit']").click
-  find(".task-context a[data-method=delete]").click
+  find(".context a[data-method=delete]").click
 end
 
 Then(/^I am on the created task$/) do

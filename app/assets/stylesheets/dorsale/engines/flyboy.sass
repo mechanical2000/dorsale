@@ -12,12 +12,6 @@
   .onalert td
     background: $state-danger-bg !important
 
-  .btn-xs, form.search
-    margin: 0 5px
-
-  .context div.infos
-    @extend p.infos
-
   div.progress
     display: inline-block
     width: 150px
@@ -26,16 +20,9 @@
   table textarea
     height: 4em !important
 
-  td.task_progress
+  td.task-progress,
+  td.folder-progress,
     width: 150px
-
-  .context .actions
-    border-bottom: 1px solid $well-border
-    margin: 0 0 15px 0
-    padding: 0 0 10px 0
-
-  .actions.top
-    text-align: right
 
     form
       display: inline-block
@@ -44,9 +31,3 @@
     form, p
       margin: 0
       padding: 0
-
-    .btn
-      position: relative
-      bottom: 1.1em
-      right: 1em
-      padding: 0.55em

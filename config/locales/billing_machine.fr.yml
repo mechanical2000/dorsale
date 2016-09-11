@@ -1,6 +1,8 @@
 fr:
   actions:
     create_invoice: "Facturer"
+    new_payment_term: "Nouvelles conditions de paiement"
+    new_id_card: "Nouvelle carte d'identité"
 
   attributes:
     id_card: "Carte d'identité"

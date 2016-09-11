@@ -69,7 +69,7 @@ module Dorsale::TextHelper
 
     label       = options[:label]     || object.t(attribute)
     tag         = options[:tag]       || :div
-    separator   = options[:separator] || " : "
+    separator   = options[:separator] || ":"
     helper      = options[:helper]
     i18n_key    = "#{object.class.to_s.tableize.singularize}/#{attribute}"
     nested      = I18n.t("activerecord.attributes.#{i18n_key}").is_a?(Hash)
@@ -90,9 +90,10 @@ module Dorsale::TextHelper
     html_label     = content_tag(:strong, class: "info-label") { label }
     span_css_class = "info-value #{object_type}-#{attribute}"
     html_value     = content_tag(:span, class: span_css_class) { value }
+    separator_html = content_tag(:span, class: "info-separator") { separator }
 
     content_tag(tag, class: "info") do
-      [html_label, separator, html_value].join.html_safe
+      [html_label, separator_html, html_value].join.html_safe
     end
   end # def info
 

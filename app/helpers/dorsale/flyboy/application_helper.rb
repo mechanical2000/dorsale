@@ -43,9 +43,9 @@ module Dorsale::Flyboy::ApplicationHelper
 
   def flyboy_status_for_filters_select
     {
-      t("messages.folders.status.all")    => "",
-      t("messages.folders.status.open")   => "open",
-      t("messages.folders.status.closed") => "closed",
+      Dorsale::Flyboy::Folder.t("status.all")    => "",
+      Dorsale::Flyboy::Folder.t("status.open")   => "open",
+      Dorsale::Flyboy::Folder.t("status.closed") => "closed",
     }
   end
 

@@ -20,6 +20,10 @@ fr:
       actions:
         create: "Nouvelle dépense"
 
+    category:
+      actions:
+        create: "Nouvelle catégorie"
+
   activerecord:
     models:
       dorsale/expense_gun/expense:

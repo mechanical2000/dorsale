@@ -10,12 +10,6 @@ fr:
       open_error: "Impossible de réouvrir le dossier"
       close_ok: "Le dossier a été fermé"
       close_error: "Impossible de fermer le dossier"
-      status:
-        all: "Tous les status"
-        open: "Ouvert"
-        pending: "En attente"
-        closed: "Fermé"
-        unknown: "Inconnu"
 
     tasks:
       create_ok: "La tâche a bien été créée"
@@ -50,9 +44,11 @@ fr:
       dorsale/flyboy/folder:
         one: "Dossier"
         other: "Dossiers"
+
       dorsale/flyboy/task:
         one: "Tâche"
         other: "Tâches"
+
     attributes:
       dorsale/flyboy/folder:
         name: "Titre"
@@ -61,6 +57,14 @@ fr:
         revision: "Révision"
         status: "Etat"
         progress: "Progression"
+
+      dorsale/flyboy/folder/status:
+        all: "Tous les status"
+        open: "Ouvert"
+        pending: "En attente"
+        closed: "Fermé"
+        unknown: "Inconnu"
+
       dorsale/flyboy/task:
         taskable: "Origine"
         owner: "Propriétaire"
@@ -73,6 +77,7 @@ fr:
         done: "Fait ?"
         description: "Description"
         progress: "Progression"
+
       dorsale/flyboy/task_comment:
         progress: "Progression"
         description: "Description"

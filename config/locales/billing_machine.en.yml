@@ -1,6 +1,8 @@
 en:
   actions:
     create_invoice: "Create invoice"
+    new_payment_term: "New payment terms"
+    new_id_card: "New Id Card"
 
   attributes:
     id_card: "Id Card"

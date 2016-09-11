@@ -1,36 +1,35 @@
 .expense_gun
-  h1
-    = @expense.t
-    = " : "
-    = @expense.name
+  .actions.top.hidden-print
+    - if policy(@expense).update?
+      = update_button dorsale.edit_expense_gun_expense_path(@expense)
 
-  .row
-    .col-md-6
+    - if policy(@expense).copy?
+      = copy_button dorsale.copy_expense_gun_expense_path(@expense)
+
+    - if policy(@expense).submit?
+      = link_to t("expense_gun.expense.actions.submit"), dorsale.submit_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-primary"
+
+    - if policy(@expense).accept?
+      = link_to t("expense_gun.expense.actions.accept"), dorsale.accept_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-success"
+
+    - if policy(@expense).refuse?
+      = link_to t("expense_gun.expense.actions.refuse"), dorsale.refuse_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-danger"
+
+    - if policy(@expense).cancel?
+      = link_to t("expense_gun.expense.actions.cancel"), dorsale.cancel_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-warning"
+
+    = print_button
+
+  .panel.panel-default
+    .panel-heading: .panel-title
+        = @expense.t
+        = " : "
+        = @expense.name
+
+    .panel-body
       = info @expense, :date
       = info @expense, :user
       = info @expense, :state
-
-    .col-md-6
-      .actions.pull-right.hidden-print
-        - if policy(@expense).update?
-          = update_button dorsale.edit_expense_gun_expense_path(@expense)
-
-        - if policy(@expense).copy?
-          = copy_button dorsale.copy_expense_gun_expense_path(@expense)
-
-        - if policy(@expense).submit?
-          = link_to t("expense_gun.expense.actions.submit"), dorsale.submit_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-xs btn-primary"
-
-        - if policy(@expense).accept?
-          = link_to t("expense_gun.expense.actions.accept"), dorsale.accept_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-xs btn-success"
-
-        - if policy(@expense).refuse?
-          = link_to t("expense_gun.expense.actions.refuse"), dorsale.refuse_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-xs btn-danger"
-
-        - if policy(@expense).cancel?
-          = link_to t("expense_gun.expense.actions.cancel"), dorsale.cancel_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-xs btn-warning"
-
-        = print_button
 
   hr
 
@@ -59,6 +58,8 @@
       = info @expense, :total_all_taxes,        helper: :euros
       = info @expense, :total_employee_payback, helper: :euros
       = info @expense, :total_vat_deductible,   helper: :euros
+
+  hr
 
   .attachments-panel.hidden-print
     = panel title: @expense.t(:documents)

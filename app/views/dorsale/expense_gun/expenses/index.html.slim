@@ -1,8 +1,10 @@
 .expense_gun
-  p.actions.pull-right
-    = create_button dorsale.new_expense_gun_expense_path, text: t("expense_gun.expense.actions.create")
-
-  h1 = Dorsale::ExpenseGun::Expense.ts
+  .row
+    .col-md-6
+      h1 = Dorsale::ExpenseGun::Expense.ts
+    .col-md-6
+      .actions.top
+        = create_button dorsale.new_expense_gun_expense_path, text: t("expense_gun.expense.actions.create")
 
   hr
 

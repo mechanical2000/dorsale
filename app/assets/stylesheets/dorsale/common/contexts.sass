@@ -1,39 +1,54 @@
 .context
-  @extend .well
-  text-align: center
-  position: relative
-  margin-bottom: 15px !important
+  @extend .panel
+  @extend .panel-default
 
-  > .fa
-    font-size: 400%
-    color: black
-    padding: 10px
-    margin: auto
-    display: block
+  .context-title
+    @extend .panel-heading
+    @extend .panel-title
 
-  strong, h2
-    @extend .text-muted
+  .context-body
+    @extend .panel-body
 
-  h2
-    margin: 10px
-    font-size: 150%
-    font-weight: bold
+  .context-footer
+    @extend .panel-footer
+    text-align: center
 
-  p.infos
-    margin: 5px
-    text-align: left
+  .info
+    display: flex
 
-  strong
-    display: inline-block
-    width: 50%
+    strong
+      @extend .text-muted
 
-  .btn-group
-    position: absolute
-    top: 0
-    right: 0
+    span.info-value
+      width: 60%
 
-    .btn
-      border-top: 0
-      border-right: 0
-      border-radius: 0 0 0 3px
+    span.info-separator
+      text-align: center
+      margin-right: auto
+      padding: 0 0.25em
 
+
+.actions.top
+  text-align: right
+  margin: 1em 0
+
+  .btn
+    @extend .btn
+
+  a.btn[href*='/new']
+    @extend .btn-success
+
+  .btn-primary
+    @extend .btn-primary
+
+  .btn-success
+    @extend .btn-success
+
+  .btn-danger
+    @extend .btn-danger
+
+  .btn-warning
+    @extend .btn-warning
+
+form.search
+  margin: 1em 0
