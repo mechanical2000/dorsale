@@ -7,9 +7,13 @@
     p = t("messages.no_people")
 
   - else
-    .people
-      - @people.each do |person|
-        = render "dorsale/customer_vault/people/list_item", person: person
+    .people: .row
+      - @people.each_with_index do |person, index|
+        .col-md-6
+          = render "dorsale/customer_vault/people/list_item", person: person
+
+        - if index.odd?
+          .clearfix
 
     = paginate @people
 
