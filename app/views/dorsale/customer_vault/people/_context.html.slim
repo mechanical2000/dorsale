@@ -8,6 +8,8 @@
     = person
 
   .panel-body
+    p.text-center = avatar_img(person)
+
     = info person, :tags,     person_tags(person)
     = info person, :email,    helper: :email_link
     = info person, :phone,    helper: :tel_link

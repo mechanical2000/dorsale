@@ -219,10 +219,6 @@ ActiveRecord::Schema.define(version: 20160910164840) do
     t.string   "bob_type_bak"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["alice_id"], name: "index_dorsale_customer_vault_links_on_alice_id"
-    t.index ["alice_type_bak"], name: "index_dorsale_customer_vault_links_on_alice_type_bak"
-    t.index ["bob_id"], name: "index_dorsale_customer_vault_links_on_bob_id"
-    t.index ["bob_type_bak"], name: "index_dorsale_customer_vault_links_on_bob_type_bak"
   end
 
   create_table "dorsale_customer_vault_people", force: :cascade do |t|
@@ -232,6 +228,7 @@ ActiveRecord::Schema.define(version: 20160910164840) do
     t.string   "last_name"
     t.string   "corporation_name"
     t.string   "short_name"
+    t.string   "avatar"
     t.string   "email"
     t.string   "phone"
     t.string   "mobile"

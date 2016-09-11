@@ -26,12 +26,17 @@
 
   .panel-body
     .row
-      .col-md-6
-        = info person, :phone
-        = info person, :mobile
+      .col-md-2.col-sm-3.col-xs-4
+        = avatar_img(person)
 
-      .col-md-6
-        = info person, :email, helper: :email_link
-        = info person, :www,   helper: :web_link
+      .col-md-10.col-sm-9.col-xs-8
+        .row
+          .col-sm-6
+            = info person, :phone
+            = info person, :mobile
 
-    = info person, :tags, person_tags(person)
+          .col-sm-6
+            = info person, :email, helper: :email_link
+            = info person, :www,   helper: :web_link
+
+        = info person, :tags, person_tags(person)

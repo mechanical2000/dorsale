@@ -142,6 +142,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def common_permitted_params
     [
       :short_name,
+      :avatar,
       :email,
       :phone,
       :mobile,

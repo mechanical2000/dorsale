@@ -1,4 +1,4 @@
-= horizontal_form_for @person, as: :person do |f|
+= horizontal_form_for @person, as: :person, multipart: true do |f|
   - if params[:type].present?
     input type="hidden" name="type" value=params[:type]
 
@@ -13,6 +13,7 @@
         = f.input :last_name
 
       = f.input :short_name
+      = render "dorsale/forms/avatar", f: f
       = f.input :tag_list, collection: @tags, input_html: {multiple: true}
 
   .panel.panel-default

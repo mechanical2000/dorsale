@@ -30,6 +30,7 @@ class CreateDorsaleCustomerVaultPeople < ActiveRecord::Migration[5.0]
       t.string :last_name
       t.string :corporation_name
       t.string :short_name
+      t.string :avatar
       t.string :email
       t.string :phone
       t.string :mobile
@@ -98,9 +99,7 @@ class CreateDorsaleCustomerVaultPeople < ActiveRecord::Migration[5.0]
   end
 
   def down
-    drop_table   :dorsale_customer_vault_people
-    rename_table :dorsale_customer_vault_individuals_bak,  :dorsale_customer_vault_individuals
-    rename_table :dorsale_customer_vault_corporations_bak, :dorsale_customer_vault_corporations
+    raise ActiveRecord::IrreversibleMigration
   end
 
   private

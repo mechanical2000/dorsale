@@ -5,6 +5,7 @@ class Dorsale::CustomerVault::Person < ActiveRecord::Base
 
   extend Forwardable
   include ::Dorsale::Search
+  include ::Dorsale::Users::Avatar
 
   def self.policy_class
     Dorsale::CustomerVault::PersonPolicy
