@@ -1,5 +1,23 @@
 # Changelog
 
+## Next realease
+
+- Migrate from CanCan to Pundit
+- ExpenseGun improvements
+  - UX
+  - Nested form
+  - Copy expense
+- Replace Selectize by Select2
+- Changes js/css file names :
+  - dorsale/dependencies
+  - dorsale/common
+  - dorsale/engines
+- CustomerVault
+  - Corporation and Individual merged into STI model
+  - Add avatar and other new fields
+- Refactoring
+- UX improvements
+
 ## 3.0.3
 
 - Refactor controllers
