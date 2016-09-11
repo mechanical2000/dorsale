@@ -164,7 +164,7 @@ When(/^I sort tasks by "(.*?)" "(.*?)"$/) do |column, direction|
 end
 
 Then(/^tasks are sorted by "(.*?)" "(.*?)"$/) do |column, direction|
-  page_names    = all("tbody td.name").map(&:text)
+  page_names    = all("tbody td.task-name").map(&:text)
   expected_name = @folder.tasks.reorder(column => direction).pluck(:name)
   expect(page_names).to eq expected_name
 end
