@@ -1,13 +1,25 @@
 .flyboy
-  .row
-    .col-md-4
-      = search_form
-    .col-md-8
-      .actions.top
-        = download_button url_for(format: :csv), action: :export_csv
-        = download_button url_for(format: :xls), action: :export_xls
-        = download_button url_for(format: :pdf), action: :export_pdf
+  - content_for :title
+    = icon :check_square_o
+    = " "
+    = ::Dorsale::Flyboy::Task.ts
 
-  = render "dorsale/flyboy/filters"
-  = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false
-  = paginate @tasks
+  - content_for :filters
+    = render "dorsale/flyboy/filters"
+
+  - content_for :search
+    = search_form
+
+  - content_for :actions
+    = download_button url_for(format: :csv), action: :export_csv
+    = download_button url_for(format: :xls), action: :export_xls
+    = download_button url_for(format: :pdf), action: :export_pdf
+
+  - content_for :table
+    = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false
+
+  - content_for :pagination
+    = paginate @tasks
+
+  = render_dorsale_index
+

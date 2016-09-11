@@ -51,6 +51,14 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
 
   private
 
+  def back_url
+    [
+      params[:form_url],
+      request.referer,
+      (main_app.root_path rescue "/"),
+    ].select(&:present?).first
+  end
+
   def model
     ::Dorsale::Comment
   end

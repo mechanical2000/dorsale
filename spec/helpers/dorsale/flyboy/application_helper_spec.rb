@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Dorsale::Flyboy::ApplicationHelper, type: :helper do
 

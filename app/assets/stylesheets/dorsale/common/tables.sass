@@ -1,8 +1,12 @@
 table.default
   @extend .table
-  @extend .table-striped
   @extend .table-bordered
   @extend .table-hover
+
+table.table
+  thead tr,
+  tfoot tr,
+    @extend .active
 
 th
   text-align: center

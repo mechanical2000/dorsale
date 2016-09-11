@@ -1,14 +1,14 @@
-table
+table#folders-list
   thead
     tr
-      th.folder-name
-        = sortable_column Dorsale::Flyboy::Folder.t, column: "name"
+      th.folder-status
+        = sortable_column Dorsale::Flyboy::Folder.t(:status), column: "status"
 
       th.folder-progress.hidden-xs.hidden-xs
         = sortable_column Dorsale::Flyboy::Folder.t(:progress), column: "progress"
 
-      th.folder-status.hidden-xs.hidden-xs
-        = sortable_column Dorsale::Flyboy::Folder.t(:status), column: "status"
+      th.folder-name
+        = sortable_column Dorsale::Flyboy::Folder.t, column: "name"
 
       th.actions
         = t("actions.actions")
@@ -16,17 +16,25 @@ table
   tbody
     - folders.each do |folder|
       tr.folder class=folder_color(folder)
+        td.folder-status
+          - if folder.status.to_s == "open"
+            = icon(:unlock)
+          - elsif folder.status.to_s == "closed"
+            = icon(:lock)
+          - else
+            = icon(:question)
+
+          = " "
+          = folder.t("status.#{folder.status}")
+
+        td.folder-progress.hidden-xs
+          = progress_bar percentage: folder.progress, label: true
+
         td.folder-name
           - if policy(folder).read?
             = link_to folder.name, dorsale.flyboy_folder_path(folder)
           - else
             = folder.name
-
-        td.folder-progress.hidden-xs
-          = progress_bar percentage: folder.progress, label: true
-
-        td.folder-status.hidden-xs
-          = folder.t("status.#{folder.status}")
 
         td.actions
           - if policy(Dorsale::Flyboy::Task.new(taskable: folder)).create?

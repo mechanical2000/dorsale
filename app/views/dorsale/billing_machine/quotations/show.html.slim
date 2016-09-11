@@ -1,5 +1,5 @@
 .billing_machine
-  .actions
+  .actions.top
     - if policy(@quotation).update?
       = update_button dorsale.edit_billing_machine_quotation_path(@quotation)
 
@@ -14,6 +14,8 @@
 
     - if policy(@quotation).delete?
       = delete_button dorsale.billing_machine_quotation_path(@quotation)
+
+  hr
 
   = render "dorsale/billing_machine/invoices/details", document: @quotation
 

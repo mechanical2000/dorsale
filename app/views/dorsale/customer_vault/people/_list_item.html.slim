@@ -25,18 +25,11 @@
             = update_button dorsale.edit_customer_vault_person_path(person)
 
   .panel-body
-    .row
-      .col-md-2.col-sm-3.col-xs-4
-        = avatar_img(person)
+    .avatar-container
+      = avatar_img(person)
 
-      .col-md-10.col-sm-9.col-xs-8
-        .row
-          .col-sm-6
-            = info person, :phone
-            = info person, :mobile
-
-          .col-sm-6
-            = info person, :email, helper: :email_link
-            = info person, :www,   helper: :web_link
-
-        = info person, :tags, person_tags(person)
+    .infos-container
+      = info person, :phone
+      = info person, :mobile
+      = info person, :email, helper: :email_link
+      = info person, :tags, person_tags(person)

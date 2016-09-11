@@ -8,6 +8,10 @@
       = render "dorsale/flyboy/task_comments/list", task: @task
 
     - if @task.description.present?
-      .well = text2html @task.description
+      .panel.panel-default
+        .panel-heading: .panel-title
+          = @task.t(:description)
+        .panel-body
+          = text2html @task.description
 
   = render_contextual

@@ -1,6 +1,7 @@
 fr:
   customer_vault:
     name: "Annuaire"
+    activity: "Activité"
     identity_informations: "Identité"
     contact_informations: "Cordonnées"
     address_informations: "Adresse"
@@ -35,7 +36,6 @@ fr:
       delete_error : "Impossible de supprimer ce lien."
 
   actions:
-    activity: "Activité"
     new_individual: "Nouvel individu"
     new_corporation: "Nouvelle entreprise"
     new_link: "Nouveau lien"
