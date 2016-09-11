@@ -93,8 +93,7 @@ describe Dorsale::Flyboy::Task do
       task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-2, done: true)
       task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-2, done: false)
       tasks = ::Dorsale::Flyboy::Task.delayed
-      expect(tasks).to eq [task_2,task_4]
-      expect(tasks).to_not eq [task, task_1, task_3]
+      expect(tasks).to contain_exactly(task_2, task_4)
     end
   end
   describe ".today" do
@@ -106,8 +105,7 @@ describe Dorsale::Flyboy::Task do
       task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: true)
       task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: false)
       tasks = ::Dorsale::Flyboy::Task.today
-      expect(tasks).to eq [task_2]
-      expect(tasks).to_not eq [task, task_1]
+      expect(tasks).to contain_exactly(task_2)
     end
   end
   describe ".tomorrow" do
@@ -119,8 +117,7 @@ describe Dorsale::Flyboy::Task do
       task_1 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: true)
       task_2 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: false)
       tasks = ::Dorsale::Flyboy::Task.tomorrow
-      expect(tasks).to eq [task_2]
-      expect(tasks).to_not eq [task, task_1]
+      expect(tasks).to contain_exactly(task_2)
     end
   end
   describe ".this_week" do
@@ -135,8 +132,7 @@ describe Dorsale::Flyboy::Task do
         task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+3, done: false)
         task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+5, done: false)
         tasks = ::Dorsale::Flyboy::Task.this_week
-        expect(tasks).to eq [task_2,task_3]
-        expect(tasks).to_not eq [task, task_1, task_4]
+        expect(tasks).to contain_exactly(task_2, task_3)
       end
     end
   end
@@ -152,8 +148,7 @@ describe Dorsale::Flyboy::Task do
         task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+9, done: false)
         task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+12, done: false)
         tasks = ::Dorsale::Flyboy::Task.next_week
-        expect(tasks).to eq [task_2,task_3]
-        expect(tasks).to_not eq [task, task_1, task_4]
+        expect(tasks).to contain_exactly(task_2, task_3)
       end
     end
   end
