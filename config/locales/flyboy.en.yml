@@ -32,9 +32,7 @@ en:
         expire: "expire today, please delay it or close it"
 
   actions:
-    complete: "Complete"
     label: "Actions"
-    search: "Search"
 
     folders:
       new_task: "New task"

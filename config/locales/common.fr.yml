@@ -39,7 +39,7 @@ fr:
     unlock     : "Ouvrir"
     snooze     : "Reporter"
     alert      : "Alerter"
-    complete   : "Terminer"
+    complete   : "Marquer terminé"
     done       : "Terminer"
     download   : "Télécharger"
     upload     : "Envoyer"
