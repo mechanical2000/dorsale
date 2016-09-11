@@ -1,5 +1,10 @@
 en:
-  customer_vault: "Directory"
+  customer_vault:
+    name: "Directory"
+    identity_informations: "Identity informations"
+    contact_informations: "Contact informations"
+    address_informations: "Address informations"
+    additional_informations: "Additional informations"
 
   sections:
     activity: "Activity"

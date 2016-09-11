@@ -146,6 +146,7 @@ fr:
     active                : "Actif ?"
     user                  : "Utilisateur"
     category              : "Catégorie"
+    corporation_name      : "Nom"
 
     # TODO : Move to bakkbone
     administrator         : "Administrateur?"

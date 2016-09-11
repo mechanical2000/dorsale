@@ -1,13 +1,13 @@
 Given(/^an existing corporation with tags hello and world$/) do
-  @corporation1 = FactoryGirl.create(:customer_vault_corporation, tag_list: "hello, world")
+  @corporation1 = create(:customer_vault_corporation, tag_list: "hello, world")
 end
 
 Given(/^an other existing corporation with tags hello and goodbye$/) do
-  @corporation2 = FactoryGirl.create(:customer_vault_corporation, tag_list: "hello, goodbye")
+  @corporation2 = create(:customer_vault_corporation, tag_list: "hello, goodbye")
 end
 
 Given(/^an other existing corporation with tag yeah$/) do
-  @corporation3 = FactoryGirl.create(:customer_vault_corporation, tag_list: "yeah")
+  @corporation3 = create(:customer_vault_corporation, tag_list: "yeah")
 end
 
 When(/^I go the to people list$/) do

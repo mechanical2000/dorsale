@@ -1,5 +1,10 @@
 fr:
-  customer_vault: "Annuaire"
+  customer_vault:
+    name: "Annuaire"
+    identity_informations: "Identité"
+    contact_informations: "Cordonnées"
+    address_informations: "Adresse"
+    additional_informations: "Informations complémentaires"
 
   sections:
     activity: "Activité"

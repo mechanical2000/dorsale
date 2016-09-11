@@ -32,7 +32,7 @@ Given(/^(\d+) existing tasks$/) do |n|
 end
 
 Given(/^a task with an owner that's the term is today$/) do
-  @task = FactoryGirl.create(:flyboy_task,
+  @task = create(:flyboy_task,
     :reminder => Date.yesterday,
     :term     => Time.zone.now.to_date,
     :owner    => create(:user),
@@ -40,7 +40,7 @@ Given(/^a task with an owner that's the term is today$/) do
 end
 
 Given(/^a task without owner$/) do
-  @task = FactoryGirl.create(:flyboy_task,
+  @task = create(:flyboy_task,
     :reminder => Date.yesterday,
     :term     => Time.zone.now.to_date,
     :owner    => nil,
@@ -48,7 +48,7 @@ Given(/^a task without owner$/) do
 end
 
 Given(/^a closed task with an owner$/) do
-  @task = FactoryGirl.create(:flyboy_task,
+  @task = create(:flyboy_task,
     :reminder => Date.yesterday,
     :term     => Time.zone.now.to_date,
     :owner    => create(:user),

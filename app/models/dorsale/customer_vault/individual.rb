@@ -1,7 +1,6 @@
-class Dorsale::CustomerVault::Individual < ActiveRecord::Base
-  self.table_name = "dorsale_customer_vault_individuals"
-  include ::Dorsale::CustomerVault::Person
-  include ::Dorsale::Search
+class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
+  serialize      :data,  Dorsale::CustomerVault::IndividualData
+  def_delegators :data, *Dorsale::CustomerVault::IndividualData.methods_to_delegate
 
   validates :first_name, presence: true
   validates :last_name,  presence: true
@@ -10,4 +9,6 @@ class Dorsale::CustomerVault::Individual < ActiveRecord::Base
     [self.last_name, self.first_name].join(", ")
   end
 
+  private def corporation_name;  raise NoMethodError; end
+  private def corporation_name=; raise NoMethodError; end
 end

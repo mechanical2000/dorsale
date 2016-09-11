@@ -2,12 +2,6 @@
   = horizontal_form_for @user, multipart: true do |f|
     = f.input :email
     = f.input :is_active, as: :boolean, wrapper: :horizontal_radio_and_checkboxes
-    = f.input :avatar, wrapper: :horizontal_form
-
-    .form-group
-      label.col-md-3.control-label
-        = @user.t(:current_avatar)
-      .col-md-9
-        = avatar_img(@user)
+    = render "dorsale/forms/avatar", f: f
 
     = form_buttons obj: @user

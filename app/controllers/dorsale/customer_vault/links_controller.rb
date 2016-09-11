@@ -1,32 +1,16 @@
 class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::ApplicationController
-  before_action :load_linkable, only: [
-    :new,
-    :edit,
-    :create,
-    :update,
-    :destroy
-  ]
+  before_action :set_objects
 
   def new
     authorize @person, :update?
 
-    @link   ||= scope.new
-    @people ||= person_policy_scope
+    @link ||= scope.new
   end
 
   def create
     authorize @person, :update?
 
-    params = link_params
-    bob = params[:bob].split("-")
-
-    @link ||= scope.new(
-      :title      => params[:title],
-      :alice_id   => @person.id,
-      :alice_type => @person.class.to_s,
-      :bob_id     => bob[1],
-      :bob_type   => bob[0],
-    )
+    @link ||= scope.new(link_params_for_create)
 
     if @link.save
       flash[:notice] = t("messages.links.create_ok")
@@ -38,16 +22,12 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
 
   def edit
     authorize @person, :update?
-
-    @link = scope.find(params[:id])
   end
 
   def update
     authorize @person, :update?
 
-    @link = scope.find(params[:id])
-
-    if @link.update(link_params)
+    if @link.update(link_params_for_update)
       flash[:notice] = t("messages.links.update_ok")
       redirect_to back_url
     else
@@ -58,8 +38,6 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   def destroy
     authorize @person, :update?
 
-    @link = scope.find(params[:id])
-
     if @link.destroy
       flash[:notice] = t("messages.links.delete_ok")
     else
@@ -69,7 +47,6 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
     redirect_to back_url
   end
 
-
   private
 
   def model
@@ -77,31 +54,55 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   end
 
   def back_url
-    polymorphic_path(@person) + "#links"
+    customer_vault_person_path(@person) + "#links"
   end
 
   def scope
     policy_scope(model)
   end
 
-  def load_linkable
-    klass = [
-      ::Dorsale::CustomerVault::Individual,
-      ::Dorsale::CustomerVault::Corporation
-    ].detect { |c| params["#{c.name.demodulize.underscore}_id"] }
+  def person_scope
+    policy_scope(::Dorsale::CustomerVault::Person)
+  end
 
-    @person = klass.find(params["#{klass.name.demodulize.underscore}_id"])
+  def set_objects
+    @people ||= person_scope.all
+    @person ||= person_scope.find(params[:person_id])
+
+    if params.key?(:id)
+      @link ||= scope.find(params[:id])
+
+      if @person == @link.alice
+        @link.person       = @link.alice
+        @link.other_person = @link.bob
+      end
+
+      if @person == @link.bob
+        @link.person       = @link.bob
+        @link.other_person = @link.alice
+      end
+    end
   end
 
   def permitted_params
     [
-      :bob,
-      :title
+      :title,
     ]
   end
 
   def link_params
     params.fetch(:link, {}).permit(permitted_params)
+  end
+
+  def link_params_for_create
+    link_params.merge(
+      :alice  => @person,
+      :bob_id => params.dig(:link, :bob_id)
+    )
+  end
+
+  def link_params_for_update
+    link_params
   end
 
 end

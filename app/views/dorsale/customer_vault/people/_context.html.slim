@@ -1,4 +1,33 @@
-- if person.instance_of? ::Dorsale::CustomerVault::Individual
-    = render "dorsale/customer_vault/individuals/context", individual: person
-- if person.instance_of? ::Dorsale::CustomerVault::Corporation
-    = render "dorsale/customer_vault/corporations/context", corporation: person
+- person = person || taskable
+
+.panel.panel-default
+  .panel-heading: .panel-title
+    = icon(:users) if person.corporation?
+    = icon(:user)  if person.individual?
+    = " "
+    = person
+
+  .panel-body
+    p.text-center = avatar_img(person)
+
+    = info person, :tags,     person_tags(person)
+    = info person, :email,    helper: :email_link
+    = info person, :phone,    helper: :tel_link
+    = info person, :mobile,   helper: :tel_link
+    = info person, :fax,      helper: :tel_link
+    = info person, :skype,    helper: :email_link
+    = info person, :www,      helper: :web_link
+    = info person, :twitter,  helper: :web_link
+    = info person, :facebook, helper: :web_link
+    = info person, :linkedin, helper: :web_link
+    = info person, :viadeo,   helper: :web_link
+
+  .panel-footer.text-center
+    - if request.path != dorsale.customer_vault_person_path(person)
+      = read_button dorsale.customer_vault_person_path(person)
+
+    - if policy(person).update? && request.path != dorsale.edit_customer_vault_person_path(person)
+      = update_button dorsale.edit_customer_vault_person_path(person)
+
+    - if policy(person).delete?
+      = delete_button dorsale.customer_vault_person_path(person)

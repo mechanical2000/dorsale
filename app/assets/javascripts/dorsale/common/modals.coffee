@@ -69,8 +69,17 @@ window.modal =
       type: type
       data: data
       dataType: "html"
-      success: (data) ->
-        modal.open(data)
+
+      success: (data, textStatus, xhr) ->
+        contentType = xhr.getResponseHeader("Content-Type")
+
+        if contentType.match(/html/)
+          modal.open(data)
+        else if contentType.match(/javascript/)
+          eval(data)
+        else
+          console.log("Invalid Content-Type " + contentType)
+
       error: ->
         modal.open(modal.i18n.error)
         modal.set_closable()

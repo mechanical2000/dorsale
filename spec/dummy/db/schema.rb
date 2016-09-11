@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701220436) do
+ActiveRecord::Schema.define(version: 20160910164840) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20160701220436) do
     t.string   "author_type"
   end
 
-  create_table "dorsale_customer_vault_corporations", force: :cascade do |t|
+  create_table "dorsale_customer_vault_corporations_bak", force: :cascade do |t|
     t.string   "name"
     t.string   "short_name"
     t.text     "email"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 20160701220436) do
     t.string   "european_union_vat_number"
   end
 
-  create_table "dorsale_customer_vault_individuals", force: :cascade do |t|
+  create_table "dorsale_customer_vault_individuals_bak", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "short_name"
@@ -214,15 +214,34 @@ ActiveRecord::Schema.define(version: 20160701220436) do
   create_table "dorsale_customer_vault_links", force: :cascade do |t|
     t.string   "title"
     t.integer  "alice_id"
-    t.string   "alice_type"
+    t.string   "alice_type_bak"
     t.integer  "bob_id"
-    t.string   "bob_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["alice_id"], name: "index_dorsale_customer_vault_links_on_alice_id"
-    t.index ["alice_type"], name: "index_dorsale_customer_vault_links_on_alice_type"
-    t.index ["bob_id"], name: "index_dorsale_customer_vault_links_on_bob_id"
-    t.index ["bob_type"], name: "index_dorsale_customer_vault_links_on_bob_type"
+    t.string   "bob_type_bak"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "dorsale_customer_vault_people", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "old_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "corporation_name"
+    t.string   "short_name"
+    t.string   "avatar"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "fax"
+    t.string   "skype"
+    t.text     "www"
+    t.text     "twitter"
+    t.text     "facebook"
+    t.text     "linkedin"
+    t.text     "viadeo"
+    t.text     "data"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "dorsale_expense_gun_categories", force: :cascade do |t|
@@ -300,16 +319,23 @@ ActiveRecord::Schema.define(version: 20160701220436) do
 
   create_table "dummy_models", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "string_field"
+    t.text     "text_field"
+    t.integer  "integer_field"
+    t.decimal  "decimal_field"
+    t.date     "date_field"
+    t.datetime "datetime_field"
+    t.boolean  "boolean_field"
   end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.string   "taggable_type"
     t.integer  "taggable_id"
-    t.string   "tagger_type"
+    t.string   "taggable_type"
     t.integer  "tagger_id"
+    t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
