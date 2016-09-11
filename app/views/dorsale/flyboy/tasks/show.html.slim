@@ -1,8 +1,7 @@
 .flyboy
   - content_for :context do
     = render "dorsale/flyboy/tasks/context", task: @task
-
-    = render "#{@task.taskable.class.to_s.tableize}/context", taskable: @task.taskable
+    = render "dorsale/flyboy/tasks/taskable_context", taskable: @task.taskable
 
   - content_for :main do
     .task-comments

@@ -1,13 +1,13 @@
 - person = person || taskable
 
-.panel.panel-default
-  .panel-heading: .panel-title
+.context
+  .context-title
     = icon(:users) if person.corporation?
     = icon(:user)  if person.individual?
     = " "
     = person
 
-  .panel-body
+  .context-body
     p.text-center = avatar_img(person)
 
     = info person, :tags,     person_tags(person)
@@ -22,12 +22,5 @@
     = info person, :linkedin, helper: :web_link
     = info person, :viadeo,   helper: :web_link
 
-  .panel-footer.text-center
-    - if request.path != dorsale.customer_vault_person_path(person)
-      = read_button dorsale.customer_vault_person_path(person)
-
-    - if policy(person).update? && request.path != dorsale.edit_customer_vault_person_path(person)
-      = update_button dorsale.edit_customer_vault_person_path(person)
-
-    - if policy(person).delete?
-      = delete_button dorsale.customer_vault_person_path(person)
+  .context-footer
+    = actions_for(person)

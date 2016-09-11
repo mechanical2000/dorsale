@@ -8,10 +8,10 @@
     tbody
       - if policy(@task).update?
         tr
-          td.task_progress
+          td.task-progress
             = f.input :progress, label: false
 
-          td.description
+          td.task-description
             = f.input :description, label: false
 
           td.actions
@@ -20,10 +20,10 @@
 
       - @task.reload.comments.map do |comment|
         tr
-          td.task_progress
+          td.task-progress
             = progress_bar percentage: comment.progress, label: true
 
-          td.description
+          td.task-description
             p: small
               span.date = l(comment.date)
 

@@ -1,17 +1,13 @@
 .flyboy
-  - content_for :sub_header
-    = render "dorsale/flyboy/filters"
+  .row
+    .col-md-4
+      = search_form
+    .col-md-8
+      .actions.top
+        = download_button url_for(format: :csv), action: :export_csv
+        = download_button url_for(format: :xls), action: :export_xls
+        = download_button url_for(format: :pdf), action: :export_pdf
 
-    .actions.top
-      = download_button url_for(format: :csv), action: :export_csv
-      = download_button url_for(format: :xls), action: :export_xls
-      = download_button url_for(format: :pdf), action: :export_pdf
-
-  = render_contextual
-
-  .actions.top
-    = search_form
-
-
+  = render "dorsale/flyboy/filters"
   = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false
   = paginate @tasks

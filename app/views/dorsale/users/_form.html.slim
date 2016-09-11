@@ -1,7 +1,16 @@
-.well
-  = horizontal_form_for @user, multipart: true do |f|
-    = f.input :email
-    = f.input :is_active, as: :boolean, wrapper: :horizontal_radio_and_checkboxes
-    = render "dorsale/forms/avatar", f: f
+.panel.panel-default
+  .panel-heading: .panel-title
+    - if @user.new_record?
+      = t("actions.new_user")
+    - else
+      = t("actions.update")
+      = " : "
+      = @user
 
-    = form_buttons obj: @user
+  .panel-body
+    = horizontal_form_for @user, multipart: true do |f|
+      = f.input :email
+      = f.input :is_active, as: :boolean, wrapper: :horizontal_radio_and_checkboxes
+      = render "dorsale/forms/avatar", f: f
+
+      = form_buttons obj: @user

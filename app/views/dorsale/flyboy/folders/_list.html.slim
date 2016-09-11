@@ -1,29 +1,32 @@
 table
   thead
     tr
-      th
+      th.folder-name
         = sortable_column Dorsale::Flyboy::Folder.t, column: "name"
-      th.hidden-xs
+
+      th.folder-progress.hidden-xs.hidden-xs
         = sortable_column Dorsale::Flyboy::Folder.t(:progress), column: "progress"
-      th.hidden-xs
+
+      th.folder-status.hidden-xs.hidden-xs
         = sortable_column Dorsale::Flyboy::Folder.t(:status), column: "status"
-      th
+
+      th.actions
         = t("actions.actions")
 
   tbody
     - folders.each do |folder|
       tr.folder class=folder_color(folder)
-        td.name
+        td.folder-name
           - if policy(folder).read?
             = link_to folder.name, dorsale.flyboy_folder_path(folder)
           - else
             = folder.name
 
-        td.folder_progress.hidden-xs
+        td.folder-progress.hidden-xs
           = progress_bar percentage: folder.progress, label: true
 
-        td.status.hidden-xs
-          = t("messages.folders.status.#{folder.status}")
+        td.folder-status.hidden-xs
+          = folder.t("status.#{folder.status}")
 
         td.actions
           - if policy(Dorsale::Flyboy::Task.new(taskable: folder)).create?

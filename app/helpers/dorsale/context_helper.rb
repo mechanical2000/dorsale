@@ -1,23 +1,4 @@
 module Dorsale::ContextHelper
-  def context_icon(id)
-    id = id.to_s.gsub("_", "-")
-    content_tag(:span, class: "icon fa fa-#{id}"){}
-  end
-
-  def context_title(title)
-    content_tag(:h2){ title }
-  end
-
-  def context_info(name, info, br = false)
-    return if info.blank?
-
-    content_tag(:p, class: "infos"){
-      label = content_tag(:strong) { "#{name} :" }
-      sep   = br ? tag(:br) : " "
-      label + sep + info
-    }
-  end
-
   def actions_for(obj, opts={})
     url        = opts[:url]
     edit_url   = opts[:edit_url]
