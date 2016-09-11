@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Dorsale::Flyboy::Task do
   it { is_expected.to belong_to(:taskable) }
