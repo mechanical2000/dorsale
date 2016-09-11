@@ -61,7 +61,7 @@ When(/^I update the expense$/) do
   @expenses_count      = Dorsale::ExpenseGun::Expense.count
   @expense_lines_count = Dorsale::ExpenseGun::ExpenseLine.count
 
-  find("[href$=edit]").click
+  find("#main [href$=edit]").click
 
   fill_in :expense_name, with: "NewExpenseName"
   all(".remove_fields").sample.click
