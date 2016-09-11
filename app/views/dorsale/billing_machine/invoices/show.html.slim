@@ -1,5 +1,5 @@
 .billing_machine
-  .actions
+  .actions.top
     - if policy(@invoice).update?
       = update_button dorsale.edit_billing_machine_invoice_path(@invoice)
 
@@ -14,5 +14,7 @@
 
     - if policy(@invoice).email?
       = dorsale_button dorsale.email_billing_machine_invoice_path(@invoice), icon: :send, action: :email
+
+  hr
 
   = render "dorsale/billing_machine/invoices/details", document: @invoice

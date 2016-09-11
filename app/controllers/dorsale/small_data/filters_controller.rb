@@ -29,8 +29,7 @@ class Dorsale::SmallData::FiltersController < ::Dorsale::ApplicationController
     url = [
       params[:form_url],
       request.referer,
-      (main_app.root_path rescue nil),
-      "/",
+      (main_app.root_path rescue "/"),
     ].select(&:present?).first
 
     # Delete page page

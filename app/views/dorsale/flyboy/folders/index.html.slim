@@ -1,12 +1,22 @@
 .flyboy
-  .row
-    .col-md-4
-      = search_form
-    .col-md-8
-      .actions.top
-        = create_button dorsale.new_flyboy_folder_path
+  - content_for :title
+    = icon(:tasks)
+    = " "
+    = ::Dorsale::Flyboy::Folder.ts
 
+  - content_for :filters
+    = render "dorsale/flyboy/filters"
 
-  = render "dorsale/flyboy/filters"
-  = render "dorsale/flyboy/folders/list", folders: @folders
-  = paginate @folders
+  - content_for :search
+    = search_form
+
+  - content_for :actions
+    = create_button dorsale.new_flyboy_folder_path
+
+  - content_for :table
+    = render "dorsale/flyboy/folders/list", folders: @folders
+
+  - content_for :pagination
+    = paginate @folders
+
+  = render_dorsale_index

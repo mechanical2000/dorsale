@@ -19,4 +19,8 @@ module Dorsale::ContextHelper
   def render_contextual
     render "dorsale/contextual"
   end
+
+  def render_dorsale_index
+    render "dorsale/index"
+  end
 end
