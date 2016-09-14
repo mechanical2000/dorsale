@@ -16,3 +16,17 @@ form
 
 .btn + .btn
   margin-left: 0.5em
+
+.textarea-input-group
+  @extend .input-group
+
+  .input-group-addon
+    background: $btn-success-bg
+    overflow: auto
+
+    &:hover
+      @extend .btn-success:hover
+
+    input
+      color: $btn-success-color
+      line-height: 4em
