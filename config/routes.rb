@@ -87,9 +87,6 @@ Dorsale::Engine.routes.draw do
       end
     end
 
-    get "/expenses/state/:state" => "expenses#index"
-    get "/expenses/state/:state/page/:page" => "expenses#index"
-
     get "/" => redirect{ ExpenseGun::Engine.routes.url_helpers.expenses_path }
   end
 end
