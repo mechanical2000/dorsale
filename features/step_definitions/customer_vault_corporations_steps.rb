@@ -67,14 +67,41 @@ When(/^I go on the activity section$/) do
 end
 
 When(/^I add a comment$/) do
-  fill_in "comment_text", with: "Hello"
+  @comments_count = Dorsale::Comment.count
+  fill_in "comment_text", with: "MyNewComment"
   find("[type=submit]").click
 end
 
-Then(/^the comment is saved$/) do
-  expect(@corporation.comments.count).to eq 1
-  find("a[href$=activity]").click
-  expect(page).to have_content "Hello"
+Then(/^I see my new comment$/) do
+  expect(Dorsale::Comment.count).to eq(@comments_count + 1)
+
+  expect(find(".comment p.text")).to have_content "MyNewComment"
+end
+
+Given(/^an existing comment on this corporation$/) do
+  @comment = create(:dorsale_comment, commentable: @corporation)
+end
+
+When(/^I update the comment$/) do
+  find(".comment [href*=edit]").click
+  within "form[id*=edit]" do
+    fill_in :comment_text, with: "MyUpdatedComment"
+    find("[type=submit]").click
+  end
+end
+
+Then(/^I see my updated comment$/) do
+  expect(find(".comment p.text")).to have_content "MyUpdatedComment"
+end
+
+When(/^I delete the comment$/) do
+  @comments_count = Dorsale::Comment.count
+  find(".comment [data-method*=delete]").click
+end
+
+Then(/^I see do not see my comment$/) do
+  expect(Dorsale::Comment.count).to eq(@comments_count - 1)
+  expect(page).to_not have_content @comment.text
 end
 
 Given(/^an existing individual with recent comments$/) do

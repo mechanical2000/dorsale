@@ -17,6 +17,7 @@
   - Add avatar and other new fields
 - Refactoring
 - UX improvements
+- Use ajax to CRUD comments
 
 ## 3.0.3
 
