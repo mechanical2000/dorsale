@@ -8,7 +8,6 @@ window.dorsaleComments =
         url: url
         success: (data) ->
           container.html(data)
-          setupUploadInputs(container)
           dorsaleComments.setupCreateForm()
           dorsaleComments.setupEditButtons()
           dorsaleComments.setupDeleteButtons()
@@ -36,5 +35,4 @@ window.dorsaleComments =
       return false
 
   setupDeleteButtons: ->
-    $("#dorsale-comments [data-method=delete]").map ->
-      $(this).on("ajax:success", dorsaleComments.reload)
+    $("#dorsale-comments [data-method=delete]").on("ajax:success", dorsaleComments.reload)
