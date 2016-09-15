@@ -46,7 +46,6 @@ Feature: Manage corporations
   Scenario: Add a comment to a corporation
     Given an existing corporation
     When I go on this corporation
-    And I go on the activity section
     And I add a comment
     Then I am on the corporation page
     And I see my new comment
@@ -55,7 +54,6 @@ Feature: Manage corporations
     Given an existing corporation
     And an existing comment on this corporation
     When I go on this corporation
-    And I go on the activity section
     And I update the comment
     Then I am on the corporation page
     And I see my updated comment
@@ -64,7 +62,6 @@ Feature: Manage corporations
     Given an existing corporation
     And an existing comment on this corporation
     When I go on this corporation
-    And I go on the activity section
     And I delete the comment
     Then I am on the corporation page
     And I see do not see my comment

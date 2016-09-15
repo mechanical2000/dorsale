@@ -10,7 +10,9 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   def index
     @comment     = scope.new(comment_params_for_create)
     @commentable = @comment.commentable
-    @comments    = scope.where(commentable: @commentable)
+    @comments    = scope
+      .where(commentable: @commentable)
+      .preload(:commentable, :author)
 
     authorize @commentable, :read?
   end

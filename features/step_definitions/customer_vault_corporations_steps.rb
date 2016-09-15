@@ -36,7 +36,7 @@ When(/^I validate the new corporation$/) do
 end
 
 When(/^I go on the corporate index$/) do
-  visit dorsale.customer_vault_people_list_path
+  visit dorsale.customer_vault_people_path
 end
 
 When(/^he go on the next page$/) do
@@ -60,10 +60,6 @@ end
 
 When(/^I go on this corporation$/) do
   visit dorsale.customer_vault_corporation_path(@corporation)
-end
-
-When(/^I go on the activity section$/) do
-  find("a[href$=activity]").click
 end
 
 When(/^I add a comment$/) do

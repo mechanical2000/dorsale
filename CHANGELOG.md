@@ -15,6 +15,7 @@
 - CustomerVault
   - Corporation and Individual merged into STI model
   - Add avatar and other new fields
+  - Add Corporations and Individuals lists
 - Refactoring
 - UX improvements
 - Use ajax to CRUD comments
