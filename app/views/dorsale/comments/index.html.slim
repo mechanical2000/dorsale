@@ -1,6 +1,6 @@
 = render "dorsale/flash"
 
-- if policy(::Dorsale::Comment).create?
+- if policy(@comment).create?
   = render "dorsale/comments/form", commentable: @commentable
 
 = render "dorsale/comments/list", comments: @comments
