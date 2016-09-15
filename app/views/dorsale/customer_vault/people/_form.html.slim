@@ -1,7 +1,4 @@
 = horizontal_form_for @person, as: :person, multipart: true do |f|
-  - if params[:type].present?
-    input type="hidden" name="type" value=params[:type]
-
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.identity_informations")
     .panel-body
