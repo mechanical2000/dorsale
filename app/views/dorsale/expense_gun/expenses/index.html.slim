@@ -2,13 +2,14 @@
   - content_for :title
     = icon(:euro)
     = " "
-    = Dorsale::ExpenseGun::Expense.ts
+    = ::Dorsale::ExpenseGun::Expense.ts
 
   - content_for :pagination
     = paginate @expenses
 
   - content_for :actions
-    = create_button dorsale.new_expense_gun_expense_path, text: t("expense_gun.expense.actions.create")
+    - if policy(::Dorsale::ExpenseGun::Expense).create?
+      = create_button dorsale.new_expense_gun_expense_path, text: t("expense_gun.expense.actions.create")
 
   - content_for :filters
     = render "dorsale/expense_gun/expenses/filters"
