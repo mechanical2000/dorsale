@@ -47,8 +47,13 @@ fr:
         one: "Tâche"
         other: "Tâches"
 
+      dorsale/flyboy/task_comment:
+        one: "Commentaire de tâche"
+        other: "Commentaires de tâche"
+
     attributes:
       dorsale/flyboy/folder:
+        folderable: "Origine"
         name: "Titre"
         status: "Status"
         description: "Description"
@@ -79,3 +84,4 @@ fr:
       dorsale/flyboy/task_comment:
         progress: "Progression"
         description: "Description"
+        task: "Tâche"
