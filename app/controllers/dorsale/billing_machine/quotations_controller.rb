@@ -14,10 +14,8 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
     @quotations ||= scope.all
     @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
-    @order      ||= {unique_index: :desc}
 
     @quotations = @filters.apply(@quotations)
-    @quotations = @quotations.order(@order)
     @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
     @quotations = @quotations.page(params[:page]).per(50)
 
