@@ -150,6 +150,10 @@ en:
     commentable           : "Origin"
     addressable           : "Origin"
     attachable            : "Origin"
+    email_subject         : "Subject"
+    email_to              : "Recipient"
+    email_attachment      : "Attachment"
+    email_body            : "Message"
 
   errors:
     messages:

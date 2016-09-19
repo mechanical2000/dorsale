@@ -161,6 +161,10 @@ fr:
     commentable           : "Origine"
     addressable           : "Origine"
     attachable            : "Origine"
+    email_subject         : "Object"
+    email_to              : "Destinataire"
+    email_attachment      : "Pièce jointe"
+    email_body            : "Message"
 
     # TODO : Move to bakkbone
     administrator         : "Administrateur?"
