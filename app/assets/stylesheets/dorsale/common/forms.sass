@@ -19,14 +19,14 @@ form
 
 .textarea-input-group
   @extend .input-group
+  display: flex
 
-  .input-group-addon
+  button, input
+    @extend .input-group-addon
+    @extend .btn-success
     background: $btn-success-bg
-    overflow: auto
+    color: $btn-success-color
+    width: auto
 
     &:hover
       @extend .btn-success:hover
-
-    input
-      color: $btn-success-color
-      line-height: 4em
