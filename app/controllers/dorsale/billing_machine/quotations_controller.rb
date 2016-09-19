@@ -19,23 +19,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     @quotations_without_pagination = @quotations # All filtered quotations (not paginated)
     @quotations = @quotations.page(params[:page]).per(50)
 
-    @total_excluding_taxes = @quotations_without_pagination.to_a
-      .select{ |q| q.state != "canceled" }
-      .map(&:total_excluding_taxes)
-      .delete_if(&:blank?)
-      .sum
-
-    @vat_amount = @quotations_without_pagination.to_a
-      .select{ |q| q.state != "canceled" }
-      .map(&:vat_amount)
-      .delete_if(&:blank?)
-      .sum
-
-    @total_including_taxes = @quotations_without_pagination.to_a
-      .select{ |q| q.state != "canceled" }
-      .map(&:total_including_taxes)
-      .delete_if(&:blank?)
-      .sum
+    @statistics = ::Dorsale::BillingMachine::Invoice::Statistics.new(@quotations_without_pagination)
   end
 
   def new
