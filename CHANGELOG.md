@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1
+
+- Minor fixes
+
 ## 3.1.0
 
 - Migrate from CanCan to Pundit
