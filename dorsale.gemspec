@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/agilidee/dorsale"
   s.summary     = "Modular ERP made with Ruby on Rails"
   s.description = "Run your own business."
-  s.test_files = Dir["spec/**/*"]
+  s.test_files  = Dir["{spec,features}/**/*"].reject { |f| f.include?("/dummy") }
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.md", "Rakefile", "README.md", "CHANGELOG.md"]
 

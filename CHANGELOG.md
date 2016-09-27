@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.2
+
+- Fix gemspec test files
+
 ## 3.1.1
 
 - Minor fixes
