@@ -16,6 +16,13 @@ Feature: Manage corporations
     Then the corporation is created
     And I am on the corporation page
 
+  Scenario: Delete a corporation
+    Given an existing corporation
+    When I go on this corporation
+    And I delete this corporation
+    Then the corporation is deleted
+    And I am on the people page
+
   Scenario: Add tags
     Given an existing corporation
     When I edit this corporation

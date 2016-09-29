@@ -1,7 +1,13 @@
 .customer_vault
-  .panel.panel-default: .panel-heading: .panel-title
-    = t("actions.update")
-    = " : "
-    = @person
+  - content_for :context
+    = render "dorsale/customer_vault/people/context", person: @person
 
-  = render "dorsale/customer_vault/people/form"
+  - content_for :main
+    .panel.panel-default: .panel-heading: .panel-title
+      = t("actions.update")
+      = " : "
+      = @person
+
+    = render "dorsale/customer_vault/people/form"
+
+  = render_contextual

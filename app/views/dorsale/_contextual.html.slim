@@ -1,5 +1,11 @@
-.row
-  aside#context.col-sm-4.col-xs-12
-    = yield :context
-  #context-main.col-sm-8.col-xs-12
-    = yield :main
+- if content_for?(:context) && content_for?(:main)
+  .row
+    aside#context.col-sm-4.col-xs-12
+      = yield :context
+    #context-main.col-sm-8.col-xs-12
+      = yield :main
+
+- elsif content_for?(:main)
+  .row
+    #context-main.col-sm-8.col-sm-offset-2.col-xs-12
+      = yield :main

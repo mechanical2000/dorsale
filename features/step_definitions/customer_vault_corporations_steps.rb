@@ -197,3 +197,18 @@ end
 Then(/^I am on the corporation page$/) do
   wait_for { current_path }.to eq dorsale.customer_vault_corporation_path(@corporation)
 end
+
+When(/^I delete this corporation$/) do
+  @corporations_count = ::Dorsale::CustomerVault::Corporation.count
+
+  find(".context [href$=edit]").click
+  find(".context [data-method=delete]").click
+end
+
+Then(/^the corporation is deleted$/) do
+  expect(::Dorsale::CustomerVault::Corporation.count).to eq (@corporations_count - 1)
+end
+
+Then(/^I am on the people page$/) do
+  expect(current_path).to eq dorsale.customer_vault_people_path
+end
