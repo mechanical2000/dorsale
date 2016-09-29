@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.3
+
+- Fix delete people
+
 ## 3.1.2
 
 - Fix gemspec test files
