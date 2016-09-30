@@ -62,6 +62,4 @@
   hr
 
   .attachments-panel.hidden-print
-    = panel title: @expense.t(:documents)
-      .panel-body
-        = attachments_for @expense
+    = attachments_for(@expense)

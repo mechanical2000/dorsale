@@ -1,6 +1,13 @@
-= render "dorsale/flash"
+#alexandrie-list.panel.panel-default
+  .panel-heading: .panel-title = ::Dorsale::Alexandrie::Attachment.ts
 
-- if policy(::Dorsale::Alexandrie::Attachment).create?
-  = render "dorsale/alexandrie/attachments/form", attachable: @attachable
+  table: tbody
+    - if flash.any?
+      tr#alexandrie-flash: td colspan=3
+        = render "dorsale/flash"
 
-= render "dorsale/alexandrie/attachments/list", attachable: @attachable
+
+    - if policy(::Dorsale::Alexandrie::Attachment).create?
+      = render "dorsale/alexandrie/attachments/new", attachable: @attachable
+
+    = render "dorsale/alexandrie/attachments/list", attachable: @attachable

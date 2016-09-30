@@ -30,6 +30,8 @@ window.alexandrie =
       xhr  = new XMLHttpRequest()
       data = new FormData(this)
 
+      data.append "attachment[attachment_type_id]", $("#attachment_attachment_type_id").val()
+
       xhr.upload.addEventListener "progress", (e) ->
         return unless e.lengthComputable
 
@@ -37,7 +39,7 @@ window.alexandrie =
         percentComplete = 1  if percentComplete == 0
         percentComplete = 99 if percentComplete == 100
 
-        bar = form.find(".progress-bar")
+        bar = $("#new_attachment_progress .progress-bar")
         bar.html percentComplete+"%"
         bar.css  "width":         percentComplete+"%"
         bar.attr "aria-valuenow": percentComplete
@@ -54,15 +56,19 @@ window.alexandrie =
   setupEditForm: ->
     $("#edit_attachment").on("ajax:success", alexandrie.reload)
 
+    $("#edit_attachment").on "ajax:beforeSend", (event, xhr, settings) ->
+      settings.data = $("#edit_attachment_tr :input").serialize()
+      true
+
   setupEditButtons: ->
     $("#dorsale-attachments [href$=edit]").click ->
-      container = $(this).parents("li")
+      container = $(this).parents(".attachment")
       url       = this.href
 
       $.ajax
         url: url
         success: (data) ->
-          container.html(data)
+          container.replaceWith(data)
           alexandrie.setupEditForm()
 
       return false

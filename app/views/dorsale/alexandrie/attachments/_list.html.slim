@@ -1,13 +1,15 @@
-ul.list-group.attachments
-  - ::Dorsale::Alexandrie::Attachment.where(attachable: attachable).each do |a|
-    li.list-group-item.attachment
+- ::Dorsale::Alexandrie::Attachment.where(attachable: attachable).each do |a|
+  tr.attachment
+    td.attachment-name
       = link_to a, a.file.url, download: a.download_filename
 
-      .pull-right
-        - if policy(a).update?
-          = update_button dorsale.edit_alexandrie_attachment_path(a), action: :rename
+    td.attachment-attachment_type.hidden-xs.hidden-sm
+      - if a.attachment_type
+        .label.label-info = a.attachment_type
 
-        = " "
+    td.attachment-actions
+      - if policy(a).update?
+        = update_button dorsale.edit_alexandrie_attachment_path(a), action: :rename
 
-        - if policy(a).delete?
-          = delete_button dorsale.alexandrie_attachment_path(a), remote: true
+      - if policy(a).delete?
+        = delete_button dorsale.alexandrie_attachment_path(a), remote: true

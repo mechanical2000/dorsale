@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910164840) do
+ActiveRecord::Schema.define(version: 20160930073538) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(version: 20160910164840) do
     t.string   "addressable_type"
   end
 
+  create_table "dorsale_alexandrie_attachment_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dorsale_alexandrie_attachments", force: :cascade do |t|
     t.integer  "attachable_id"
     t.string   "attachable_type"
@@ -48,6 +54,8 @@ ActiveRecord::Schema.define(version: 20160910164840) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "attachment_type_id"
+    t.index ["attachment_type_id"], name: "index_dorsale_alexandrie_attachments_on_attachment_type_id"
   end
 
   create_table "dorsale_billing_machine_id_cards", force: :cascade do |t|
