@@ -134,21 +134,18 @@ Feature: Quotation Management
     And 2 associated documents to this quotation
     When the user goes to the quotation details
     And he delete a document
-    Then a message signals the success of the quotation update
     And the document is not in the quotation details
 
   Scenario: Create a document
     And an existing quotation
     When the user goes to the quotation details
     And he add a new document
-    Then a message signals the success of the quotation update
     And the document is in the quotation details
 
   Scenario: Update a document
     And an existing quotation
     When the user goes to the quotation details
     And he add a new document
-    Then a message signals the success of the quotation update
     And the document is in the quotation details
     When he update the document
     Then the document is updated

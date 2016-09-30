@@ -138,6 +138,4 @@
 
 - if document_type == :quotation
   .attachments-panel
-    = panel title: document.t(:documents)
-      .panel-body
-        = attachments_for document
+    = attachments_for(document)

@@ -3,10 +3,12 @@ require "rails_helper"
 describe ::Dorsale::Alexandrie::Attachment, type: :model do
   it { is_expected.to belong_to :attachable }
   it { is_expected.to belong_to :sender }
+  it { is_expected.to belong_to :attachment_type }
 
   it { is_expected.to validate_presence_of :attachable }
   it { is_expected.to validate_presence_of :file }
 
+  it { is_expected.to_not validate_presence_of :attachment_type }
   it { is_expected.to_not validate_presence_of :sender }
 
   it "factory should be valid" do

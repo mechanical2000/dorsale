@@ -7,6 +7,7 @@ class Dorsale::PolicyChecker
     errors.clear
 
     check_policy! "Dorsale::Alexandrie::AttachmentPolicy"
+    check_policy! "Dorsale::Alexandrie::AttachmentTypePolicy"
     check_policy! "Dorsale::BillingMachine::IdCardPolicy"
     check_policy! "Dorsale::BillingMachine::InvoicePolicy"
     check_policy! "Dorsale::BillingMachine::PaymentTermPolicy"

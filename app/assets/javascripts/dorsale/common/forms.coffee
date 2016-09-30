@@ -1,12 +1,12 @@
 # Fake file input (bootstrap style)s
 window.setupUploadInputs = (scope = document) ->
-  $(scope).find(".form-group.upload").map ->
-    group    = $(this)
-    form     = group.parents("form")
-    input    = group.find("[type=file]")
-    submit   = group.find("[type=submit]")
-    label    = group.find("label")
-    progress = group.find(".progress")
+  $(scope).find(".form-control.upload").map ->
+    container = $(this)
+    form      = container.parents("form")
+    input     = container.find("[type=file]")
+    submit    = container.find("[type=submit]")
+    label     = container.find("label")
+    progress  = container.parents("form").find(".progress")
 
     progress.hide() if not xhr2_available()
 

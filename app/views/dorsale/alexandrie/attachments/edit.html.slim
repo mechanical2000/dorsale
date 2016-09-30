@@ -1,6 +1,13 @@
-= form_for(@attachment, as: :attachment, remote: true) do |f|
-  .input-group
-    = f.text_field :name, class: "form-control input-sm"
-    span.input-group-btn
-      button.btn.btn-success.btn-sm type="submit"
+tr#edit_attachment_tr
+  td.attachment-name
+    = text_field :attachment, :name, class: "form-control input-sm"
+
+  td.attachment-attachment_type.hidden-xs.hidden-sm
+    - if @attachment_types.to_a.any?
+      = collection_select :attachment, :attachment_type_id, @attachment_types, :id, :to_s, {include_blank: true}, {class: "form-control input-sm"}
+
+  td.attachment-actions
+    = form_for(@attachment, as: :attachment, remote: true) do |f|
+      = hidden_field_tag :authenticity_token, form_authenticity_token
+      button.btn.btn-success.btn-sm.btn-block type="submit"
         = t("actions.save")

@@ -4,6 +4,8 @@ class Dorsale::Alexandrie::Attachment < ActiveRecord::Base
   belongs_to :attachable, polymorphic: true
   belongs_to :sender,     polymorphic: true
 
+  belongs_to :attachment_type, required: false
+
   validates :attachable, presence: true
   validates :file,       presence: true
 

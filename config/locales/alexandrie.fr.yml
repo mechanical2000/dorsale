@@ -21,8 +21,15 @@ fr:
     create_ok : "La Paiement a été créé."
     update_ok : "La Paiement a été modifié."
 
+  attributes:
+    attachment_type: "Type de document"
+
   activerecord:
     models:
       dorsale/alexandrie/attachment:
         one: "Document"
         other: "Documents"
+
+      dorsale/alexandrie/attachment_type:
+        one: "Type de document"
+        other: "Types de document"

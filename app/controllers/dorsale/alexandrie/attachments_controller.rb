@@ -7,6 +7,8 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     :destroy,
   ]
 
+  before_action :set_attachment_types
+
   def index
     @attachable = find_attachable
     skip_policy_scope
@@ -20,7 +22,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :create?
 
     if @attachment.save
-      flash[:notice] = t("messages.attachments.create_ok")
+      # flash[:notice] = t("messages.attachments.create_ok")
     else
       flash[:alert] = t("messages.attachments.create_error")
     end
@@ -36,7 +38,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :update?
 
     if @attachment.update(attachment_params_for_update)
-      flash[:notice] = t("messages.attachments.update_ok")
+      # flash[:notice] = t("messages.attachments.update_ok")
     else
       flash[:alert] = t("messages.attachments.update_error")
     end
@@ -48,7 +50,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :delete?
 
     if @attachment.destroy
-      flash[:notice] = t("messages.attachments.delete_ok")
+      # flash[:notice] = t("messages.attachments.delete_ok")
     else
       flash[:alert] = t("messages.attachments.delete_error")
     end
@@ -70,6 +72,10 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     @attachment = scope.find(params[:id])
   end
 
+  def set_attachment_types
+    @attachment_types = policy_scope(::Dorsale::Alexandrie::AttachmentType).all
+  end
+
   def attachable_type
     params[:attachable_type] || @attachment.attachable_type
   end
@@ -89,7 +95,8 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
       :attachable_id,
       :attachable_type,
       :file,
-      :name
+      :name,
+      :attachment_type_id,
     ]
   end
 
@@ -103,12 +110,13 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   def permitted_params_for_update
     [
       :name,
+      :attachment_type_id,
     ]
   end
 
   def attachment_params_for_update
     params
-      .require(:attachment)
+      .fetch(:attachment, {})
       .permit(permitted_params_for_update)
   end
 
