@@ -1,0 +1,23 @@
+tr#new_attachment_tr
+  td.attachment-name
+    input(
+      value    = t("actions.browse")
+      disabled = "disabled"
+      class    = "form-control input-sm"
+    )
+
+  td.attachment-attachment_type.hidden-xs.hidden-sm
+    select(
+      disabled = "disabled"
+      class    = "form-control input-sm"
+    )
+
+  td.attachment-actions
+    button(
+      class    = "btn btn-success btn-sm btn-block"
+      type     = "button"
+      disabled = "disabled"
+    )
+      = t("actions.upload")
+
+= render "dorsale/alexandrie/attachments/progress_bar"

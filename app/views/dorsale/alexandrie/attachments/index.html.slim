@@ -1,13 +1,24 @@
-#alexandrie-list.panel.panel-default
+.panel.panel-default
   .panel-heading: .panel-title = ::Dorsale::Alexandrie::Attachment.ts
 
-  table: tbody
-    - if flash.any?
-      tr#alexandrie-flash: td colspan=3
-        = render "dorsale/flash"
+  = form_for(@attachment, as: :attachment, remote: true) do |f|
+    = hidden_field_tag :authenticity_token, form_authenticity_token
+
+    table: tbody
+      - if flash.any?
+        tr#alexandrie-flash: td colspan=3
+          = render "dorsale/flash"
 
 
-    - if policy(::Dorsale::Alexandrie::Attachment).create?
-      = render "dorsale/alexandrie/attachments/new", attachable: @attachable
+      - if policy(::Dorsale::Alexandrie::Attachment).create?
+        / Create only on index
+        - if params[:action] == "index"
+          = render "dorsale/alexandrie/attachments/new", attachable: @attachable
+        - else
+          = render "dorsale/alexandrie/attachments/new_disabled"
 
-    = render "dorsale/alexandrie/attachments/list", attachable: @attachable
+      - ::Dorsale::Alexandrie::Attachment.where(attachable: @attachable).each do |attachment|
+        - if request.path == url_for(action: :edit, id: attachment)
+          = render "dorsale/alexandrie/attachments/edit", attachment: attachment
+        - else
+          = render "dorsale/alexandrie/attachments/attachment", attachment: attachment

@@ -7,7 +7,5 @@ tr#edit_attachment_tr
       = collection_select :attachment, :attachment_type_id, @attachment_types, :id, :to_s, {include_blank: true}, {class: "form-control input-sm"}
 
   td.attachment-actions
-    = form_for(@attachment, as: :attachment, remote: true) do |f|
-      = hidden_field_tag :authenticity_token, form_authenticity_token
-      button.btn.btn-success.btn-sm.btn-block type="submit"
-        = t("actions.save")
+    button.btn.btn-success.btn-sm.btn-block type="submit"
+      = t("actions.save")

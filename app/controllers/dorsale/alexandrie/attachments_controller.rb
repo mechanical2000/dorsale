@@ -14,6 +14,8 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     skip_policy_scope
 
     authorize @attachable, :read?
+
+    @attachment = scope.new(attachment_params_for_create)
   end
 
   def create
@@ -32,6 +34,10 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
   def edit
     authorize @attachment, :update?
+
+    @attachable = @attachment.attachable
+
+    render :index
   end
 
   def update
@@ -90,28 +96,30 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     raise ActiveRecord::RecordNotFound
   end
 
-  def permitted_params_for_create
+  def common_permitted_params
     [
+      :name,
+      :attachment_type_id
+    ]
+  end
+
+  def permitted_params_for_create
+    common_permitted_params + [
       :attachable_id,
       :attachable_type,
       :file,
-      :name,
-      :attachment_type_id,
     ]
   end
 
   def attachment_params_for_create
     params
-      .require(:attachment)
+      .fetch(:attachment, {})
       .permit(permitted_params_for_create)
       .merge(sender: current_user)
   end
 
   def permitted_params_for_update
-    [
-      :name,
-      :attachment_type_id,
-    ]
+    common_permitted_params
   end
 
   def attachment_params_for_update
