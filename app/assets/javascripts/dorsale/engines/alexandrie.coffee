@@ -66,7 +66,8 @@ window.alexandrie =
         percentComplete = 99 if percentComplete == 100
 
         # Get edit progress bar if available, new progress bar otherwise
-        bar = $("#edit_attachment_tr + tr .progress-bar, #new_attachment_tr + tr .progress-bar").first()
+        bar = $("#edit_attachment_tr + tr .progress-bar").first()
+        bar = $("#new_attachment_tr + tr .progress-bar").first() if bar.length == 0
         bar.html percentComplete+"%"
         bar.css  "width":         percentComplete+"%"
         bar.attr "aria-valuenow": percentComplete
