@@ -1,12 +1,12 @@
-# Fake file input (bootstrap style)s
+# Fake file input (bootstrap style)
 window.setupUploadInputs = (scope = document) ->
   $(scope).find(".form-control.upload").map ->
     container = $(this)
     form      = container.parents("form")
     input     = container.find("[type=file]")
-    submit    = container.find("[type=submit]")
     label     = container.find("label")
-    progress  = container.parents("form").find(".progress")
+    submit    = form.find("[type=submit]")
+    progress  = form.find(".progress")
 
     progress.hide() if not xhr2_available()
 
@@ -15,7 +15,7 @@ window.setupUploadInputs = (scope = document) ->
 
     input.change ->
       if this.value == ""
-        submit.prop(disabled: true)
+        submit.prop(disabled: true) if input.hasClass("required")
         label_value = label.data("defaultValue")
       else
         submit.prop(disabled: false)

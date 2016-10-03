@@ -14,18 +14,46 @@ window.alexandrie =
         success: (data) ->
           container.html(data)
           setupUploadInputs(container)
-          alexandrie.setupCreateForm()
-          alexandrie.setupEditButtons()
-          alexandrie.setupDeleteButtons()
+          alexandrie.setup()
 
   reload: ->
     alexandrie.load()
 
-  setupCreateForm: ->
+  setup: ->
+    alexandrie.setupForms()
+    alexandrie.setupFormsProgress()
+    alexandrie.setupEditButtons()
+    alexandrie.setupDeleteButtons()
+
+  setupForms: ->
+    $("#dorsale-attachments form").on("ajax:success", alexandrie.reload)
+
+  setupEditButtons: ->
+    $("#dorsale-attachments [href$=edit]").click ->
+      container = $("#dorsale-attachments")
+      url       = this.href
+
+      $.ajax
+        url: url
+        success: (data) ->
+          container.html(data)
+          setupUploadInputs(container)
+          alexandrie.setup()
+
+      return false
+
+  setupDeleteButtons: ->
+    $("#dorsale-attachments [data-method=delete]").map ->
+      $(this).on("ajax:success", alexandrie.reload)
+
+  setupFormsProgress: ->
     return unless xhr2_available()
     return unless alexandrie.enable_xhr_upload
 
-    $("#new_attachment").submit ->
+    # Ignore progress if no file input
+    return unless $("#dorsale-attachments form input[type=file]").length
+
+    $("#dorsale-attachments form").submit ->
       form = $(this)
       xhr  = new XMLHttpRequest()
       data = new FormData(this)
@@ -37,7 +65,8 @@ window.alexandrie =
         percentComplete = 1  if percentComplete == 0
         percentComplete = 99 if percentComplete == 100
 
-        bar = $("#new_attachment_progress .progress-bar")
+        # Get edit progress bar if available, new progress bar otherwise
+        bar = $("#edit_attachment_tr + tr .progress-bar, #new_attachment_tr + tr .progress-bar").first()
         bar.html percentComplete+"%"
         bar.css  "width":         percentComplete+"%"
         bar.attr "aria-valuenow": percentComplete
@@ -50,25 +79,3 @@ window.alexandrie =
       xhr.send(data)
 
       return false
-
-  setupEditForm: ->
-    $("#edit_attachment").on("ajax:success", alexandrie.reload)
-
-  setupEditButtons: ->
-    $("#dorsale-attachments [href$=edit]").click ->
-      container = $("#dorsale-attachments")
-      url       = this.href
-
-      $.ajax
-        url: url
-        success: (data) ->
-          container.html(data)
-          alexandrie.setupEditForm()
-          alexandrie.setupEditButtons()
-          alexandrie.setupDeleteButtons()
-
-      return false
-
-  setupDeleteButtons: ->
-    $("#dorsale-attachments [data-method=delete]").map ->
-      $(this).on("ajax:success", alexandrie.reload)

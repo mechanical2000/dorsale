@@ -1,17 +1,16 @@
 tr#new_attachment_tr
-  td.attachment-name
-    = hidden_field :attachment, :attachable_id,   value: attachable.id.to_s
-    = hidden_field :attachment, :attachable_type, value: attachable.class.to_s
-
+  td.attachment-file
     .form-control.input-sm.upload
-      = file_field :attachment, :file
-      label.nostyle = t("actions.browse")
+      = file_field :attachment, :file, {class: "required"}
+      label for="attachment_file" = t("actions.browse")
 
   td.attachment-attachment_type.hidden-xs.hidden-sm
     - if @attachment_types.to_a.any?
       = collection_select :attachment, :attachment_type_id, @attachment_types, :id, :to_s, {include_blank: true}, {class: "form-control input-sm"}
 
   td.attachment-actions
+    = hidden_field :attachment, :attachable_id,   value: attachable.id.to_s
+    = hidden_field :attachment, :attachable_type, value: attachable.class.to_s
     button.btn.btn-success.btn-sm.btn-block type="submit"
       = t("actions.upload")
 

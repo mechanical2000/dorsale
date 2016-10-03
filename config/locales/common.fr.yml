@@ -57,7 +57,7 @@ fr:
     logout     : "Se déconnecter"
     sign_up    : "S'enregistrer"
     signup     : "S'enregistrer"
-    browse     : "Parcourir"
+    browse     : "Sélectionner le fichier..."
     cut        : "Couper"
     copy       : "Copier"
     paste      : "Coller"

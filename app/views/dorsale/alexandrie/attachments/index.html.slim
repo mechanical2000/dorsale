@@ -1,22 +1,24 @@
+= render "dorsale/flash"
+
 .panel.panel-default
   .panel-heading: .panel-title = ::Dorsale::Alexandrie::Attachment.ts
 
   = form_for(@attachment, as: :attachment, remote: true) do |f|
     = hidden_field_tag :authenticity_token, form_authenticity_token
 
-    table: tbody
-      - if flash.any?
-        = render "dorsale/alexandrie/attachments/flash"
+    table
+      = render "dorsale/alexandrie/attachments/header"
 
-      - if policy(::Dorsale::Alexandrie::Attachment).create?
-        / Create only on index
-        - if params[:action] == "index"
-          = render "dorsale/alexandrie/attachments/new", attachable: @attachable
-        - else
-          = render "dorsale/alexandrie/attachments/new_disabled"
+      tbody
+        - if policy(::Dorsale::Alexandrie::Attachment).create?
+          / Create only on index
+          - if params[:action] == "index"
+            = render "dorsale/alexandrie/attachments/new", attachable: @attachable
+          - else
+            = render "dorsale/alexandrie/attachments/new_disabled"
 
-      - ::Dorsale::Alexandrie::Attachment.where(attachable: @attachable).each do |attachment|
-        - if request.path == url_for(action: :edit, id: attachment)
-          = render "dorsale/alexandrie/attachments/edit", attachment: attachment
-        - else
-          = render "dorsale/alexandrie/attachments/attachment", attachment: attachment
+        - ::Dorsale::Alexandrie::Attachment.where(attachable: @attachable).each do |attachment|
+          - if request.path == url_for(action: :edit, id: attachment)
+            = render "dorsale/alexandrie/attachments/edit", attachment: attachment
+          - else
+            = render "dorsale/alexandrie/attachments/attachment", attachment: attachment

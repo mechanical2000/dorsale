@@ -1,5 +1,10 @@
 When(/^he add a new document$/) do
+  execute_script %(
+    $("[type=file]").show()
+  )
+
   attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf"), visible: :all
+
   find("#new_attachment [type=submit]").click
 end
 
