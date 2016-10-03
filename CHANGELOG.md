@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.4
+
+- Add attachment types
+
 ## 3.1.3
 
 - Fix delete people
