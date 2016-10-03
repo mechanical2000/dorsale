@@ -6,9 +6,7 @@
 
     table: tbody
       - if flash.any?
-        tr#alexandrie-flash: td colspan=3
-          = render "dorsale/flash"
-
+        = render "dorsale/alexandrie/attachments/flash"
 
       - if policy(::Dorsale::Alexandrie::Attachment).create?
         / Create only on index
