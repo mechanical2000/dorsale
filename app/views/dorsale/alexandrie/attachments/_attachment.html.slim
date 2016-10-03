@@ -1,0 +1,14 @@
+tr.attachment
+  td.attachment-name
+    = link_to attachment, attachment.file.url, download: attachment.download_filename
+
+  td.attachment-attachment_type.hidden-xs.hidden-sm
+    - if attachment.attachment_type
+      .label.label-info = attachment.attachment_type
+
+  td.attachment-actions
+    - if policy(attachment).update?
+      = update_button dorsale.edit_alexandrie_attachment_path(attachment)
+
+    - if policy(attachment).delete?
+      = delete_button dorsale.alexandrie_attachment_path(attachment), remote: true

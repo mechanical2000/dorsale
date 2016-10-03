@@ -30,8 +30,6 @@ window.alexandrie =
       xhr  = new XMLHttpRequest()
       data = new FormData(this)
 
-      data.append "attachment[attachment_type_id]", $("#attachment_attachment_type_id").val()
-
       xhr.upload.addEventListener "progress", (e) ->
         return unless e.lengthComputable
 
@@ -56,20 +54,18 @@ window.alexandrie =
   setupEditForm: ->
     $("#edit_attachment").on("ajax:success", alexandrie.reload)
 
-    $("#edit_attachment").on "ajax:beforeSend", (event, xhr, settings) ->
-      settings.data = $("#edit_attachment_tr :input").serialize()
-      true
-
   setupEditButtons: ->
     $("#dorsale-attachments [href$=edit]").click ->
-      container = $(this).parents(".attachment")
+      container = $("#dorsale-attachments")
       url       = this.href
 
       $.ajax
         url: url
         success: (data) ->
-          container.replaceWith(data)
+          container.html(data)
           alexandrie.setupEditForm()
+          alexandrie.setupEditButtons()
+          alexandrie.setupDeleteButtons()
 
       return false
 

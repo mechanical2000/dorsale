@@ -1,34 +1,18 @@
 tr#new_attachment_tr
   td.attachment-name
-    = simple_form_for([dorsale, Dorsale::Alexandrie::Attachment.new],
-      :as        => :attachment,
-      :multipart => true,
-      :wrapper   => :inline_form,
-    ) do |f|
+    = hidden_field :attachment, :attachable_id,   value: attachable.id.to_s
+    = hidden_field :attachment, :attachable_type, value: attachable.class.to_s
 
-      = f.hidden_field :attachable_id,   value: attachable.id.to_s
-      = f.hidden_field :attachable_type, value: attachable.class.to_s
-
-      .form-control.input-sm.upload
-        = f.file_field :file
-        label.nostyle = t("actions.browse")
-
-      input#new_attachment_submit.hidden type="submit"
+    .form-control.input-sm.upload
+      = file_field :attachment, :file
+      label.nostyle = t("actions.browse")
 
   td.attachment-attachment_type.hidden-xs.hidden-sm
     - if @attachment_types.to_a.any?
       = collection_select :attachment, :attachment_type_id, @attachment_types, :id, :to_s, {include_blank: true}, {class: "form-control input-sm"}
 
   td.attachment-actions
-    label.btn.btn-success.btn-sm.btn-block for="new_attachment_submit"
+    button.btn.btn-success.btn-sm.btn-block type="submit"
       = t("actions.upload")
 
-tr#new_attachment_progress: td colspan=3
-  .progress
-    .progress-bar.progress-bar-success.progress-bar-striped.active(
-      style="width: 0%"
-      role="progressbar"
-      aria-valuenow=0
-      aria-valuemin=0
-      aria-valuemax=100
-    ) = percentage(0)
+= render "dorsale/alexandrie/attachments/progress_bar"

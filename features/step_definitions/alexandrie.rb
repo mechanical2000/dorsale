@@ -1,6 +1,6 @@
 When(/^he add a new document$/) do
   attach_file :attachment_file, Dorsale::Engine.root.join("spec/files/pdf.pdf"), visible: :all
-  find("[for=new_attachment_submit]").click
+  find("#new_attachment [type=submit]").click
 end
 
 When(/^he delete a document$/) do
