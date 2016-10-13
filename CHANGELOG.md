@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.5
+
+- Move filters to app/filters
+- Tags refactor
+- Rename `person_tags` helper to `tags`
+
 ## 3.1.4
 
 - Add attachment types
