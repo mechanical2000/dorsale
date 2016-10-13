@@ -103,4 +103,14 @@ module Dorsale::TextHelper
     end
   end # def info
 
+  def tags(object)
+    return "" if object.tag_list.empty?
+
+    object.tag_list.map { |tag|
+      content_tag(:span, class: "tag label label-primary"){
+        "#{icon :tag} #{tag}".html_safe
+      }
+    }.join(" ").html_safe
+  end
+
 end
