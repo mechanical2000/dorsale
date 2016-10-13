@@ -13,7 +13,7 @@ class Dorsale::CustomerVault::ApplicationController < ::Dorsale::ApplicationCont
   private
 
   def customer_vault_tag_list
-    ActsAsTaggableOn::Tag.order(:name).map(&:to_s)
+    Dorsale::TagListForModel.(Dorsale::CustomerVault::Person)
   end
 
   def set_form_variables
