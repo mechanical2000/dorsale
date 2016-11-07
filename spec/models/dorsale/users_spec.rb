@@ -50,10 +50,17 @@ RSpec.describe User, type: :model do
     it "avatar_url should return local_avatar_url if present" do
       expect(@user.avatar_url).to include "avatar.png"
     end
+
     it "avatar_url should return gravatar_url if no local avatar" do
       @user.remove_avatar!
       @user.save!
       expect(@user.avatar_url).to include "gravatar"
+    end
+
+    it "should work if email is nil" do
+      @user.remove_avatar!
+      allow(@user).to receive(:email)
+      expect(@user.avatar_url).to be_present
     end
   end
 
