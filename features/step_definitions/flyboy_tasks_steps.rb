@@ -64,7 +64,7 @@ end
 
 When(/^I create a task$/) do
   all("a[href*='tasks/new']").first.click
-  find("[type=submit]").click # First submit to see errors
+  find("form[id*=task] [type=submit]").click # First submit to see errors
   fill_in "task_name", with: "I-am-the-task-title"
   fill_in "task_description", with: "I-am-the-task-description"
   select @user.name
