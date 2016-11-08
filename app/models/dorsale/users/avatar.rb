@@ -12,7 +12,7 @@ module Dorsale::Users::Avatar
       end
 
       def gravatar_url
-        "https://www.gravatar.com/avatar/" + Digest::MD5.hexdigest(email) + "?default=mm&size=200"
+        "https://www.gravatar.com/avatar/" + Digest::MD5.hexdigest(email.to_s) + "?default=mm&size=200"
       end
     end
   end

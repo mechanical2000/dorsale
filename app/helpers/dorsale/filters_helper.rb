@@ -52,10 +52,16 @@ module Dorsale::FiltersHelper
 
   def dorsale_time_periods_for_select
     {
-      t("time_periods.all_time") => "",
-      t("time_periods.today")    => "today",
-      t("time_periods.week")     => "week" ,
-      t("time_periods.month")    => "month",
+      t("time_periods.all_time")    => "",
+      t("time_periods.today")       => "today",
+      t("time_periods.yesterday")   => "yesterday" ,
+      t("time_periods.this_week")   => "this_week",
+      t("time_periods.last_week")   => "last_week",
+      t("time_periods.this_month")  => "this_month",
+      t("time_periods.last_month")  => "last_month",
+      t("time_periods.this_year")   => "this_year",
+      t("time_periods.last_year")   => "last_year",
+      t("time_periods.custom_date") => "custom_date",
     }
   end
 

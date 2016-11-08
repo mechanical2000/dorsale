@@ -179,6 +179,22 @@ Feature: Invoice Management
     When he filters by date on today
     Then only the invoices of today do appear
 
+  Scenario: Filter by custom dates
+    Given a bunch of existing invoices
+    When the user goes to the invoices page
+    Then he do not see the "bm_date_begin" filter
+    Then he do not see the "bm_date_end" filter
+    When he select custom date filter
+    Then he see the "bm_date_begin" filter
+    Then he see the "bm_date_end" filter
+    When he filters invoices between two date
+    Then only the invoices of today do appear
+    Then he see the "bm_date_begin" filter
+    Then he see the "bm_date_end" filter
+    When he reset filters
+    Then he do not see the "bm_date_begin" filter
+    Then he do not see the "bm_date_end" filter
+
   Scenario: Filter by status
     Given a bunch of existing invoices
     When the user goes to the invoices page

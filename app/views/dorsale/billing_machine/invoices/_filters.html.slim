@@ -9,6 +9,9 @@
     :include_blank => false,
   )
 
+  = f.input :bm_date_begin, input_html: {placeholder: t("filters.date_begin")}
+  = f.input :bm_date_end,   input_html: {placeholder: t("filters.date_end")}
+
   = f.input(:bm_payment_status,
     :collection    => billing_machine_payment_status_for_filter_select,
     :include_blank => false,
