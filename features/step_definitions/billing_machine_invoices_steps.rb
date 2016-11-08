@@ -105,6 +105,8 @@ When(/^wants to copy it$/) do
 end
 
 When(/^he fills a line with "(.*?)", "(.*?)", "(.*?)", "(.*?)"$/) do |label, quantity, unit, unit_price|
+  expect(page).to have_selector(".line")
+
   within all('.line').last do
     find(".line-label textarea").set label
     find(".line-quantity input").set  quantity
@@ -332,10 +334,6 @@ end
 
 Then(/^the invoice status should be "(.*?)"$/) do |color|
   expect(find(".invoice")[:class]).to include(color)
-end
-
-Then(/^the PDF should have the filename "([^\"]*)"$/) do |filename|
-  expect(page.response_headers['Content-Disposition']).to include("filename=\"#{filename}\"")
 end
 
 Then(/^data total amount is "(.*?)"$/) do |text|

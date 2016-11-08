@@ -118,6 +118,7 @@ When(/^I copy the expense$/) do
   @expenses_count = Dorsale::ExpenseGun::Expense.count
 
   find("[href$=copy]").click
+  expect(page).to have_selector("form#new_expense [type=submit]")
 
   all(".nested-fields").each do |line|
     within line do
@@ -125,7 +126,7 @@ When(/^I copy the expense$/) do
     end
   end
 
-  find("[type=submit]").click
+  find("form#new_expense [type=submit]").click
 end
 
 Then(/^an expense copy is created$/) do
