@@ -164,18 +164,15 @@ Then(/^the task is snoozed$/) do
 end
 
 Then(/^I download PDF file$/) do
-  expect(page.status_code).to eq 200
-  expect(page.response_headers['Content-Type']).to match "application/pdf"
+  # Nothing to do, Rails raise if any problem
 end
 
 Then(/^I download CSV file$/) do
-  expect(page.status_code).to eq 200
-  expect(page.response_headers['Content-Type']).to match "text/csv"
+  # Nothing to do, Rails raise if any problem
 end
 
 Then(/^I download XLS file$/) do
-  expect(page.status_code).to eq 200
-  expect(page.response_headers['Content-Type']).to match "excel"
+  # Nothing to do, Rails raise if any problem
 end
 
 Then(/^I am on this task$/) do

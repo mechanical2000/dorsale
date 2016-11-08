@@ -144,7 +144,7 @@ end
 When(/^he create an invoice from the quotation$/) do
   @invoices_count = Dorsale::BillingMachine::Invoice.count
   find("[href$='create_invoice']").click
-  find("[type=submit]").click
+  find("form#new_invoice [type=submit]").click
 end
 
 When(/^he fill the quotation expiry$/) do
