@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.6
+
+- Migrate tests to PhantomJS 2
+- Add more time period filters
+- Fix avatar concern error
+
 ## 3.1.5
 
 - Move filters to app/filters
