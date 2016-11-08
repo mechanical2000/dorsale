@@ -42,3 +42,14 @@ Then(/^the selected filter is "(.*?)"$/) do |value|
   expect(selected_values).to include value
 end
 
+Then(/^he do not see the "([^"]*)" filter$/) do |id|
+  expect(page).to have_no_selector("#filters_#{id}")
+end
+
+When(/^he select custom date filter$/) do
+  select "Choisir une date"
+end
+
+Then(/^he see the "([^"]*)" filter$/) do |id|
+  expect(page).to have_selector("#filters_#{id}")
+end

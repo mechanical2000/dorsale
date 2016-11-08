@@ -116,7 +116,7 @@ When(/^I filter tasks by undone$/) do
   find(".filters [type=submit]:last-child").click
 end
 
-When(/^I reset filters$/) do
+When(/^(?:I|he|she) reset filters$/) do
   find(".filters .reset").click
 end
 

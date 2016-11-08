@@ -361,3 +361,9 @@ Then(/^an invoice is sent to customer$/) do
   expect(email.parts.first.body).to eq "def"
   expect(email.attachments.count).to eq 1
 end
+
+When(/^he filters invoices between two date$/) do
+  fill_in :filters_bm_date_begin, with: I18n.l(Time.zone.now.to_date)
+  fill_in :filters_bm_date_end,   with: I18n.l(Time.zone.now.to_date)
+  find(".filter-submit").click
+end

@@ -161,18 +161,24 @@ en:
 
   filters:
     all_customers: "All customers"
+    date_begin: "Date begin"
+    date_end: "Date end"
 
   time_periods:
     all_time: "All time"
+    tomorrow: "Tomorrow"
     today: "Today"
-    week: "This week"
-    month: "This month"
-    year: "This year"
+    yesterday: "Yesterday"
+    this_week: "This semaine"
+    this_month: "This mois"
+    this_year: "This année"
+    last_week: "Last week"
+    last_month: "Last month"
+    last_year: "Last year"
     delayed: "Delayed"
-    this_week: "This week"
     next_week: "Next week"
     next_next_week: "In two weeks"
-
+    custom_date: "Custom date"
 
   labels:
     <<: *attributes
