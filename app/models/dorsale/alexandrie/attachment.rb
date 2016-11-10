@@ -1,4 +1,4 @@
-class Dorsale::Alexandrie::Attachment < ActiveRecord::Base
+class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_alexandrie_attachments"
 
   belongs_to :attachable, polymorphic: true

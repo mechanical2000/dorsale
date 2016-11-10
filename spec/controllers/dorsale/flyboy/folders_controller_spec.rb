@@ -26,17 +26,13 @@ describe Dorsale::Flyboy::FoldersController, type: :controller do
       end
 
       it 'should filter by status closed' do
-        Dorsale::Flyboy::SmallData::FilterForFolders.new(request.cookies)
-          .store(fb_status: "closed")
-
+        cookies["filters"] = {fb_status: "closed"}.to_json
         get :index
         expect(assigns(:folders)).to eq [@folder2]
       end
 
       it 'should filter by status open' do
-        Dorsale::Flyboy::SmallData::FilterForFolders.new(request.cookies)
-          .store(fb_status: "open")
-
+        cookies["filters"] = {fb_status: "open"}.to_json
         get :index
         expect(assigns(:folders)).to eq [@folder1]
       end

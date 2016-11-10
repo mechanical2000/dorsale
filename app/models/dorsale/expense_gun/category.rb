@@ -1,4 +1,4 @@
-class Dorsale::ExpenseGun::Category < ActiveRecord::Base
+class Dorsale::ExpenseGun::Category < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_categories"
 
   validates :name, presence: true

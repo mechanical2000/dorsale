@@ -6,16 +6,16 @@ module Dorsale
     let(:filter) { {"name" => "bidule"} }
     let(:f)      { Dorsale::SmallData::Filter.new(jar) }
 
-    describe "store" do
-      it "should store the provided hash as json in the jar" do
-        f.store(filter)
+    describe "write" do
+      it "should write the provided hash as json in the jar" do
+        f.write(filter)
         expect(jar["filters"]).to eq filter.to_json
       end
     end
 
     describe "read" do
       it "should read stored filters" do
-        f.store(filter)
+        f.write(filter)
         expect(f.read).to eq(filter)
       end
 
@@ -29,19 +29,11 @@ module Dorsale
       end
     end
 
-    describe "get" do
-      it "should return the value" do
-        f.store(filter)
-        expect(f.get("name")).to eq("bidule")
-      end
+    it "should set/get values" do
+      filter = Dorsale::CustomerVault::SmallData::FilterForPeople.new({})
+      filter.person_type = "truc"
+      expect(filter.person_type).to eq "truc"
     end
 
-    describe "set" do
-      it "should set the value" do
-        f.store(filter)
-        f.set("new", "truc")
-        expect(f.get("new")).to eq("truc")
-      end
-    end
   end
 end

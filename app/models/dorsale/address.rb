@@ -1,4 +1,4 @@
-class Dorsale::Address < ActiveRecord::Base
+class Dorsale::Address < ::Dorsale::ApplicationRecord
   belongs_to :addressable, polymorphic: true, inverse_of: :address
 
   validates :addressable, presence: true

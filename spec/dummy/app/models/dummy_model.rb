@@ -1,2 +1,2 @@
-class DummyModel < ActiveRecord::Base
+class DummyModel < ::Dorsale::ApplicationRecord
 end

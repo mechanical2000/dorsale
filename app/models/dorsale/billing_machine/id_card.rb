@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::IdCard < ActiveRecord::Base
+class Dorsale::BillingMachine::IdCard < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_id_cards"
 
   has_many :invoices

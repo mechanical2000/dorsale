@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::InvoiceLine < ActiveRecord::Base
+class Dorsale::BillingMachine::InvoiceLine < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_invoice_lines"
 
   belongs_to :invoice, inverse_of: :lines

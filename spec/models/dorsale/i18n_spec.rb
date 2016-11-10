@@ -7,7 +7,7 @@ RSpec.describe "i18n" do
 
   # TODO : test FR + EN
 
-  ActiveRecord::Base.descendants.each do |model|
+  ::Dorsale::ApplicationRecord.descendants.each do |model|
     next unless model.to_s.start_with?("Dorsale")
 
     it "should i18n #{model} model name" do

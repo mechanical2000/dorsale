@@ -1,4 +1,4 @@
-class Dorsale::ExpenseGun::ExpenseLine < ActiveRecord::Base
+class Dorsale::ExpenseGun::ExpenseLine < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_expense_lines"
 
   belongs_to :expense,  class_name: ::Dorsale::ExpenseGun::Expense

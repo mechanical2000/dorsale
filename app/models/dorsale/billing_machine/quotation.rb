@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::Quotation < ActiveRecord::Base
+class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_quotations"
 
   STATES = %w(pending accepted refused canceled)

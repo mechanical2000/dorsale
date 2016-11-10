@@ -1,26 +1,10 @@
 class Dorsale::SmallData::Filter
+  STRATEGIES = {}
+
+  attr_reader :jar
+
   def initialize(jar)
     @jar = jar
-  end
-
-  def store(filters)
-    @jar["filters"] = filters.to_json
-  end
-
-  def read
-    JSON.parse @jar["filters"].to_s
-  rescue JSON::ParserError
-    {}
-  end
-
-  def get(key)
-    read[key.to_s]
-  end
-
-  def set(key, value)
-    array           = read
-    array[key.to_s] = value
-    store(array)
   end
 
   def strategies
@@ -40,12 +24,45 @@ class Dorsale::SmallData::Filter
   end
 
   def method_missing(method, *args)
-    key = method.to_s
+    if method.to_s.end_with?("=")
+      key    = method.to_s[0..-2]
+      value  = args.first
+      action = :write
+    else
+      key    = method.to_s
+      action = :read
+    end
 
-    if strategies.key?(key)
+    if strategies.key?(key) && action == :read
       get(key)
+    elsif strategies.key?(key) && action == :write
+      set(key, value)
     else
       super
     end
+  end
+
+  def read
+    JSON.parse jar["filters"].to_s
+  rescue JSON::ParserError
+    {}
+  end
+
+  def write(filters)
+    jar["filters"] = filters.to_json
+  end
+
+  def merge(new_filters)
+    write read.merge(new_filters)
+  end
+
+  private
+
+  def get(key)
+    read[key.to_s]
+  end
+
+  def set(key, value)
+    merge(key.to_s => value)
   end
 end

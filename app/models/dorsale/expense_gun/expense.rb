@@ -1,4 +1,4 @@
-class Dorsale::ExpenseGun::Expense < ActiveRecord::Base
+class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_expenses"
   include AASM
 

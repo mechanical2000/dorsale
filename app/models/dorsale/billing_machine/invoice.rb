@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::Invoice < ActiveRecord::Base
+class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_invoices"
 
   belongs_to :customer, polymorphic: true
