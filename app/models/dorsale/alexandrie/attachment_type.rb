@@ -1,4 +1,4 @@
-class Dorsale::Alexandrie::AttachmentType < ActiveRecord::Base
+class Dorsale::Alexandrie::AttachmentType < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_alexandrie_attachment_types"
 
   has_many :attachments, dependent: :nullify

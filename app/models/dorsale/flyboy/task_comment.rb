@@ -1,4 +1,4 @@
-class Dorsale::Flyboy::TaskComment < ActiveRecord::Base
+class Dorsale::Flyboy::TaskComment < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_flyboy_task_comments"
 
   belongs_to :task

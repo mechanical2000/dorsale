@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::QuotationLine < ActiveRecord::Base
+class Dorsale::BillingMachine::QuotationLine < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_quotation_lines"
 
   belongs_to :quotation, inverse_of: :lines

@@ -1,4 +1,4 @@
-class Dorsale::Comment < ActiveRecord::Base
+class Dorsale::Comment < ::Dorsale::ApplicationRecord
   belongs_to :author, polymorphic: true
   belongs_to :commentable, polymorphic: true
 

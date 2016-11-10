@@ -1,7 +1,7 @@
 require "dorsale/search"
 require "dorsale/polymorphic_id"
 
-class Dorsale::Flyboy::Folder < ActiveRecord::Base
+class Dorsale::Flyboy::Folder < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_flyboy_folders"
 
   include AASM
