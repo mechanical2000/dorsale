@@ -7,6 +7,8 @@ class Dorsale::Comment < ::Dorsale::ApplicationRecord
   validates :text,        presence: true
 
   default_scope -> {
-    order(created_at: :desc)
+    all
+      .order(created_at: :desc)
+      .preload(:author)
   }
 end

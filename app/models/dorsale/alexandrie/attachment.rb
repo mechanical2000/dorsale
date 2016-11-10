@@ -14,7 +14,9 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
   before_save :set_default_name
 
   default_scope -> {
-    order(id: :desc)
+    all
+      .order(id: :desc)
+      .preload(:attachment_type)
   }
 
   def set_default_name
