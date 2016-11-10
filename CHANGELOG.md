@@ -1,5 +1,11 @@
 # Changelog
 
+## Next version
+
+- Filters changes : get/set are now private
+- Add Bullet gem
+- Add ApplicationRecord
+
 ## 3.1.6
 
 - Migrate tests to PhantomJS 2
