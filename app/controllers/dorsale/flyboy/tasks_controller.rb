@@ -13,7 +13,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def index
     authorize model, :list?
 
-    @tasks ||= scope.all
+    @tasks ||= scope.all.preload(:taskable)
 
     @order ||= sortable_column_order do |column, direction|
       case column

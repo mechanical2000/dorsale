@@ -12,7 +12,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     # callback in BillingMachine::ApplicationController
     authorize model, :list?
 
-    @invoices ||= scope.all
+    @invoices ||= scope.all.preload(:customer)
     @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
 
     @invoices = @filters.apply(@invoices)

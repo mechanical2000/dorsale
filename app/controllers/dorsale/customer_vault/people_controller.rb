@@ -13,7 +13,9 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
 
     @filters ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
     @tags    ||= customer_vault_tag_list
-    @people  ||= policy_scope(model).search(params[:q])
+    @people  ||= policy_scope(model)
+      .search(params[:q])
+      .preload(:taggings)
 
     if params[:q].blank?
       @people = @filters.apply(@people)

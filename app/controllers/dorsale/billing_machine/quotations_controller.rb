@@ -12,7 +12,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     # callback in BillingMachine::ApplicationController
     authorize model, :list?
 
-    @quotations ||= scope.all
+    @quotations ||= scope.all.preload(:customer)
     @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
 
     @quotations = @filters.apply(@quotations)

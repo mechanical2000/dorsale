@@ -32,4 +32,8 @@ Dummy::Application.configure do
   config.action_view.raise_on_missing_translations = true
 
   config.action_mailer.delivery_method = :desktop_delivery
+
+  Bullet.enable       = true
+  Bullet.add_footer   = true
+  Bullet.rails_logger = true
 end
