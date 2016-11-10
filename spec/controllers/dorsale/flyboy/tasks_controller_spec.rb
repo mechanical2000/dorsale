@@ -65,13 +65,13 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       end
 
       it 'should filter by status closed' do
-        Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'fb_status' => "closed"})
+        cookies["filters"] = {'fb_status' => "closed"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task1]
       end
 
       it 'should filter by status opened' do
-        Dorsale::Flyboy::SmallData::FilterForTasks.new(request.cookies).store({'fb_status' => "opened"})
+        cookies["filters"] = {'fb_status' => "opened"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task2]
       end
