@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Add print CSS
+
 ## 3.1.7
 
 - Filters changes : get/set are now private
