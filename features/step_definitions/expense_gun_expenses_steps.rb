@@ -39,7 +39,7 @@ Then(/^the expense is created$/) do
   expect(Dorsale::ExpenseGun::Expense.count).to eq(@expenses_count + 1)
   expect(Dorsale::ExpenseGun::ExpenseLine.count).to eq(@expense_lines_count + 2)
 
-  @expense = Dorsale::ExpenseGun::Expense.reorder(:id).last
+  @expense = Dorsale::ExpenseGun::Expense.last_created
 
   expect(@expense.name).to eq "ExpenseName"
   expect(@expense.expense_lines.first.name).to eq "ExpenseLine1Name"
@@ -131,5 +131,5 @@ end
 
 Then(/^an expense copy is created$/) do
   expect(Dorsale::ExpenseGun::Expense.count).to eq(@expenses_count + 1)
-  @expense = Dorsale::ExpenseGun::Expense.reorder(:id).last
+  @expense = Dorsale::ExpenseGun::Expense.last_created
 end

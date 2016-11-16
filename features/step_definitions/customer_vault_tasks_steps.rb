@@ -12,7 +12,7 @@ end
 
 Then(/^the person task is created$/) do
   expect(::Dorsale::Flyboy::Task.count).to eq(@tasks_count + 1)
-  @task = ::Dorsale::Flyboy::Task.order(:id).last
+  @task = ::Dorsale::Flyboy::Task.last_created
 
   if @corporation
     url = dorsale.customer_vault_corporation_path(@corporation)

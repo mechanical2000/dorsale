@@ -15,7 +15,7 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
 
   default_scope -> {
     all
-      .order(id: :desc)
+      .order(created_at: :desc, id: :desc)
       .preload(:attachment_type)
   }
 

@@ -53,7 +53,7 @@ end
 
 Then(/^the corporation is created$/) do
   expect(Dorsale::CustomerVault::Corporation.count).to eq(@corporations_count + 1)
-  @corporation = Dorsale::CustomerVault::Corporation.reorder(:id).last
+  @corporation = Dorsale::CustomerVault::Corporation.last_created
 
   expect(@corporation.corporation_name).to eq "AGILiDEE"
 end

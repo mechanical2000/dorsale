@@ -159,7 +159,7 @@ When(/^he changes the advance to "(.*?)"€$/) do |value|
 end
 
 When(/^he goes to the newly created invoice page$/) do
-  @invoice = ::Dorsale::BillingMachine::Invoice.unscoped.order(:id).last
+  @invoice = ::Dorsale::BillingMachine::Invoice.last_created
   visit dorsale.edit_billing_machine_invoice_path(@invoice)
 end
 

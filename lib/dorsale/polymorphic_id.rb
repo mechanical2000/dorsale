@@ -30,7 +30,7 @@ Module.new do
   def relation_guid=(guid)
     return self.relation = nil if guid.blank?
 
-    type, id      = guid.split("-")
+    type, id      = guid.split("-", 2)
     self.relation = type.constantize.find(id)
   end
 end

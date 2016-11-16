@@ -182,7 +182,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       it "redirects to the created task" do
         post :create, params: {:task => valid_attributes}
-        expect(response).to redirect_to Dorsale::Flyboy::Task.order("id ASC").last
+        expect(response).to redirect_to Dorsale::Flyboy::Task.last_created
       end
 
       it "should send a mail to the owner" do

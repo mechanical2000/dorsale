@@ -170,7 +170,7 @@ Then(/^the quotation's label has changed$/) do
 end
 
 Then(/^I am on the created quotation$/) do
-  @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
+  @quotation = Dorsale::BillingMachine::Quotation.last_created
   expect(current_path).to eq dorsale.billing_machine_quotation_path(@quotation)
 end
 
@@ -201,7 +201,7 @@ Then(/^he will see links to the documents$/) do
 end
 
 Then(/^the quotation informations are visible on the quotation details$/) do
-  @quotation = ::Dorsale::BillingMachine::Quotation.unscoped.order(:id).last
+  @quotation = ::Dorsale::BillingMachine::Quotation.last_created
   visit dorsale.billing_machine_quotation_path(@quotation)
   expect(page).to have_content @payment_term.label
   expect(page).to have_content "I-am-a-comment"
@@ -217,13 +217,13 @@ end
 
 Then(/^he is on the created quotation edit page$/) do
   expect(Dorsale::BillingMachine::Quotation.count).to eq(@quotations_count+1)
-  @quotation = Dorsale::BillingMachine::Quotation.reorder(:id).last
+  @quotation = Dorsale::BillingMachine::Quotation.last_created
   expect(current_path).to eq dorsale.edit_billing_machine_quotation_path(@quotation)
 end
 
 Then(/^an invoice is created from quotation$/) do
   expect(Dorsale::BillingMachine::Invoice.count).to eq(@invoices_count+1)
-  @invoice = Dorsale::BillingMachine::Invoice.reorder(:id).last
+  @invoice = Dorsale::BillingMachine::Invoice.last_created
   expect(@invoice.label).to eq @quotation.label
 end
 

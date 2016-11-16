@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20160930073538) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -24,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
   create_table "dorsale_addresses", force: :cascade do |t|
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attachment_type_id"
-    t.index ["attachment_type_id"], name: "index_dorsale_alexandrie_attachments_on_attachment_type_id"
+    t.index ["attachment_type_id"], name: "index_dorsale_alexandrie_attachments_on_attachment_type_id", using: :btree
   end
 
   create_table "dorsale_billing_machine_id_cards", force: :cascade do |t|
@@ -103,7 +106,7 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal  "vat_rate"
-    t.index ["invoice_id"], name: "index_dorsale_billing_machine_invoice_lines_on_invoice_id"
+    t.index ["invoice_id"], name: "index_dorsale_billing_machine_invoice_lines_on_invoice_id", using: :btree
   end
 
   create_table "dorsale_billing_machine_invoices", force: :cascade do |t|
@@ -126,10 +129,10 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
     t.text     "comments"
-    t.index ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id"
-    t.index ["customer_type"], name: "index_dorsale_billing_machine_invoices_on_customer_type"
-    t.index ["id_card_id"], name: "index_dorsale_billing_machine_invoices_on_id_card_id"
-    t.index ["payment_term_id"], name: "index_dorsale_billing_machine_invoices_on_payment_term_id"
+    t.index ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id", using: :btree
+    t.index ["customer_type"], name: "index_dorsale_billing_machine_invoices_on_customer_type", using: :btree
+    t.index ["id_card_id"], name: "index_dorsale_billing_machine_invoices_on_id_card_id", using: :btree
+    t.index ["payment_term_id"], name: "index_dorsale_billing_machine_invoices_on_payment_term_id", using: :btree
   end
 
   create_table "dorsale_billing_machine_payment_terms", force: :cascade do |t|
@@ -148,7 +151,7 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.decimal  "vat_rate"
-    t.index ["quotation_id"], name: "index_dorsale_billing_machine_quotation_lines_on_quotation_id"
+    t.index ["quotation_id"], name: "index_dorsale_billing_machine_quotation_lines_on_quotation_id", using: :btree
   end
 
   create_table "dorsale_billing_machine_quotations", force: :cascade do |t|
@@ -169,10 +172,10 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
     t.string   "state"
-    t.index ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id"
-    t.index ["customer_type"], name: "index_dorsale_billing_machine_quotations_on_customer_type"
-    t.index ["id_card_id"], name: "index_dorsale_billing_machine_quotations_on_id_card_id"
-    t.index ["payment_term_id"], name: "index_dorsale_billing_machine_quotations_on_payment_term_id"
+    t.index ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id", using: :btree
+    t.index ["customer_type"], name: "index_dorsale_billing_machine_quotations_on_customer_type", using: :btree
+    t.index ["id_card_id"], name: "index_dorsale_billing_machine_quotations_on_id_card_id", using: :btree
+    t.index ["payment_term_id"], name: "index_dorsale_billing_machine_quotations_on_payment_term_id", using: :btree
   end
 
   create_table "dorsale_comments", force: :cascade do |t|
@@ -268,8 +271,8 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.float    "company_part"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["category_id"], name: "index_dorsale_expense_gun_expense_lines_on_category_id"
-    t.index ["expense_id"], name: "index_dorsale_expense_gun_expense_lines_on_expense_id"
+    t.index ["category_id"], name: "index_dorsale_expense_gun_expense_lines_on_category_id", using: :btree
+    t.index ["expense_id"], name: "index_dorsale_expense_gun_expense_lines_on_expense_id", using: :btree
   end
 
   create_table "dorsale_expense_gun_expenses", force: :cascade do |t|
@@ -292,8 +295,8 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.integer  "version"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["folderable_id"], name: "index_dorsale_flyboy_folders_on_folderable_id"
-    t.index ["folderable_type"], name: "index_dorsale_flyboy_folders_on_folderable_type"
+    t.index ["folderable_id"], name: "index_dorsale_flyboy_folders_on_folderable_id", using: :btree
+    t.index ["folderable_type"], name: "index_dorsale_flyboy_folders_on_folderable_type", using: :btree
   end
 
   create_table "dorsale_flyboy_task_comments", force: :cascade do |t|
@@ -305,7 +308,7 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "updated_at",  null: false
     t.string   "author_type"
     t.integer  "author_id"
-    t.index ["task_id"], name: "index_dorsale_flyboy_task_comments_on_task_id"
+    t.index ["task_id"], name: "index_dorsale_flyboy_task_comments_on_task_id", using: :btree
   end
 
   create_table "dorsale_flyboy_tasks", force: :cascade do |t|
@@ -321,8 +324,8 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "updated_at",    null: false
     t.string   "owner_type"
     t.integer  "owner_id"
-    t.index ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id"
-    t.index ["taskable_type"], name: "index_dorsale_flyboy_tasks_on_taskable_type"
+    t.index ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id", using: :btree
+    t.index ["taskable_type"], name: "index_dorsale_flyboy_tasks_on_taskable_type", using: :btree
   end
 
   create_table "dummy_models", force: :cascade do |t|
@@ -346,21 +349,21 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
-    t.index ["context"], name: "index_taggings_on_context"
-    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-    t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
-    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
-    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
-    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
-    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
-    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
-    t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -378,8 +381,8 @@ ActiveRecord::Schema.define(version: 20160930073538) do
     t.datetime "updated_at",                          null: false
     t.boolean  "is_active"
     t.string   "avatar"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
 end

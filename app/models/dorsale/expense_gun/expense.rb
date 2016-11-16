@@ -20,7 +20,7 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
     :reject_if => proc { |attr| attr["name"].blank? }
 
   default_scope -> {
-    order(id: :desc)
+    order(created_at: :desc, id: :desc)
   }
 
   def initialize(*args)
