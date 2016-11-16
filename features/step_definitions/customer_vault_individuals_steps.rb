@@ -30,7 +30,7 @@ end
 Then(/^the individual is created$/) do
   expect(Dorsale::CustomerVault::Individual.count).to eq(@individuals_count + 1)
 
-  @individual = Dorsale::CustomerVault::Individual.reorder(:id).last
+  @individual = Dorsale::CustomerVault::Individual.last_created
 
   expect(@individual.first_name).to eq "Benoit"
   expect(@individual.last_name).to eq "Gantaume"

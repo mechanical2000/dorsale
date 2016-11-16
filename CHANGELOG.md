@@ -3,6 +3,7 @@
 ## Next version
 
 - Add print CSS
+- UUID friendly
 
 ## 3.1.7
 

@@ -127,7 +127,7 @@ When(/^I delete this task$/) do
 end
 
 Then(/^I am on the created task$/) do
-  @task = Dorsale::Flyboy::Task.order("id DESC").first
+  @task = Dorsale::Flyboy::Task.last_created
   expect(current_path).to eq dorsale.flyboy_task_path(@task)
 end
 

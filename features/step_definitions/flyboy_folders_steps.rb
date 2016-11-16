@@ -14,7 +14,7 @@ Then(/^I am on this folder$/) do
 end
 
 Then(/^I am on the created folder$/) do
-  @folder = Dorsale::Flyboy::Folder.order("id DESC").first
+  @folder = Dorsale::Flyboy::Folder.last_created
   expect(current_path).to eq dorsale.flyboy_folder_path(@folder)
 end
 
