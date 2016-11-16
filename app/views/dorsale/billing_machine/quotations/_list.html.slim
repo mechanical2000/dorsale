@@ -19,7 +19,7 @@ table.default.quotations
       th.hidden-xs
         = ::Dorsale::BillingMachine::Quotation.t(:state)
 
-      th
+      th.actions
         = t("actions.actions")
 
   tbody
@@ -40,7 +40,7 @@ table.default.quotations
         td.hidden-xs.total_including_taxes
           = bm_currency quotation.total_including_taxes
 
-        td
+        td.hidden-xs
           = quotation.t("state.#{quotation.state}")
 
         td.actions

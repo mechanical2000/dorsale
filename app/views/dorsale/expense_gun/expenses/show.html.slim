@@ -1,5 +1,5 @@
 .expense_gun
-  .actions.top.hidden-print
+  .actions.top
     - if policy(@expense).update?
       = update_button dorsale.edit_expense_gun_expense_path(@expense)
 
@@ -61,5 +61,5 @@
 
   hr
 
-  .attachments-panel.hidden-print
+  .attachments-panel
     = attachments_for(@expense)
