@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version
+## 3.1.7
 
 - Filters changes : get/set are now private
 - Add Bullet gem
