@@ -16,7 +16,7 @@ table.default.invoices
       th.hidden-xs
         = ::Dorsale::BillingMachine::Invoice.t(:total_including_taxes)
 
-      th
+      th.actions
         = t("actions.actions")
 
   tbody

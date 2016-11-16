@@ -10,7 +10,7 @@
 
     tbody
       - if policy(@task).update?
-        tr
+        tr#new_task_comment_tr
           td.task_comment-progress
             = f.input :progress, label: false
 
