@@ -23,8 +23,8 @@ Alors(/^this individual appear in search results$/) do
 end
 
 Alors(/^other individuals do not appear in search results$/) do
-  expect(page).to_not have_content "Laurent"
-  expect(page).to_not have_content "DURAND"
+  expect(page).to have_no_content "Laurent"
+  expect(page).to have_no_content "DURAND"
 end
 
 Lorsqu(/^he search an individual by last name$/) do
@@ -42,6 +42,6 @@ Alors(/^this corporation appear in search results$/) do
 end
 
 Alors(/^other corporations do not appear in search results$/) do
-  expect(page).to_not have_content "zzz"
-  expect(page).to_not have_content "contact@zzz.com"
+  expect(page).to have_no_content "zzz"
+  expect(page).to have_no_content "contact@zzz.com"
 end

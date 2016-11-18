@@ -22,7 +22,7 @@ end
 Then(/^only first and second corporation appear$/) do
   expect(page).to have_content @corporation1.name
   expect(page).to have_content @corporation2.name
-  expect(page).to_not have_content @corporation3.name
+  expect(page).to have_no_content @corporation3.name
 end
 
 When(/^I add the second tag world$/) do
@@ -32,6 +32,6 @@ end
 
 Then(/^only the first corporation appear$/) do
   expect(page).to have_content @corporation1.name
-  expect(page).to_not have_content @corporation2.name
-  expect(page).to_not have_content @corporation3.name
+  expect(page).to have_no_content @corporation2.name
+  expect(page).to have_no_content @corporation3.name
 end

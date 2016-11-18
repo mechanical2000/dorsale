@@ -152,7 +152,7 @@ Then(/^I am on the tasks section$/) do
 end
 
 Then(/^the task is deleted$/) do
-  expect(page).to_not have_content @task.name
+  expect(page).to have_no_content @task.name
 end
 
 Then(/^the task is completed$/) do
@@ -181,11 +181,11 @@ end
 
 Then(/^only done tasks appear$/) do
   expect(page).to have_content @done_task.name
-  expect(page).to_not have_content @undone_task.name
+  expect(page).to have_no_content @undone_task.name
 end
 
 Then(/^only undone tasks appear$/) do
-  expect(page).to_not have_content @done_task.name
+  expect(page).to have_no_content @done_task.name
   expect(page).to have_content @undone_task.name
 end
 
@@ -197,7 +197,7 @@ end
 
 Then(/^only the "Hello" task appear$/) do
   expect(page).to have_content "Hello"
-  expect(page).to_not have_content "World"
+  expect(page).to have_no_content "World"
 end
 
 Then(/^tasks are paginated$/) do
