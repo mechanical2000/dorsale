@@ -11,7 +11,7 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
 
   mount_uploader :file, ::Dorsale::Alexandrie::FileUploader
 
-  before_save :set_default_name
+  before_save :assign_default_name
 
   default_scope -> {
     all
@@ -19,7 +19,7 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
       .preload(:attachment_type)
   }
 
-  def set_default_name
+  def assign_default_name
     self.name = file_identifier if name.blank?
   end
 

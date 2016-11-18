@@ -18,16 +18,8 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     order(unique_index: :desc)
   }
 
-  def initialize(*args)
-    super
-    assign_default_values
-    self.due_date              = 30.days.from_now      if due_date.nil?
-    self.date                  = Time.zone.now.to_date if date.nil?
-  end
-
   before_create :assign_unique_index
   before_create :assign_tracking_id
-  before_validation :assign_default_values
 
   def assign_unique_index
     if unique_index.nil?
@@ -40,11 +32,19 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
   end
 
   def assign_default_values
-    self.advance               = 0.0   if advance.nil?
-    self.vat_amount            = 0.0   if vat_amount.nil?
-    self.commercial_discount   = 0.0   if commercial_discount.nil?
-    self.total_excluding_taxes = 0.0   if total_excluding_taxes.nil?
-    self.paid                  = false if paid.nil?
+    assign_default :advance,               0.0
+    assign_default :vat_amount,            0.0
+    assign_default :commercial_discount,   0.0
+    assign_default :total_excluding_taxes, 0.0
+    assign_default :paid,                  false
+
+  end
+
+  after_initialize :assign_default_dates
+
+  def assign_default_dates
+    assign_default :date,     Time.zone.now.to_date
+    assign_default :due_date, Time.zone.now.to_date + 30.days
   end
 
   before_save :update_totals

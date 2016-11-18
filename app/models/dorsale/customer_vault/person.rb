@@ -11,12 +11,12 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     Dorsale::CustomerVault::PersonPolicy
   end
 
-  def initialize(*)
+  after_initialize :verify_class
+
+  def verify_class
     if self.class == ::Dorsale::CustomerVault::Person
       # self.abstract_class does not work with STI
       raise "Cannot directly instantiate Person class"
-    else
-      super
     end
   end
 

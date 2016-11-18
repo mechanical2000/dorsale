@@ -30,9 +30,8 @@ class Dorsale::Flyboy::Folder < ::Dorsale::ApplicationRecord
     in: proc { ::Dorsale::Flyboy::Folder.aasm.states.map(&:to_s) }
   }
 
-  def initialize(*args)
-    super
-    self.progress = 0 if progress.nil?
+  def assign_default_values
+    assign_default :progress, 0
   end
 
   def no_undone_tasks?

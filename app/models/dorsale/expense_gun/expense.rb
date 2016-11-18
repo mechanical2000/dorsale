@@ -23,9 +23,8 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
     order(created_at: :desc, id: :desc)
   }
 
-  def initialize(*args)
-    super
-    self.date = Time.zone.now.to_date if self.date.nil?
+  def assign_default_values
+    assign_default :date, Time.zone.now.to_date
   end
 
   # Sum of line amounts
