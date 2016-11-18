@@ -137,10 +137,6 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     model.to_s.demodulize.downcase.to_sym
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_objects
     @person ||= scope.find(params[:id])
   end

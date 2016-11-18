@@ -57,10 +57,6 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
     customer_vault_person_path(@person) + "#links"
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def person_scope
     policy_scope(::Dorsale::CustomerVault::Person)
   end

@@ -13,4 +13,16 @@ class Dorsale::ApplicationController < ::ApplicationController
     end
   }
 
+  def model
+    raise NotImplementedError
+  end
+
+  helper_method :model
+
+  def scope
+    policy_scope(model)
+  end
+
+  helper_method :scope
+
 end

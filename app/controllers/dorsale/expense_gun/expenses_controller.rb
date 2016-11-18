@@ -109,10 +109,6 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     ::Dorsale::ExpenseGun::Expense
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_expense
     @expense = scope.find(params[:id])
   end

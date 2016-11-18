@@ -113,10 +113,6 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     ::Dorsale::BillingMachine::Quotation
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def default_back_url
     if @quotation
       url_for(action: :show, id: @quotation.to_param)

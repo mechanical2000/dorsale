@@ -51,10 +51,6 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
     ::Dorsale::BillingMachine::PaymentTerm
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def back_url
     url_for(action: :index, id: nil)
   end
