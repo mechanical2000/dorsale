@@ -7,6 +7,7 @@
 - Add missing indexes
 - Add `:default` option to `info` helper
 - Refactor
+- Add nilify_blanks gem
 
 ## 3.1.7
 
