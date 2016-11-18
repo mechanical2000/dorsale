@@ -1,12 +1,7 @@
 class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::ApplicationController
   handles_sortable_columns
 
-  before_action :set_objects, only: [
-    :show,
-    :edit,
-    :update,
-    :destroy,
-  ]
+  before_action :set_objects
 
   def index
     authorize model, :list?
@@ -80,6 +75,13 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     authorize @person, :read?
   end
 
+  def tasks
+    show
+  end
+
+  def invoices
+    show
+  end
 
   def edit
     authorize @person, :update?
@@ -138,7 +140,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   end
 
   def set_objects
-    @person ||= scope.find(params[:id])
+    @person ||= scope.find(params[:id]) if params.key?(:id)
   end
 
   def common_permitted_params

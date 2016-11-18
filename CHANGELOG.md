@@ -9,6 +9,7 @@
 - Refactor
 - Add nilify_blanks gem
 - Add invoices chart
+- CustomerVault improvements + add invoices tab
 
 ## 3.1.7
 

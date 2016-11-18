@@ -187,7 +187,7 @@ When(/^the user download the pdf$/) do
   find(".link_download").click
 end
 
-Then(/^he should see (\d+) invoices$/) do |count|
+Then(/^he should see (\d+) invoices?$/) do |count|
   expect(page).to have_selector '.invoice', count: count
 end
 

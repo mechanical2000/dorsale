@@ -1,28 +1,7 @@
-.customer_vault
-  - content_for :context
-    = render "dorsale/customer_vault/people/context", person: @person
-    = render "dorsale/customer_vault/people/data_context", person: @person
+- content_for :person_page
+  = comments_for(@person)
 
-  - content_for :main
-    ul.nav.nav-tabs role="tablist"
-      li.active
-        a data-toggle="tab" href="#activity" role="tab"
-          = t("sections.activity")
-      li
-        a data-toggle="tab" href="#links" role="tab"
-          = t("sections.links")
-      li
-        a data-toggle="tab" href="#tasks" role="tab"
-          = t("sections.tasks")
+  - if @person.try(:context).present?
+    .panel.panel-default: .panel-body = text2html(@person.context)
 
-    .tab-content.person-tab-content
-      #activity.tab-pane.active
-        = render "dorsale/customer_vault/people/activity_tab", person: @person
-
-      #links.tab-pane
-        = render "dorsale/customer_vault/people/links_tab", person: @person
-
-      #tasks.tab-pane
-        = render "dorsale/customer_vault/people/tasks_tab", person: @person
-
-  = render_contextual
+= render "dorsale/customer_vault/people/show_layout"

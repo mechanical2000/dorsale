@@ -184,7 +184,7 @@ Then(/^the quotation default date is set to today's date\.$/) do
   page.should have_field('quotation_date', with: I18n.l(Time.zone.now.to_date))
 end
 
-Then(/^he should see (\d+) quotations$/) do |arg1|
+Then(/^he should see (\d+) quotations?$/) do |arg1|
   page.should have_selector '.quotation', count: arg1
 end
 

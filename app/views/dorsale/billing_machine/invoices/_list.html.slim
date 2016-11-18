@@ -29,7 +29,8 @@ table.default.invoices
           = invoice.tracking_id
 
         td.customer_name
-          = invoice.customer.try(:name)
+          - if invoice.customer
+            = link_to invoice.customer, invoice.customer
 
         td.total_excluding_taxes
           = bm_currency invoice.total_excluding_taxes

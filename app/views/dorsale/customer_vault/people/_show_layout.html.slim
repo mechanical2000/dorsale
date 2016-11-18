@@ -4,11 +4,7 @@
     = render "dorsale/customer_vault/people/data_context", person: @person
 
   - content_for :main
-    .panel.panel-default: .panel-heading: .panel-title
-      = t("actions.update")
-      = " : "
-      = @person
-
-    = render "dorsale/customer_vault/people/form"
+    = render "dorsale/customer_vault/people/tabs"
+    = content_for :person_page
 
   = render_contextual

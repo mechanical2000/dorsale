@@ -7,12 +7,6 @@ en:
     address_informations: "Address informations"
     additional_informations: "Additional informations"
 
-  sections:
-    activity: "Activity"
-    links: "Links"
-    tasks: "Tasks"
-    people: "People"
-
   messages:
     no_people: "No people find."
     no_activity: "No recent activity."

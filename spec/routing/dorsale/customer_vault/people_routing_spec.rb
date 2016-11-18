@@ -59,6 +59,21 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :routing do
       route_to("dorsale/customer_vault/people#show", id: "1")
     end
 
+    it "#tasks" do
+      expect(get "/customer_vault/people/1/tasks").to \
+      route_to("dorsale/customer_vault/people#tasks", id: "1")
+    end
+
+    it "#invoices" do
+      expect(get "/customer_vault/people/1/invoices").to \
+      route_to("dorsale/customer_vault/people#invoices", id: "1")
+    end
+
+    it "#links" do
+      expect(get "/customer_vault/people/1/links").to \
+      route_to("dorsale/customer_vault/links#index", person_id: "1")
+    end
+
     it "#edit" do
       expect(get "/customer_vault/people/1/edit").to \
       route_to("dorsale/customer_vault/people#edit", id: "1")

@@ -27,7 +27,7 @@ Feature: Create tasks on people
     When I go on the general tasks page
     Then the task appear
 
-  Scenario: Add a task to an individual
+  Scenario: Filter tasks on an individual
     Given an existing individual
     When I go on this individual
     And I go on the tasks section

@@ -52,4 +52,8 @@ module Dorsale::BillingMachine::ApplicationHelper
 
     column_chart totals, height: "200px"
   end
+
+  def bm_currency(n)
+    currency(n, ::Dorsale::BillingMachine.default_currency)
+  end
 end
