@@ -49,4 +49,8 @@ module Dorsale::Flyboy::ApplicationHelper
     }
   end
 
+  def flyboy_tasks_owners_for_filters_select
+    policy_scope(User)
+  end
+
 end
