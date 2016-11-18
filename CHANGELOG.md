@@ -4,7 +4,9 @@
 
 - Add print CSS
 - UUID friendly
-- Add missins indexes
+- Add missing indexes
+- Add `:default` option to `info` helper
+- Refactor
 
 ## 3.1.7
 
