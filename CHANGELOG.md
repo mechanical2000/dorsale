@@ -4,6 +4,7 @@
 
 - Add print CSS
 - UUID friendly
+- Add missins indexes
 
 ## 3.1.7
 
