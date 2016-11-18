@@ -10,6 +10,12 @@
           :input_html => {value: @subject},
         )
 
+        = f.input(:from,
+          :disabled => true,
+          :label => t("attributes.email_from"),
+          :input_html => {value: "#{current_user} <#{current_user.email}>"},
+        )
+
         = f.input(:to,
           :disabled => true,
           :label => t("attributes.email_to"),

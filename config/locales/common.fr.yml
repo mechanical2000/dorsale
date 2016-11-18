@@ -162,6 +162,7 @@ fr:
     addressable           : "Origine"
     attachable            : "Origine"
     email_subject         : "Object"
+    email_from            : "Expéditeur"
     email_to              : "Destinataire"
     email_attachment      : "Pièce jointe"
     email_body            : "Message"

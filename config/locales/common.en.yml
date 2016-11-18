@@ -151,6 +151,7 @@ en:
     addressable           : "Origin"
     attachable            : "Origin"
     email_subject         : "Subject"
+    email_from            : "Sender"
     email_to              : "Recipient"
     email_attachment      : "Attachment"
     email_body            : "Message"

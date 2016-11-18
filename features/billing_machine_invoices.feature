@@ -33,6 +33,7 @@ Feature: Invoice Management
     Then a new invoice is displayed with the informations
 
   Scenario: Send invoice by email
+    Given an existing customer
     And an existing invoice
     When the user goes to the invoice details
     And he send invoice to customer by email
