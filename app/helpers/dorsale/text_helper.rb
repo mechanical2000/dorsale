@@ -65,12 +65,19 @@ module Dorsale::TextHelper
     str.gsub("\r", "").gsub("\n", "<br />").html_safe
   end
 
-  def info(object, attribute, text_or_options = nil, options = {})
-    if text_or_options.is_a?(Hash)
-      text    = nil
-      options = text_or_options
+  def info(object, attribute, value_or_options = nil, options = {})
+    if value_or_options.nil?
+      value = object.public_send(attribute)
+    elsif value_or_options.is_a?(Hash)
+      value = object.public_send(attribute)
+      options = value_or_options
     else
-      text = text_or_options
+      value = value_or_options
+    end
+
+    if value.blank?
+      value = options[:default]
+      return if value == :hide
     end
 
     label       = options[:label]     || object.t(attribute)
@@ -82,8 +89,6 @@ module Dorsale::TextHelper
     klass       = object.is_a?(Module) ? object : object.class
     object_type = klass.to_s.split("::").last.underscore
 
-    value = text
-    value = object.public_send(attribute)     if value.nil?
     value = t("yes")                          if value === true
     value = t("no")                           if value === false
     value = object.t("#{attribute}.#{value}") if nested
