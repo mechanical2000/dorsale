@@ -51,12 +51,11 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
     end
   end
 
-  def initialize(*args)
-    super
-    self.done = false                                    if done.nil?
-    self.reminder = Time.zone.now.to_date + snooze_default_reminder if reminder.nil?
-    self.term     = Time.zone.now.to_date + snooze_default_term     if term.nil?
-    self.progress = 0                                    if progress.nil?
+  def assign_default_values
+    assign_default :progress, 0
+    assign_default :done,     false
+    assign_default :reminder, Time.zone.now.to_date + snooze_default_reminder
+    assign_default :term,     Time.zone.now.to_date + snooze_default_term
   end
 
   after_save    :update_taskable_progress!

@@ -103,6 +103,21 @@ describe Dorsale::TextHelper, type: :helper do
     it "should work with class" do
       expect(info Dorsale::CustomerVault::Person, :count, 123).to eq %(<div class="info"><strong class="info-label">Nombre de contacts</strong><span class="info-separator"> : </span><span class="info-value person-count">123</span></div>)
     end
+
+    it "should accept default value" do
+      quotation_line.unit = nil
+      expect(info quotation_line, :unit, default: "hello").to eq %(<div class="info"><strong class="info-label">Unité</strong><span class="info-separator"> : </span><span class="info-value quotation_line-unit">hello</span></div>)
+    end
+
+    it "should accept :hide as default value" do
+      quotation_line.unit = nil
+      expect(info quotation_line, :unit, default: :hide).to eq nil
+    end
+
+    it "should hide on blank strings" do
+      quotation_line.unit = " \n"
+      expect(info quotation_line, :unit, default: :hide).to eq nil
+    end
   end
 
 end

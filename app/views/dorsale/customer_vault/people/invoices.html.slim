@@ -1,0 +1,5 @@
+- content_for :person_page
+  .panel.panel-default
+    = render "dorsale/billing_machine/invoices/list", invoices: @person.invoices
+
+= render "dorsale/customer_vault/people/show_layout"

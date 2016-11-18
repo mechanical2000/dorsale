@@ -97,7 +97,7 @@ end
 
 Then(/^I see do not see my comment$/) do
   expect(Dorsale::Comment.count).to eq(@comments_count - 1)
-  expect(page).to_not have_content @comment.text
+  expect(page).to have_no_content @comment.text
 end
 
 Given(/^an existing individual with recent comments$/) do
@@ -155,8 +155,8 @@ end
 
 Then(/^tags are added$/) do
   expect(all(".tag").count).to eq 2
-  expect(page.body).to have_content "mytag1"
-  expect(page.body).to have_content "mytag2"
+  expect(page).to have_content "mytag1"
+  expect(page).to have_content "mytag2"
 end
 
 Given(/^an existing corporation with tags$/) do
@@ -169,8 +169,8 @@ end
 
 Then(/^tags are removed$/) do
   expect(all(".tag").count).to eq 1
-  expect(page.body).to_not have_content "mytag1"
-  expect(page.body).to have_content "mytag2"
+  expect(page).to have_no_content "mytag1"
+  expect(page).to have_content "mytag2"
 end
 
 Given(/^an open task to this corporation$/) do
@@ -187,7 +187,7 @@ end
 
 Then(/^I see only the open task in the context$/) do
   expect(find("#context")).to have_content "I-am-open"
-  expect(find("#context")).to_not have_content "I-am-closed"
+  expect(find("#context")).to have_no_content "I-am-closed"
 end
 
 Then(/^I see the link in the context$/) do

@@ -1,17 +1,13 @@
-.customer_vault
-  - content_for :context do
-    = render "dorsale/customer_vault/people/context", person: @person
+- content_for :person_page
+  .panel.panel-default
+    .panel-heading: .panel-title
+      = t("actions.new_link")
 
-  - content_for :main do
-    .panel.panel-default
-      .panel-heading: .panel-title
-        = t("actions.new_link")
+    .panel-body
+      = horizontal_form_for @link, as: :link, url: customer_vault_link_form_path do |f|
+        = f.association :bob, label: ::Dorsale::CustomerVault::Person.t
 
-      .panel-body
-        = horizontal_form_for @link, as: :link, url: customer_vault_link_form_path do |f|
-          = f.association :bob, label: ::Dorsale::CustomerVault::Person.t
+        = f.input :title
+        = form_buttons
 
-          = f.input :title
-          = form_buttons
-
-  = render_contextual
+= render "dorsale/customer_vault/people/show_layout"

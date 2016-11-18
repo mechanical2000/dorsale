@@ -11,12 +11,12 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     Dorsale::CustomerVault::PersonPolicy
   end
 
-  def initialize(*)
+  after_initialize :verify_class
+
+  def verify_class
     if self.class == ::Dorsale::CustomerVault::Person
       # self.abstract_class does not work with STI
       raise "Cannot directly instantiate Person class"
-    else
-      super
     end
   end
 
@@ -25,6 +25,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   has_many :comments, -> { order(created_at: :desc, id: :desc) }, class_name: ::Dorsale::Comment, as: :commentable, dependent: :destroy
   has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable, dependent: :destroy
   has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable, dependent: :destroy
+  has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer
   accepts_nested_attributes_for :address, allow_destroy: true
 
   after_destroy :destroy_links

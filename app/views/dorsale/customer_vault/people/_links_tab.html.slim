@@ -1,7 +1,0 @@
-.linkable
-  - person.links.each do |link|
-    = render "dorsale/customer_vault/people/list_item", person: link.other_person, link: link
-
-.text-center
-  - if policy(person).update?
-    = create_button dorsale.new_customer_vault_person_link_path(person), action: :new_link

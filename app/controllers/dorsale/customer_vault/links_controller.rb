@@ -1,6 +1,10 @@
 class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::ApplicationController
   before_action :set_objects
 
+  def index
+    authorize @person, :read?
+  end
+
   def new
     authorize @person, :update?
 
@@ -54,11 +58,7 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   end
 
   def back_url
-    customer_vault_person_path(@person) + "#links"
-  end
-
-  def scope
-    policy_scope(model)
+    customer_vault_person_links_path(@person)
   end
 
   def person_scope

@@ -70,10 +70,6 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     ::Dorsale::Alexandrie::Attachment
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_objects
     @attachment = scope.find(params[:id])
   end

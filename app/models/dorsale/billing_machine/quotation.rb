@@ -28,16 +28,8 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     order(unique_index: :desc)
   }
 
-  def initialize(*)
-    super
-    self.state                 = STATES.first          if state.nil?
-    self.date                  = Time.zone.now.to_date if date.nil?
-    assign_default_values
-  end
-
   before_create :assign_unique_index
   before_create :assign_tracking_id
-  before_validation :assign_default_values
 
   def assign_unique_index
     if unique_index.nil?
@@ -50,10 +42,12 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
   end
 
   def assign_default_values
-    self.expires_at            = date + 1.month if expires_at.nil?
-    self.commercial_discount   = 0              if commercial_discount.nil?
-    self.vat_amount            = 0              if vat_amount.nil?
-    self.total_excluding_taxes = 0              if total_excluding_taxes
+    assign_default :state,                  STATES.first
+    assign_default :date,                   Time.zone.now.to_date
+    assign_default :expires_at,             date + 1.month
+    assign_default :commercial_discount,    0
+    assign_default :vat_amount,             0
+    assign_default :total_excluding_taxes,  0
   end
 
   before_save :update_totals

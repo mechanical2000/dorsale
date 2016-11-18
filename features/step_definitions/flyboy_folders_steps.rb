@@ -80,7 +80,7 @@ Then(/^I am on the folders section$/) do
 end
 
 Then(/^the folder is deleted$/) do
-  expect(page).to_not have_content @folder.name
+  expect(page).to have_no_content @folder.name
 end
 
 When(/^I close this folder$/) do
@@ -114,7 +114,7 @@ end
 
 Then(/^only open folders appear$/) do
     expect(page).to have_content @open_folder.name
-    expect(page).to_not have_content @closed_folder.name
+    expect(page).to have_no_content @closed_folder.name
 end
 
 When(/^I filter folders by closed$/) do
@@ -124,7 +124,7 @@ end
 
 Then(/^only closed folders appear$/) do
   expect(page).to have_content @closed_folder.name
-  expect(page).to_not have_content @open_folder.name
+  expect(page).to have_no_content @open_folder.name
 end
 
 Then(/^all folders appear$/) do
@@ -138,7 +138,7 @@ end
 
 Then(/^only the "Hello" folder appear$/) do
   expect(page).to have_content "Hello"
-  expect(page).to_not have_content "World"
+  expect(page).to have_no_content "World"
 end
 
 Given(/^(\d+) existing folders$/) do |n|

@@ -82,10 +82,6 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
     ::Dorsale::Comment
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_objects
     @comment ||= scope.find(params[:id])
   end

@@ -25,6 +25,8 @@ require "pdf/reader"
 require "prawn"
 require "prawn/table"
 require "combine_pdf"
+require "nilify_blanks"
+require "chartkick"
 
 if Rails.env.test? || Rails.env.development?
   require "pry"

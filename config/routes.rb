@@ -71,7 +71,12 @@ Dorsale::Engine.routes.draw do
     end
 
     resources :people do
-      resources :links, except: [:index]
+      resources :links
+
+      member do
+        get :tasks
+        get :invoices
+      end
     end
 
     resources :corporations, path: "people", except: [:new] do

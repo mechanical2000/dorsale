@@ -48,4 +48,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rake"
   s.add_dependency "axlsx"
   s.add_dependency "zip-zip"
+  s.add_dependency "nilify_blanks"
+  s.add_dependency "chartkick"
 end

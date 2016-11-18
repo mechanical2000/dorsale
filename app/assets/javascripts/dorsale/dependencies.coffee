@@ -9,3 +9,5 @@
 //= require select2_locale_fr
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
+//= require Chart.bundle
+//= require chartkick

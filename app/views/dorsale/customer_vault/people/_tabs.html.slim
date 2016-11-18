@@ -1,0 +1,24 @@
+.nav.nav-tabs#person-tabs
+  li class=("active" if request.path == dorsale.customer_vault_person_path(@person))
+    a href=dorsale.customer_vault_person_path(@person)
+      = t("customer_vault.activity")
+      = " "
+      span.badge = @person.comments.count
+
+  li class=("active" if request.path.start_with? dorsale.customer_vault_person_links_path(@person))
+    a href=dorsale.customer_vault_person_links_path(@person)
+      = Dorsale::CustomerVault::Link.ts
+      = " "
+      span.badge = @person.links.length
+
+  li class=("active" if request.path == dorsale.tasks_customer_vault_person_path(@person))
+    a href=dorsale.tasks_customer_vault_person_path(@person)
+      = Dorsale::Flyboy::Task.ts
+      = " "
+      span.badge = @person.tasks.count
+
+  li class=("active" if request.path == dorsale.invoices_customer_vault_person_path(@person))
+    a href=dorsale.invoices_customer_vault_person_path(@person)
+      = Dorsale::BillingMachine::Invoice.ts
+      = " "
+      span.badge = @person.invoices.count

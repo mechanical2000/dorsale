@@ -51,10 +51,6 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
     ::Dorsale::BillingMachine::IdCard
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def back_url
     url_for(action: :index, id: nil)
   end

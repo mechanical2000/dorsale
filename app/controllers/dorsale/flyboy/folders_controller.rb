@@ -114,10 +114,6 @@ class Dorsale::Flyboy::FoldersController < ::Dorsale::Flyboy::ApplicationControl
     ::Dorsale::Flyboy::Folder
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_objects
     @folder = scope.find(params[:id])
   end

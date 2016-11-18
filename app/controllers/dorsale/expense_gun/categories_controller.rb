@@ -51,10 +51,6 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
     ::Dorsale::ExpenseGun::Category
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def back_url
     expense_gun_categories_path
   end

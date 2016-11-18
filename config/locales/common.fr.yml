@@ -181,6 +181,7 @@ fr:
 
   filters:
     all_customers: "Tous les clients"
+    all_owners: "Tout le monde"
     date_begin: "Date début"
     date_end: "Date fin"
 

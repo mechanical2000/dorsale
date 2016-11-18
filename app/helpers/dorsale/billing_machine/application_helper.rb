@@ -33,4 +33,27 @@ module Dorsale::BillingMachine::ApplicationHelper
     end
   end
 
+  def billing_machine_invoices_chart
+    invoices = policy_scope(::Dorsale::BillingMachine::Invoice)
+      .where("date > ?", 1.year.ago.beginning_of_month)
+
+    totals = {}
+
+    (0..12).to_a.reverse.map do |n|
+      date  = n.month.ago
+      label = l(date, format: "%B %Y").titleize
+      totals[label] = 0
+      invoices.each do |i|
+        next if i.date.year  != date.year
+        next if i.date.month != date.month
+        totals[label] += i.total_excluding_taxes
+      end
+    end
+
+    column_chart totals, height: "200px"
+  end
+
+  def bm_currency(n)
+    currency(n, ::Dorsale::BillingMachine.default_currency)
+  end
 end

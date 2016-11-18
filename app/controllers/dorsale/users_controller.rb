@@ -56,10 +56,6 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
     User
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def set_objects
     @user = scope.find(params[:id])
   end

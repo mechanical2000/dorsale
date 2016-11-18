@@ -12,14 +12,9 @@ class Dorsale::Flyboy::TaskComment < ::Dorsale::ApplicationRecord
 
   default_scope -> { order("created_at DESC") }
 
-  def initialize(*args)
-    super
-
-    self.date = Time.zone.now if date.nil?
-
-    if progress.nil?
-      self.progress = task ? task.progress : 0
-    end
+  def assign_default_values
+    assign_default :date,     Time.zone.now
+    assign_default :progress, (task ? task.progress : 0)
   end
 
   after_create :update_task_progress

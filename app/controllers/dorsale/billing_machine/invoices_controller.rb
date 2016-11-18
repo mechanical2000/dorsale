@@ -140,10 +140,6 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     ::Dorsale::BillingMachine::Invoice
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def default_back_url
     if @invoice
       url_for(action: :show, id: @invoice.to_param)

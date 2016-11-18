@@ -4,7 +4,12 @@
 
 - Add print CSS
 - UUID friendly
-- Add missins indexes
+- Add missing indexes
+- Add `:default` option to `info` helper
+- Refactor
+- Add nilify_blanks gem
+- Add invoices chart
+- CustomerVault improvements + add invoices tab
 
 ## 3.1.7
 

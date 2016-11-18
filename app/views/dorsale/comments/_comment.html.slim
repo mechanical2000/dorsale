@@ -14,13 +14,13 @@
   p.infos
     span.commentable-container
       span.commentable
-        = link_to comment.commentable.name, engine_polymorphic_path(comment.commentable)
+        = link_to comment.commentable, engine_polymorphic_path(comment.commentable)
 
       span.separator
         = " - "
 
     span.date
-      = l(comment.created_at)
+      = date(comment.created_at)
 
     = " "
     = ::Dorsale::Comment.t(:written_by)

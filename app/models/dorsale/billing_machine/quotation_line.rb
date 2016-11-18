@@ -9,17 +9,12 @@ class Dorsale::BillingMachine::QuotationLine < ::Dorsale::ApplicationRecord
     order(:created_at => :asc)
   }
 
-  def initialize(*)
-    super
-    assign_default_values
-  end
-
   before_validation :update_total
 
   def assign_default_values
-      self.quantity   ||= 0
-      self.unit_price ||= 0
-      self.vat_rate ||= ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    assign_default :quantity,   0
+    assign_default :unit_price, 0
+    assign_default :vat_rate,   ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
   end
 
   def update_total

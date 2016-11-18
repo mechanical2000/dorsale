@@ -152,10 +152,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     ::Dorsale::Flyboy::Task
   end
 
-  def scope
-    policy_scope(model)
-  end
-
   def default_back_url
     if @task
       url_for(action: :show, id: @task.to_param)
