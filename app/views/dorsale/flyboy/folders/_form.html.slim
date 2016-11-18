@@ -3,7 +3,9 @@
     = icon :tasks
     = " "
     - if @folder.persisted?
-      = t("actions.update") + " : " + @folder.name
+      = t("actions.update")
+      = " : "
+      = @folder
     - else
       = t('messages.folders.title_create')
 

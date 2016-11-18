@@ -14,14 +14,17 @@ table.table.default#category
     - @categories.each do |category|
       tr.actions.category
         td.actions.category-name
-          = category.name
+          = category
+
         td.actions.category-code
           = category.code
+
         td.actions.category-vat_deductible
           - if category.vat_deductible?
             = icon(:check)
           - else
             = icon(:remove)
+
         td.actions.category-action
           - if policy(category).create?
             = update_button edit_expense_gun_category_path(category), id: "edit-#{category.id}"

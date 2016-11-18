@@ -1,6 +1,6 @@
 = filters_form do |f|
   = f.input(:customer_guid,
-    :collection    => @people.map { |p| [p.name, p.guid] },
+    :collection    => @people.map { |p| [p.to_s, p.guid] },
     :include_blank => t("filters.all_customers"),
   )
 

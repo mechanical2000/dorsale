@@ -3,7 +3,10 @@
     = icon :check_square_o
     = " "
     - if @task.persisted?
-      = t("actions.update") + " : " + @task.name
+      = t("actions.update")
+      = " : "
+      = @task
+
     - else
       =  t('actions.new_task')
 

@@ -32,9 +32,9 @@ table#folders-list
 
         td.folder-name
           - if policy(folder).read?
-            = link_to folder.name, dorsale.flyboy_folder_path(folder)
+            = link_to folder, dorsale.flyboy_folder_path(folder)
           - else
-            = folder.name
+            = folder
 
         td.actions
           - if policy(Dorsale::Flyboy::Task.new(taskable: folder)).create?

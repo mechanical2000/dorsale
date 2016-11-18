@@ -8,7 +8,7 @@
     - person.tasks.where(done: false).map do |task|
       li.list-group-item
         a href=dorsale.flyboy_task_path(task)
-          = task.name
+          = task
 
         - if policy(task).complete?
           span.pull-right
