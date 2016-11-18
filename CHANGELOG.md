@@ -8,6 +8,7 @@
 - Add `:default` option to `info` helper
 - Refactor
 - Add nilify_blanks gem
+- Add invoices chart
 
 ## 3.1.7
 
