@@ -24,7 +24,6 @@ Given(/^an authenticated user$/) do
   sign_in @user
 end
 
-
 Given(/^an active user$/) do
   @user = create(:user)
 end
@@ -52,4 +51,11 @@ end
 
 Then(/^he see the "([^"]*)" filter$/) do |id|
   expect(page).to have_selector("#filters_#{id}")
+end
+
+When(/^(?:I|he|she) export to XLS$/) do
+  find("a[href$=xls]").click
+end
+
+When(/^(?:I|he|she) download XLS file$/) do
 end

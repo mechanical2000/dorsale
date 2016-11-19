@@ -94,10 +94,6 @@ When(/^I snooze this task$/) do
   find("a[href*=snooze]").click
 end
 
-When(/^I export tasks to XLS$/) do
-  find("a[href$=xls]").click
-end
-
 When(/^I filter tasks by done$/) do
   select "Fermé"
   find(".filters [type=submit]:last-child").click

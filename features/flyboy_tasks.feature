@@ -47,7 +47,7 @@ Feature: Manage tasks
   Scenario: Export tasks to XLS
     Given 3 existing tasks
     When I go to the tasks section
-    And I export tasks to XLS
+    And I export to XLS
     Then I download XLS file
 
   Scenario: Filter tasks
