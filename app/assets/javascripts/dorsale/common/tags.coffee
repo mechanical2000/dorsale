@@ -1,4 +1,4 @@
-$(document).on "ready turbolinks:load page:load", ->
+$(document).on "turbolinks:load", ->
   $("form:not([action*=filters]) select[multiple][name*=tag]").not(".select2-hidden-accessible").map ->
     placeholder = $(this).attr("placeholder")
 

@@ -1,7 +1,7 @@
 Dorsale::Engine.routes.draw do
   # Comments
 
-  resources :comments, only: [:index, :create, :edit, :update, :destroy]
+  resources :comments, only: [:create, :edit, :update, :destroy]
 
   # Users
 

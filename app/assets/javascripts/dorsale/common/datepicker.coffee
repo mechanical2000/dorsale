@@ -16,5 +16,5 @@ window.setupDatepickers = ->
       todayBtn: "linked"
       autoclose: true
 
-$(document).on "ready turbolinks:load page:load", ->
+$(document).on "turbolinks:load", ->
   setupDatepickers()

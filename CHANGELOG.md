@@ -10,6 +10,7 @@
 - Add nilify_blanks gem
 - Add invoices chart
 - CustomerVault improvements + add invoices tab
+- Comments improvements
 
 ## 3.1.7
 

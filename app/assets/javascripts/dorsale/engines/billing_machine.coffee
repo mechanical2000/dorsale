@@ -15,7 +15,7 @@ window.num2str = (num) ->
   num = parseFloat(num)
   accounting.formatNumber(num)
 
-$(document).on "ready turbolinks:load page:load cocoon:after-insert", ->
+$(document).on "turbolinks:load cocoon:after-insert", ->
   $("#billing_machine-form input.number").keyup ->
     total_excluding_taxes = 0.0
 

@@ -8,11 +8,11 @@ describe Dorsale::CommentsController, type: :controller do
   before(:each) { sign_in(user) }
 
   let(:valid_params){
-    commentable = DummyModel.create!(name: "A")
+    commentable = create(:customer_vault_corporation)
     {
-      :commentable_id   => commentable.id,
-      :commentable_type => commentable.class.to_s,
       :comment => {
+        :commentable_id   => commentable.id,
+        :commentable_type => commentable.class.to_s,
         :text => "Hello",
       },
       :back_url => "/",
