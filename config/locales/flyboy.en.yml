@@ -69,6 +69,8 @@ en:
 
       dorsale/flyboy/task:
         taskable: "Origin"
+        taskable_type: "Origin type"
+        taskable_progerss: "Origin progress"
         owner: "Owner"
         owner_id: "Owner"
         owner_guid: "Owner"
