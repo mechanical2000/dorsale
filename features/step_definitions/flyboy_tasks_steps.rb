@@ -94,18 +94,6 @@ When(/^I snooze this task$/) do
   find("a[href*=snooze]").click
 end
 
-When(/^I export tasks to PDF$/) do
-  find("a[href$=pdf]").click
-end
-
-When(/^I export tasks to CSV$/) do
-  find("a[href$=csv]").click
-end
-
-When(/^I export tasks to XLS$/) do
-  find("a[href$=xls]").click
-end
-
 When(/^I filter tasks by done$/) do
   select "Fermé"
   find(".filters [type=submit]:last-child").click
@@ -161,18 +149,6 @@ end
 
 Then(/^the task is snoozed$/) do
   expect(all("a[href*=snooze]").count).to eq 0
-end
-
-Then(/^I download PDF file$/) do
-  # Nothing to do, Rails raise if any problem
-end
-
-Then(/^I download CSV file$/) do
-  # Nothing to do, Rails raise if any problem
-end
-
-Then(/^I download XLS file$/) do
-  # Nothing to do, Rails raise if any problem
 end
 
 Then(/^I am on this task$/) do

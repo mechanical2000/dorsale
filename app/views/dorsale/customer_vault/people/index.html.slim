@@ -2,7 +2,7 @@
   - content_for :title
     = icon(:book)
     = " "
-    = ::Dorsale::CustomerVault::Person.ts
+    = model.ts
 
   - content_for :filters
     = render "dorsale/customer_vault/people/filters"
@@ -21,6 +21,6 @@
 
   - content_for :page_footer
     .text-center
-      = info ::Dorsale::CustomerVault::Person, :count, @people_without_pagination.count
+      = info model, :count, @people_without_pagination.count
 
   = render_dorsale_index

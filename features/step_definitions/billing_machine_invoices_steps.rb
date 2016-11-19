@@ -140,10 +140,6 @@ When(/^he saves the invoice$/) do
   find("[type=submit]").click
 end
 
-When(/^he finds and clicks on the download CSV export file$/) do
-  find("[href$=csv]").click
-end
-
 When(/^he set the invoice as paid$/) do
   find("[href$=pay]").click
 end
