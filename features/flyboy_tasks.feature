@@ -44,18 +44,6 @@ Feature: Manage tasks
     Then I am on the tasks section
     And the task is snoozed
 
-  Scenario: Export tasks to PDF
-    Given 3 existing tasks
-    When I go to the tasks section
-    And I export tasks to PDF
-    Then I download PDF file
-
-  Scenario: Export tasks to CSV
-    Given 3 existing tasks
-    When I go to the tasks section
-    And I export tasks to CSV
-    Then I download CSV file
-
   Scenario: Export tasks to XLS
     Given 3 existing tasks
     When I go to the tasks section
