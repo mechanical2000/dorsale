@@ -12,6 +12,7 @@
 - CustomerVault improvements + add invoices tab
 - Comments improvements
 - Remove tasks PDF and CSV export (XLS still present)
+- Convert CSV exports to XLS
 
 ## 3.1.7
 
