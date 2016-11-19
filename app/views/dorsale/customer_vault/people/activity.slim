@@ -15,9 +15,8 @@
       p = t("messages.no_activity")
 
     - else
-      #comments-list
-        - @comments.map do |comment|
-          = render "dorsale/customer_vault/people/comment", comment: comment
+      #dorsale-comments
+        = render "dorsale/comments/list", comments: @comments
 
   - content_for :pagination
     = paginate @comments

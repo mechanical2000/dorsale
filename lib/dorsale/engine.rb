@@ -59,6 +59,10 @@ module Dorsale
       end
     end
 
+    initializer "assets" do
+      Rails.application.config.assets.precompile += %w( dorsale/avatar.png )
+    end
+
     Mime::Type.register "application/vnd.ms-excel", :xls
     Mime::Type.register "application/vnd.ms-excel", :xlsx
   end

@@ -1,11 +1,10 @@
-= simple_form_for [dorsale, @comment], remote: true do |f|
-  - if defined?(commentable)
-    input type="hidden" name="commentable_id"   value=commentable.id
-    input type="hidden" name="commentable_type" value=commentable.class
+= simple_form_for [dorsale, comment], remote: true do |f|
+  = f.hidden_field :commentable_id
+  = f.hidden_field :commentable_type
 
   .comment
-    - if @comment.author.try(:avatar_url).present?
-      = image_tag @comment.author.avatar_url, class: "avatar"
+    - if comment.author.try(:avatar_url).present?
+      = image_tag comment.author.avatar_url, class: "avatar"
     - else
       = image_tag "dorsale/avatar.png", class: "avatar"
 

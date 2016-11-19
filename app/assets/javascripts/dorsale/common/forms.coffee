@@ -24,7 +24,7 @@ window.setupUploadInputs = (scope = document) ->
       label.html(label_value)
     input.change()
 
-$(document).on "ready turbolinks:load page:load", ->
+$(document).on "turbolinks:load", ->
   $("button.reset").click ->
     form = $(this).parents("form")
 
