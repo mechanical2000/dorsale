@@ -5,9 +5,6 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
     :update,
   ]
 
-  def show
-  end
-
   def index
     authorize User, :list?
 
@@ -18,10 +15,6 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
     @user ||= scope.new
 
     authorize @user, :create?
-  end
-
-  def edit
-    authorize @user, :update?
   end
 
   def create
@@ -36,6 +29,13 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
       flash.now[:error] = t("messages.users.create_error")
       render :new
     end
+  end
+
+  def show
+  end
+
+  def edit
+    authorize @user, :update?
   end
 
   def update
