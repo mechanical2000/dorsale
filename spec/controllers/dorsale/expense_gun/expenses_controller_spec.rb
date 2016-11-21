@@ -30,6 +30,16 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
 
         expect(assigns :expenses).to eq [expense1]
       end
+
+      it "should assigns only users having expenses" do
+        user1    = create(:user)
+        user2    = create(:user)
+        expense2 = create(:expense_gun_expense, user: user2)
+
+        get :index
+
+        expect(assigns :users).to eq [user2]
+      end
     end # describe "filters"
   end # describe "#index"
 end

@@ -143,7 +143,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
   end
 
   def set_filters_variables
-    @users ||= policy_scope(User).all
+    @users ||= scope.preload(:user).map(&:user).uniq.compact
   end
 
 end
