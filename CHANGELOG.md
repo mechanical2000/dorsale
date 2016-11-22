@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version
+## 3.2.0
 
 - Add print CSS
 - UUID friendly
