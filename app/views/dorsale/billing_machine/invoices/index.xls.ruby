@@ -29,12 +29,12 @@ data = [
     invoice.customer.try(:address).try(:zip),
     invoice.customer.try(:address).try(:city),
     invoice.customer.try(:address).try(:country),
-    number(invoice.commercial_discount),
-    number(invoice.total_excluding_taxes),
-    number(invoice.vat_amount),
-    number(invoice.total_including_taxes),
-    number(invoice.advance),
-    number(invoice.balance),
+    invoice.commercial_discount,
+    invoice.total_excluding_taxes,
+    invoice.vat_amount,
+    invoice.total_including_taxes,
+    invoice.advance,
+    invoice.balance,
   ]
 end
 

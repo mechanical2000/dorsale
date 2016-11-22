@@ -13,6 +13,7 @@
 - Comments improvements
 - Remove tasks PDF and CSV export (XLS still present)
 - Convert CSV exports to XLS
+- XLSX Serializer improvements
 
 ## 3.1.7
 
