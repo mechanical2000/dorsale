@@ -12,7 +12,7 @@
 
   - content_for :actions
     - if policy(model).export?
-      = download_button url_for(format: :xls), download: "#{model.ts}.xls"
+      = download_button url_for(format: :xlsx), download: "#{model.ts}.xlsx"
 
   - content_for :table
     = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false

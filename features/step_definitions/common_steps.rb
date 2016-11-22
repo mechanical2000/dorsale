@@ -53,9 +53,9 @@ Then(/^he see the "([^"]*)" filter$/) do |id|
   expect(page).to have_selector("#filters_#{id}")
 end
 
-When(/^(?:I|he|she) export to XLS$/) do
-  find("a[href$=xls]").click
+When(/^(?:I|he|she) export to XLSX$/) do
+  find("a[href$=xlsx]").click
 end
 
-When(/^(?:I|he|she) download XLS file$/) do
+When(/^(?:I|he|she) download XLSX file$/) do
 end

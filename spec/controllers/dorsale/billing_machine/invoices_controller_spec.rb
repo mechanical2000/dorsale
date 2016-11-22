@@ -6,15 +6,15 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
   let(:user) { create(:user) }
   before(:each) { sign_in(user) }
 
-  describe "XLS export" do
+  describe "XLSX export" do
     render_views
 
     it "should be ok" do
       3.times { create(:billing_machine_invoice_line) }
-      get :index, params: {format: :xls}
+      get :index, params: {format: :xlsx}
       expect(response).to be_ok
     end
-  end # describe "XLS export"
+  end # describe "XLSX export"
 
   describe "filters" do
     before do

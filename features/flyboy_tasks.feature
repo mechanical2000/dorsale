@@ -44,11 +44,11 @@ Feature: Manage tasks
     Then I am on the tasks section
     And the task is snoozed
 
-  Scenario: Export tasks to XLS
+  Scenario: Export tasks to XLSX
     Given 3 existing tasks
     When I go to the tasks section
-    And I export to XLS
-    Then I download XLS file
+    And I export to XLSX
+    Then I download XLSX file
 
   Scenario: Filter tasks
     Given an existing done task

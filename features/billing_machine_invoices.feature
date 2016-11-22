@@ -142,11 +142,11 @@ Feature: Invoice Management
     And the VAT due is "196,00"
     And the total including taxes is "1 196,00"
 
-  Scenario: Export invoices in XLS
+  Scenario: Export invoices in XLSX
     And an existing invoice
     When the user goes to the invoices page
-    When I export to XLS
-    Then I download XLS file
+    When I export to XLSX
+    Then I download XLSX file
 
   Scenario: Existing unpaid invoice set to paid
     And an existing invoice

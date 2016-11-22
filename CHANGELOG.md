@@ -11,8 +11,8 @@
 - Add invoices chart
 - CustomerVault improvements + add invoices tab
 - Comments improvements
-- Remove tasks PDF and CSV export (XLS still present)
-- Convert CSV exports to XLS
+- Remove tasks PDF and CSV export (XLSX still present)
+- Convert CSV exports to XLSX
 - XLSX Serializer improvements
 
 ## 3.1.7

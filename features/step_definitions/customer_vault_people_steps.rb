@@ -1,5 +1,5 @@
 When(/^I export people list$/) do
-  find("[href$=xls]").click
+  find("[href$=xlsx]").click
 end
 
 Then(/^the file is downloaded$/) do
