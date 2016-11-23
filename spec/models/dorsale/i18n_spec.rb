@@ -1,11 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "i18n" do
-  before :all do
-    Rails.application.eager_load!
-  end
+# TODO : test FR + EN
 
-  # TODO : test FR + EN
+RSpec.describe "i18n" do
+  Rails.application.eager_load!
 
   ::Dorsale::ApplicationRecord.descendants.each do |model|
     next unless model.to_s.start_with?("Dorsale")
