@@ -167,15 +167,6 @@ fr:
     email_attachment      : "Pièce jointe"
     email_body            : "Message"
 
-    # TODO : Move to bakkbone
-    administrator         : "Administrateur?"
-    billing_machine       : "Accès Facturation?"
-    time_machine          : "Accès Gestion Du Temps?"
-    expense_gun           : "Accès Note de Frais?"
-    customer_vault        : "Accès Annuaire?"
-    flyboy                : "Accès Taches?"
-    notify_invoices_late_payments: "Notifications de Retard de Paiement?"
-
   errors:
     messages:
       extension_white_list_error : "Ce type de fichier n'est pas prit en charge"
