@@ -43,7 +43,7 @@ fr:
         other: "Personnes"
       dorsale/customer_vault/corporation:
         one: "Entreprise"
-        other: "Entreprise"
+        other: "Entreprises"
       dorsale/customer_vault/individual:
         one: "Individu"
         other: "Individus"
