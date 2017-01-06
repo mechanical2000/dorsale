@@ -80,6 +80,9 @@ fr:
     rename     : "Renommer"
     email      : "Envoyer par email"
     print      : "Imprimer"
+    submit     : "Soumettre"
+    accept     : "Accepter"
+    refuse     : "Refuser"
 
   attributes: &attributes
     id                    : "Id"

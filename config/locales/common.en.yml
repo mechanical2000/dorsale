@@ -72,6 +72,9 @@ en:
     rename     : "Rename"
     email      : "Send by email"
     print      : "Print"
+    submit     : "Submit"
+    accept     : "Accept"
+    refuse     : "Refuse"
 
   attributes: &attributes
     id                    : "Id"

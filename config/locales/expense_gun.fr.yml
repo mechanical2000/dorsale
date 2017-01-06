@@ -11,10 +11,6 @@ fr:
 
       actions:
         create : "Nouvelle note de frais"
-        submit : "Soumettre"
-        accept : "Accepter"
-        refuse : "Refuser"
-        cancel : "Annuler"
 
     expense_line:
       actions:
