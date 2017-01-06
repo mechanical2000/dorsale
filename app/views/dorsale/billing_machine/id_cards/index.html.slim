@@ -3,8 +3,7 @@
     = ::Dorsale::BillingMachine::IdCard.ts
 
   - content_for :actions
-    - if policy(::Dorsale::BillingMachine::IdCard).create?
-      = create_button new_billing_machine_id_card_path, action: :create
+    = render "dorsale/billing_machine/id_cards/index_actions"
 
   - content_for :table
     = render "dorsale/billing_machine/id_cards/list", id_cards: @id_cards

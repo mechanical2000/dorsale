@@ -5,10 +5,10 @@
     = t("customer_vault.activity")
 
   - content_for :actions
-    = render "dorsale/customer_vault/people/actions"
+    = render "dorsale/customer_vault/people/index_actions"
 
   - content_for :page_header
-  = render "dorsale/customer_vault/people/index_tabs"
+    = render "dorsale/customer_vault/people/index_tabs"
 
   - content_for :page_body
     - if @comments.empty?

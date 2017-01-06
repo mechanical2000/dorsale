@@ -8,8 +8,7 @@
     = paginate @expenses
 
   - content_for :actions
-    - if policy(::Dorsale::ExpenseGun::Expense).create?
-      = create_button dorsale.new_expense_gun_expense_path, text: t("expense_gun.expense.actions.create")
+    = render "dorsale/expense_gun/expenses/index_actions"
 
   - content_for :filters
     = render "dorsale/expense_gun/expenses/filters"

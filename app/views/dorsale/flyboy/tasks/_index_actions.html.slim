@@ -1,0 +1,2 @@
+- if policy(model).export?
+  = download_button url_for(format: :xlsx), download: "#{model.ts}.xlsx"

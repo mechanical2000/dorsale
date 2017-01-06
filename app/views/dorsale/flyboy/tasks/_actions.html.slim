@@ -1,9 +1,0 @@
-.actions
-  - if policy(task).update?
-    = update_button dorsale.edit_flyboy_task_path(task)
-
-  - if policy(task).snooze?
-    = snooze_button dorsale.snooze_flyboy_task_path(task)
-
-  - if policy(task).complete?
-    = complete_button dorsale.complete_flyboy_task_path(task)
