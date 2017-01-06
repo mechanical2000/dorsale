@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Rename `render_dorsale_index` to `render_dorsale_page`
+
 ## 3.2.0
 
 - Add print CSS
