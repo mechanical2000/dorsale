@@ -1,0 +1,12 @@
+= document.t
+- if document.tracking_id.present?
+  = " n° "
+  = document.tracking_id
+
+- if document.is_a?(Dorsale::BillingMachine::Invoice)
+  .label class="invoice #{document.payment_status}"
+    = document.t("payment_status.#{document.payment_status}")
+
+- if document.is_a?(Dorsale::BillingMachine::Quotation)
+  .label class="quotation #{quotation_state_classes(document)}"
+    = document.t("state.#{document.state}")

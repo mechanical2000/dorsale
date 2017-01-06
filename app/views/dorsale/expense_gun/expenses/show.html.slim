@@ -1,65 +1,52 @@
 .expense_gun
-  .actions.top
-    - if policy(@expense).update?
-      = update_button dorsale.edit_expense_gun_expense_path(@expense)
+  - content_for :actions
+    = render "dorsale/expense_gun/expenses/show_actions"
 
-    - if policy(@expense).copy?
-      = copy_button dorsale.copy_expense_gun_expense_path(@expense)
+  - content_for :title
+    = @expense.t
+    = " : "
+    = @expense
 
-    - if policy(@expense).submit?
-      = link_to t("expense_gun.expense.actions.submit"), dorsale.submit_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-primary"
 
-    - if policy(@expense).accept?
-      = link_to t("expense_gun.expense.actions.accept"), dorsale.accept_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-success"
-
-    - if policy(@expense).refuse?
-      = link_to t("expense_gun.expense.actions.refuse"), dorsale.refuse_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-danger"
-
-    - if policy(@expense).cancel?
-      = link_to t("expense_gun.expense.actions.cancel"), dorsale.cancel_expense_gun_expense_path(@expense), data: {method: "patch", confirm: t("actions.confirm")}, class: "btn btn-warning"
-
-    = print_button
-
-  .panel.panel-default
-    .panel-heading: .panel-title
-        = @expense.t
-        = " : "
-        = @expense
-
+  - content_for :table
     .panel-body
       = info @expense, :date
       = info @expense, :user
       = info @expense, :state
 
-  hr
+  - content_for :page_body
 
-  - @expense.expense_lines.each do |expense_line|
-    .panel.panel-default.expense-line
+    hr
+
+    - @expense.expense_lines.each do |expense_line|
+      .panel.panel-default.expense-line
+        .panel-body
+          .row
+            .col-md-4
+              = info expense_line, :name
+              = info expense_line, :category
+              = info expense_line, :date
+
+            .col-md-4
+              = info expense_line, :total_all_taxes,  helper: :euros
+              = info expense_line, :company_part,     helper: :percentage
+              = info expense_line, :employee_payback, helper: :euros
+
+            .col-md-4
+              = info expense_line, :vat,                  helper: :euros
+              = info expense_line, :total_vat_deductible, helper: :euros
+
+    hr
+
+    .panel.panel-default
       .panel-body
-        .row
-          .col-md-4
-            = info expense_line, :name
-            = info expense_line, :category
-            = info expense_line, :date
+        = info @expense, :total_all_taxes,        helper: :euros
+        = info @expense, :total_employee_payback, helper: :euros
+        = info @expense, :total_vat_deductible,   helper: :euros
 
-          .col-md-4
-            = info expense_line, :total_all_taxes,  helper: :euros
-            = info expense_line, :company_part,     helper: :percentage
-            = info expense_line, :employee_payback, helper: :euros
+    hr
 
-          .col-md-4
-            = info expense_line, :vat,                  helper: :euros
-            = info expense_line, :total_vat_deductible, helper: :euros
+    .attachments-panel
+      = attachments_for(@expense)
 
-  hr
-
-  .panel.panel-default
-    .panel-body
-      = info @expense, :total_all_taxes,        helper: :euros
-      = info @expense, :total_employee_payback, helper: :euros
-      = info @expense, :total_vat_deductible,   helper: :euros
-
-  hr
-
-  .attachments-panel
-    = attachments_for(@expense)
+  = render_dorsale_page

@@ -1,7 +1,11 @@
 .billing_machine
-  .actions.top
+  - content_for :title
+    = render "dorsale/billing_machine/invoices/show_title", document: @invoice
+
+  - content_for :actions
     = render "dorsale/billing_machine/invoices/show_actions"
 
-  hr
+  - content_for :page_body
+    = render "dorsale/billing_machine/invoices/details", document: @invoice
 
-  = render "dorsale/billing_machine/invoices/details", document: @invoice
+  = render_dorsale_page
