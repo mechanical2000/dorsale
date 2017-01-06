@@ -2,20 +2,6 @@
 - document_type = document.class.to_s.split("::").last.downcase.to_sym
 
 #billing_machine-show
-  h1
-    = document.t
-    - if document.tracking_id.present?
-      = " n° "
-      = document.tracking_id
-
-    - if document_type == :invoice
-      .label class="invoice #{document.payment_status}"
-        = document.t("payment_status.#{document.payment_status}")
-
-    - if document_type == :quotation
-      .label class="quotation #{quotation_state_classes(document)}"
-        = document.t("state.#{document.state}")
-
   .row
     .col-md-6
       .well

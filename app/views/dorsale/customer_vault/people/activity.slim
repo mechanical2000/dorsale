@@ -5,10 +5,10 @@
     = t("customer_vault.activity")
 
   - content_for :actions
-    = render "dorsale/customer_vault/people/actions"
+    = render "dorsale/customer_vault/people/index_actions"
 
   - content_for :page_header
-  = render "dorsale/customer_vault/people/index_tabs"
+    = render "dorsale/customer_vault/people/index_tabs"
 
   - content_for :page_body
     - if @comments.empty?
@@ -21,4 +21,4 @@
   - content_for :pagination
     = paginate @comments
 
-  = render_dorsale_index
+  = render_dorsale_page

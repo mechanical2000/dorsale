@@ -1,10 +1,9 @@
-- content_for :person_page
-  .linkable
-    - @person.links.each do |link|
-      = render "dorsale/customer_vault/people/list_item", person: link.other_person, link: link
+- content_for :actions
+  - if policy(@person).update?
+    = create_button dorsale.new_customer_vault_person_link_path(@person), action: :new_link
 
-  .text-center
-    - if policy(@person).update?
-      = create_button dorsale.new_customer_vault_person_link_path(@person), action: :new_link
+- content_for :page_body
+  - @person.links.each do |link|
+    = render "dorsale/customer_vault/people/list_item", person: link.other_person, link: link
 
 = render "dorsale/customer_vault/people/show_layout"

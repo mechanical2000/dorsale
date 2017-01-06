@@ -1,9 +1,14 @@
 .flyboy
-  - content_for :context do
+  - content_for :title
+    = icon :check_square_o
+    = " "
+    = ::Dorsale::Flyboy::Task.ts
+
+  - content_for :context
     = render "dorsale/flyboy/folders/context", folder: @folder
 
-  - content_for :main do
+  - content_for :page_body
     .tasks
       = tasks_for @folder
 
-  = render_contextual
+  = render_dorsale_page

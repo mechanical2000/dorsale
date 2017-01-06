@@ -11,7 +11,7 @@
     = render "dorsale/customer_vault/people/index_tabs"
 
   - content_for :actions
-    = render "dorsale/customer_vault/people/actions"
+    = render "dorsale/customer_vault/people/index_actions"
 
   - content_for :page_body
     = render "dorsale/customer_vault/people/list"
@@ -23,4 +23,4 @@
     .text-center
       = info model, :count, @people_without_pagination.count
 
-  = render_dorsale_index
+  = render_dorsale_page

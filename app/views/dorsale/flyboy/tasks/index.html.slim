@@ -11,8 +11,7 @@
     = search_form
 
   - content_for :actions
-    - if policy(model).export?
-      = download_button url_for(format: :xlsx), download: "#{model.ts}.xlsx"
+    = render "dorsale/flyboy/tasks/index_actions"
 
   - content_for :table
     = render "dorsale/flyboy/tasks/list", tasks: @tasks, nested: false
@@ -20,5 +19,5 @@
   - content_for :pagination
     = paginate @tasks
 
-  = render_dorsale_index
+  = render_dorsale_page
 

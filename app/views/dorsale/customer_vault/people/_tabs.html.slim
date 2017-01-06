@@ -11,14 +11,16 @@
       = " "
       span.badge = @person.links.length
 
-  li class=("active" if request.path == dorsale.tasks_customer_vault_person_path(@person))
-    a href=dorsale.tasks_customer_vault_person_path(@person)
-      = Dorsale::Flyboy::Task.ts
-      = " "
-      span.badge = @person.tasks.count
+  - if policy(Dorsale::Flyboy::Task).list?
+    li class=("active" if request.path == dorsale.tasks_customer_vault_person_path(@person))
+      a href=dorsale.tasks_customer_vault_person_path(@person)
+        = Dorsale::Flyboy::Task.ts
+        = " "
+        span.badge = @person.tasks.count
 
-  li class=("active" if request.path == dorsale.invoices_customer_vault_person_path(@person))
-    a href=dorsale.invoices_customer_vault_person_path(@person)
-      = Dorsale::BillingMachine::Invoice.ts
-      = " "
-      span.badge = @person.invoices.count
+  - if policy(Dorsale::BillingMachine::Invoice).list?
+    li class=("active" if request.path == dorsale.invoices_customer_vault_person_path(@person))
+      a href=dorsale.invoices_customer_vault_person_path(@person)
+        = Dorsale::BillingMachine::Invoice.ts
+        = " "
+        span.badge = @person.invoices.count

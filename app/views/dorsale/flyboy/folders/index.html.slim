@@ -11,8 +11,7 @@
     = search_form
 
   - content_for :actions
-    - if policy(::Dorsale::Flyboy::Folder).create?
-      = create_button dorsale.new_flyboy_folder_path
+    = render "dorsale/flyboy/folders/index_actions"
 
   - content_for :table
     = render "dorsale/flyboy/folders/list", folders: @folders
@@ -20,4 +19,4 @@
   - content_for :pagination
     = paginate @folders
 
-  = render_dorsale_index
+  = render_dorsale_page

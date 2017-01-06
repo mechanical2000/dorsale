@@ -1,0 +1,40 @@
+#page_header = content_for(:page_header)
+
+- if content_for(:search)
+  .row
+    .col-md-8
+    .col-md-4
+      = content_for(:search)
+
+= content_for(:filters)
+
+- content_for(:main)
+  = content_for(:tabs)
+
+  - unless content_for?(:title)
+    p.text-right = content_for(:actions)
+
+  - if content_for?(:title) || content_for?(:table)
+    .panel.panel-default
+      - if content_for?(:title)
+        .panel-heading: .panel-title
+          = content_for(:title)
+          .pull-right = content_for(:actions)
+
+      = content_for(:table)
+
+  = content_for(:page_body)
+
+- if content_for?(:context)
+  .row
+    aside#context.col-sm-4.col-xs-12
+      = content_for(:context)
+    #context-main.col-sm-8.col-xs-12
+      = content_for(:main)
+- else
+  = content_for(:main)
+
+
+= content_for(:pagination)
+
+#page_footer = content_for(:page_footer)

@@ -1,8 +1,11 @@
 .billing_machine
-  .actions.top
+  - content_for :title
+    = render "dorsale/billing_machine/quotations/show_title", document: @quotation
+
+  - content_for :actions
     = render "dorsale/billing_machine/quotations/show_actions"
 
-  hr
+  - content_for :page_body
+    = render "dorsale/billing_machine/quotations/details", document: @quotation
 
-  = render "dorsale/billing_machine/invoices/details", document: @quotation
-
+  = render_dorsale_page

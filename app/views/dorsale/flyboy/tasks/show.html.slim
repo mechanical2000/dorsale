@@ -1,9 +1,9 @@
 .flyboy
-  - content_for :context do
+  - content_for :context
     = render "dorsale/flyboy/tasks/context", task: @task
     = render "dorsale/flyboy/tasks/taskable_context", taskable: @task.taskable
 
-  - content_for :main do
+  - content_for :page_body
     .task-comments
       = render "dorsale/flyboy/task_comments/list", task: @task
 
@@ -14,4 +14,4 @@
         .panel-body
           = text2html @task.description
 
-  = render_contextual
+  = render_dorsale_page

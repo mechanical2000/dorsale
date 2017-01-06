@@ -1,8 +1,8 @@
 .customer_vault
-  - content_for :main
+  - content_for :page_body
     .panel.panel-default: .panel-heading: .panel-title
       = t("actions.new_#{@person.person_type}")
 
     = render "dorsale/customer_vault/people/form"
 
-  = render_contextual
+  = render_dorsale_page

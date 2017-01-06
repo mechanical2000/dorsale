@@ -11,8 +11,7 @@
     = Dorsale::BillingMachine::Quotation.ts
 
   - content_for :actions
-    - if policy(Dorsale::BillingMachine::Quotation).create?
-      = create_button dorsale.new_billing_machine_quotation_path
+    = render "dorsale/billing_machine/quotations/index_actions"
 
   - content_for :table
     = render "dorsale/billing_machine/quotations/list", quotations: @quotations
@@ -20,4 +19,4 @@
   - content_for :pagination
     = paginate @quotations
 
-  = render_dorsale_index
+  = render_dorsale_page
