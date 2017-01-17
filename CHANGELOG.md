@@ -1,10 +1,12 @@
 # Changelog
 
 ## Next version
+
 - Add download of all invoices in pdf
 - Rename `render_dorsale_index` to `render_dorsale_page`
 - Replace `render_contextual` by `render_dorsale_page`
 - Change some view/partial names
+- Fix js reset button
 
 ## 3.2.0
 

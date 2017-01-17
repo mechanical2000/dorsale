@@ -27,20 +27,9 @@ window.setupUploadInputs = (scope = document) ->
 $(document).on "turbolinks:load", ->
   $("button.reset").click ->
     form = $(this).parents("form")
-
-    form.find("select option:first-child").map ->
-      this.selected = true
-
-    form.find("input").map ->
-      return if this.type.match(/submit|hidden|button/)
-      this.value = $(this).data("default-value") || ""
-
-    form.find("textarea").map ->
-      this.value = $(this).data("default-value") || ""
-
-    form.find("select").map ->
-      this.selectize.clear() if this.selectize
-      $(this).val("").trigger("change")
+    form.find("input, textarea, select").map ->
+      return if String(this.type).match(/submit|hidden|button/)
+      $(this).val String($(this).data("default-value") || "")
 
   # Referer with anchor
   $("form").submit ->
