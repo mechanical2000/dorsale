@@ -16,6 +16,16 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
     end
   end # describe "XLSX export"
 
+  describe "PDF export" do
+    render_views
+
+    it "should be ok" do
+      3.times { create(:billing_machine_invoice) }
+      get :index, params: {format: :pdf}
+      expect(response).to be_ok
+    end
+  end # describe "PDF export"
+
   describe "filters" do
     before do
       Timecop.freeze "2016-11-08 12:00:00"
