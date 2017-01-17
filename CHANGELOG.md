@@ -4,6 +4,7 @@
 
 - Rename `render_dorsale_index` to `render_dorsale_page`
 - Replace `render_contextual` by `render_dorsale_page`
+- Change some view/partial names
 
 ## 3.2.0
 
