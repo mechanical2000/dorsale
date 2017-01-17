@@ -7,6 +7,7 @@
 - Replace `render_contextual` by `render_dorsale_page`
 - Change some view/partial names
 - Fix js reset button
+- Print CSS add flash
 
 ## 3.2.0
 
