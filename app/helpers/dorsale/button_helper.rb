@@ -65,6 +65,24 @@ module Dorsale::ButtonHelper
     dorsale_button(url, options)
   end
 
+  def export_button(url, options = {})
+    ext = url.split(".").last
+
+    if ext.length <= 4
+      action = :"export_#{ext}"
+    else
+      action = :export
+    end
+
+    options = {
+      :icon     => "cloud-download",
+      :action   => action,
+      :download => url,
+    }.merge(options)
+
+    dorsale_button(url, options)
+  end
+
   def update_button(url, options = {})
     options = {
       :icon   => :pencil,

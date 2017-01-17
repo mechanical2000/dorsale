@@ -2,4 +2,5 @@
   = create_button dorsale.new_billing_machine_invoice_path
 
 - if policy(::Dorsale::BillingMachine::Invoice).export?
-  = download_button dorsale.billing_machine_invoices_path(format: :xlsx), download: "#{model.ts}.xlsx"
+  = export_button dorsale.billing_machine_invoices_path(format: :xlsx), download: "#{model.ts}.xlsx"
+  = export_button dorsale.billing_machine_invoices_path(format: :pdf),  download: "#{model.ts}.pdf"
