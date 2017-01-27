@@ -61,6 +61,7 @@ fr:
     total_including_taxes: "Total TTC"
     expires_at: "Date d'expiration"
     balance: "Reste à payer"
+    pdf_file: "Fichier PDF"
 
   activerecord:
     models:

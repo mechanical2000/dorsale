@@ -61,7 +61,7 @@
           br
 
         - if document.comments.present?
-          = info document, :comments, text2html(document.comments), separator: " :<br />"
+          = info document, :comments, text2html(document.comments), separator: " :<br />".html_safe
           br
 
 

@@ -16,39 +16,45 @@ describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
     q
   }
 
-  let(:content) {
-    tempfile = Tempfile.new("pdf")
-    tempfile.binmode
-    tempfile.write(quotation.to_pdf)
-    tempfile.flush
-    Yomu.new(tempfile.path).text
+  let(:generate!) {
+    Dorsale::BillingMachine::PdfFileGenerator.(quotation)
+    quotation.reload
   }
 
+  let(:content) {
+    generate!
+    Yomu.new(quotation.pdf_file.path).text
+  }
   it "should display global vat rate" do
     expect(content).to include "TVA 19,60 %"
     expect(content).to_not include "MONTANT TVA"
     expect(content).to_not include "TVA %"
   end
 
-  it "should work with empty quotation" do
-    id_card = Dorsale::BillingMachine::IdCard.new
-    quotation = ::Dorsale::BillingMachine::Quotation.new(id_card: id_card)
+  describe "empty quotation" do
+    let(:quotation) {
+      id_card = Dorsale::BillingMachine::IdCard.new
+      id_card.save(validate: false)
+      quotation = ::Dorsale::BillingMachine::Quotation.create!(id_card: id_card)
+    }
 
-    expect {
-      quotation.to_pdf
-    }.to_not raise_error
-  end
+    it "should work" do
+      expect { generate! }.to_not raise_error
+    end
+  end # describe "empty quotation"
 
-  describe "attachment" do
-    it "should build attachments" do
+  describe "attachments" do
+    let(:quotation) {
       quotation  = create(:billing_machine_quotation)
       attachment = create(:alexandrie_attachment, attachable: quotation)
+      quotation
+    }
 
-      text = Yomu.read(:text, quotation.to_pdf).split("\n")
-      expect(text).to include "page 1"
-      expect(text).to include "page 2"
+    it "should build attachments" do
+      expect(content).to include "page 1"
+      expect(content).to include "page 2"
     end
-  end
+  end # describe "attachments"
 
 end
 

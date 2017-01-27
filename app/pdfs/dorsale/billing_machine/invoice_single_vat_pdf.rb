@@ -4,6 +4,11 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
   include Dorsale::Alexandrie::Prawn
   include Dorsale::AllHelpers
   include ActionView::Helpers::NumberHelper
+
+  def attachments
+    @main_document.try(:attachments) || []
+  end
+
   DEBUG = false
 
   GREY       = "808080"
