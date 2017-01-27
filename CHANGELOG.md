@@ -2,7 +2,7 @@
 
 ## Next version
 
-Nothing.
+- Delete Flyboy folders
 
 ## 3.3.0
 
