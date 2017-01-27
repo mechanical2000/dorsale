@@ -106,23 +106,18 @@ individual2.comments.create!(
   :author => user,
 )
 
-folder1 = Dorsale::Flyboy::Folder.create!(
-  :name        => "Dorsale v2",
-  :description => "Tâches pour la version 2 de Dorsale"
-)
-
-folder1_task1 = folder1.tasks.create!(
+task1 = Dorsale::Flyboy::Task.create!(
   :name        => "Traduction",
   :description => "Traduire en français et en anglais"
 )
 
-folder1_task1.comments.create!(
+task1.comments.create!(
   :description => "Traduction française terminée",
   :progress    => 50,
   :author      => user,
 )
 
-folder1_task2 = folder1.tasks.create!(
+task2 = Dorsale::Flyboy::Task.create!(
   :name        => "Rediger les documentations",
   :description => "Dorsale, CustomerVault, Flyboy, ..."
 )

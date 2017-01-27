@@ -2,7 +2,6 @@ data = [
   [
     model.t(:taskable),
     model.t(:taskable_type),
-    model.t(:taskable_progress),
     model.t(:name),
     model.t(:progress),
     model.t(:term),
@@ -11,9 +10,8 @@ data = [
 
 @tasks_without_pagination.each do |task|
   data << [
-    task.taskable.name,
-    task.taskable.class.t,
-    percentage(task.taskable.try(:progress)),
+    task.taskable.to_s,
+    (task.taskable.class.t if task.taskable),
     task.name,
     percentage(task.progress),
     date(task.term),

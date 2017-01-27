@@ -12,6 +12,9 @@
 
   .panel-body
     = horizontal_form_for @task, as: :task do |f|
+      - if @task.taskable
+        = f.input :taskable, as: :string, input_html: {value: @task.taskable.to_s, disabled: true}
+
       = f.input :name
       = f.input :description
       = f.input :reminder, html5: true

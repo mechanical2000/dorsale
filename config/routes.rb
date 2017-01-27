@@ -22,13 +22,6 @@ Dorsale::Engine.routes.draw do
   # Flyboy
 
   namespace :flyboy do
-    resources :folders do
-      member do
-        patch :open
-        patch :close
-      end
-    end
-
     resources :tasks do
       get :summary, on: :collection
       member do

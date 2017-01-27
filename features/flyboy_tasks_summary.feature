@@ -5,7 +5,6 @@ Feature: Homepage
 
   Background:
     Given an authenticated user
-    Given an existing folder
 
   Scenario: Expired tasks
     Given an expired tasks

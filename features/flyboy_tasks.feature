@@ -4,11 +4,10 @@ Feature: Manage tasks
     Given an authenticated user
 
   Scenario: Create a task
-    Given an existing folder
-    When I consult this folder
+    When I go to the tasks section
     And I create a task
-    Then I am on this folder
-    And the task is created
+    Then the task is created
+    And I go to the tasks section
 
   Scenario: Read a task
     Given an existing task

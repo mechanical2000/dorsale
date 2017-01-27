@@ -14,8 +14,7 @@ Given(/^an existing task named "(.*?)"$/) do |name|
 end
 
 Given(/^an existing task$/) do
-  @task   = create(:flyboy_task)
-  @folder = @task.taskable
+  @task = create(:flyboy_task)
 end
 
 Given(/^an existing snoozable task$/) do
@@ -63,7 +62,7 @@ When(/^the flyboy daily crons run$/) do
 end
 
 When(/^I create a task$/) do
-  find("#context-main a[href*='tasks/new']").click
+  find("a[href*='tasks/new']").click
   find("form[id*=task] [type=submit]").click # First submit to see errors
   fill_in "task_name", with: "I-am-the-task-title"
   fill_in "task_description", with: "I-am-the-task-description"
