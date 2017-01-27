@@ -32,8 +32,7 @@ table.default.quotations
           = quotation.tracking_id
 
         td.customer_name
-          - if quotation.customer
-            = link_to quotation.customer, quotation.customer
+          = link_to_object(quotation.customer)
 
         td.total_excluding_taxes
           = bm_currency quotation.total_excluding_taxes

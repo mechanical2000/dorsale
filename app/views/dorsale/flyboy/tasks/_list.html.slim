@@ -51,17 +51,11 @@ table#tasks-list
           = progress_bar percentage: task.progress, label: true
 
         td.task-name
-          - if policy(task).read?
-            = link_to task.to_s, dorsale.flyboy_task_path(task)
-          - else
-            = task.to_s
+          = link_to_object(task)
 
         - unless nested
           td.taskable-name.hidden-xs
-            - if task.taskable && policy(task.taskable).read?
-              = link_to task.taskable.to_s, engine_polymorphic_path(task.taskable)
-            - else
-              = task.taskable.to_s
+            = link_to_object(task.taskable)
 
         td.task-term.hidden-xs
           = date(task.term)

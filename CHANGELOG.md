@@ -3,6 +3,7 @@
 ## Next version
 
 - Delete Flyboy folders
+- Add `link_to_object` helper
 
 ## 3.3.0
 

@@ -14,7 +14,7 @@
   p.infos
     span.commentable-container
       span.commentable
-        = link_to comment.commentable, engine_polymorphic_path(comment.commentable)
+        = link_to_object(comment.commentable)
 
       span.separator
         = " - "

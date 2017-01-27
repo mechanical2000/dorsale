@@ -5,7 +5,7 @@
       = icon :user  if person.individual?
       = " "
       span.name
-        = link_to person.to_s, dorsale.customer_vault_person_path(person)
+        = link_to_object(person)
 
       - if defined?(link)
         span.separator = " / "

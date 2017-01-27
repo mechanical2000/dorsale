@@ -1,4 +1,14 @@
 module Dorsale::LinkHelper
+  def link_to_object(obj, options = {})
+    return if obj.nil?
+
+    if policy(obj).read?
+      link_to(obj.to_s, engine_polymorphic_path(obj), options)
+    else
+      obj.to_s
+    end
+  end
+
   def icon_link_to(icon, name, options = nil, html_options = nil, &block)
     name = "#{icon(icon)} #{name}".html_safe
     link_to(name, options, html_options, &block)
