@@ -5,10 +5,11 @@ describe Dorsale::Flyboy::Task do
   it { is_expected.to belong_to :owner }
   it { is_expected.to have_many(:comments).dependent(:destroy) }
 
-  it { is_expected.to validate_presence_of :taskable}
   it { is_expected.to validate_presence_of :name}
   it { is_expected.to validate_presence_of :term}
   it { is_expected.to validate_presence_of :reminder}
+
+  it { is_expected.to_not validate_presence_of :taskable}
 
   describe "default values" do
     before do

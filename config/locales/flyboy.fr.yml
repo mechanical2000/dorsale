@@ -2,15 +2,6 @@ fr:
   messages:
     forbidden: "Cette page ne peut être trouvée"
 
-    folders:
-      title_create: "Nouveau dossier"
-      create_ok: "Le dossier a bien été créé"
-      update_ok: "Le dossier a bien été modifié"
-      open_ok: "Le dossier a été réouvert"
-      open_error: "Impossible de réouvrir le dossier"
-      close_ok: "Le dossier a été fermé"
-      close_error: "Impossible de fermer le dossier"
-
     tasks:
       create_ok: "La tâche a bien été créée"
       update_ok: "La tâche a bien été modifiée"
@@ -33,15 +24,8 @@ fr:
   actions:
     label: "Actions"
 
-    folders:
-      new_task: "Nouvelle tâche"
-
   activerecord:
     models:
-      dorsale/flyboy/folder:
-        one: "Dossier"
-        other: "Dossiers"
-
       dorsale/flyboy/task:
         one: "Tâche"
         other: "Tâches"
@@ -51,26 +35,15 @@ fr:
         other: "Commentaires de tâche"
 
     attributes:
-      dorsale/flyboy/folder:
-        folderable: "Origine"
-        name: "Titre"
-        status: "Status"
-        description: "Description"
-        revision: "Révision"
-        status: "Etat"
-        progress: "Progression"
-
-      dorsale/flyboy/folder/status:
+      dorsale/flyboy/task/status:
         all: "Tous les status"
         open: "Ouvert"
-        pending: "En attente"
         closed: "Fermé"
         unknown: "Inconnu"
 
       dorsale/flyboy/task:
         taskable: "Origine"
         taskable_type: "Type origine"
-        taskable_progress: "Progression origine"
         owner: "Propriétaire"
         owner_id: "Propriétaire"
         owner_guid: "Propriétaire"

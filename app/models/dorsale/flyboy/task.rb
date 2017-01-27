@@ -8,15 +8,16 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   paginates_per 50
 
-  belongs_to :taskable, polymorphic: true
+  belongs_to :taskable, polymorphic: true, required: false
   belongs_to :owner, polymorphic: true
   has_many :comments, class_name: ::Dorsale::Flyboy::TaskComment, inverse_of: :task, dependent: :destroy
+
   polymorphic_id_for :taskable
   polymorphic_id_for :owner
 
-  scope :delayed,  -> { where(done: false).where("term < ?", Time.zone.now.to_date)    }
-  scope :today,    -> { where(done: false).where("term = ?", Time.zone.now.to_date)    }
-  scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow) }
+  scope :delayed,  -> { where(done: false).where("term < ?", Time.zone.now.to_date) }
+  scope :today,    -> { where(done: false).where("term = ?", Time.zone.now.to_date) }
+  scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow)         }
 
   scope :this_week, -> {
     min = Date.tomorrow
@@ -37,7 +38,6 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   }
 
 
-  validates :taskable, presence: true
   validates :name,     presence: true
   validates :term,     presence: true
   validates :reminder, presence: true
@@ -46,7 +46,6 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   def validates_reminder_and_term
     if reminder && term && reminder > term
-      # errors.add(:reminder, "La date de relance doit être antérieure ou égale à la date d'échéance")
       errors.add(:reminder, :less_than, count: term)
     end
   end
@@ -56,13 +55,6 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
     assign_default :done,     false
     assign_default :reminder, Time.zone.now.to_date + snooze_default_reminder
     assign_default :term,     Time.zone.now.to_date + snooze_default_term
-  end
-
-  after_save    :update_taskable_progress!
-  after_destroy :update_taskable_progress!
-
-  def update_taskable_progress!
-    taskable.try(:update_progress!)
   end
 
   def snooze

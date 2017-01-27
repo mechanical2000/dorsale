@@ -1,2 +1,5 @@
 - if policy(model).export?
+  - if policy(Dorsale::Flyboy::Task).create?
+    = create_button dorsale.new_flyboy_task_path
+
   = export_button url_for(format: :xlsx), download: "#{model.ts}.xlsx"

@@ -1,5 +1,5 @@
 @javascript
-Feature: Manage folder comments
+Feature: Manage task comments
   Background:
     Given an authenticated user
 

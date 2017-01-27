@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161118071317) do
+ActiveRecord::Schema.define(version: 20170127131537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -299,21 +299,6 @@ ActiveRecord::Schema.define(version: 20161118071317) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.index ["user_id"], name: "index_dorsale_expense_gun_expenses_on_user_id", using: :btree
-  end
-
-  create_table "dorsale_flyboy_folders", force: :cascade do |t|
-    t.integer  "folderable_id"
-    t.string   "folderable_type"
-    t.string   "name"
-    t.text     "description"
-    t.integer  "progress"
-    t.string   "status"
-    t.string   "tracking"
-    t.integer  "version"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["folderable_id"], name: "index_dorsale_flyboy_folders_on_folderable_id", using: :btree
-    t.index ["folderable_type"], name: "index_dorsale_flyboy_folders_on_folderable_type", using: :btree
   end
 
   create_table "dorsale_flyboy_task_comments", force: :cascade do |t|

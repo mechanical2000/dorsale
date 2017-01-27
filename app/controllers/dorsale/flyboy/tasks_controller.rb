@@ -160,12 +160,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     end
   end
 
-  def back_url
-    url = super
-    url << "#tasks" if url.include?("customer_vault")
-    url
-  end
-
   def notify_owner(author, task)
     return if author == task.owner
     return if task.owner.nil?

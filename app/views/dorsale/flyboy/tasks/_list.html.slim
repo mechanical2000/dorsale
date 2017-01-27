@@ -58,7 +58,7 @@ table#tasks-list
 
         - unless nested
           td.taskable-name.hidden-xs
-            - if policy(task.taskable).read?
+            - if task.taskable && policy(task.taskable).read?
               = link_to task.taskable.to_s, engine_polymorphic_path(task.taskable)
             - else
               = task.taskable.to_s

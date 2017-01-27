@@ -2,15 +2,6 @@ en:
   messages:
     forbidden: "This page dont exist"
 
-    folders:
-      title_create: "New folder"
-      create_ok: "Folder created"
-      update_ok: "Folder updated"
-      open_ok: "Folder is open again"
-      open_error: "One error occurs, folder can't be opened"
-      close_ok: "Folder closed"
-      close_error: "One error occurs, folder can't be closed"
-
     tasks:
       create_ok: "Task created"
       update_ok: "Task updated"
@@ -33,15 +24,8 @@ en:
   actions:
     label: "Actions"
 
-    folders:
-      new_task: "New task"
-
   activerecord:
     models:
-      dorsale/flyboy/folder:
-        one: "Folder"
-        other: "Folders"
-
       dorsale/flyboy/task:
         one: "Task"
         other: "Tasks"
@@ -51,26 +35,15 @@ en:
         other: "Task Comments"
 
     attributes:
-      dorsale/flyboy/folder:
-        folderable: "Origin"
-        name: "Name"
-        status: "Status"
-        description: "Description"
-        revision: "Revision"
-        status: "State"
-        progress: "Progress"
-
-      dorsale/flyboy/folder/status:
+      dorsale/flyboy/task/status:
         all: "All status"
         open: "Open"
-        pending: "Pending"
         closed: "Closed"
         unknown: "Unknown"
 
       dorsale/flyboy/task:
         taskable: "Origin"
         taskable_type: "Origin type"
-        taskable_progerss: "Origin progress"
         owner: "Owner"
         owner_id: "Owner"
         owner_guid: "Owner"

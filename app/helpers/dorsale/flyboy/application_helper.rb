@@ -34,18 +34,11 @@ module Dorsale::Flyboy::ApplicationHelper
     return "onwarning"
   end
 
-  def folder_color(folder)
-    return "onalert"   if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term < ?', false, Time.zone.now.to_date).count > 0
-    return "onwarning" if ::Dorsale::Flyboy::Task.where(taskable: folder).where('done = ? AND term > ? AND reminder < ?', false, Time.zone.now.to_date, Time.zone.now.to_date).count > 0
-    return "finished"  if folder.closed?
-    return "ontime"
-  end
-
   def flyboy_status_for_filters_select
     {
-      Dorsale::Flyboy::Folder.t("status.all")    => "",
-      Dorsale::Flyboy::Folder.t("status.open")   => "open",
-      Dorsale::Flyboy::Folder.t("status.closed") => "closed",
+      Dorsale::Flyboy::Task.t("status.all")    => "",
+      Dorsale::Flyboy::Task.t("status.open")   => "open",
+      Dorsale::Flyboy::Task.t("status.closed") => "closed",
     }
   end
 

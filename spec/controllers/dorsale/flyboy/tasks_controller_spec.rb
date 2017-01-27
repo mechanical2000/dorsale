@@ -11,14 +11,8 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     create(:flyboy_task, done: false)
   }
 
-  let!(:task2) {
-    create(:flyboy_task, taskable: task.taskable, done: true)
-  }
-
   let(:valid_attributes) {{
     :name          => "New Task" ,
-    :taskable_id   => task.taskable.id,
-    :taskable_type => task.taskable.class,
     :reminder      => (Time.zone.now.to_date - 3.days),
     :term          => Time.zone.now.to_date,
   }}
@@ -79,15 +73,14 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     context "when sorting" do
       before do
-        Dorsale::Flyboy::Folder.destroy_all
         Dorsale::Flyboy::Task.destroy_all
-        @folder1 = create(:flyboy_folder, name: "Abc")
-        @folder2 = create(:flyboy_folder, name: "dEF")
-        @folder3 = create(:flyboy_folder, name: "xyz")
+        @corporation1 = create(:customer_vault_corporation, name: "Abc")
+        @corporation2 = create(:customer_vault_corporation, name: "dEF")
+        @corporation3 = create(:customer_vault_corporation, name: "xyz")
 
-        @task1 = create(:flyboy_task, taskable: @folder1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = create(:flyboy_task, taskable: @folder2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = create(:flyboy_task, taskable: @folder3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
+        @task1 = create(:flyboy_task, taskable: @corporation1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
+        @task2 = create(:flyboy_task, taskable: @corporation2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
+        @task3 = create(:flyboy_task, taskable: @corporation3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
       end
 
       it "sorting by taskable asc" do
@@ -136,13 +129,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     it "assigns the requested task as @task" do
       get :show, params: {:id => task.to_param}
       expect(assigns(:task)).to eq(task)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new task as @task" do
-      get :new, params: {:folder_id => task.taskable.id}
-      expect(assigns(:task)).to be_a_new(Dorsale::Flyboy::Task)
     end
   end
 
@@ -197,14 +183,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         expect(ActionMailer::Base.deliveries.count).to eq 0
       end
     end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved task as @task" do
-        post :create, params: {task: {name: nil, taskable_id: task.taskable.id, taskable_type: task.taskable.class}}
-        expect(assigns(:task)).to be_a_new(Dorsale::Flyboy::Task)
-      end
-    end
-
   end
 
   describe "PUT update" do
@@ -261,7 +239,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "summary" do
     let(:summary_user) { create :user }
-    let(:folder) { create(:flyboy_folder) }
 
     before(:each) do
       Dorsale::Flyboy::Task.destroy_all
@@ -269,7 +246,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       Timecop.travel "2016-03-09 15:00:00" do
         @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
-        @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)               # thursday - today
+        @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)    # thursday - today
         @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
         @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
         @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week

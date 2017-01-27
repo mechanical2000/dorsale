@@ -11,8 +11,10 @@
       - tasks.each do |task|
         tr
           td.taskable
-            a href=engine_polymorphic_path(task.taskable)
-              = task.taskable
+            - if task.taskable && policy(task.taskable).read?
+              = link_to task.taskable.to_s, engine_polymorphic_path(task.taskable)
+            - else
+              = task.taskable.to_s
 
           td.name
             - if task.owner.nil?

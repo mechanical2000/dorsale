@@ -17,7 +17,6 @@ class Dorsale::PolicyChecker
     check_policy! "Dorsale::CustomerVault::LinkPolicy"
     check_policy! "Dorsale::ExpenseGun::CategoryPolicy"
     check_policy! "Dorsale::ExpenseGun::ExpensePolicy"
-    check_policy! "Dorsale::Flyboy::FolderPolicy"
     check_policy! "Dorsale::Flyboy::TaskPolicy"
     check_policy! "UserPolicy"
 
