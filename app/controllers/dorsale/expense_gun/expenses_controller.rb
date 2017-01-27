@@ -74,8 +74,8 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
   def submit
     authorize @expense, :submit?
 
-    @expense.go_to_submited!
-    flash[:success] = t("expense_gun.expense.messages.submited")
+    @expense.go_to_submitted!
+    flash[:success] = t("expense_gun.expense.messages.submitted")
     redirect_to dorsale.expense_gun_expenses_path
   end
 

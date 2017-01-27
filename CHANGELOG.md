@@ -4,6 +4,7 @@
 
 - Delete Flyboy folders
 - Add `link_to_object` helper
+- Change/fix expense states (new -> draft, submited -> submitted)
 
 ## 3.3.0
 

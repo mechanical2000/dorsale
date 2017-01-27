@@ -10,7 +10,7 @@ class Dorsale::ExpenseGun::Expense::Copy < ::Dorsale::Service
 
     @copy.user       = nil
     @copy.date       = nil
-    @copy.state      = "new"
+    @copy.state      = "draft"
     @copy.created_at = nil
     @copy.updated_at = nil
 

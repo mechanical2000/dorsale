@@ -2,12 +2,12 @@ fr:
   expense_gun:
     expense:
       messages:
-        created  : "La note de frais a été créée."
-        updated  : "La note de frais a été mise à jour."
-        submited : "La note de frais a été soumise."
-        accepted : "La note de frais a été acceptée."
-        refused  : "La note de frais a été refusée."
-        canceled : "La note de frais a été annulée."
+        created   : "La note de frais a été créée."
+        updated   : "La note de frais a été mise à jour."
+        submitted : "La note de frais a été soumise."
+        accepted  : "La note de frais a été acceptée."
+        refused   : "La note de frais a été refusée."
+        canceled  : "La note de frais a été annulée."
 
       actions:
         create : "Nouvelle note de frais"
@@ -61,9 +61,9 @@ fr:
         vat_deductible : "TVA déductible"
 
       dorsale/expense_gun/expense/state:
-        all      : "Toutes"
-        new      : "Brouillon"
-        submited : "Soumise"
-        accepted : "Accepée"
-        refused  : "Refusée"
-        canceled : "Annulée"
+        all       : "Toutes"
+        draft     : "Brouillon"
+        submitted : "Soumise"
+        accepted  : "Accepée"
+        refused   : "Refusée"
+        canceled  : "Annulée"

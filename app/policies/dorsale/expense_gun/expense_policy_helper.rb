@@ -17,7 +17,7 @@ module Dorsale::ExpenseGun::ExpensePolicyHelper
   end
 
   def submit?
-    return false unless expense.may_go_to_submited?
+    return false unless expense.may_go_to_submitted?
     super
   end
 
