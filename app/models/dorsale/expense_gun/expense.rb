@@ -47,31 +47,31 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   end
 
   aasm(column: :state, whiny_transitions: false) do
-    state :new, initial: true
-    state :submited
+    state :draft, initial: true
+    state :submitted
     state :accepted
     state :refused
     state :canceled
 
-    event :go_to_submited do
-      transitions from: :new, to: :submited
+    event :go_to_submitted do
+      transitions from: :draft, to: :submitted
     end
 
     event :go_to_accepted do
-      transitions from: :submited, to: :accepted
+      transitions from: :submitted, to: :accepted
     end
 
     event :go_to_refused do
-      transitions from: :submited, to: :refused
+      transitions from: :submitted, to: :refused
     end
 
     event :go_to_canceled do
-      transitions from: [:new, :submited, :accepted], to: :canceled
+      transitions from: [:draft, :submitted, :accepted], to: :canceled
     end
   end
 
   def may_edit?
-    current_state == :new
+    current_state == :draft
   end
 
 end

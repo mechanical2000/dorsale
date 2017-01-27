@@ -59,7 +59,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
 
   it "should reset expense state" do
     expect(expense.state).to eq "accepted"
-    expect(copy.state).to eq "new"
+    expect(copy.state).to eq "draft"
   end
 
   it "should reset expense created_at/updated_at" do

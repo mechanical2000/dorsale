@@ -14,7 +14,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "new expense should have new state" do
-    expect(::Dorsale::ExpenseGun::Expense.new.current_state).to be :new
+    expect(::Dorsale::ExpenseGun::Expense.new.current_state).to be :draft
   end
 
   describe "new state" do
@@ -22,19 +22,19 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
       @expense = build(:expense_gun_expense)
     end
 
-    it "new expense can be submited" do
-      expect(@expense.go_to_submited).to be true
-      expect(@expense.current_state).to be :submited
+    it "new expense can be submitted" do
+      expect(@expense.go_to_submitted).to be true
+      expect(@expense.current_state).to be :submitted
     end
 
     it "new expense can't be accepted" do
       expect(@expense.go_to_accepted).to be false
-      expect(@expense.current_state).to be :new
+      expect(@expense.current_state).to be :draft
     end
 
     it "new expense can't be refused" do
       expect(@expense.go_to_refused).to be false
-      expect(@expense.current_state).to be :new
+      expect(@expense.current_state).to be :draft
     end
 
     it "new expense can be canceled" do
@@ -43,10 +43,10 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
     end
   end
 
-  describe "submited state" do
+  describe "submitted state" do
     before :each do
       @expense = build(:expense_gun_expense)
-      @expense.go_to_submited
+      @expense.go_to_submitted
     end
 
     it "submitted expense can be accepted" do
@@ -68,12 +68,12 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   describe "acceped state" do
     before :each do
       @expense = build(:expense_gun_expense)
-      @expense.go_to_submited
+      @expense.go_to_submitted
       @expense.go_to_accepted
     end
 
-    it "acceped expense can't be submited" do
-      expect(@expense.go_to_submited).to be false
+    it "acceped expense can't be submitted" do
+      expect(@expense.go_to_submitted).to be false
       expect(@expense.current_state).to be :accepted
     end
 
@@ -91,12 +91,12 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   describe "refused state" do
     before :each do
       @expense = build(:expense_gun_expense)
-      @expense.go_to_submited
+      @expense.go_to_submitted
       @expense.go_to_refused
     end
 
-    it "refused expense can't be submited" do
-      expect(@expense.go_to_submited).to be false
+    it "refused expense can't be submitted" do
+      expect(@expense.go_to_submitted).to be false
       expect(@expense.current_state).to be :refused
     end
 
@@ -117,8 +117,8 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
       @expense.go_to_canceled
     end
 
-    it "canceled expense can't be submited" do
-      expect(@expense.go_to_submited).to be false
+    it "canceled expense can't be submitted" do
+      expect(@expense.go_to_submitted).to be false
       expect(@expense.current_state).to be :canceled
     end
 
@@ -156,9 +156,9 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
     expect(expense.total_vat_deductible).to eq 5.0
   end
 
-  it "#may_edit? should return false unless expense is not submited" do
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :new).may_edit?).to be true
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :submited).may_edit?).to be false
+  it "#may_edit? should return false unless expense is not submitted" do
+    expect(::Dorsale::ExpenseGun::Expense.new(state: :draft).may_edit?).to be true
+    expect(::Dorsale::ExpenseGun::Expense.new(state: :submitted).may_edit?).to be false
     expect(::Dorsale::ExpenseGun::Expense.new(state: :acceped).may_edit?).to be false
     expect(::Dorsale::ExpenseGun::Expense.new(state: :refused).may_edit?).to be false
     expect(::Dorsale::ExpenseGun::Expense.new(state: :canceled).may_edit?).to be false

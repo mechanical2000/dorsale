@@ -34,7 +34,7 @@ Feature: Expenses
     When I go on the expense page
     And I submit the expense
     Then I am redirect to the expenses page
-    And the expense state is "submited"
+    And the expense state is "submitted"
 
   Scenario: Cancel expense
     Given an existing expense
@@ -45,7 +45,7 @@ Feature: Expenses
 
   Scenario: Accept expense
     Given an existing expense
-    And the expense is submited
+    And the expense is submitted
     When I go on the expense page
     And I accept the expense
     Then I am redirect to the expense page
@@ -53,7 +53,7 @@ Feature: Expenses
 
   Scenario: Refuse expense
     Given an existing expense
-    And the expense is submited
+    And the expense is submitted
     When I go on the expense page
     And I refuse the expense
     Then I am redirect to the expenses page

@@ -90,8 +90,8 @@ Then(/^the expense state is "([^"]*)"$/) do |new_state|
   expect(@expense.reload.state).to eq new_state
 end
 
-Given(/^the expense is submited$/) do
-  @expense.update_columns(state: "submited")
+Given(/^the expense is submitted$/) do
+  @expense.update_columns(state: "submitted")
 end
 
 When(/^I cancel the expense$/) do
