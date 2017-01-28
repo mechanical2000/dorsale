@@ -6,4 +6,4 @@ filename = [
 
 response.headers["Content-Disposition"] = %(inline; filename="#{filename}")
 
-@quotation.to_pdf
+@quotation.pdf_file.read

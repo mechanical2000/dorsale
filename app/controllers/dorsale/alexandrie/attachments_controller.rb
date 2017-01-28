@@ -24,6 +24,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :create?
 
     if @attachment.save
+      notify_attachable
       # flash[:notice] = t("messages.attachments.create_ok")
     else
       flash[:alert] = t("messages.attachments.create_error")
@@ -44,6 +45,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :update?
 
     if @attachment.update(attachment_params_for_update)
+      notify_attachable
       # flash[:notice] = t("messages.attachments.update_ok")
     else
       flash[:alert] = t("messages.attachments.update_error")
@@ -56,6 +58,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :delete?
 
     if @attachment.destroy
+      notify_attachable
       # flash[:notice] = t("messages.attachments.delete_ok")
     else
       flash[:alert] = t("messages.attachments.delete_error")
@@ -130,6 +133,10 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     else
       redirect_to back_url
     end
+  end
+
+  def notify_attachable
+    @attachment.attachable.send(:try, :after_attachments_changes)
   end
 
 end

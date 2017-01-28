@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127151610) do
+ActiveRecord::Schema.define(version: 20170127155636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170127151610) do
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
     t.text     "comments"
+    t.string   "pdf_file"
     t.index ["customer_id"], name: "index_dorsale_billing_machine_invoices_on_customer_id", using: :btree
     t.index ["customer_type"], name: "index_dorsale_billing_machine_invoices_on_customer_type", using: :btree
     t.index ["id_card_id"], name: "index_dorsale_billing_machine_invoices_on_id_card_id", using: :btree
@@ -179,6 +180,7 @@ ActiveRecord::Schema.define(version: 20170127151610) do
     t.string   "tracking_id"
     t.decimal  "commercial_discount"
     t.string   "state"
+    t.string   "pdf_file"
     t.index ["customer_id"], name: "index_dorsale_billing_machine_quotations_on_customer_id", using: :btree
     t.index ["customer_type"], name: "index_dorsale_billing_machine_quotations_on_customer_type", using: :btree
     t.index ["id_card_id"], name: "index_dorsale_billing_machine_quotations_on_id_card_id", using: :btree

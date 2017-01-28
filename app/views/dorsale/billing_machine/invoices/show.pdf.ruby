@@ -6,4 +6,4 @@ filename = [
 
 response.headers["Content-Disposition"] = %(inline; filename="#{filename}")
 
-@invoice.to_pdf
+@invoice.pdf_file.read

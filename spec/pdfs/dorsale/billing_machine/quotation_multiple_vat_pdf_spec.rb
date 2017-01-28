@@ -16,12 +16,14 @@ describe ::Dorsale::BillingMachine::QuotationMultipleVatPdf, pdfs: true do
     q
   }
 
+  let(:generate!) {
+    Dorsale::BillingMachine::PdfFileGenerator.(quotation)
+    quotation.reload
+  }
+
   let(:content) {
-    tempfile = Tempfile.new("pdf")
-    tempfile.binmode
-    tempfile.write(quotation.to_pdf)
-    tempfile.flush
-    Yomu.new(tempfile.path).text
+    generate!
+    Yomu.new(quotation.pdf_file.path).text
   }
 
   it "should not display global vat rate" do
@@ -30,13 +32,16 @@ describe ::Dorsale::BillingMachine::QuotationMultipleVatPdf, pdfs: true do
     expect(content).to include "TVA %"
   end
 
-  it "should work with empty quotation" do
-    id_card = Dorsale::BillingMachine::IdCard.new
-    quotation = ::Dorsale::BillingMachine::Quotation.new(id_card: id_card)
+  describe "empty quotation" do
+    let(:quotation) {
+      id_card = Dorsale::BillingMachine::IdCard.new
+      id_card.save(validate: false)
+      quotation = ::Dorsale::BillingMachine::Quotation.create!(id_card: id_card)
+    }
 
-    expect {
-      quotation.to_pdf
-    }.to_not raise_error
-  end
+    it "should work" do
+      expect { generate! }.to_not raise_error
+    end
+  end # describe "empty quotation"
 
 end

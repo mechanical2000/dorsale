@@ -39,6 +39,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     authorize @quotation, :create?
 
     if @quotation.save
+      Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
       flash[:notice] = t("messages.quotations.create_ok")
       redirect_to default_back_url
     else
@@ -67,6 +68,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     authorize @quotation, :update?
 
     if @quotation.update(quotation_params_for_update)
+      Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
       flash[:notice] = t("messages.quotations.update_ok")
       redirect_to default_back_url
     else

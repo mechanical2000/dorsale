@@ -20,7 +20,10 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
     render_views
 
     it "should be ok" do
-      3.times { create(:billing_machine_invoice) }
+      3.times {
+        invoice = create(:billing_machine_invoice)
+        Dorsale::BillingMachine::PdfFileGenerator.(invoice)
+      }
       get :index, params: {format: :pdf}
       expect(response).to be_ok
     end

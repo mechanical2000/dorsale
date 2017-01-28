@@ -339,6 +339,7 @@ end
 When(/^he send invoice to customer by email$/) do
   ActionMailer::Base.deliveries.clear
 
+  Dorsale::BillingMachine::PdfFileGenerator.(@invoice)
   @invoice.customer = create(:customer_vault_corporation, email: "aaa@example.org")
   @invoice.save!
 

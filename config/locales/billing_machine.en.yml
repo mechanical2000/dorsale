@@ -61,6 +61,7 @@ en:
     total_including_taxes: "Total"
     expires_at: "Expires at"
     balance: "Balance"
+    pdf_file: "PDF File"
 
   activerecord:
     models:
