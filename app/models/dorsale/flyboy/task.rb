@@ -1,6 +1,3 @@
-require "dorsale/search"
-require "dorsale/polymorphic_id"
-
 class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_flyboy_tasks"
 

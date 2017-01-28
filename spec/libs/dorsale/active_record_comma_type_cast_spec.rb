@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ActiveRecordCommaTypeCast, type: :model do
+describe Dorsale::ActiveRecordCommaTypeCast, type: :model do
   let(:line) { create(:billing_machine_invoice_line) }
 
   it "should accept , as decimal separator" do

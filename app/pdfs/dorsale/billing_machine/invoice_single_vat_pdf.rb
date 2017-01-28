@@ -1,7 +1,7 @@
 require "prawn/measurement_extensions"
 
 class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
-  include Dorsale::Alexandrie::Prawn
+  include Dorsale::Alexandrie::Prawn::RenderWithAttachments
   include Dorsale::AllHelpers
   include ActionView::Helpers::NumberHelper
 

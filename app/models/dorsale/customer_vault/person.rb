@@ -1,5 +1,3 @@
-require "dorsale/search"
-
 class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_customer_vault_people"
 
