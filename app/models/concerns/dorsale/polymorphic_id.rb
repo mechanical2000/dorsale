@@ -1,7 +1,7 @@
 module Dorsale::PolymorphicId
   extend ActiveSupport::Concern
-  included do
 
+  included do
     def self.polymorphic_id_for(relation_name)
       module_src = File.read(__FILE__).split("__END__").last
       module_src = module_src.gsub("relation", relation_name.to_s)
@@ -15,8 +15,6 @@ module Dorsale::PolymorphicId
     end
   end # included
 end # module
-
-ActiveRecord::Base.send(:include, Dorsale::PolymorphicId)
 
 # __END__
 

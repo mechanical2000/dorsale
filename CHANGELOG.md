@@ -6,6 +6,7 @@
 - Add `link_to_object` helper
 - Change/fix expense states (new -> draft, submited -> submitted)
 - Persist invoice/quotation PDFs after save
+- Add concerns to ApplicationRecord and stop pollute ActiveRecord::Base
 
 ## 3.3.0
 

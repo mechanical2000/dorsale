@@ -1,4 +1,4 @@
-ActionView::Helpers::FormTagHelper.module_eval do
+module Dorsale::FormBackUrl
   def back_url_tag
     tag(:input,
       :type => "hidden",
@@ -14,3 +14,5 @@ ActionView::Helpers::FormTagHelper.module_eval do
     output.safe_concat("</form>")
   end
 end
+
+ActionView::Helpers::FormTagHelper.send(:prepend, Dorsale::FormBackUrl)
