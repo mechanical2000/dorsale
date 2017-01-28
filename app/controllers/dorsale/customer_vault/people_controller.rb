@@ -1,6 +1,4 @@
 class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::ApplicationController
-  handles_sortable_columns
-
   before_action :set_objects
 
   def index

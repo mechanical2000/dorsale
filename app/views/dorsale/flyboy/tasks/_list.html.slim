@@ -4,17 +4,17 @@ table#tasks-list
       th.task-status
       th.task-snooze
       th.task-progress.hidden-xs
-        = sortable_column Dorsale::Flyboy::Task.t(:progress), column: "progress"
+        = sortable_column Dorsale::Flyboy::Task.t(:progress), :progress
 
       th.task-name
-        = sortable_column Dorsale::Flyboy::Task.t, column: "name"
+        = sortable_column Dorsale::Flyboy::Task.t, :name
 
       - unless nested
         th.taskable-name.hidden-xs
-          = sortable_column Dorsale::Flyboy::Task.t(:taskable), column: "taskable"
+          = sortable_column Dorsale::Flyboy::Task.t(:taskable), :taskable
 
       th.task-term.hidden-xs
-        = sortable_column Dorsale::Flyboy::Task.t(:term),  column: "term"
+        = sortable_column Dorsale::Flyboy::Task.t(:term), :term
 
   tbody
     - tasks.each do |task|

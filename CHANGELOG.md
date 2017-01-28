@@ -7,6 +7,7 @@
 - Change/fix expense states (new -> draft, submited -> submitted)
 - Persist invoice/quotation PDFs after save
 - Add concerns to ApplicationRecord and stop pollute ActiveRecord::Base
+- Replace abandoned gem handles_sortable_columns
 
 ## 3.3.0
 

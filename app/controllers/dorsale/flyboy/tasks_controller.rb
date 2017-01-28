@@ -23,9 +23,9 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
         %(dorsale_flyboy_tasks.#{column} #{direction})
       when "taskable"
         if direction == :asc
-          proc { |a, b| a.taskable.name.downcase <=> b.taskable.name.downcase }
+          proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
         else
-          proc { |a, b| b.taskable.name.downcase <=> a.taskable.name.downcase }
+          proc { |a, b| b.taskable.to_s.downcase <=> a.taskable.to_s.downcase }
         end
       else
         params["sort"] = "term"

@@ -1,8 +1,4 @@
 class Dorsale::CustomerVault::ApplicationController < ::Dorsale::ApplicationController
-  handles_sortable_columns
-
-  helper ::Dorsale::Flyboy::ApplicationHelper
-
   before_action :set_form_variables, only: [
     :new,
     :create,

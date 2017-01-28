@@ -1,6 +1,4 @@
 module Dorsale::Flyboy::ApplicationHelper
-  include ::Handles::SortableColumns::InstanceMethods
-
   def tasks_for(taskable)
     @filters = ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
 

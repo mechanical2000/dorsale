@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
   s.add_dependency "bootstrap-datepicker-rails"
   s.add_dependency "carrierwave"
   s.add_dependency "aasm"
-  s.add_dependency "handles_sortable_columns"
   s.add_dependency "pdf-reader"
   s.add_dependency "prawn"
   s.add_dependency "prawn-table"
