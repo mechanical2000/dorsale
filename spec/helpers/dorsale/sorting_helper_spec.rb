@@ -57,6 +57,11 @@ describe Dorsale::SortingHelper, type: :helper do
       expect(sortable_column_order).to eq ["col", :desc]
     end
 
+    it "should parse nil" do
+      @params = {}
+      expect(sortable_column_order).to eq [nil, nil]
+    end
+
     it "should accept block" do
       @params = {sort: "-col"}
 
