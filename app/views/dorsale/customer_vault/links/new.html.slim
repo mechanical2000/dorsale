@@ -5,7 +5,7 @@
 
     .panel-body
       = horizontal_form_for @link, as: :link, url: customer_vault_link_form_path do |f|
-        = f.association :bob, label: ::Dorsale::CustomerVault::Person.t
+        = f.association :bob, label: ::Dorsale::CustomerVault::Person.t, collection: @people
 
         = f.input :title
         = form_buttons
