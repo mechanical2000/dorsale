@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::SmallData::FilterStrategyByState < ::Dorsale::SmallData::FilterStrategy
+class Dorsale::BillingMachine::SmallData::FilterStrategyByState < ::Agilibox::SmallData::FilterStrategy
   def apply(query, value)
     if value.to_s.match(/not_(.+)/)
       query.where("state != ?", $~[1])

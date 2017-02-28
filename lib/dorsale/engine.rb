@@ -26,6 +26,8 @@ require "combine_pdf"
 require "nilify_blanks"
 require "chartkick"
 
+require "agilibox"
+
 if Rails.env.test? || Rails.env.development?
   require "pry"
   require "factory_girl_rails"
@@ -70,4 +72,4 @@ module Dorsale
   end
 end
 
-require_relative "core_and_rails_ext"
+require_relative "file_loader"

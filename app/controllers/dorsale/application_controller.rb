@@ -1,7 +1,7 @@
 class Dorsale::ApplicationController < ::ApplicationController
   include Pundit
-  include Dorsale::BackUrlConcern
-  include Dorsale::SortingHelper
+  include Agilibox::BackUrlConcern
+  include Agilibox::SortingHelper
 
   after_action :verify_authorized
   after_action :verify_policy_scoped

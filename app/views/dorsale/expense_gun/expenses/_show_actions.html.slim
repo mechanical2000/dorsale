@@ -5,15 +5,15 @@
   = copy_button dorsale.copy_expense_gun_expense_path(@expense)
 
 - if policy(@expense).submit?
-  = dorsale_button dorsale.submit_expense_gun_expense_path(@expense), action: :submit, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-primary"
+  = bs_button dorsale.submit_expense_gun_expense_path(@expense), action: :submit, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-primary"
 
 - if policy(@expense).accept?
-  = dorsale_button dorsale.accept_expense_gun_expense_path(@expense), action: :accept, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-success"
+  = bs_button dorsale.accept_expense_gun_expense_path(@expense), action: :accept, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-success"
 
 - if policy(@expense).refuse?
-  = dorsale_button dorsale.refuse_expense_gun_expense_path(@expense), action: :refuse, method: "patch", confirm: true, icon: :ban, class: "btn btn-xs btn-danger"
+  = bs_button dorsale.refuse_expense_gun_expense_path(@expense), action: :refuse, method: "patch", confirm: true, icon: :ban, class: "btn btn-xs btn-danger"
 
 - if policy(@expense).cancel?
-  = dorsale_button dorsale.cancel_expense_gun_expense_path(@expense), action: :cancel, method: "patch", confirm: true, icon: :times, class: "btn btn-xs btn-warning"
+  = bs_button dorsale.cancel_expense_gun_expense_path(@expense), action: :cancel, method: "patch", confirm: true, icon: :times, class: "btn btn-xs btn-warning"
 
 = print_button

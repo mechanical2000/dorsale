@@ -1,7 +1,7 @@
 class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_flyboy_tasks"
 
-  include ::Dorsale::Search
+  include ::Agilibox::Search
 
   paginates_per 50
 

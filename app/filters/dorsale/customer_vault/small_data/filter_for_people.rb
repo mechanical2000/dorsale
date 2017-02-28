@@ -1,6 +1,6 @@
-class Dorsale::CustomerVault::SmallData::FilterForPeople < ::Dorsale::SmallData::Filter
+class Dorsale::CustomerVault::SmallData::FilterForPeople < ::Agilibox::SmallData::Filter
   STRATEGIES = {
-    "person_type" => ::Dorsale::SmallData::FilterStrategyByKeyValue.new(:type),
-    "person_tags" => ::Dorsale::SmallData::FilterStrategyByTags.new,
+    "person_type" => ::Agilibox::SmallData::FilterStrategyByKeyValue.new(:type),
+    "person_tags" => ::Agilibox::SmallData::FilterStrategyByTags.new,
   }
 end

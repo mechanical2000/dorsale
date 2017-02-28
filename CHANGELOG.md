@@ -2,7 +2,9 @@
 
 ## Next version
 
-Nothing.
+- Move helpers/i18n/... to agilibox gem
+  - rename `dorsale_button` helper to `bs_button`
+  - rename `dorsale_time_periods_for_select` helper to `agilibox_time_periods_for_select`
 
 ## 3.4.0
 

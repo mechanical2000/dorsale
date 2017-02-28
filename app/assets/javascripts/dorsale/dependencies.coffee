@@ -11,3 +11,4 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
 //= require Chart.bundle
 //= require chartkick
+//= require agilibox/all

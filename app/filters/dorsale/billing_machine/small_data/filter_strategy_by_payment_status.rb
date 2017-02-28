@@ -1,4 +1,4 @@
-class Dorsale::BillingMachine::SmallData::FilterStrategyByPaymentStatus < ::Dorsale::SmallData::FilterStrategy
+class Dorsale::BillingMachine::SmallData::FilterStrategyByPaymentStatus < ::Agilibox::SmallData::FilterStrategy
   def apply(query, value)
     table_name = query.model.table_name
 

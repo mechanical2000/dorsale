@@ -1,11 +1,11 @@
 = filters_form do |f|
-  = f.input(:customer_guid,
+  = f.input(:bm_customer_guid,
     :collection    => @people.map { |p| [p.to_s, p.guid] },
     :include_blank => t("filters.all_customers"),
   )
 
   = f.input(:bm_time_period,
-    :collection    => dorsale_time_periods_for_select,
+    :collection    => agilibox_time_periods_for_select,
     :include_blank => false,
   )
 

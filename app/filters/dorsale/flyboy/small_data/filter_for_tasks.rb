@@ -1,6 +1,6 @@
-class Dorsale::Flyboy::SmallData::FilterForTasks < ::Dorsale::SmallData::Filter
+class Dorsale::Flyboy::SmallData::FilterForTasks < ::Agilibox::SmallData::Filter
   STRATEGIES = {
     "fb_status" => ::Dorsale::Flyboy::SmallData::FilterStrategyByDone.new,
-    "fb_owner"  => ::Dorsale::SmallData::FilterStrategyByKeyValue.new(:owner_id)
+    "fb_owner"  => ::Agilibox::SmallData::FilterStrategyByKeyValue.new(:owner_id)
   }
 end

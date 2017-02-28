@@ -7,12 +7,6 @@ Dorsale::Engine.routes.draw do
 
   resources :users, except: [:destroy]
 
-  # Small Sata / Filters
-
-  namespace :small_data do
-    resources :filters, only: [:create]
-  end
-
   # Alexandrie / Attachments
 
   namespace :alexandrie do

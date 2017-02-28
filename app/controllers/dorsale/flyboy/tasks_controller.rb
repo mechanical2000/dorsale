@@ -17,11 +17,11 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
     @order ||= sortable_column_order do |column, direction|
       case column
-      when "name", "status"
+      when :name, :status
         %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-      when "progress", "term"
+      when :progress, :term
         %(dorsale_flyboy_tasks.#{column} #{direction})
-      when "taskable"
+      when :taskable
         if direction == :asc
           proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
         else

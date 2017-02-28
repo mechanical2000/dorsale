@@ -8,7 +8,7 @@
   = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
 
 - if policy(@quotation).create?
-  = dorsale_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
+  = bs_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 
 - if policy(@quotation).delete?
   = delete_button dorsale.billing_machine_quotation_path(@quotation)

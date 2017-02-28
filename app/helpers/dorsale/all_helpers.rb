@@ -1,18 +1,10 @@
 module Dorsale::AllHelpers
   include ::ActionView::Helpers::NumberHelper
+  include ::Agilibox::AllHelpers
 
-  include ::Dorsale::ButtonHelper
-  include ::Dorsale::CommentsHelper
   include ::Dorsale::ContextHelper
-  include ::Dorsale::FiltersHelper
-  include ::Dorsale::FormHelper
-  include ::Dorsale::LinkHelper
-  include ::Dorsale::PaginationHelper
-  include ::Dorsale::RoutesHelper
-  include ::Dorsale::TextHelper
-  include ::Dorsale::BootstrapHelper
-  include ::Dorsale::SortingHelper
 
+  include ::Dorsale::CommentsHelper
   include ::Dorsale::Alexandrie::AttachmentsHelper
   include ::Dorsale::BillingMachine::ApplicationHelper
   include ::Dorsale::Flyboy::ApplicationHelper

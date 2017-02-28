@@ -18,4 +18,4 @@ data = [
   ]
 end
 
-Dorsale::Serializers::XLSX.new(data).render_inline
+Agilibox::Serializers::XLSX.new(data).render_inline

@@ -1,6 +1,6 @@
-class Dorsale::ExpenseGun::SmallData::FilterForExpenses < ::Dorsale::SmallData::Filter
+class Dorsale::ExpenseGun::SmallData::FilterForExpenses < ::Agilibox::SmallData::Filter
   STRATEGIES = {
-    "expense_state"   => ::Dorsale::SmallData::FilterStrategyByKeyValue.new("state"),
-    "expense_user_id" => ::Dorsale::SmallData::FilterStrategyByKeyValue.new("user_id"),
+    "expense_state"   => ::Agilibox::SmallData::FilterStrategyByKeyValue.new("state"),
+    "expense_user_id" => ::Agilibox::SmallData::FilterStrategyByKeyValue.new("user_id"),
   }
 end

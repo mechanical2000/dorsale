@@ -24,3 +24,13 @@ fr:
           login: "Votre login est: %{login}"
           password: "Votre mot de passe est: %{password}"
           url_label: "Cliquez ici pour accéder au service"
+
+  activerecord:
+    models:
+      dorsale/address:
+        one: "Adresse"
+        other: "Adresses"
+
+      dorsale/comment:
+        one: "Commentaire"
+        other: "Commentaires"

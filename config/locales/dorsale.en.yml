@@ -24,3 +24,13 @@ en:
             login: "Your login is: %{login}"
             password: "Your password is: %{password}"
             url_label: "Click here to access service"
+
+  activerecord:
+    models:
+      dorsale/address:
+        one: "Address"
+        other: "Addresses"
+
+      dorsale/comment:
+        one: "Comment"
+        other: "Comments"

@@ -1,13 +1,11 @@
-require "dorsale/search"
-
 class Dorsale::ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  include Dorsale::ActiveRecordUUIDConcern
-  include Dorsale::DefaultValuesConcern
-  include Dorsale::ModelToS
-  include Dorsale::ModelI18n
-  include Dorsale::PolymorphicId
+  include Agilibox::ActiveRecordUUIDConcern
+  include Agilibox::DefaultValuesConcern
+  include Agilibox::ModelToS
+  include Agilibox::ModelI18n
+  include Agilibox::PolymorphicId
 
   nilify_blanks
 
@@ -16,5 +14,5 @@ class Dorsale::ApplicationRecord < ActiveRecord::Base
   end
 end
 
-ActsAsTaggableOn::Tagging.send(:include, Dorsale::ActiveRecordUUIDConcern)
-ActsAsTaggableOn::Tag.send(:include, Dorsale::ActiveRecordUUIDConcern)
+ActsAsTaggableOn::Tagging.send(:include, Agilibox::ActiveRecordUUIDConcern)
+ActsAsTaggableOn::Tag.send(:include, Agilibox::ActiveRecordUUIDConcern)

@@ -2,7 +2,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_customer_vault_people"
 
   extend Forwardable
-  include ::Dorsale::Search
+  include ::Agilibox::Search
   include ::Dorsale::Users::Avatar
 
   def self.policy_class

@@ -4,9 +4,9 @@ module Dorsale::Flyboy::ApplicationHelper
 
     order ||= sortable_column_order do |column, direction|
       case column
-      when "name", "status"
+      when :name, :status
         %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-      when "progress", "term"
+      when :progress, :term
         %(dorsale_flyboy_tasks.#{column} #{direction})
       else
         params["sort"] = "term"
