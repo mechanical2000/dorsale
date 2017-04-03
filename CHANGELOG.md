@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version
+## 3.5.0
 
 - Move helpers/i18n/... to agilibox gem
   - rename `dorsale_button` helper to `bs_button`
