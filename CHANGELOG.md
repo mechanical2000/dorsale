@@ -4,6 +4,8 @@
 
 - Add title and date to comments
 - Truncate comments
+- CustomerVault : individual belongs to corporation
+- CustomerVault : add/remove fields
 
 ## 3.5.0
 
