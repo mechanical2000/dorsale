@@ -8,8 +8,17 @@
     - else
       = image_tag "dorsale/avatar.png", class: "avatar"
 
-    .textarea-input-group
-      = f.text_area :text, rows: 3, class: "form-control"
-      input type="submit" value=t("actions.send")
+    .comment-fields
+      .comment-title-field
+        = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
+
+      .comment-date-field
+        = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
+
+      .comment-text-field
+        = f.text_area :text, rows: 3, class: "form-control input-sm", placeholder: f.object.t(:text)
+
+      .comment-submit
+        input type="submit" value=t("actions.send") class="btn btn-success btn-xs"
 
     .clearfix

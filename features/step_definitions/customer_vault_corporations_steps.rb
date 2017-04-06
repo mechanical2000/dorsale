@@ -71,7 +71,7 @@ end
 Then(/^I see my new comment$/) do
   expect(Dorsale::Comment.count).to eq(@comments_count + 1)
 
-  expect(find(".comment p.text")).to have_content "MyNewComment"
+  expect(find("p.comment-text")).to have_content "MyNewComment"
 end
 
 Given(/^an existing comment on this corporation$/) do
@@ -87,7 +87,7 @@ When(/^I update the comment$/) do
 end
 
 Then(/^I see my updated comment$/) do
-  expect(find(".comment p.text")).to have_content "MyUpdatedComment"
+  expect(find("p.comment-text")).to have_content "MyUpdatedComment"
 end
 
 When(/^I delete the comment$/) do

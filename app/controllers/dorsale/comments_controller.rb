@@ -84,17 +84,18 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   end
 
   def permitted_params_for_comment
+    safe_params = [
+      :title,
+      :date,
+      :text,
+    ]
+
     if params[:action] == "create"
-      [
-        :commentable_id,
-        :commentable_type,
-        :text,
-      ]
-    else
-      [
-        :text,
-      ]
+      safe_params << :commentable_id
+      safe_params << :commentable_type
     end
+
+    safe_params
   end
 
   def comment_params

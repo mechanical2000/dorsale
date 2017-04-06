@@ -24,6 +24,7 @@ window.dorsaleComments =
         url: url
         success: (data) ->
           container.replaceWith(data)
+          setupDatepickers()
 
       return false
 

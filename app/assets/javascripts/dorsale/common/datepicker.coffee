@@ -1,7 +1,7 @@
 # Doc : http://bootstrap-datepicker.readthedocs.io/en/stable/index.html
 
-window.setupDatepickers = ->
-  $("input[type*=date], input[name*=date], input[name$=_at]").map ->
+window.setupDatepickers = (scope = document) ->
+  $(scope).find("input[type*=date], input[name*=date], input[name$=_at]").map ->
     return if this.type == "hidden"
 
     this.type = "text"

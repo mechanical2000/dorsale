@@ -4,7 +4,7 @@
 .comment
   @extend .well
   box-shadow: none
-  padding: 0.5em 1em
+  padding: 0.5em
   margin: 0.75em 0
 
   .avatar
@@ -13,19 +13,44 @@
     height: 50px
     width: 50px
 
-  .infos
+  .comment-fields
+    margin-left: 65px
+
+    .comment-title-field
+      display: inline-block
+      width: calc(100% - 10rem - 0.5rem)
+      margin-right: 0.5rem
+
+    .comment-date-field
+      display: inline-block
+      width: 10rem
+
+      input
+        text-align: center
+
+    .comment-text-field
+      margin-top: 0.5rem
+
+    .comment-submit
+      text-align: right
+      margin-top: 0.5rem
+
+      input
+        min-width: 10rem
+
+  .comment-infos
     font-size: 80%
     @extend .text-muted
 
-  .commentable
+  .comment-commentable
     font-weight: bold
 
-  .actions
+  .comment-actions
     float: right
 
     a
       font-size: 80%
-      margin-left: 1.5em
+      margin-left: 1.5rem
 
-  p.text
-    margin: 1em 0 0 65px
+  p.comment-text
+    margin: 1rem 0 0 65px

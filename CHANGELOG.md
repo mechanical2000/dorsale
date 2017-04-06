@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Add title and date to comments
+
 ## 3.5.0
 
 - Move helpers/i18n/... to agilibox gem
