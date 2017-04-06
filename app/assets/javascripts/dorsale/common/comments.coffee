@@ -4,6 +4,7 @@ window.dorsaleComments =
     dorsaleComments.setupEditForm()
     dorsaleComments.setupEditButtons()
     dorsaleComments.setupDeleteButtons()
+    dorsaleComments.setupShowMoreLinks()
 
   setupCreateForm: ->
     $("#dorsale-comments").on "ajax:success", "form[id*=new]", (e, data) ->
@@ -32,6 +33,11 @@ window.dorsaleComments =
     $("#dorsale-comments-list").on "ajax:success", "[data-method=delete]", ->
       $(this).parents(".comment").fadeOut ->
         $(this).remove()
+
+  setupShowMoreLinks: ->
+    $("#dorsale-comments").on "click", ".comment-show_more", ->
+      $(this).parents(".comment-text-truncated").remove()
+      return false
 
 $(document).on "turbolinks:load", ->
   dorsaleComments.setup()

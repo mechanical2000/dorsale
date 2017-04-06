@@ -14,4 +14,8 @@ module Dorsale::CommentsHelper
       },
     )
   end
+
+  def truncate_comment_text?
+    controller_name == "people" && action_name == "activity"
+  end
 end
