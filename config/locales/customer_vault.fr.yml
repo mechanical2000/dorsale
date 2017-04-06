@@ -57,12 +57,17 @@ fr:
         all_tags: "Tous les tags"
         all_types: "Tous les types"
         capital: "Capital"
-        immatriculation_number_1: "SIREN"
-        immatriculation_number_2: "RCS"
+        immatriculation_number: "SIREN"
+        revenue: "Chiffre d'affaire"
+        number_of_employees: "Effectif"
+        naf: "NAF"
+        corporation: "Entreprise"
+        societe_com: "Societe.com"
         european_union_vat_number: "Numéro TVA européenne"
         legal_form: "Forme juridique"
         count: "Nombre de contacts"
         person_type: "Type"
+        title: "Fonction"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

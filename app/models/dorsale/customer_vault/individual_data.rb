@@ -1,5 +1,3 @@
 class Dorsale::CustomerVault::IndividualData < Dorsale::CustomerVault::PersonData
-  attribute :title,   String
-  attribute :context, String
+  attribute :title, String
 end
-

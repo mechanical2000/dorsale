@@ -7,6 +7,7 @@ RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
   end
 
   it { is_expected.to have_one(:address).dependent(:destroy) }
+  it { is_expected.to belong_to :corporation }
   it { is_expected.to have_many :comments }
   it { is_expected.to have_many :taggings }
   it { is_expected.to have_many :tags }
@@ -14,4 +15,6 @@ RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
   it { is_expected.to have_many(:comments).dependent(:destroy) }
   it { is_expected.to validate_presence_of :first_name }
   it { is_expected.to validate_presence_of :last_name }
+
+  it { is_expected.to respond_to :context }
 end
