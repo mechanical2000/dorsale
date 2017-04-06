@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127155636) do
+ActiveRecord::Schema.define(version: 20170406121024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,8 @@ ActiveRecord::Schema.define(version: 20170127155636) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "author_type"
+    t.date     "date"
+    t.string   "title"
     t.index ["author_id"], name: "index_dorsale_comments_on_author_id", using: :btree
     t.index ["author_type"], name: "index_dorsale_comments_on_author_type", using: :btree
     t.index ["commentable_id"], name: "index_dorsale_comments_on_commentable_id", using: :btree

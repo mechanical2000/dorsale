@@ -4,30 +4,32 @@
   - else
     = image_tag "dorsale/avatar.png", class: "avatar"
 
-  p.actions
+  p.comment-actions
     - if policy(comment).update?
       = icon_link_to :pencil, t("actions.edit"), dorsale.edit_comment_path(comment), class: "edit"
 
     - if policy(comment).delete?
       = icon_link_to :trash, t("actions.delete"), dorsale.comment_path(comment), method: :delete, remote: true, data: {confirm: t("actions.confirm")}
 
-  p.infos
-    span.commentable-container
-      span.commentable
-        = link_to_object(comment.commentable)
+  p.comment-infos
+    span.comment-commentable-container
+      span.comment-commentable = link_to_object(comment.commentable)
+      span.comment-separator   = " - "
 
-      span.separator
-        = " - "
+    - if comment.title.present?
+      span.title-container
+        strong.title  = comment.title
+        span.separator = " - "
 
-    span.date
-      = date(comment.created_at)
+    span.comment-date
+      = date(comment.date)
 
     = " "
-    = ::Dorsale::Comment.t(:written_by)
+    = comment.t(:written_by)
     = " "
-    span.author
+    span.comment-author
       = comment.author.to_s
 
-  p.text = text2html(comment.text)
+  p.comment-text = text2html(comment.text)
 
   .clearfix

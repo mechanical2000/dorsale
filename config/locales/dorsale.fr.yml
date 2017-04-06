@@ -34,3 +34,8 @@ fr:
       dorsale/comment:
         one: "Commentaire"
         other: "Commentaires"
+
+    attributes:
+      dorsale/comment:
+        title: "Titre (facultatif)"
+        text: "Commentaire"
