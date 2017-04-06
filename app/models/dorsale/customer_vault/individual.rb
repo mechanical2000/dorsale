@@ -4,6 +4,7 @@ class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
 
   validates :first_name, presence: true
   validates :last_name,  presence: true
+  belongs_to :corporation
 
   def name
     [self.last_name, self.first_name].join(", ")

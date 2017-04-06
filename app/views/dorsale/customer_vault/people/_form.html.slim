@@ -18,14 +18,16 @@
     .panel-body
       - if @person.corporation?
         = f.input :capital
-        = f.input :immatriculation_number_1
-        = f.input :immatriculation_number_2
+        = f.input :immatriculation_number
+        = f.input :number_of_employees
+        = f.input :revenue
         = f.input :european_union_vat_number
         = f.input :legal_form
+        = f.input :context, as: :text, input_html: {rows: 4}
 
       - if @person.individual?
         = f.input :title
-        = f.input :context, as: :text, input_html: {rows: 4}
+        = f.association :corporation, collection: policy_scope(Dorsale::CustomerVault::Corporation), input_html: {class: 'select2'}
 
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.contact_informations")
@@ -40,6 +42,8 @@
       = f.input :facebook, as: :string
       = f.input :linkedin, as: :string
       = f.input :viadeo,   as: :string
+      - if @person.corporation?
+        = f.input :societe_com
 
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.address_informations")

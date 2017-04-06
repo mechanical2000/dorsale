@@ -16,11 +16,14 @@ When(/^I add the corporation's informations$/) do
   fill_in 'person_fax', with: '09 00 00 00 00'
 end
 
-When(/^I fill the corporation capital, immatriculation1, immatriculation2, legal form$/) do
+When(/^I fill the corporation capital, immatriculation, legal form$/) do
   fill_in 'person_capital', with: '1000'
-  fill_in 'person_immatriculation_number_1', with: 'RCS 201523658'
-  fill_in 'person_immatriculation_number_2', with: 'SIREN 5485632569'
+  fill_in 'person_immatriculation_number', with: 'RCS 201523658'
   fill_in 'person_legal_form', with: 'SARL'
+  fill_in 'person_number_of_employees', with: '45'
+  fill_in 'person_revenue', with: "450000"
+  fill_in 'person_context', with: "Le joli contexte"
+  fill_in 'person_societe_com', with: "societe_com"
 end
 
 When(/^I fill the corporation's address$/) do

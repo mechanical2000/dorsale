@@ -155,6 +155,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
       :facebook,
       :linkedin,
       :viadeo,
+      :context,
       :tag_list => [],
       :address_attributes => [
         :street,
@@ -170,19 +171,21 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     common_permitted_params + [
       :corporation_name,
       :capital,
-      :immatriculation_number_1,
-      :immatriculation_number_2,
+      :immatriculation_number,
       :european_union_vat_number,
       :legal_form,
+      :revenue,
+      :societe_com,
+      :number_of_employees,
     ]
   end
 
   def permitted_params_for_individuals
     common_permitted_params + [
+      :corporation_id,
       :first_name,
       :last_name,
       :title,
-      :context,
     ]
   end
 
