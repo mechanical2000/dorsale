@@ -9,7 +9,7 @@ Feature: Manage links
 
   Scenario: Add a new link on individual
     Given an existing corporation
-    And an existing indidual
+    And an existing individual
     When I navigate to the link section of the indidual details
     And I add a new link to the individual
     And I provide the link and the target corporation
@@ -32,7 +32,7 @@ Feature: Manage links
 
   Scenario: Add a new link on corporation
     Given an existing corporation
-    And an existing indidual
+    And an existing individual
     When I navigate to the link section of the corporation details
     And I add a new link to the corporation
     And I provide the link and the target individual

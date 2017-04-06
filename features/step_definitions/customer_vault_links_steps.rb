@@ -4,7 +4,7 @@ Given(/^an existing corporation$/) do
   @person = @corporation
 end
 
-Given(/^an existing indidual$/) do
+Given(/^an existing individual$/) do
   @individual = create(:customer_vault_individual)
   @person = @individual
 end

@@ -36,10 +36,6 @@ Then(/^the individual is created$/) do
   expect(@individual.last_name).to eq "Gantaume"
 end
 
-Given(/^an existing individual$/) do
-  @individual = create(:customer_vault_individual)
-end
-
 When(/^I edit this individual$/) do
   visit dorsale.edit_customer_vault_individual_path(@individual)
 end

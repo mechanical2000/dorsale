@@ -59,3 +59,7 @@ end
 
 When(/^(?:I|he|she) download XLSX file$/) do
 end
+
+When(/^I click on show more$/) do
+  find("a[class*=show_more]").click
+end

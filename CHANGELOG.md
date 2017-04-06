@@ -3,6 +3,7 @@
 ## Next version
 
 - Add title and date to comments
+- Truncate comments
 
 ## 3.5.0
 
