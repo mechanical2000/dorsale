@@ -23,12 +23,12 @@
         = f.input :revenue
         = f.input :european_union_vat_number
         = f.input :legal_form
-        = f.input :context, as: :text, input_html: {rows: 4}
+
 
       - if @person.individual?
         = f.input :title
         = f.association :corporation, collection: policy_scope(Dorsale::CustomerVault::Corporation), input_html: {class: 'select2'}
-
+      = f.input :context, as: :text, input_html: {rows: 4}
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.contact_informations")
     .panel-body

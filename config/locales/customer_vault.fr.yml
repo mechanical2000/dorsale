@@ -67,6 +67,7 @@ fr:
         legal_form: "Forme juridique"
         count: "Nombre de contacts"
         person_type: "Type"
+        title: "Fonction"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

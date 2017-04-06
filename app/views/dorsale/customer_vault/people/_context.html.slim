@@ -22,5 +22,21 @@
     = info person, :linkedin, helper: :web_link
     = info person, :viadeo,   helper: :web_link
 
+    - if (person.individual? && person.corporation.present?)
+      - corporation = person.corporation
+      p.text-center = avatar_img(corporation)
+      = info person, :corporation, link_to(corporation, corporation)
+      = info person, :title
+      = info corporation, :email,    helper: :email_link
+      = info corporation, :phone,    helper: :tel_link
+      = info corporation, :mobile,   helper: :tel_link
+      = info corporation, :fax,      helper: :tel_link
+      - address = corporation.address
+      = info address, :street
+      = info address, :street_bis
+      = info address, :city
+      = info address, :zip
+      = info address, :country
+
   .context-footer
     = actions_for(person)
