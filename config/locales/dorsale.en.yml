@@ -34,3 +34,8 @@ en:
       dorsale/comment:
         one: "Comment"
         other: "Comments"
+
+    attributes:
+      dorsale/comment:
+        title: "Title (optional)"
+        text: "Comment"

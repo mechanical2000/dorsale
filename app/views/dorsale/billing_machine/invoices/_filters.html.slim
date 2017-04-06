@@ -2,6 +2,7 @@
   = f.input(:bm_customer_guid,
     :collection    => @people.map { |p| [p.to_s, p.guid] },
     :include_blank => t("filters.all_customers"),
+    :input_html    => {class: "select2"},
   )
 
   = f.input(:bm_time_period,

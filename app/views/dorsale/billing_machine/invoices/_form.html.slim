@@ -24,7 +24,7 @@
         .well
           = f.input :date, html5: true
           hr
-          = f.input :customer_guid, collection: @people.map{ |e| [e.to_s, e.guid] }
+          = f.input :customer_guid, collection: @people.map{ |e| [e.to_s, e.guid] }, input_html: {class: "select2"}
 
     table#lines-table
       thead

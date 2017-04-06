@@ -197,6 +197,8 @@ ActiveRecord::Schema.define(version: 20170406122047) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "author_type"
+    t.date     "date"
+    t.string   "title"
     t.index ["author_id"], name: "index_dorsale_comments_on_author_id", using: :btree
     t.index ["author_type"], name: "index_dorsale_comments_on_author_type", using: :btree
     t.index ["commentable_id"], name: "index_dorsale_comments_on_commentable_id", using: :btree
