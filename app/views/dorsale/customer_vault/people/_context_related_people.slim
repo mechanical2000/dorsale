@@ -1,0 +1,5 @@
+- return unless person.corporation?
+
+.sub-context class=("blank" if person_related_people_blank?(person))
+  hr
+  = info person, :individuals, person.individuals.map { |i| link_to_object(i) }.join(tag(:br)).html_safe

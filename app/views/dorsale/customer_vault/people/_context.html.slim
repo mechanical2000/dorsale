@@ -9,11 +9,10 @@
 
   .context-body
     p.text-center = avatar_img(person)
-    = render "dorsale/customer_vault/people/context_general", person: person
-    hr
-    = render "dorsale/customer_vault/people/context_address", person: person
-    hr
-    = render 'dorsale/customer_vault/people/context_social', person: person
+    = render "dorsale/customer_vault/people/context_general",        person: person
+    = render "dorsale/customer_vault/people/context_related_people", person: person
+    = render "dorsale/customer_vault/people/context_address",        person: person
+    = render 'dorsale/customer_vault/people/context_social',         person: person
 
   .context-footer
     = actions_for(person)

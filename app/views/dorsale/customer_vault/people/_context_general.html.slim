@@ -1,5 +1,11 @@
-= info person, :tags,     tags(person)
-= info person, :email,    helper: :email_link
-= info person, :phone,    helper: :tel_link
-= info person, :mobile,   helper: :tel_link
-= info person, :fax,      helper: :tel_link
+.sub-context
+  = info person, :tags, tags(person)
+
+  - if person.individual?
+    = info person, :corporation, helper: :link_to_object
+    = info person, :title
+
+  = info person, :email,  helper: :email_link
+  = info person, :phone,  helper: :tel_link
+  = info person, :mobile, helper: :tel_link
+  = info person, :fax,    helper: :tel_link
