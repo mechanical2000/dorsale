@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Truncate comments improvements
+
 ## 3.5.1
 
 - Add title and date to comments

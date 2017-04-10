@@ -15,7 +15,24 @@ module Dorsale::CommentsHelper
     )
   end
 
-  def truncate_comment_text?
-    controller_name == "people" && action_name == "activity"
+  def truncate_comments_in_this_page?
+    controller_name == "people"
+  end
+
+  def truncate_comment_text(comment)
+    text      = comment.text.to_s
+    truncated = false
+
+    if text.to_s.count("\n") > 3
+      text      = text.split("\n")[0, 3].join("\n")
+      truncated = true
+    end
+
+    if text.to_s.length > 300
+      text      = truncate(text, length: 200)
+      truncated = true
+    end
+
+    text2html(text) if truncated
   end
 end

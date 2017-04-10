@@ -30,9 +30,9 @@
     span.comment-author
       = comment.author.to_s
 
-  - if truncate_comment_text? && comment.text.length > 300
+  - if truncate_comments_in_this_page? && text = truncate_comment_text(comment)
     p.comment-text-truncated
-      = truncate(comment.text, length: 200)
+      = text
       = " "
       a.comment-show_more href="#"
         = ta(:show_more)
