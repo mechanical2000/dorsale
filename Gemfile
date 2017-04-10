@@ -7,7 +7,7 @@ else
   puts ".ruby-version file not found"
 end
 
-gem "rails", "5.0.0"
+gem "rails", "~> 5.0"
 
 gem 'devise'
 gem 'devise-bootstrap-views'
