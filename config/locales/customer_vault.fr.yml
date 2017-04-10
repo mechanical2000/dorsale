@@ -68,6 +68,7 @@ fr:
         count: "Nombre de contacts"
         person_type: "Type"
         title: "Fonction"
+        individuals: "Individus"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

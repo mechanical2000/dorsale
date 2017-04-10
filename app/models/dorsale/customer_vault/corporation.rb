@@ -5,6 +5,10 @@ class Dorsale::CustomerVault::Corporation < Dorsale::CustomerVault::Person
   validates :corporation_name, presence: true
   has_many :individuals
 
+  def self_and_related_comments
+    ::Dorsale::Comment.where(commentable: [self] + individuals)
+  end
+
   def name
     corporation_name
   end

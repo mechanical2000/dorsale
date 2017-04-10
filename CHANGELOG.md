@@ -1,5 +1,10 @@
 # Changelog
 
+## Next version
+
+- Comments improvements
+- Add infos to people context
+
 ## 3.5.1
 
 - Add title and date to comments

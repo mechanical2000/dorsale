@@ -67,6 +67,8 @@ en:
         legal_form: "Legal form"
         count: "Number of people"
         person_type: "Type"
+        title: "Title"
+        individuals: "Individuals"
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

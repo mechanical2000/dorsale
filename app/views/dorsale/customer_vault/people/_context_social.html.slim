@@ -1,6 +1,11 @@
-= info person, :skype,    helper: :email_link
-= info person, :www,      helper: :web_link
-= info person, :twitter,  helper: :web_link
-= info person, :facebook, helper: :web_link
-= info person, :linkedin, helper: :web_link
-= info person, :viadeo,   helper: :web_link
+.sub-context class=("blank" if person_social_blank?(person))
+  hr
+  = info person, :skype,    helper: :email_link
+  = info person, :www,      helper: :web_link
+  = info person, :twitter,  helper: :web_link
+  = info person, :facebook, helper: :web_link
+  = info person, :linkedin, helper: :web_link
+  = info person, :viadeo,   helper: :web_link
+
+  - if person.corporation?
+    = info person, :societe_com, helper: :web_link

@@ -16,6 +16,9 @@
   .comment-fields
     margin-left: 65px
 
+    input, textarea
+      font-size: $font-size-base
+
     .comment-title-field
       display: inline-block
       width: calc(100% - 10rem - 0.5rem)
@@ -52,7 +55,8 @@
       font-size: 80%
       margin-left: 1.5rem
 
-  p.comment-text
+  p.comment-text,
+  p.comment-text-truncated,
     margin: 1rem 0 0 65px
 
   p.comment-text-truncated + p.comment-text
