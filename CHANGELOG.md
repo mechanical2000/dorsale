@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version
+## 3.5.2
 
 - Comments improvements
 - Add infos to people context
