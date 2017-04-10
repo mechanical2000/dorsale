@@ -9,7 +9,7 @@ class Dorsale::Comment < ::Dorsale::ApplicationRecord
 
   default_scope -> {
     all
-      .order(date: :desc, created_at: :desc)
+      .order(created_at: :desc, id: :desc)
       .preload(:author)
   }
 

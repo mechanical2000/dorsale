@@ -20,7 +20,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
 
   acts_as_taggable
 
-  has_many :comments, -> { order(created_at: :desc, id: :desc) }, class_name: ::Dorsale::Comment, as: :commentable, dependent: :destroy
+  has_many :comments, class_name: ::Dorsale::Comment, as: :commentable, dependent: :destroy
   has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable, dependent: :destroy
   has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable, dependent: :destroy
   has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer

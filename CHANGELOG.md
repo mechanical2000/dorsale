@@ -2,7 +2,7 @@
 
 ## Next version
 
-- Truncate comments improvements
+- Comments improvements
 - Add infos to people context
 
 ## 3.5.1

@@ -6,6 +6,10 @@ class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
   validates :last_name,  presence: true
   belongs_to :corporation
 
+  def self_and_related_comments
+    comments
+  end
+
   def name
     [self.last_name, self.first_name].join(", ")
   end
