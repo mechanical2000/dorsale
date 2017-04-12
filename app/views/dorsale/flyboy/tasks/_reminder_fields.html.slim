@@ -1,0 +1,36 @@
+.task_reminder_fields
+  .form-sub-group.task_reminder_label
+    = f.label :reminder, class: "control-label"
+
+  .form-sub-group.task_reminder_type
+    = f.input :reminder_type, collection: flyboy_reminder_types_for_select, include_blank: false, wrapper: :default, label: false, input_html: {class: "form-control"}
+
+  .form-sub-group.task_reminder_duration
+    = f.input :reminder_duration, wrapper: :default, label: false, input_html: {class: "form-control"}
+
+  .form-sub-group.task_reminder_unit
+    = f.input :reminder_unit, collection: flyboy_reminder_type_units_for_select, wrapper: :default, label: false, input_html: {class: "form-control"}
+
+  .form-sub-group.task_reminder_date
+    = f.input :reminder_date, html5: true, wrapper: :default, label: false, input_html: {class: "form-control"}
+
+coffee:
+  $("#task_reminder_type")
+    .change ->
+      if $(this).val() == "duration"
+        $(".form-sub-group.task_reminder_duration").show()
+        $(".form-sub-group.task_reminder_unit").show()
+        $(".form-sub-group.task_reminder_date").hide()
+        duration = $(".form-sub-group.task_reminder_duration input")
+        duration.val(1) if duration.val() == ""
+        unit = $(".form-sub-group.task_reminder_unit select")
+        unit.val("days") if unit.val() == ""
+      else if $(this).val() == "custom"
+        $(".form-sub-group.task_reminder_duration").hide()
+        $(".form-sub-group.task_reminder_unit").hide()
+        $(".form-sub-group.task_reminder_date").show()
+      else
+        $(".form-sub-group.task_reminder_duration").hide()
+        $(".form-sub-group.task_reminder_unit").hide()
+        $(".form-sub-group.task_reminder_date").hide()
+    .change()

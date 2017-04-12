@@ -3,8 +3,6 @@ FactoryGirl.define do
     name        { "I-am-a-task#{Kernel.rand(1_000..9_999)}"                }
     description { "I-am-the-task-description_#{Kernel.rand(1_000..9_999)}" }
     progress    { Kernel.rand(0..99) }
-    term        { Kernel.rand(0..1000).days.ago }
-    reminder    { term - 30.days }
     done false
   end
 end

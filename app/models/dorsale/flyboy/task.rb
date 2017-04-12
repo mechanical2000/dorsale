@@ -1,4 +1,7 @@
 class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
+  REMINDER_TYPES = %w(duration custom)
+  REMINDER_UNITS = %w(days weeks months)
+
   self.table_name = "dorsale_flyboy_tasks"
 
   include ::Agilibox::Search
@@ -34,55 +37,62 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
     where(done: false).where("term > ?", min).where("term <= ?", max)
   }
 
+  validates :name,          presence: true
+  validates :term,          presence: true
+  validates :reminder_type, inclusion: {in: REMINDER_TYPES}, allow_blank: true
+  validates :reminder_unit, inclusion: {in: REMINDER_UNITS}, allow_blank: true
+  validates :reminder_date, presence: true, if: proc { reminder_type.present? }
 
-  validates :name,     presence: true
-  validates :term,     presence: true
-  validates :reminder, presence: true
-
-  validate :validates_reminder_and_term
-
-  def validates_reminder_and_term
-    if reminder && term && reminder > term
-      errors.add(:reminder, :less_than, count: term)
-    end
-  end
+  validate :validates_reminder_date
 
   def assign_default_values
     assign_default :progress, 0
     assign_default :done,     false
-    assign_default :reminder, Time.zone.now.to_date + snooze_default_reminder
-    assign_default :term,     Time.zone.now.to_date + snooze_default_term
+    assign_default :term,     Time.zone.now.to_date.end_of_week
   end
 
-  def snooze
-    if term_not_passed_yet
-      if self.reminder + snooze_default_reminder > Time.zone.now.to_date
-        self.reminder += snooze_default_reminder
-        self.term     += snooze_default_term
-      else
-        self.reminder = Time.zone.now.to_date + 1
-      end
-    else
-      self.reminder = Time.zone.now.to_date + snooze_default_reminder
-      self.term     = Time.zone.now.to_date + snooze_default_term
+  def snoozer
+    @snoozer ||= Snoozer.new(self)
+  end
+
+  def term=(value)
+    super
+    auto_update_reminder_date
+  end
+
+  def reminder_type=(value)
+    super
+    auto_update_reminder_date
+  end
+
+  def reminder_duration=(value)
+    super
+    auto_update_reminder_date
+  end
+
+  def reminder_unit=(value)
+    super
+    auto_update_reminder_date
+  end
+
+  private
+
+  def auto_update_reminder_date
+    if reminder_type.blank?
+      self.reminder_date = nil
+    end
+
+    if reminder_type == "duration" && term && reminder_duration && reminder_unit.in?(REMINDER_UNITS)
+      self.reminder_date = term - eval("#{reminder_duration}.#{reminder_unit}")
+    end
+
+    true
+  end
+
+  def validates_reminder_date
+    if term && reminder_date && reminder_date > term
+      errors.add(:reminder_date, :less_than, count: term)
     end
   end
 
-  def snooze_default_reminder
-    7
-  end
-
-  def snooze_default_term
-    30
-  end
-
-  def snoozable?
-    return false if done?
-    return false if reminder >= Time.zone.now.to_date
-    return true
-  end
-
-  def term_not_passed_yet
-    self.term > Time.zone.now.to_date
-  end
 end

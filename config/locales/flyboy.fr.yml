@@ -50,6 +50,10 @@ fr:
         created_at: "Créée le"
         name: "Titre"
         reminder: "Rappel"
+        reminder_type: "Type de rappel"
+        reminder_date: "Date de rappel"
+        reminder_duration: "Durée du rappel"
+        reminder_unit: "Unité du rappel"
         term: "Echéance"
         done: "Fait"
         description: "Description"
@@ -59,3 +63,20 @@ fr:
         progress: "Progression"
         description: "Description"
         task: "Tâche"
+
+      dorsale/flyboy/task/reminder_type:
+        none: "Aucun"
+        duration: "Durée"
+        custom: "Date"
+
+      dorsale/flyboy/task/reminder_unit:
+        days: "Jour(s)"
+        weeks: "Semaine(s)"
+        months: "Mois"
+
+      dorsale/flyboy/task/term_value:
+        today: "Aujourd'hui"
+        tomorrow: "Demain"
+        this_week: "Cette semaine"
+        next_week: "La semaine prochaine"
+        custom: "Choisir une date"

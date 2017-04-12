@@ -55,6 +55,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
   def new
     @task ||= scope.new
+    @task.owner ||= current_user
     @task.taskable_guid = params[:taskable_guid]
 
     set_owners
@@ -129,9 +130,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def snooze
     authorize @task, :snooze?
 
-    @task.snooze
-
-    if @task.save
+    if @task.snoozer.snooze
       flash[:success] = t("messages.tasks.snooze_ok")
     else
       flash[:danger] = t("messages.tasks.snooze_error")
@@ -183,7 +182,10 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       :description,
       :progress,
       :term,
-      :reminder,
+      :reminder_type,
+      :reminder_date,
+      :reminder_duration,
+      :reminder_unit,
       :owner_guid,
     ]
   end

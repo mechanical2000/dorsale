@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406122047) do
+ActiveRecord::Schema.define(version: 20170413082819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -329,11 +329,14 @@ ActiveRecord::Schema.define(version: 20170406122047) do
     t.integer  "progress"
     t.boolean  "done"
     t.date     "term"
-    t.date     "reminder"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.date     "reminder_date"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "owner_type"
     t.integer  "owner_id"
+    t.string   "reminder_type"
+    t.integer  "reminder_duration"
+    t.string   "reminder_unit"
     t.index ["owner_id"], name: "index_dorsale_flyboy_tasks_on_owner_id", using: :btree
     t.index ["owner_type"], name: "index_dorsale_flyboy_tasks_on_owner_type", using: :btree
     t.index ["taskable_id"], name: "index_dorsale_flyboy_tasks_on_taskable_id", using: :btree

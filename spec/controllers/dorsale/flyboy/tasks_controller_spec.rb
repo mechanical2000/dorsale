@@ -12,9 +12,8 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   }
 
   let(:valid_attributes) {{
-    :name          => "New Task" ,
-    :reminder      => (Time.zone.now.to_date - 3.days),
-    :term          => Time.zone.now.to_date,
+    :name => "New Task" ,
+    :term => Time.zone.now.to_date,
   }}
 
   describe "#complete" do
@@ -78,9 +77,9 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         @corporation2 = create(:customer_vault_corporation, name: "dEF")
         @corporation3 = create(:customer_vault_corporation, name: "xyz")
 
-        @task1 = create(:flyboy_task, taskable: @corporation1, name: "Abc", progress: 100, term: "21/12/2012", reminder: "21/12/2012")
-        @task2 = create(:flyboy_task, taskable: @corporation2, name: "dEF", progress: 0,   term: "23/12/2012", reminder: "23/12/2012")
-        @task3 = create(:flyboy_task, taskable: @corporation3, name: "xyz", progress: 35,  term: "22/12/2012", reminder: "22/12/2012")
+        @task1 = create(:flyboy_task, taskable: @corporation1, name: "Abc", progress: 100, term: "21/12/2012", reminder_type: "custom", reminder_date: "21/12/2012")
+        @task2 = create(:flyboy_task, taskable: @corporation2, name: "dEF", progress: 0,   term: "23/12/2012", reminder_type: "custom", reminder_date: "23/12/2012")
+        @task3 = create(:flyboy_task, taskable: @corporation3, name: "xyz", progress: 35,  term: "22/12/2012", reminder_type: "custom", reminder_date: "22/12/2012")
       end
 
       it "sorting by taskable asc" do
@@ -216,14 +215,14 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested task" do
-      task = Dorsale::Flyboy::Task.create! valid_attributes
+      task = create(:flyboy_task)
       expect {
         delete :destroy, params: {:id => task.to_param}
       }.to change(Dorsale::Flyboy::Task, :count).by(-1)
     end
 
     it "redirects to the tasks list" do
-      task = Dorsale::Flyboy::Task.create! valid_attributes
+      task = create(:flyboy_task)
       delete :destroy, params: {:id => task.to_param}
       expect(response).to redirect_to(flyboy_tasks_path)
     end
@@ -231,7 +230,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "snooze" do
     it "should redirect to the task list to refresh it" do
-      task = Dorsale::Flyboy::Task.create! valid_attributes
+      task = create(:flyboy_task, term: 3.days.ago)
       patch :snooze, params: {:id => task.to_param}
       expect(response).to redirect_to(task)
     end
@@ -244,57 +243,53 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       Dorsale::Flyboy::Task.destroy_all
       sign_in summary_user
 
-      Timecop.travel "2016-03-09 15:00:00" do
-        @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
-        @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)    # thursday - today
-        @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
-        @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
-        @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week
-        @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday next next week
-      end
+      Timecop.freeze "2016-03-09 15:00:00"
+      @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
+      @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)    # thursday - today
+      @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
+      @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
+      @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week
+      @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday next next week
     end
 
     it "should not assign tasks when owner is an other person" do
       other_user = create(:user)
       Dorsale::Flyboy::Task.update_all(owner_id: other_user.id, owner_type: other_user.class)
 
-      Timecop.travel "2016-03-09 15:00:00" do
-        controller.setup_tasks_summary
-        expect(assigns(:delayed_tasks)).to        eq []
-        expect(assigns(:today_tasks)).to          eq []
-        expect(assigns(:tomorrow_tasks)).to       eq []
-        expect(assigns(:this_week_tasks)).to      eq []
-        expect(assigns(:next_week_tasks)).to      eq []
-        expect(assigns(:next_next_week_tasks)).to eq []
-      end
+      Timecop.freeze "2016-03-09 15:00:00"
+      controller.setup_tasks_summary
+      expect(assigns(:delayed_tasks)).to        eq []
+      expect(assigns(:today_tasks)).to          eq []
+      expect(assigns(:tomorrow_tasks)).to       eq []
+      expect(assigns(:this_week_tasks)).to      eq []
+      expect(assigns(:next_week_tasks)).to      eq []
+      expect(assigns(:next_next_week_tasks)).to eq []
     end
 
     it "should assign tasks when owner is nil" do
       Dorsale::Flyboy::Task.update_all(owner_id: nil, owner_type: nil)
 
-      Timecop.travel "2016-03-09 15:00:00" do
-        controller.setup_tasks_summary
-        expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
-        expect(assigns(:today_tasks)).to          eq [@today_task]
-        expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
-        expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
-        expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
-        expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
-      end
+      Timecop.freeze "2016-03-09 15:00:00"
+      controller.setup_tasks_summary
+      expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
+      expect(assigns(:today_tasks)).to          eq [@today_task]
+      expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
+      expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
+      expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
+      expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
     end
 
     it "should assign tasks when owner is me" do
       Dorsale::Flyboy::Task.update_all(owner_id: summary_user.id, owner_type: summary_user.class)
 
-      Timecop.travel "2016-03-09 15:00:00" do
-        controller.setup_tasks_summary
-        expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
-        expect(assigns(:today_tasks)).to          eq [@today_task]
-        expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
-        expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
-        expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
-        expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
-      end
+      Timecop.freeze "2016-03-09 15:00:00"
+      controller.setup_tasks_summary
+      expect(assigns(:delayed_tasks)).to        eq [@delayed_task]
+      expect(assigns(:today_tasks)).to          eq [@today_task]
+      expect(assigns(:tomorrow_tasks)).to       eq [@tomorrow_task]
+      expect(assigns(:this_week_tasks)).to      eq [@this_week_task]
+      expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
+      expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
     end
 
   end # describe summary

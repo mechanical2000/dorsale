@@ -59,6 +59,22 @@
   th.task-term,
     text-align: right
 
+  .task_reminder_fields,
+  .task_term_fields,
+    display: flex
+
+    > div
+      margin-right: 15px
+
+    label
+      line-height: 2.5em
+
+    input, select
+      width: auto
+
+    input[id$=duration]
+      width: 5em
+
   @media print
     #new_task_comment_tr
       display: none

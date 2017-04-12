@@ -63,3 +63,28 @@ end
 When(/^I click on show more$/) do
   find("a[class*=show_more]").click
 end
+
+When(/^I select "([^"]*)"$/) do |value|
+  select value
+end
+
+When(/^I submit$/) do
+  find("#main [type=submit]").click
+end
+
+When(/^I fill "([^"]*)" with "([^"]*)"$/) do |field, value|
+  fill_in field, with: value
+end
+
+Then(/^"([^"]*)" has value "([^"]*)"$/) do |field, expected_value|
+  value = find_field(field).value
+  expect(value).to eq expected_value
+end
+
+Then(/^I do not see "([^"]*)" element$/) do |element_selector|
+  expect(page).to have_no_selector element_selector
+end
+
+Then(/^I see "([^"]*)" element$/) do |element_selector|
+  expect(page).to have_selector element_selector
+end

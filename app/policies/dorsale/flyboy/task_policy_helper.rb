@@ -29,7 +29,7 @@ module Dorsale::Flyboy::TaskPolicyHelper
   end
 
   def snooze?
-    return false unless task.snoozable?
+    return false unless task.snoozer.snoozable?
     super
   end
 
