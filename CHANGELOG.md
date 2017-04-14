@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Task term and reminder improvements
+
 ## 3.5.2
 
 - Comments improvements
