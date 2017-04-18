@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.6.1
+
+- CSS fix
+
 ## 3.6.0
 
 - Task term and reminder improvements
