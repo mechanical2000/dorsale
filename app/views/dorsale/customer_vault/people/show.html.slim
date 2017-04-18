@@ -1,5 +1,6 @@
 - content_for :page_body
-  = comments_for(@person, @person.self_and_related_comments)
+  = render "dorsale/comments/form", comment: new_comment_for(@person)
+  = render "dorsale/customer_vault/events/list", events: @person.self_and_related_events
 
   - if @person.try(:context).present?
     .panel.panel-default: .panel-body = text2html(@person.context)

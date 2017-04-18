@@ -1,8 +1,7 @@
 module Dorsale::CommentsHelper
-  def comments_for(commentable, comments = nil)
-    comments    = ::Dorsale::Comment.where(commentable: commentable) if comments.nil?
-    comments    = policy_scope(comments).preload(:commentable, :author)
-    new_comment = policy_scope(comments).new(commentable: commentable, author: current_user)
+  def comments_for(commentable)
+    comments    = policy_scope(::Dorsale::Comment).where(commentable: commentable)
+    new_comment = new_comment_for(commentable)
 
     render(
       :partial => "dorsale/comments/comments",
@@ -11,6 +10,10 @@ module Dorsale::CommentsHelper
         :new_comment => new_comment,
       },
     )
+  end
+
+  def new_comment_for(commentable)
+    policy_scope(Dorsale::Comment).new(commentable: commentable, author: current_user)
   end
 
   def truncate_comments_in_this_page?

@@ -1,4 +1,7 @@
-= simple_form_for [dorsale, comment], remote: true do |f|
+- id = "new-dorsale-comment"  if comment.new_record?
+- id = "edit-dorsale-comment" if comment.persisted?
+
+= simple_form_for [dorsale, comment], remote: true, html: {id: id} do |f|
   = f.hidden_field :commentable_id
   = f.hidden_field :commentable_type
 
@@ -6,7 +9,7 @@
     - if comment.author.try(:avatar_url).present?
       = image_tag comment.author.avatar_url, class: "avatar"
     - else
-      = image_tag "dorsale/avatar.png", class: "avatar"
+      = image_tag default_avatar_url, class: "avatar"
 
     .comment-fields
       .comment-title-field

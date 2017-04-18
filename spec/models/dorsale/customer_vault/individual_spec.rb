@@ -13,6 +13,7 @@ RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
   it { is_expected.to have_many :tags }
   it { is_expected.to have_many(:tasks).dependent(:destroy) }
   it { is_expected.to have_many(:comments).dependent(:destroy) }
+  it { is_expected.to have_many(:events).dependent(:destroy) }
   it { is_expected.to validate_presence_of :first_name }
   it { is_expected.to validate_presence_of :last_name }
 

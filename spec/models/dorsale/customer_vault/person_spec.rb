@@ -26,14 +26,14 @@ RSpec.describe ::Dorsale::CustomerVault::Person, type: :model do
     end
   end # describe '#links'
 
-  it "should return self_and_related_comments" do
-    corporation         = create(:customer_vault_corporation)
-    individual          = create(:customer_vault_individual, corporation: corporation)
-    corporation_comment = create(:dorsale_comment, commentable: corporation)
-    individual_comment  = create(:dorsale_comment, commentable: individual)
+  it "should return self_and_related_events" do
+    corporation       = create(:customer_vault_corporation)
+    individual        = create(:customer_vault_individual, corporation: corporation)
+    corporation_event = create(:customer_vault_event, person: corporation)
+    individual_event  = create(:customer_vault_event, person: individual)
 
-    expect(corporation.self_and_related_comments).to contain_exactly(corporation_comment, individual_comment)
-    expect(individual.self_and_related_comments).to contain_exactly(individual_comment)
+    expect(corporation.self_and_related_events).to contain_exactly(corporation_event, individual_event)
+    expect(individual.self_and_related_events).to contain_exactly(individual_event)
   end
 
 end

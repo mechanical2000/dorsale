@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413082819) do
+ActiveRecord::Schema.define(version: 20170418070730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,15 @@ ActiveRecord::Schema.define(version: 20170413082819) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.string   "european_union_vat_number"
+  end
+
+  create_table "dorsale_customer_vault_events", force: :cascade do |t|
+    t.integer  "author_id"
+    t.integer  "person_id"
+    t.integer  "comment_id"
+    t.string   "action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dorsale_customer_vault_individuals_bak", force: :cascade do |t|

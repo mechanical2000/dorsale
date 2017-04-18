@@ -1,0 +1,6 @@
+.dorsale-events-list.dorsale-comments-list
+  - events.each do |event|
+    - if event.comment
+      = render "dorsale/comments/comment", comment: event.comment
+    - else
+      = render "dorsale/customer_vault/events/event", event: event

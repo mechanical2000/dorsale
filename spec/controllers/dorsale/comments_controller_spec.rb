@@ -7,8 +7,8 @@ describe Dorsale::CommentsController, type: :controller do
 
   before(:each) { sign_in(user) }
 
+  let(:commentable) { create(:customer_vault_corporation) }
   let(:valid_params){
-    commentable = create(:customer_vault_corporation)
     {
       :comment => {
         :commentable_id   => commentable.id,
@@ -29,6 +29,20 @@ describe Dorsale::CommentsController, type: :controller do
       post :create, params: valid_params
       expect(response).to redirect_to("/")
     end
+
+    describe "on person" do
+      it "should create an event" do
+        expect {
+          post :create, params: valid_params
+        }.to change(Dorsale::CustomerVault::Event, :count).by(1)
+
+        event = Dorsale::CustomerVault::Event.last_created
+        expect(event.author).to eq user
+        expect(event.person).to eq commentable
+        expect(event.comment).to eq Dorsale::Comment.last_created
+        expect(event.action).to eq "comment"
+      end
+    end # describe "on person"
   end
 
   describe "update" do

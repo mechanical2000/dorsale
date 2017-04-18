@@ -50,6 +50,9 @@ en:
       dorsale/customer_vault/link:
         one: "Link"
         other: "Links"
+      dorsale/customer_vault/event:
+        one: "Event"
+        other: "Events"
 
     attributes:
       dorsale/customer_vault/person: &customer_vault_person_attributes
@@ -76,3 +79,10 @@ en:
       dorsale/customer_vault/link:
         alice: "Person"
         bob: "Person"
+      dorsale/customer_vault/event:
+        action: "Action"
+        person: "Person"
+        authored_by: "by"
+      dorsale/customer_vault/event/text:
+        create: "Creation of the person"
+        update: "Update person informations"

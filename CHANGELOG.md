@@ -3,6 +3,7 @@
 ## Next version
 
 - Task term and reminder improvements
+- Add CustomerVault events
 
 ## 3.5.2
 

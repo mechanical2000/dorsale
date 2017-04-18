@@ -23,6 +23,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   has_many :comments, class_name: ::Dorsale::Comment, as: :commentable, dependent: :destroy
   has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable, dependent: :destroy
   has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable, dependent: :destroy
+  has_many :events, dependent: :destroy
   has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer
   accepts_nested_attributes_for :address, allow_destroy: true
 
@@ -64,6 +65,18 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
 
   def destroy_links
     links.each(&:destroy!)
+  end
+
+  def receive_comment_notification(comment, action)
+    if action == :create
+      scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
+      scope.create!(
+        :author  => comment.author,
+        :person  => self,
+        :comment => comment,
+        :action  => "comment",
+      )
+    end
   end
 
 end

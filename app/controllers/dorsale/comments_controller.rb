@@ -13,6 +13,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
     authorize @comment, :create?
 
     if @comment.save
+      notify_attachable!(:create)
       render_comment
     else
       render_nothing
@@ -27,6 +28,7 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
     authorize @comment, :update?
 
     if @comment.update(comment_params_for_update)
+      notify_attachable!(:update)
       render_comment
     else
       render_form
@@ -36,7 +38,8 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
   def destroy
     authorize @comment, :delete?
 
-    @comment.destroy
+    @comment.destroy!
+    notify_attachable!(:delete)
 
     render_nothing
   end
@@ -108,5 +111,9 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
 
   def comment_params_for_update
     comment_params
+  end
+
+  def notify_attachable!(action)
+    @comment.commentable.try(:receive_comment_notification, @comment, action)
   end
 end

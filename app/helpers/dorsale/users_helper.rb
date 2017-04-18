@@ -8,4 +8,8 @@ module Dorsale::UsersHelper
       :title => user.to_s,
     )
   end
+
+  def default_avatar_url
+    "https://www.gravatar.com/avatar/?default=mm&size=200"
+  end
 end
