@@ -1,7 +1,6 @@
 module Dorsale::CommentsHelper
-  def comments_for(commentable, comments = nil)
-    comments    = ::Dorsale::Comment.where(commentable: commentable) if comments.nil?
-    comments    = policy_scope(comments).preload(:commentable, :author)
+  def comments_for(commentable)
+    comments    = policy_scope(::Dorsale::Comment).where(commentable: commentable)
     new_comment = new_comment_for(commentable)
 
     render(
