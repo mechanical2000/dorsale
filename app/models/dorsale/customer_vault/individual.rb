@@ -6,8 +6,8 @@ class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
   validates :last_name,  presence: true
   belongs_to :corporation
 
-  def self_and_related_comments
-    comments
+  def self_and_related_events
+    events
   end
 
   def name

@@ -32,14 +32,9 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def activity
     authorize model, :list?
 
-    @people ||= scope
+    @events ||= policy_scope(::Dorsale::CustomerVault::Event)
 
-    @comments ||= policy_scope(::Dorsale::Comment)
-      .where("commentable_type LIKE ?", "%CustomerVault%")
-      .order("created_at DESC, id DESC")
-      .preload(:commentable, :author)
-
-    @comments = @comments.page(params[:page]).per(50)
+    @events = @events.page(params[:page]).per(50)
   end
 
   def new
@@ -62,6 +57,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     @person ||= scope.new(person_params_for_create)
 
     if @person.save
+      generate_event!("create")
       flash[:notice] = t("messages.#{person_type.to_s.pluralize}.create_ok")
       redirect_to back_url
     else
@@ -91,6 +87,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     authorize @person, :update?
 
     if @person.update(person_params_for_update)
+      generate_event!("update")
       flash[:notice] = t("messages.#{person_type.to_s.pluralize}.update_ok")
       redirect_to back_url
     else
@@ -205,6 +202,14 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
 
   def person_params_for_update
     person_params
+  end
+
+  def generate_event!(action)
+    policy_scope(::Dorsale::CustomerVault::Event).create!(
+      :author => current_user,
+      :person => @person,
+      :action => action,
+    )
   end
 
 end

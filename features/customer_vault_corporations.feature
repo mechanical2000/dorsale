@@ -79,7 +79,7 @@ Feature: Manage corporations
     When I go on the people activity
     Then I see all these comments
 
-  Scenario: People activity
+  Scenario: People activity pagination
     Given an existing corporation with 150 comments
     When I go on the people activity
     Then I see these comments paginated

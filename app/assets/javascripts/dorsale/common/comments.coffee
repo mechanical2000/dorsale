@@ -7,17 +7,17 @@ window.dorsaleComments =
     dorsaleComments.setupShowMoreLinks()
 
   setupCreateForm: ->
-    $("#dorsale-comments").on "ajax:success", "form[id*=new]", (e, data) ->
+    $(document).on "ajax:success", "form#new-dorsale-comment", (e, data) ->
       if data.length
-        $(this).find("textarea").val("")
-        $("#dorsale-comments-list").prepend(data)
+        $(this).find("#comment_title, #comment_text").val("")
+        $(".dorsale-comments-list").prepend(data)
 
   setupEditForm: ->
-    $("#dorsale-comments-list").on "ajax:success", "form[id*=edit]", (e, data) ->
+    $(document).on "ajax:success", "form#edit-dorsale-comment", (e, data) ->
      $(this).replaceWith(data)
 
   setupEditButtons: ->
-    $("#dorsale-comments-list").on "click", "[href$=edit]", ->
+    $(document).on "click", "a.edit-dorsale-comment", ->
       container = $(this).parents(".comment")
       url       = this.href
 
@@ -30,12 +30,12 @@ window.dorsaleComments =
       return false
 
   setupDeleteButtons: ->
-    $("#dorsale-comments-list").on "ajax:success", "[data-method=delete]", ->
+    $(document).on "ajax:success", ".delete-dorsale-comment", ->
       $(this).parents(".comment").fadeOut ->
         $(this).remove()
 
   setupShowMoreLinks: ->
-    $("#dorsale-comments").on "click", ".comment-show_more", ->
+    $(document).on "click", ".comment-show_more", ->
       $(this).parents(".comment-text-truncated").remove()
       return false
 

@@ -65,20 +65,58 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
         expect(assigns(:people)).to eq [corporation2]
       end
     end # describe "search"
-  end # describe "#liwt"
+  end # describe "#list"
 
   describe "#activity" do
     before do
-      @person = create(:customer_vault_corporation)
-      @comment1 = @person.comments.create!(text: "ABC", created_at: Time.zone.now - 3.days, author: user)
-      @comment2 = @person.comments.create!(text: "DEF", created_at: Time.zone.now - 2.days, author: user)
-      @comment3 = @person.comments.create!(text: "DEF", created_at: Time.zone.now - 9.days, author: user)
+      @corporation_1 = create(:customer_vault_corporation)
+      @corporation_2 = create(:customer_vault_corporation)
+      @event_1       = create(:customer_vault_event, person: @corporation_1, created_at: "2012-02-15")
+      @event_2       = create(:customer_vault_event, person: @corporation_2, created_at: "2012-03-15")
     end
 
-    it "should assigns all comments ordered by created_at DESC" do
+    it "should assigns all events ordered by created_at DESC" do
       get :activity
-      expect(assigns(:comments)).to eq [@comment2, @comment1, @comment3]
+      expect(assigns(:events)).to eq [@event_2, @event_1]
     end
   end # describe "#activity"
+
+  describe "#create" do
+    before do
+      allow_any_instance_of(Dorsale::CustomerVault::PeopleController).to \
+      receive(:model) { Dorsale::CustomerVault::Corporation }
+    end
+
+    it "should generate an event" do
+      expect {
+        post :create, params: {person: {corporation_name: "agilidée"}}
+      }.to change(Dorsale::CustomerVault::Event, :count).by(1)
+
+      event = Dorsale::CustomerVault::Event.last_created
+      expect(event.author).to eq user
+      expect(event.person).to eq Dorsale::CustomerVault::Person.last_created
+      expect(event.action).to eq "create"
+    end
+  end # describe "#create"
+
+  describe "#update" do
+    before do
+      allow_any_instance_of(Dorsale::CustomerVault::PeopleController).to \
+      receive(:model) { Dorsale::CustomerVault::Corporation }
+    end
+
+    it "should generate an event" do
+      corporation = create(:customer_vault_corporation)
+
+      expect {
+        patch :update, params: {id: corporation, person: {corporation_name: "agilidée"}}
+      }.to change(Dorsale::CustomerVault::Event, :count).by(1)
+
+      event = Dorsale::CustomerVault::Event.last_created
+      expect(event.author).to eq user
+      expect(event.person).to eq corporation
+      expect(event.action).to eq "update"
+    end
+  end # describe "#update"
 
 end
