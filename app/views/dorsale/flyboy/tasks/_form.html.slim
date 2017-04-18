@@ -20,11 +20,8 @@
         .col-sm-4 = f.input :owner_guid, collection: @owners.map{ |e| [e.to_s, e.guid] }
 
       = f.input :description, input_html: {rows: 5}
-
-      .row
-        .col-md-6 = render "dorsale/flyboy/tasks/term_fields", f: f
-        .col-md-6 = render "dorsale/flyboy/tasks/reminder_fields", f: f
-
+      = render "dorsale/flyboy/tasks/term_fields", f: f
+      = render "dorsale/flyboy/tasks/reminder_fields", f: f
       = f.hidden_field :taskable_id
       = f.hidden_field :taskable_type
 
