@@ -1,0 +1,20 @@
+.task_term_fields
+  .form-sub-group.task_term_label
+    = f.label :term, class: "control-label"
+
+  .form-sub-group.task_term_type
+    = f.input :term, collection: task_term_values_for_select, include_blank: true, html5: true, wrapper: :default, label: false, input_html: {class: "form-control"}
+
+  .form-sub-group.task_term_custom
+    = f.input :term, html5: true, wrapper: :default, label: false, input_html: {class: "form-control", id: "task_term_custom"}
+
+coffee:
+  $("#task_term")
+    .change ->
+      if $(this).val() == "custom" || $(this).val() == ""
+        $("#task_term_custom").prop(disabled: false)
+        $(".form-sub-group.task_term_custom").show()
+      else
+        $("#task_term_custom").prop(disabled: true)
+        $(".form-sub-group.task_term_custom").hide()
+    .change()

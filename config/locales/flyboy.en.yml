@@ -50,6 +50,10 @@ en:
         created_at: "Created at"
         name: "Name"
         reminder: "Reminder"
+        reminder_type: "Reminder type"
+        reminder_date: "Reminder date"
+        reminder_duration: "Reminder duration"
+        reminder_unit: "Reminder unit"
         term: "Term"
         done: "Done ?"
         description: "Description"
@@ -59,3 +63,20 @@ en:
         progress: "Progress"
         description: "Description"
         task: "Task"
+
+      dorsale/flyboy/task/reminder_type:
+        none: "None"
+        duration: "Duration"
+        custom: "Custom date"
+
+      dorsale/flyboy/task/reminder_unit:
+        days: "Day(s)"
+        weeks: "Week(s)"
+        months: "Month(s)"
+
+      dorsale/flyboy/task/term_value:
+        today: "Today"
+        tomorrow: "Tomorrow"
+        this_week: "This week"
+        next_week: "Next prochaine"
+        custom: "Choose a date"

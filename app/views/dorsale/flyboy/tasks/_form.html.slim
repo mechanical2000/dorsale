@@ -11,17 +11,21 @@
       =  t('actions.new_task')
 
   .panel-body
-    = horizontal_form_for @task, as: :task do |f|
+    = simple_form_for @task, as: :task do |f|
       - if @task.taskable
         = f.input :taskable, as: :string, input_html: {value: @task.taskable.to_s, disabled: true}
 
-      = f.input :name
-      = f.input :description
-      = f.input :reminder, html5: true
-      = f.input :term,     html5: true
+      .row
+        .col-sm-8 = f.input :name
+        .col-sm-4 = f.input :owner_guid, collection: @owners.map{ |e| [e.to_s, e.guid] }
+
+      = f.input :description, input_html: {rows: 5}
+
+      .row
+        .col-md-6 = render "dorsale/flyboy/tasks/term_fields", f: f
+        .col-md-6 = render "dorsale/flyboy/tasks/reminder_fields", f: f
 
       = f.hidden_field :taskable_id
       = f.hidden_field :taskable_type
-      = f.input :owner_guid, collection: @owners.map{ |e| [e.to_s, e.guid] }
 
       = form_buttons
