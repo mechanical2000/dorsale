@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version
+## 3.7.0
 
 - Remove some useless "polymorphic" belongs_to
 - Add `comment?` action to task policy
