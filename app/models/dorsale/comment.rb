@@ -1,5 +1,5 @@
 class Dorsale::Comment < ::Dorsale::ApplicationRecord
-  belongs_to :author, polymorphic: true
+  belongs_to :author, class_name: User
   belongs_to :commentable, polymorphic: true
 
   validates :author,      presence: true

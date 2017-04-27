@@ -2,7 +2,7 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_alexandrie_attachments"
 
   belongs_to :attachable, polymorphic: true
-  belongs_to :sender,     polymorphic: true
+  belongs_to :sender, class_name: User
 
   belongs_to :attachment_type, required: false
 

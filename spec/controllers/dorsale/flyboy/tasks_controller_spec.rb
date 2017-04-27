@@ -161,7 +161,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "should send a mail to the owner" do
         owner = create(:user)
         ActionMailer::Base.deliveries.clear
-        post :create, params: {:task => valid_attributes.merge(owner_guid: owner.guid)}
+        post :create, params: {:task => valid_attributes.merge(owner_id: owner.id)}
         expect(ActionMailer::Base.deliveries.count).to eq 1
         email = ActionMailer::Base.deliveries.last
         expect(email.to).to include owner.email
@@ -254,7 +254,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     it "should not assign tasks when owner is an other person" do
       other_user = create(:user)
-      Dorsale::Flyboy::Task.update_all(owner_id: other_user.id, owner_type: other_user.class)
+      Dorsale::Flyboy::Task.update_all(owner_id: other_user.id)
 
       Timecop.freeze "2016-03-09 15:00:00"
       controller.setup_tasks_summary
@@ -267,7 +267,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     end
 
     it "should assign tasks when owner is nil" do
-      Dorsale::Flyboy::Task.update_all(owner_id: nil, owner_type: nil)
+      Dorsale::Flyboy::Task.update_all(owner_id: nil)
 
       Timecop.freeze "2016-03-09 15:00:00"
       controller.setup_tasks_summary
@@ -280,7 +280,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     end
 
     it "should assign tasks when owner is me" do
-      Dorsale::Flyboy::Task.update_all(owner_id: summary_user.id, owner_type: summary_user.class)
+      Dorsale::Flyboy::Task.update_all(owner_id: summary_user.id)
 
       Timecop.freeze "2016-03-09 15:00:00"
       controller.setup_tasks_summary

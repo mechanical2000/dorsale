@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Remove some useless "polymorphic" belongs_to
+
 ## 3.6.1
 
 - CSS fix

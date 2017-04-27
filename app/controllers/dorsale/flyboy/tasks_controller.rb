@@ -186,7 +186,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       :reminder_date,
       :reminder_duration,
       :reminder_unit,
-      :owner_guid,
+      :owner_id,
     ]
   end
 
