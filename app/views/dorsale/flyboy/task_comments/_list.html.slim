@@ -14,7 +14,7 @@
           td.task_comment-progress
             = f.input :progress, label: false
 
-          td.task_comment-description
+          td.task_comment-content
             = f.hidden_field :task_id
 
             .textarea-input-group
@@ -23,12 +23,16 @@
 
 
       - @task.reload.comments.map do |comment|
-        tr
+        tr.task_comment
           td.task_comment-progress
             = progress_bar percentage: comment.progress, label: true
 
-          td.task_comment-description
+          td.task_comment-content
             p: small
-              span.date = date(comment.date)
+              span.task_comment-date = date(comment.date)
+              = " "
+              = comment.t(:written_by)
+              = " "
+              span.task_comment-author = comment.author
 
-            p = text2html comment.description
+            p.task_comment-description = text2html comment.description
