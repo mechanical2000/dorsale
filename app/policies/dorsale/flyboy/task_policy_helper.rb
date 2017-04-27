@@ -4,6 +4,7 @@ module Dorsale::Flyboy::TaskPolicyHelper
     :export?,
     :create?,
     :read?,
+    :comment?,
     :update?,
     :delete?,
     :complete?,

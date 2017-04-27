@@ -9,7 +9,7 @@
           = Dorsale::Flyboy::TaskComment.t(:description)
 
     tbody
-      - if policy(@task).update?
+      - if policy(@task).comment?
         tr#new_task_comment_tr
           td.task_comment-progress
             = f.input :progress, label: false
