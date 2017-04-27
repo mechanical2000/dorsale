@@ -1,0 +1,13 @@
+.panel.panel-default
+  .panel-heading: .panel-title
+    - if @origin.new_record?
+      = t("customer_vault.origin.actions.create")
+    - else
+      = t("actions.update")
+      = " : "
+      = @origin
+
+  .panel-body
+    = horizontal_form_for @origin, as: :origin do |f|
+      = f.input :name
+      = form_buttons

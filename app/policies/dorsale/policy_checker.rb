@@ -16,6 +16,8 @@ class Dorsale::PolicyChecker
     check_policy! "Dorsale::CustomerVault::EventPolicy"
     check_policy! "Dorsale::CustomerVault::PersonPolicy"
     check_policy! "Dorsale::CustomerVault::LinkPolicy"
+    check_policy! "Dorsale::CustomerVault::OriginPolicy"
+    check_policy! "Dorsale::CustomerVault::ActivityTypePolicy"
     check_policy! "Dorsale::ExpenseGun::CategoryPolicy"
     check_policy! "Dorsale::ExpenseGun::ExpensePolicy"
     check_policy! "Dorsale::Flyboy::TaskPolicy"

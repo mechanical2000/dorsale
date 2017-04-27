@@ -1,5 +1,7 @@
 .sub-context
   = info person, :tags, tags(person)
+  = info person, :activity_type
+  = info person, :origin
 
   - if person.individual?
     = info person, :corporation, helper: :link_to_object

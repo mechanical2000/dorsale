@@ -1,0 +1,11 @@
+.customer_vault
+  - content_for :title
+    = ::Dorsale::CustomerVault::ActivityType.ts
+
+  - content_for :actions
+    = render "dorsale/customer_vault/activity_types/index_actions"
+
+  - content_for :table
+    = render "dorsale/customer_vault/activity_types/list", activity_types: @activity_types
+
+  = render_dorsale_page

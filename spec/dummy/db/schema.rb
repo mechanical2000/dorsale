@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427083541) do
+ActiveRecord::Schema.define(version: 20170427093507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,12 @@ ActiveRecord::Schema.define(version: 20170427083541) do
     t.index ["user_type"], name: "index_dorsale_comments_on_user_type", using: :btree
   end
 
+  create_table "dorsale_customer_vault_activity_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dorsale_customer_vault_corporations_bak", force: :cascade do |t|
     t.string   "name"
     t.string   "short_name"
@@ -256,6 +262,12 @@ ActiveRecord::Schema.define(version: 20170427083541) do
     t.index ["bob_id"], name: "index_dorsale_customer_vault_links_on_bob_id", using: :btree
   end
 
+  create_table "dorsale_customer_vault_origins", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dorsale_customer_vault_people", force: :cascade do |t|
     t.string   "type"
     t.integer  "old_id"
@@ -279,6 +291,8 @@ ActiveRecord::Schema.define(version: 20170427083541) do
     t.datetime "updated_at",       null: false
     t.text     "context"
     t.integer  "corporation_id"
+    t.integer  "activity_type_id"
+    t.integer  "origin_id"
     t.index ["old_id"], name: "index_dorsale_customer_vault_people_on_old_id", using: :btree
   end
 

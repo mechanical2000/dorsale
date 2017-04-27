@@ -1,0 +1,17 @@
+table.table.default#activity_type
+  thead
+    tr
+      th.actions.activity_type-name
+        = ::Dorsale::CustomerVault::ActivityType.t(:name)
+      th.actions.activity_type-action
+        = "Action"
+
+  tbody
+    - @activity_types.each do |activity_type|
+      tr.actions.activity_type
+        td.actions.activity_type-name
+          = activity_type
+
+        td.actions.activity_type-action
+          - if policy(activity_type).create?
+            = update_button edit_customer_vault_activity_type_path(activity_type), id: "edit-#{activity_type.id}"

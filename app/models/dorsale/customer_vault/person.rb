@@ -27,6 +27,9 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer
   accepts_nested_attributes_for :address, allow_destroy: true
 
+  belongs_to :activity_type, class_name: ::Dorsale::CustomerVault::ActivityType
+  belongs_to :origin, class_name: ::Dorsale::CustomerVault::Origin
+
   after_destroy :destroy_links
 
   default_scope -> {

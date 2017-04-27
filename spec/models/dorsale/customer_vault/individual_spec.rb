@@ -17,5 +17,29 @@ RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
   it { is_expected.to validate_presence_of :first_name }
   it { is_expected.to validate_presence_of :last_name }
 
+  it { is_expected.to belong_to :activity_type }
+  it { is_expected.to belong_to :origin }
+
   it { is_expected.to respond_to :context }
+
+  describe "activity type" do
+    it "should have the same activity than his corporation" do
+      corporation = create(:customer_vault_corporation)
+      individual = create(:customer_vault_individual, corporation: corporation)
+      expect(individual.activity_type).to eq corporation.activity_type
+    end
+
+    it "should have no activity if no corporation" do
+      individual = create(:customer_vault_individual, corporation: nil)
+      expect(individual.activity_type).to eq nil
+    end
+
+    it "should have no activity if his corporation has no activity" do
+      corporation = create(:customer_vault_corporation, activity_type: nil)
+      individual = create(:customer_vault_individual, corporation: corporation)
+      expect(individual.activity_type).to eq nil
+    end
+  end
+
+
 end

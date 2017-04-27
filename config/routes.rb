@@ -53,6 +53,10 @@ Dorsale::Engine.routes.draw do
   get "customer_vault/individuals"  => "customer_vault/people#individuals"
 
   namespace :customer_vault do
+
+    resources :activity_types, except: [:destroy, :show]
+    resources :origins, except: [:destroy, :show]
+
     namespace :people do
       get :activity
     end

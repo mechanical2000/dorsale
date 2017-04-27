@@ -18,6 +18,9 @@ RSpec.describe ::Dorsale::CustomerVault::Corporation, type: :model do
     it { is_expected.to respond_to :number_of_employees }
     it { is_expected.to respond_to :societe_com }
 
+    it { is_expected.to belong_to :activity_type }
+    it { is_expected.to belong_to :origin }
+
     it { is_expected.to have_many(:comments).dependent(:destroy) }
 
     it { is_expected.to validate_presence_of :corporation_name }

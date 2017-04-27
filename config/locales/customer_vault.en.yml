@@ -7,6 +7,14 @@ en:
     address_informations: "Address informations"
     additional_informations: "Additional informations"
 
+    origin:
+      actions:
+        create: "New origin"
+
+    activity_type:
+      actions:
+        create: "New activity type"
+
   messages:
     no_people: "No people find."
     no_activity: "No recent activity."
@@ -28,6 +36,14 @@ en:
       update_ok    : "Link updated."
       delete_ok    : "Link deleted."
       delete_error : "One error occurs, link not deleted."
+
+    origins:
+      create_ok    : "Origin created."
+      update_ok    : "Origin updated."
+
+    activity_types:
+      create_ok    : "Activity created."
+      update_ok    : "Activity updated."
 
   actions:
     new_individual: "New individual"
@@ -53,6 +69,13 @@ en:
       dorsale/customer_vault/event:
         one: "Event"
         other: "Events"
+      dorsale/customer_vault/origin:
+        one: "Origin"
+        other: "Origin"
+      dorsale/customer_vault/activity_type:
+        one: "Activity type"
+        other: "Activity types"
+
 
     attributes:
       dorsale/customer_vault/person: &customer_vault_person_attributes
@@ -72,6 +95,9 @@ en:
         person_type: "Type"
         title: "Title"
         individuals: "Individuals"
+        origin: "Origin"
+        activity_type: "Activity type"
+
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
       dorsale/customer_vault/corporation:

@@ -1,0 +1,17 @@
+table.table.default#origin
+  thead
+    tr
+      th.actions.origin-name
+        = ::Dorsale::CustomerVault::Origin.t(:name)
+      th.actions.origin-action
+        = "Action"
+
+  tbody
+    - @origins.each do |origin|
+      tr.actions.origin
+        td.actions.origin-name
+          = origin
+
+        td.actions.origin-action
+          - if policy(origin).create?
+            = update_button edit_customer_vault_origin_path(origin), id: "edit-#{origin.id}"

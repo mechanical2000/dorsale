@@ -4,6 +4,7 @@
 
 - Remove some useless "polymorphic" belongs_to
 - Add `comment?` action to task policy
+- CustomerVault : origins and activity types
 
 ## 3.6.1
 

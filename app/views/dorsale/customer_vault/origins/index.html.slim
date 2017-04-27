@@ -1,0 +1,11 @@
+.customer_vault
+  - content_for :title
+    = ::Dorsale::CustomerVault::Origin.ts
+
+  - content_for :actions
+    = render "dorsale/customer_vault/origins/index_actions"
+
+  - content_for :table
+    = render "dorsale/customer_vault/origins/list", origins: @origins
+
+  = render_dorsale_page

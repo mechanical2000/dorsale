@@ -1,0 +1,13 @@
+.panel.panel-default
+  .panel-heading: .panel-title
+    - if @activity_type.new_record?
+      = t("customer_vault.activity_type.actions.create")
+    - else
+      = t("actions.update")
+      = " : "
+      = @activity_type
+
+  .panel-body
+    = horizontal_form_for @activity_type, as: :activity_type do |f|
+      = f.input :name
+      = form_buttons

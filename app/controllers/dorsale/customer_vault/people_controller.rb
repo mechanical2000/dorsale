@@ -153,6 +153,8 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
       :linkedin,
       :viadeo,
       :context,
+      :origin_id,
+      :activity_type_id,
       :tag_list => [],
       :address_attributes => [
         :street,
