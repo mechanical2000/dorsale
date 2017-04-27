@@ -17,7 +17,7 @@
 
       .row
         .col-sm-8 = f.input :name
-        .col-sm-4 = f.input :owner_guid, collection: @owners.map{ |e| [e.to_s, e.guid] }
+        .col-sm-4 = f.input :owner_id, collection: @owners
 
       = f.input :description, input_html: {rows: 5}
       = render "dorsale/flyboy/tasks/term_fields", f: f

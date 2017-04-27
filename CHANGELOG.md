@@ -1,5 +1,10 @@
 # Changelog
 
+## Next version
+
+- Remove some useless "polymorphic" belongs_to
+- Add `comment?` action to task policy
+
 ## 3.6.1
 
 - CSS fix

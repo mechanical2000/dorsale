@@ -46,7 +46,6 @@ en:
         taskable_type: "Origin type"
         owner: "Owner"
         owner_id: "Owner"
-        owner_guid: "Owner"
         created_at: "Created at"
         name: "Name"
         reminder: "Reminder"

@@ -5,7 +5,7 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
     @task_comment ||= model.new(task_comment_params_for_create)
     @task         ||= @task_comment.task
 
-    authorize @task, :update?
+    authorize @task, :comment?
 
     if @task_comment.save
       redirect_to @task

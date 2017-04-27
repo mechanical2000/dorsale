@@ -2,7 +2,7 @@ class Dorsale::Flyboy::TaskComment < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_flyboy_task_comments"
 
   belongs_to :task
-  belongs_to :author, polymorphic: true
+  belongs_to :author, class_name: User
 
   validates :author,      presence: true
   validates :task,        presence: true

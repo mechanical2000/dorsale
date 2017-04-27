@@ -46,7 +46,6 @@ fr:
         taskable_type: "Type origine"
         owner: "Propriétaire"
         owner_id: "Propriétaire"
-        owner_guid: "Propriétaire"
         created_at: "Créée le"
         name: "Titre"
         reminder: "Rappel"
