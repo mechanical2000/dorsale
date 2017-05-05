@@ -80,6 +80,8 @@ fr:
       dorsale/customer_vault/person: &customer_vault_person_attributes
         context: "Contexte"
         all_tags: "Tous les tags"
+        all_origins: "Toutes les origines"
+        all_activity_types: "Toutes les activités"
         all_types: "Tous les types"
         capital: "Capital"
         immatriculation_number: "SIREN"

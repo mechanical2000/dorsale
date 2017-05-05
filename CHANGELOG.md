@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.7.1
+- Add activity type and origin filters for people
+- Add activity type and origin in people export
+
 ## 3.7.0
 
 - Remove some useless "polymorphic" belongs_to

@@ -7,6 +7,8 @@ fields = %w(
   email
   phone
   mobile
+  origin
+  activity_type
   fax
   skype
   www

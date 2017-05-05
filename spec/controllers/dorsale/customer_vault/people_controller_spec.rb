@@ -54,6 +54,31 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
 
         expect(assigns(:people)).to eq [individual]
       end
+
+      it "should filter by person origin" do
+        @origin = create(:customer_vault_origin)
+        individual  = create(:customer_vault_individual, origin: @origin)
+        corporation = create(:customer_vault_corporation)
+
+        cookies[:filters] = {person_origin: @origin.id}.to_json
+
+        get :index
+
+        expect(assigns(:people)).to eq [individual]
+      end
+
+      it "should filter by person activity" do
+        @activity = create(:customer_vault_activity_type)
+        corpo1 = create(:customer_vault_corporation, activity_type: @activity)
+        individual  = create(:customer_vault_individual, corporation: corpo1)
+        corpo2 = create(:customer_vault_corporation)
+
+        cookies[:filters] = {person_activity: @activity.id}.to_json
+
+        get :index
+
+        expect(assigns(:people)).to eq [corpo1, individual]
+      end
     end # describe "filters"
 
     describe "search" do

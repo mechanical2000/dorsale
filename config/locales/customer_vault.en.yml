@@ -81,6 +81,8 @@ en:
       dorsale/customer_vault/person: &customer_vault_person_attributes
         context: "Context"
         all_tags: "All tags"
+        all_origins: "All origins"
+        all_activity_types: "All activities"
         all_types: "All types"
         capital: "Capital"
         immatriculation_number: "Immatriculation number 1"

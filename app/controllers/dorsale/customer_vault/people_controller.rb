@@ -4,9 +4,11 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def index
     authorize model, :list?
 
-    @filters ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
-    @tags    ||= customer_vault_tag_list
-    @people  ||= policy_scope(model)
+    @filters        ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(cookies)
+    @tags           ||= customer_vault_tag_list
+    @origins        ||= policy_scope(Dorsale::CustomerVault::Origin)
+    @activity_types ||= policy_scope(Dorsale::CustomerVault::ActivityType)
+    @people         ||= policy_scope(model)
       .search(params[:q])
       .preload(:taggings)
 

@@ -7,3 +7,11 @@
     :collection    => @tags,
     :input_html    => {multiple: true},
     :placeholder => ::Dorsale::CustomerVault::Person.t(:all_tags)
+
+  = f.input :person_origin,
+    :collection    => @origins,
+    :include_blank => ::Dorsale::CustomerVault::Person.t(:all_origins)
+
+  = f.input :person_activity,
+    :collection    => @activity_types,
+    :include_blank => ::Dorsale::CustomerVault::Person.t(:all_activity_types)
