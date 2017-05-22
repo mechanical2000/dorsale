@@ -9,18 +9,11 @@ module Dorsale::Flyboy::TaskPolicyHelper
     :delete?,
     :complete?,
     :snooze?,
+    :copy?,
   ]
 
   def create?
     return false if cannot_read_taskable?
-    super
-  end
-
-  def update?
-    super
-  end
-
-  def delete?
     super
   end
 

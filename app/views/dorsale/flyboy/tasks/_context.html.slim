@@ -4,7 +4,7 @@
     = " "
     = task
 
-  .context-body
+  .context-body class=task_color(task)
     = info task, :progress, progress_bar(percentage: task.progress, label: true)
     = info task, :owner
     = info task, :created_at
@@ -14,3 +14,9 @@
 
   .context-footer
     = actions_for task
+
+    - if policy(task).copy?
+      = copy_button copy_flyboy_task_path(task), method: :patch
+
+    - if policy(task).snooze?
+      = snooze_button snooze_flyboy_task_path(task), method: :patch

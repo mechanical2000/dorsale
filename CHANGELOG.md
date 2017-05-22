@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.7.2
+- Add sorting for task comments
+- Add copy for tasks
+- Add comment when reporting
+
 ## 3.7.1
 - Add activity type and origin filters for people
 - Add activity type and origin in people export

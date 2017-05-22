@@ -7,7 +7,8 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     :update,
     :destroy,
     :complete,
-    :snooze
+    :snooze,
+    :copy,
   ]
 
   def index
@@ -33,7 +34,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       end
     end
 
-    @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
+    @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(filters_jar)
 
     @tasks = @filters.apply(@tasks)
     @tasks = @tasks.search(params[:q])
@@ -51,6 +52,19 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
   def show
     authorize @task, :read?
+    @task_comments = @task.comments
+
+    @order ||= sortable_column_order do |column, direction|
+    case column
+    when :description
+        %(LOWER(#{column}) #{direction})
+      when :progress
+        %(#{column} #{direction})
+      else
+        "date #{direction}"
+      end
+    end
+    @task_comments = @task_comments.reorder(@order)
   end
 
   def new
@@ -131,12 +145,22 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     authorize @task, :snooze?
 
     if @task.snoozer.snooze
+      comment = Dorsale::Flyboy::TaskComment.new(task: @task, progress: @task.progress, description: t("messages.tasks.snooze_ok"), author: current_user)
+      comment.save!
       flash[:success] = t("messages.tasks.snooze_ok")
     else
       flash[:danger] = t("messages.tasks.snooze_error")
     end
 
     redirect_to back_url
+  end
+
+  def copy
+    authorize @task, :copy?
+
+    @original = @task
+    @task  = Dorsale::Flyboy::Task::Copy.(@original)
+    render :new
   end
 
   def summary

@@ -11,6 +11,8 @@ fr:
       snooze_eror: "Impossible de reporter la tâche"
       complete_ok: "La tâche a été marquée comme terminée"
       complete_eror: "Impossible de terminer la tâche"
+      copy_ok: "La tâche a été copiée"
+      copy_ko: "Impossible de copier cette tâche"
 
   task_mailer:
     new_task:

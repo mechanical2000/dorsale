@@ -13,7 +13,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     authorize model, :list?
 
     @invoices ||= scope.all.preload(:customer)
-    @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(cookies)
+    @filters  ||= ::Dorsale::BillingMachine::SmallData::FilterForInvoices.new(filters_jar)
 
     @invoices = @filters.apply(@invoices)
     @invoices_without_pagination = @invoices

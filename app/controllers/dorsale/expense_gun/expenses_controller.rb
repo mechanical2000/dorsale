@@ -16,7 +16,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     authorize model, :list?
 
     @expenses ||= scope.all.preload(:user, :expense_lines)
-    @filters ||= Dorsale::ExpenseGun::SmallData::FilterForExpenses.new(cookies)
+    @filters ||= Dorsale::ExpenseGun::SmallData::FilterForExpenses.new(filters_jar)
     @expenses = @filters.apply(@expenses)
     @expenses = @expenses.page(params[:page]).per(25)
   end

@@ -1,6 +1,6 @@
 module Dorsale::Flyboy::ApplicationHelper
   def tasks_for(taskable)
-    @filters = ::Dorsale::Flyboy::SmallData::FilterForTasks.new(cookies)
+    @filters = ::Dorsale::Flyboy::SmallData::FilterForTasks.new(filters_jar)
 
     order ||= sortable_column_order do |column, direction|
       case column

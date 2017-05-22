@@ -44,5 +44,8 @@ describe ::Dorsale::Flyboy::TasksController, type: :routing do
       expect(delete("flyboy/tasks/1")).to route_to("dorsale/flyboy/tasks#destroy", id: "1")
     end
 
+    it "routes to #copy" do
+      expect(patch("flyboy/tasks/1/copy")).to route_to("dorsale/flyboy/tasks#copy", id: "1")
+    end
   end
 end

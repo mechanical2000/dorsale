@@ -13,7 +13,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     authorize model, :list?
 
     @quotations ||= scope.all.preload(:customer)
-    @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(cookies)
+    @filters    ||= ::Dorsale::BillingMachine::SmallData::FilterForQuotations.new(filters_jar)
 
     @quotations = @filters.apply(@quotations)
     @quotations_without_pagination = @quotations # All filtered quotations (not paginated)

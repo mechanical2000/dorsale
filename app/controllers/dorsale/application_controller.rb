@@ -14,11 +14,16 @@ class Dorsale::ApplicationController < ::ApplicationController
     end
   }
 
+  def filters_jar
+    cookies
+  end
+
   def model
     raise NotImplementedError
   end
 
   helper_method :model
+  helper_method :filters_jar
 
   def scope
     policy_scope(model)

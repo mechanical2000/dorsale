@@ -3,10 +3,10 @@
     thead
       tr
         th.task_comment-progress
-          = Dorsale::Flyboy::TaskComment.t(:progress)
+          = sortable_column Dorsale::Flyboy::TaskComment.t(:progress), :progress
 
         th.task_comment-description
-          = Dorsale::Flyboy::TaskComment.t(:description)
+          = sortable_column Dorsale::Flyboy::TaskComment.t(:description), :description
 
     tbody
       - if policy(@task).comment?
@@ -22,7 +22,7 @@
               input type="submit" value=t("actions.save")
 
 
-      - @task.reload.comments.map do |comment|
+      - @task_comments.each do |comment|
         tr.task_comment
           td.task_comment-progress
             = progress_bar percentage: comment.progress, label: true
