@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.7.3
+- Fix copy action
+
 ## 3.7.2
 - Add sorting for task comments
 - Add copy for tasks
