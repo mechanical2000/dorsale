@@ -11,6 +11,14 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     :copy,
   ]
 
+  before_action :set_owners, only: [
+    :new,
+    :create,
+    :edit,
+    :update,
+    :copy,
+  ]
+
   def index
     authorize model, :list?
 
@@ -72,8 +80,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     @task.owner ||= current_user
     @task.taskable_guid = params[:taskable_guid]
 
-    set_owners
-
     authorize @task, :create?
   end
 
@@ -87,7 +93,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       notify_owner(current_user, @task)
       redirect_to back_url
     else
-      set_owners
       render :new
     end
   end
@@ -95,7 +100,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def edit
     authorize @task, :update?
 
-    set_owners
   end
 
   def update
@@ -105,7 +109,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       flash[:success] = t("messages.tasks.update_ok")
       redirect_to back_url
     else
-      set_owners
       render :edit
     end
   end
