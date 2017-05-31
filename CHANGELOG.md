@@ -1,5 +1,9 @@
 # Changelog
 
+## Next version
+
+- Change nilify_blanks config
+
 ## 3.7.3
 - Fix copy action
 

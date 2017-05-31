@@ -7,7 +7,7 @@ class Dorsale::ApplicationRecord < ActiveRecord::Base
   include Agilibox::ModelI18n
   include Agilibox::PolymorphicId
 
-  nilify_blanks
+  nilify_blanks before: :validation
 
   def self.last_created
     reorder(:created_at, :id).last
