@@ -71,14 +71,19 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   end
 
   def receive_comment_notification(comment, action)
+    scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
+
     if action == :create
-      scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
       scope.create!(
         :author  => comment.author,
         :person  => self,
         :comment => comment,
         :action  => "comment",
       )
+    end
+
+    if action == :delete
+      scope.where(comment: comment).destroy_all
     end
   end
 
