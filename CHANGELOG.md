@@ -5,6 +5,7 @@
 - Change nilify_blanks config
 - CustomerVault Events : persist text
 - CustomerVault : delete event when deleting comment
+- Comments : fix double comments JS
 
 ## 3.7.3
 - Fix copy action
