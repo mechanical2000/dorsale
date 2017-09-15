@@ -17,7 +17,7 @@ module Dorsale::CommentsHelper
   end
 
   def truncate_comments_in_this_page?
-    controller_name == "people"
+    params[:controller].include?("customer_vault")
   end
 
   def truncate_comment_text(comment)

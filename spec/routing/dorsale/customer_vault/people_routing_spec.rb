@@ -19,11 +19,6 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :routing do
       route_to("dorsale/customer_vault/people#individuals")
     end
 
-    it "#activity" do
-      expect(get "/customer_vault/people/activity").to \
-      route_to("dorsale/customer_vault/people#activity")
-    end
-
     it "#new person" do
       expect(get "/customer_vault/people/new").to \
       route_to("dorsale/customer_vault/people#new")

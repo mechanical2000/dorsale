@@ -1,7 +1,6 @@
 en:
   customer_vault:
     name: "Directory"
-    activity: "Activity"
     identity_informations: "Identity informations"
     contact_informations: "Contact informations"
     address_informations: "Address informations"
@@ -67,8 +66,8 @@ en:
         one: "Link"
         other: "Links"
       dorsale/customer_vault/event:
-        one: "Event"
-        other: "Events"
+        one: "Activity"
+        other: "Activity"
       dorsale/customer_vault/origin:
         one: "Origin"
         other: "Origin"
@@ -108,9 +107,14 @@ en:
         alice: "Person"
         bob: "Person"
       dorsale/customer_vault/event:
-        action: "Action"
+        action: "Activity type"
         person: "Person"
         authored_by: "by"
+        all_actions: "All types"
+      dorsale/customer_vault/event/action:
+        create: "Create"
+        update: "Update"
+        comment: "Comment"
       dorsale/customer_vault/event/text:
         create: "Creation of the person"
         update: "Update person informations"

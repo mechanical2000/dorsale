@@ -1,7 +1,7 @@
 .nav.nav-tabs#person-tabs
   li class=("active" if request.path == dorsale.customer_vault_person_path(@person))
     a href=dorsale.customer_vault_person_path(@person)
-      = t("customer_vault.activity")
+      = Dorsale::CustomerVault::Event.ts
       = " "
       span.badge = @person.comments.count
 

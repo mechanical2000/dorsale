@@ -1,4 +1,5 @@
 module Dorsale::CustomerVault::EventPolicyHelper
-  # Only used for scopes
-  POLICY_METHODS = []
+  POLICY_METHODS = [
+    :list?,
+  ]
 end

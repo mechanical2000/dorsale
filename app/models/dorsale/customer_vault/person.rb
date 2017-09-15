@@ -36,6 +36,8 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     order("LOWER(COALESCE(corporation_name, '') || COALESCE(last_name, '') || COALESCE(first_name, '')) ASC")
   }
 
+  after_initialize :build_address, unless: :address
+
   def person_type
     self.class.to_s.demodulize.downcase.to_sym
   end
@@ -71,14 +73,19 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   end
 
   def receive_comment_notification(comment, action)
+    scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
+
     if action == :create
-      scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
       scope.create!(
         :author  => comment.author,
         :person  => self,
         :comment => comment,
         :action  => "comment",
       )
+    end
+
+    if action == :delete
+      scope.where(comment: comment).destroy_all
     end
   end
 

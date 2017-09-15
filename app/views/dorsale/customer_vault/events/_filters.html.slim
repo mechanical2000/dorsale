@@ -1,0 +1,2 @@
+= filters_form do |f|
+  = checkboxes_dropdown f, :event_action, customer_vault_event_actions_for_filter_select, ::Dorsale::CustomerVault::Event.t(:action)

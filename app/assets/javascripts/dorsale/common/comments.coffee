@@ -39,5 +39,5 @@ window.dorsaleComments =
       $(this).parents(".comment-text-truncated").remove()
       return false
 
-$(document).on "turbolinks:load", ->
-  dorsaleComments.setup()
+
+dorsaleComments.setup()
