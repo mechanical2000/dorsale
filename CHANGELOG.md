@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.7.4
+
 - Change nilify_blanks config
 - CustomerVault Events : persist text
 - CustomerVault : delete event when deleting comment
