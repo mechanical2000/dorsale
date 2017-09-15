@@ -6,6 +6,7 @@
 - CustomerVault Events : persist text
 - CustomerVault : delete event when deleting comment
 - Comments : fix double comments JS
+- CustomerVault : do not validate events author
 
 ## 3.7.3
 - Fix copy action
