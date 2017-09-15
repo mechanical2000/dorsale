@@ -77,7 +77,7 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
 
         get :index
 
-        expect(assigns(:people)).to eq [corpo1, individual]
+        expect(assigns(:people)).to contain_exactly(corpo1, individual)
       end
     end # describe "filters"
 

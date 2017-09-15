@@ -21,8 +21,4 @@ class Dorsale::CustomerVault::Event < ::Dorsale::ApplicationRecord
   def date
     created_at.try(:to_date)
   end
-
-  def text
-    t("text.#{action}")
-  end
 end

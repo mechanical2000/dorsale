@@ -110,6 +110,6 @@ fr:
         action: "Action"
         person: "Personne"
         authored_by: "par"
-      dorsale/customer_vault/event/text:
+      dorsale/customer_vault/event/action:
         create: "Création de la personne"
         update: "Mise à jour des informations de la personne"

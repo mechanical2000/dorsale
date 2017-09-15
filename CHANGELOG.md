@@ -3,6 +3,7 @@
 ## Next version
 
 - Change nilify_blanks config
+- CustomerVault Events : persist text
 
 ## 3.7.3
 - Fix copy action

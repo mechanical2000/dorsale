@@ -111,6 +111,6 @@ en:
         action: "Action"
         person: "Person"
         authored_by: "by"
-      dorsale/customer_vault/event/text:
+      dorsale/customer_vault/event/action:
         create: "Creation of the person"
         update: "Update person informations"
