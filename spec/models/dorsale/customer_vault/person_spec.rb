@@ -36,4 +36,10 @@ RSpec.describe ::Dorsale::CustomerVault::Person, type: :model do
     expect(individual.self_and_related_events).to contain_exactly(individual_event)
   end
 
+  describe "address" do
+    it "should auto create address" do
+      corporation = Dorsale::CustomerVault::Corporation.create!(name: "agilidée")
+      expect(corporation.address).to_not be nil
+    end
+  end # describe "address"
 end
