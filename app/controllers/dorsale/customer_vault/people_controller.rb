@@ -31,14 +31,6 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
     render :index
   end
 
-  def activity
-    authorize model, :list?
-
-    @events ||= policy_scope(::Dorsale::CustomerVault::Event)
-
-    @events = @events.page(params[:page]).per(50)
-  end
-
   def new
     authorize model, :create?
 
@@ -213,7 +205,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
       :author => current_user,
       :person => @person,
       :action => action,
-      :text   => ::Dorsale::CustomerVault::Event.t("action.#{action}")
+      :text   => ::Dorsale::CustomerVault::Event.t("text.#{action}")
     )
   end
 

@@ -116,7 +116,7 @@ Given(/^an existing corporation with recent comments$/) do
 end
 
 When(/^I go on the people activity$/) do
-  visit dorsale.customer_vault_people_activity_path
+  visit dorsale.customer_vault_events_path
 end
 
 Then(/^I see all these comments$/) do

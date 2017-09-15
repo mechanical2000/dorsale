@@ -8,7 +8,7 @@ class Dorsale::CustomerVault::Event < ::Dorsale::ApplicationRecord
   belongs_to :comment, class_name: Dorsale::Comment
 
   validates :person,  presence: true
-  validates :action,  presence: true, inclusion: {in: ACTIONS}
+  validates :action,  presence: true, inclusion: {in: proc {ACTIONS} }
   validates :comment, presence: true, if: proc { action == "comment" }
 
   default_scope -> {

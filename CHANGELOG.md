@@ -7,6 +7,8 @@
 - CustomerVault : delete event when deleting comment
 - Comments : fix double comments JS
 - CustomerVault : do not validate events author
+- CustomerVault : move PeopleController#activity to EventsController#index
+- CustomerVault : add events filters
 
 ## 3.7.3
 - Fix copy action

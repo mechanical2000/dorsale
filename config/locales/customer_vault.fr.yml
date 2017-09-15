@@ -1,7 +1,6 @@
 fr:
   customer_vault:
     name: "Annuaire"
-    activity: "Activité"
     identity_informations: "Identité"
     contact_informations: "Cordonnées"
     address_informations: "Adresse"
@@ -67,8 +66,8 @@ fr:
         one: "Lien"
         other: "Liens"
       dorsale/customer_vault/event:
-        one: "Événement"
-        other: "Événements"
+        one: "Activité"
+        other: "Activité"
       dorsale/customer_vault/origin:
         one: "Origine du contact"
         other: "Origines du contact"
@@ -107,9 +106,14 @@ fr:
         alice: "Personne"
         bob: "Personne"
       dorsale/customer_vault/event:
-        action: "Action"
+        action: "Type d'activité"
         person: "Personne"
         authored_by: "par"
+        all_actions: "Tous les types"
       dorsale/customer_vault/event/action:
+        create: "Création"
+        update: "Modification"
+        comment: "Commentaire"
+      dorsale/customer_vault/event/text:
         create: "Création de la personne"
         update: "Mise à jour des informations de la personne"

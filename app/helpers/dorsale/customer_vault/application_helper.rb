@@ -39,4 +39,11 @@ module Dorsale::CustomerVault::ApplicationHelper
   def person_related_people_blank?(person)
     person.individuals.empty?
   end
+
+  def customer_vault_event_actions_for_filter_select
+    model = Dorsale::CustomerVault::Event
+    model::ACTIONS.map do |action|
+      [model.t("action.#{action}"), action]
+    end
+  end
 end
