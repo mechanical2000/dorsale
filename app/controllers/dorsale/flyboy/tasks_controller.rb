@@ -60,19 +60,10 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
   def show
     authorize @task, :read?
-    @task_comments = @task.comments
 
-    @order ||= sortable_column_order do |column, direction|
-    case column
-    when :description
-        %(LOWER(#{column}) #{direction})
-      when :progress
-        %(#{column} #{direction})
-      else
-        "date #{direction}"
-      end
-    end
-    @task_comments = @task_comments.reorder(@order)
+    @task_comments = @task.comments.preload(:author)
+
+    @task_comments = Dorsale::Flyboy::TaskCommentsSorter.(@task_comments, params[:sort] ||= "-date")
   end
 
   def new

@@ -1,0 +1,11 @@
+- if policy(@task).comment?
+  tr#new_task_comment_tr
+    td.task_comment-progress
+      = f.input :progress, label: false
+
+    td.task_comment-content
+      = f.hidden_field :task_id
+
+      .textarea-input-group
+        = f.text_area :description, rows: 3, class: "form-control"
+        input type="submit" value=t("actions.save")

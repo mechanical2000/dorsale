@@ -10,7 +10,7 @@ class Dorsale::Flyboy::TaskComment < ::Dorsale::ApplicationRecord
   validates :description, presence: true
   validates :progress,    inclusion: {in: 0..100}
 
-  default_scope -> { order("created_at DESC") }
+  default_scope -> { order(date: :desc) }
 
   def assign_default_values
     assign_default :date,     Time.zone.now
