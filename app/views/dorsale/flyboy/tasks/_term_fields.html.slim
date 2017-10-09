@@ -1,12 +1,16 @@
-.task_term_fields class=("has-error" if f.object.errors.key?(:term))
-  .form-sub-group.task_term_label
-    = f.label :term, class: "control-label"
+.form-group.task_term_fields class=("has-error" if f.object.errors.key?(:term))
+  = f.label :term, class: "control-label col-sm-3"
 
-  .form-sub-group.task_term_type
-    = f.input :term, collection: task_term_values_for_select, include_blank: true, html5: true, wrapper: :default, label: false, input_html: {class: "form-control"}
+  .col-sm-9
+    .form-sub-group-container
+      .form-sub-group.task_term_type
+        = f.select :term, task_term_values_for_select, {include_blank: true}, {class: "form-control"}
 
-  .form-sub-group.task_term_custom
-    = f.input :term, html5: true, wrapper: :default, label: false, input_html: {class: "form-control", id: "task_term_custom"}
+      .form-sub-group.task_term_custom
+        = f.date_field :term, class: "form-control", id: "task_term_custom"
+
+    - if errors = f.object.errors[:term].join(", ").presence
+      span.help-block = errors
 
 coffee:
   $("#task_term")
