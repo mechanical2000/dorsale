@@ -15,6 +15,35 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   polymorphic_id_for :taskable
   polymorphic_id_for :owner
 
+  STATES = %w(done undone ontime onwarning onalert)
+
+  def state
+    return "done"      if done
+    return "onalert"   if term          && term          <= Time.zone.now.to_date
+    return "onwarning" if reminder_date && reminder_date <= Time.zone.now.to_date
+    return "ontime"
+  end
+
+  scope :done,   -> { where(done: true)  }
+  scope :undone, -> { where(done: false) }
+
+  scope :ontime, -> {
+    undone
+      .where("term IS NULL OR term > ?", Time.zone.now.to_date)
+      .where("reminder_date IS NULL OR reminder_date > ?", Time.zone.now.to_date)
+  }
+
+  scope :onwarning, -> {
+    undone
+      .where("reminder_date <= ?", Time.zone.now.to_date)
+      .where("term IS NULL OR term > ?", Time.zone.now.to_date)
+  }
+
+  scope :onalert, -> {
+    undone
+      .where("term <= ?", Time.zone.now.to_date)
+  }
+
   scope :delayed,  -> { where(done: false).where("term < ?", Time.zone.now.to_date) }
   scope :today,    -> { where(done: false).where("term = ?", Time.zone.now.to_date) }
   scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow)         }

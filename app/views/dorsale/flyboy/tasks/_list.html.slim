@@ -18,7 +18,7 @@ table#tasks-list
 
   tbody
     - tasks.each do |task|
-      tr.task class=task_color(task)
+      tr.task class=task.state
         td.task-status
           - if task.done?
             span.title-tooltip title=task.t(:done)

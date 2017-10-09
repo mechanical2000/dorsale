@@ -25,20 +25,10 @@ module Dorsale::Flyboy::ApplicationHelper
     render "dorsale/flyboy/tasks/summary"
   end
 
-  def task_color(task)
-    return "finished"  if task.done
-    return "onalert"   if task.term < Time.zone.now.to_date
-    return "onwarning" if task.reminder_date && task.reminder_date < Time.zone.now.to_date
-    return "ontime"
-
-  end
-
   def flyboy_status_for_filters_select
-    {
-      Dorsale::Flyboy::Task.t("status.all")    => "",
-      Dorsale::Flyboy::Task.t("status.open")   => "open",
-      Dorsale::Flyboy::Task.t("status.closed") => "closed",
-    }
+    Dorsale::Flyboy::Task::STATES.map do |state|
+      [Dorsale::Flyboy::Task.t("state.#{state}"), state]
+    end
   end
 
   def flyboy_tasks_owners_for_filters_select

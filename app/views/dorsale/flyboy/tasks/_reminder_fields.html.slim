@@ -1,4 +1,4 @@
-.task_reminder_fields
+.task_reminder_fields class=("has-error" if f.object.errors.key?(:reminder_date))
   .form-sub-group.task_reminder_label
     = f.label :reminder, class: "control-label"
 

@@ -4,7 +4,7 @@
     = " "
     = task
 
-  .context-body class=task_color(task)
+  .context-body class=task.state
     = info task, :progress, progress_bar(percentage: task.progress, label: true)
     = info task, :owner
     = info task, :created_at

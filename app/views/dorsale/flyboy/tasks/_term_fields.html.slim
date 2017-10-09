@@ -1,4 +1,4 @@
-.task_term_fields
+.task_term_fields class=("has-error" if f.object.errors.key?(:term))
   .form-sub-group.task_term_label
     = f.label :term, class: "control-label"
 

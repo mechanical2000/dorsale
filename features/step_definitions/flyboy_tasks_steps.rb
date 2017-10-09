@@ -93,12 +93,12 @@ When(/^I snooze this task$/) do
 end
 
 When(/^I filter tasks by done$/) do
-  select "Fermé"
+  select "Terminée"
   find(".filters [type=submit]:last-child").click
 end
 
 When(/^I filter tasks by undone$/) do
-  select "Ouvert"
+  select "Non terminé"
   find(".filters [type=submit]:last-child").click
 end
 

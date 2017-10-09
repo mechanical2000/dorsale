@@ -37,12 +37,6 @@ fr:
         other: "Commentaires de tâche"
 
     attributes:
-      dorsale/flyboy/task/status:
-        all: "Tous les status"
-        open: "Ouvert"
-        closed: "Fermé"
-        unknown: "Inconnu"
-
       dorsale/flyboy/task:
         taskable: "Origine"
         taskable_type: "Type origine"
@@ -59,6 +53,14 @@ fr:
         done: "Fait"
         description: "Description"
         progress: "Progression"
+
+      dorsale/flyboy/task/state:
+        all: "Tous les états"
+        done: "Terminée"
+        undone: "Non terminée"
+        ontime: "À temps"
+        onwarning: "Rappel dépassé"
+        onalert: "Échéance dépassée"
 
       dorsale/flyboy/task_comment:
         progress: "Progression"

@@ -35,12 +35,6 @@ en:
         other: "Task Comments"
 
     attributes:
-      dorsale/flyboy/task/status:
-        all: "All status"
-        open: "Open"
-        closed: "Closed"
-        unknown: "Unknown"
-
       dorsale/flyboy/task:
         taskable: "Origin"
         taskable_type: "Origin type"
@@ -57,6 +51,14 @@ en:
         done: "Done ?"
         description: "Description"
         progress: "Progress"
+
+      dorsale/flyboy/task/state:
+        all: "All states"
+        done: "Finished"
+        undone: "Not finished"
+        ontime: "On time"
+        onwarning: "Reminder outdated"
+        onalert: "Term outdated"
 
       dorsale/flyboy/task_comment:
         progress: "Progress"
