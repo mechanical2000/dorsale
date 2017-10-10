@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.7.5
+
+- Task improvements
+
 ## 3.7.4
 
 - Change nilify_blanks config
