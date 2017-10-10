@@ -3,6 +3,8 @@ class Dorsale::Flyboy::TaskCommentsSorter < Agilibox::Sorter
     case column
     when :date
       %(#{column} #{direction})
+    when :description
+      %(LOWER(#{column}) #{direction})
     else
       "date DESC"
     end

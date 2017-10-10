@@ -6,7 +6,7 @@
           = sortable_column Dorsale::Flyboy::TaskComment.t(:progress), :date
 
         th.task_comment-description
-          = Dorsale::Flyboy::TaskComment.t(:description)
+          = sortable_column Dorsale::Flyboy::TaskComment.t(:description), :description
 
     tbody
       - if params[:sort] != "date"
