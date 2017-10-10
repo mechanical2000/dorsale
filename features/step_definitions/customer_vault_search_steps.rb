@@ -14,10 +14,10 @@ end
 
 Lorsqu(/^he search an individual by first name$/) do
   fill_in "q", with: "Jean"
+  find(".search-submit").click
 end
 
 Alors(/^this individual appear in search results$/) do
-  find(".search [type=submit]").click
   expect(page).to have_content "Jean"
   expect(page).to have_content "DUPONT"
 end
@@ -29,14 +29,15 @@ end
 
 Lorsqu(/^he search an individual by last name$/) do
   fill_in "q", with: "DUPONT"
+  find(".search-submit").click
 end
 
 Lorsqu(/^he search a corporation by name$/) do
   fill_in "q", with: "aaa"
+  find(".search-submit").click
 end
 
 Alors(/^this corporation appear in search results$/) do
-  find(".search [type=submit]").click
   expect(page).to have_content "aaa"
   expect(page).to have_content "contact@aaa.com"
 end
