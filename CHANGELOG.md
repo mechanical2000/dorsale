@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.7.6
+
 - Add table names on SQL queries
 
 ## 3.7.5
