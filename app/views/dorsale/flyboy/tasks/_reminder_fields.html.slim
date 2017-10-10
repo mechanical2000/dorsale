@@ -1,18 +1,22 @@
-.task_reminder_fields
-  .form-sub-group.task_reminder_label
-    = f.label :reminder, class: "control-label"
+.form-group.task_reminder_fields class=("has-error" if f.object.errors.key?(:reminder_date))
+  = f.label :reminder, class: "control-label col-sm-3"
 
-  .form-sub-group.task_reminder_type
-    = f.input :reminder_type, collection: flyboy_reminder_types_for_select, include_blank: false, wrapper: :default, label: false, input_html: {class: "form-control"}
+  .col-sm-9
+    .form-sub-group-container
+      .form-sub-group.task_reminder_type
+        = f.select :reminder_type, flyboy_reminder_types_for_select, {include_blank: false}, {class: "form-control"}
 
-  .form-sub-group.task_reminder_duration
-    = f.input :reminder_duration, wrapper: :default, label: false, input_html: {class: "form-control"}
+      .form-sub-group.task_reminder_duration
+        = f.text_field :reminder_duration, class: "form-control"
 
-  .form-sub-group.task_reminder_unit
-    = f.input :reminder_unit, collection: flyboy_reminder_type_units_for_select, wrapper: :default, label: false, input_html: {class: "form-control"}
+      .form-sub-group.task_reminder_unit
+        = f.select :reminder_unit, flyboy_reminder_type_units_for_select, {include_blank: false}, {class: "form-control"}
 
-  .form-sub-group.task_reminder_date
-    = f.input :reminder_date, html5: true, wrapper: :default, label: false, input_html: {class: "form-control"}
+      .form-sub-group.task_reminder_date
+        = f.date_field :reminder_date, class: "form-control"
+
+    - if errors = f.object.errors[:reminder_date].join(", ").presence
+      span.help-block = errors
 
 coffee:
   $("#task_reminder_type")

@@ -10,6 +10,7 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
     if @task_comment.save
       redirect_to @task
     else
+      @task_comments = @task.comments
       render "dorsale/flyboy/tasks/show"
     end
   end

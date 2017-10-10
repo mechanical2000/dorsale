@@ -3,36 +3,17 @@
     thead
       tr
         th.task_comment-progress
-          = sortable_column Dorsale::Flyboy::TaskComment.t(:progress), :progress
+          = sortable_column Dorsale::Flyboy::TaskComment.t(:progress), :date
 
         th.task_comment-description
           = sortable_column Dorsale::Flyboy::TaskComment.t(:description), :description
 
     tbody
-      - if policy(@task).comment?
-        tr#new_task_comment_tr
-          td.task_comment-progress
-            = f.input :progress, label: false
+      - if params[:sort] != "date"
+        = render "dorsale/flyboy/task_comments/form", f: f
 
-          td.task_comment-content
-            = f.hidden_field :task_id
+      - @task_comments.each do |task_comment|
+        = render "dorsale/flyboy/task_comments/task_comment", task_comment: task_comment
 
-            .textarea-input-group
-              = f.text_area :description, rows: 3, class: "form-control"
-              input type="submit" value=t("actions.save")
-
-
-      - @task_comments.each do |comment|
-        tr.task_comment
-          td.task_comment-progress
-            = progress_bar percentage: comment.progress, label: true
-
-          td.task_comment-content
-            p: small
-              span.task_comment-date = date(comment.date)
-              = " "
-              = comment.t(:written_by)
-              = " "
-              span.task_comment-author = comment.author
-
-            p.task_comment-description = text2html comment.description
+      - if params[:sort] == "date"
+        = render "dorsale/flyboy/task_comments/form", f: f

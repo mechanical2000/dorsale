@@ -9,7 +9,7 @@
     th
       text-align: left
 
-  .finished td, .context-body.finished
+  .done td, .context-body.done
     background: $state-success-bg !important
 
   .onwarning td, .context-body.onwarning
@@ -61,13 +61,17 @@
 
   .task_reminder_fields,
   .task_term_fields,
-    display: flex
-
-    > div
-      margin-right: 15px
+    height: 34px
 
     label
-      line-height: 2.5em
+      padding-left: 0
+
+    .form-sub-group-container
+      display: flex
+
+      > div
+        margin-right: 15px
+
 
     input, select
       width: auto

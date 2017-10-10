@@ -1,0 +1,13 @@
+tr.task_comment
+  td.task_comment-progress
+    = progress_bar percentage: task_comment.progress, label: true
+
+  td.task_comment-content
+    p: small
+      span.task_comment-date = date(task_comment.date)
+      = " "
+      = task_comment.t(:written_by)
+      = " "
+      span.task_comment-author = task_comment.author
+
+    p.task_comment-description = text2html task_comment.description

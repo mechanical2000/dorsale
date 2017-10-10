@@ -89,7 +89,7 @@ describe Dorsale::Flyboy::Task do
   end # describe "reminders"
 
   describe "scopes" do
-    it "should return delayed unfinished tasks" do
+    it "should return delayed undone tasks" do
       task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+1)
       task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-1, done: true)
       task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-1, done: false)
@@ -99,7 +99,7 @@ describe Dorsale::Flyboy::Task do
       expect(tasks).to contain_exactly(task_2, task_4)
     end
 
-    it "should return today unfinished tasks" do
+    it "should return today undone tasks" do
       task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+1)
       task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: true)
       task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: false)
@@ -107,7 +107,7 @@ describe Dorsale::Flyboy::Task do
       expect(tasks).to contain_exactly(task_2)
     end
 
-    it "should return tomorrow unfinished tasks" do
+    it "should return tomorrow undone tasks" do
       task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date)
       task_1 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: true)
       task_2 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: false)
@@ -115,7 +115,7 @@ describe Dorsale::Flyboy::Task do
       expect(tasks).to contain_exactly(task_2)
     end
 
-    it "should return this week unfinished tasks" do
+    it "should return this week undone tasks" do
       Timecop.freeze(2015, 5, 21, 12, 0, 0)
       task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-7, done: false)
       task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+2, done: true)
@@ -126,7 +126,7 @@ describe Dorsale::Flyboy::Task do
       expect(tasks).to contain_exactly(task_2, task_3)
     end
 
-    it "should return next week unfinished tasks" do
+    it "should return next week undone tasks" do
       Timecop.freeze(2015, 5, 21)
       task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: false)
       task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+7, done: true)
@@ -137,4 +137,67 @@ describe Dorsale::Flyboy::Task do
       expect(tasks).to contain_exactly(task_2, task_3)
     end
   end # describe "scopes"
+
+  describe "states" do
+    # L’affichage de la couleur de la tâche dépend de son achèvement:
+    # Si date jour < date relance alors noir
+    let(:task_ontime) {
+      create(:flyboy_task,
+        :reminder_type => "custom",
+        :reminder_date => Time.zone.now.to_date + 1.day,
+        :term          => Time.zone.now.to_date + 3.days,
+        :done          => false,
+      )
+    }
+
+    it "should return :ontime" do
+      expect(task_ontime.state).to eq "ontime"
+      expect(described_class.ontime).to eq [task_ontime]
+    end
+
+    # Si date relance <= date jour
+    let(:task_onwarning) {
+      create(:flyboy_task,
+        :reminder_type => "custom",
+        :reminder_date => Time.zone.now.to_date,
+        :term          => Time.zone.now.to_date + 3.days,
+        :done          => false,
+      )
+    }
+
+    it "should return :onwarning" do
+      expect(task_onwarning.state).to eq "onwarning"
+      expect(described_class.onwarning).to eq [task_onwarning]
+    end
+
+    # Si date butoir <= date jour alors rouge
+    let(:task_onalert) {
+      create(:flyboy_task,
+        :reminder_type => "custom",
+        :reminder_date => Time.zone.now.to_date - 3.days,
+        :term          => Time.zone.now.to_date,
+        :done          => false,
+      )
+    }
+
+    it "should return :onalert" do
+      expect(task_onalert.state).to eq "onalert"
+      expect(described_class.onalert).to eq [task_onalert]
+    end
+
+    # Si action faite alors vert
+    let(:task_done) {
+      create(:flyboy_task,
+        :reminder_type => "custom",
+        :reminder_date => Time.zone.now.to_date - 3.days,
+        :term          => Time.zone.now.to_date - 1.day,
+        :done          => true,
+      )
+    }
+
+    it "should return :done" do
+      expect(task_done.state).to eq "done"
+      expect(described_class.done).to eq [task_done]
+    end
+  end # describe "states"
 end

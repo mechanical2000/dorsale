@@ -58,13 +58,13 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       end
 
       it 'should filter by status closed' do
-        cookies["filters"] = {'fb_status' => "closed"}.to_json
+        cookies["filters"] = {'fb_state' => "done"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task1]
       end
 
       it 'should filter by status opened' do
-        cookies["filters"] = {'fb_status' => "opened"}.to_json
+        cookies["filters"] = {'fb_state' => "undone"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task2]
       end
