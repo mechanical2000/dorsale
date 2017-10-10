@@ -34,8 +34,9 @@ module Dorsale::BillingMachine::ApplicationHelper
   end
 
   def billing_machine_invoices_chart
-    invoices = policy_scope(::Dorsale::BillingMachine::Invoice)
-      .where("date > ?", 1.year.ago.beginning_of_month)
+    model    = ::Dorsale::BillingMachine::Invoice
+    invoices = policy_scope(model)
+      .where("#{model.table_name}.date > ?", 1.year.ago.beginning_of_month)
 
     totals = {}
 

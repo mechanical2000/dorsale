@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Add table names on SQL queries
+
 ## 3.7.5
 
 - Task improvements

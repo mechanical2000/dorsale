@@ -29,41 +29,41 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   scope :ontime, -> {
     undone
-      .where("term IS NULL OR term > ?", Time.zone.now.to_date)
-      .where("reminder_date IS NULL OR reminder_date > ?", Time.zone.now.to_date)
+      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Time.zone.now.to_date)
+      .where("#{table_name}.reminder_date IS NULL OR #{table_name}.reminder_date > ?", Time.zone.now.to_date)
   }
 
   scope :onwarning, -> {
     undone
-      .where("reminder_date <= ?", Time.zone.now.to_date)
-      .where("term IS NULL OR term > ?", Time.zone.now.to_date)
+      .where("#{table_name}.reminder_date <= ?", Time.zone.now.to_date)
+      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Time.zone.now.to_date)
   }
 
   scope :onalert, -> {
     undone
-      .where("term <= ?", Time.zone.now.to_date)
+      .where("#{table_name}.term <= ?", Time.zone.now.to_date)
   }
 
-  scope :delayed,  -> { where(done: false).where("term < ?", Time.zone.now.to_date) }
-  scope :today,    -> { where(done: false).where("term = ?", Time.zone.now.to_date) }
-  scope :tomorrow, -> { where(done: false).where("term = ?", Date.tomorrow)         }
+  scope :delayed,  -> { where(done: false).where("#{table_name}.term < ?", Time.zone.now.to_date) }
+  scope :today,    -> { where(done: false).where("#{table_name}.term = ?", Time.zone.now.to_date) }
+  scope :tomorrow, -> { where(done: false).where("#{table_name}.term = ?", Date.tomorrow)         }
 
   scope :this_week, -> {
     min = Date.tomorrow
     max = Time.zone.now.to_date.end_of_week
-    where(done: false).where("term > ?", min).where("term <= ?", max)
+    where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
   scope :next_week, -> {
     min = Time.zone.now.to_date.end_of_week
     max = Time.zone.now.to_date.next_week.end_of_week
-    where(done: false).where("term > ?", min).where("term <= ?", max)
+    where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
   scope :next_next_week, -> {
     min = Time.zone.now.to_date.next_week.end_of_week
     max = Time.zone.now.to_date.next_week.next_week.end_of_week
-    where(done: false).where("term > ?", min).where("term <= ?", max)
+    where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
   validates :name,          presence: true
