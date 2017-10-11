@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.7.7
+
 - Change redirect after create task comment
 
 ## 3.7.6
