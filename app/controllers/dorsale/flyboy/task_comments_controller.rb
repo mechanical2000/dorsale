@@ -8,7 +8,7 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
     authorize @task, :comment?
 
     if @task_comment.save
-      redirect_to @task
+      redirect_to back_url
     else
       @task_comments = @task.comments
       render "dorsale/flyboy/tasks/show"
@@ -16,6 +16,10 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
   end
 
   private
+
+  def back_url
+    request.referer.presence || url_for(@task)
+  end
 
   def model
     ::Dorsale::Flyboy::TaskComment

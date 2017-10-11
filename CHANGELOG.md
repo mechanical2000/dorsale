@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Change redirect after create task comment
+
 ## 3.7.6
 
 - Add table names on SQL queries
