@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.7.8
+
 - Person build address improvement
 
 ## 3.7.7
