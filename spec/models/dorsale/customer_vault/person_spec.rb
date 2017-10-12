@@ -37,9 +37,28 @@ RSpec.describe ::Dorsale::CustomerVault::Person, type: :model do
   end
 
   describe "address" do
-    it "should auto create address" do
+    let(:person_without_address) {
       corporation = Dorsale::CustomerVault::Corporation.create!(name: "agilidée")
-      expect(corporation.address).to_not be nil
+      corporation.address.destroy
+      corporation
+    }
+
+    it "should auto create address on build" do
+      corporation = Dorsale::CustomerVault::Corporation.new
+      expect(corporation.address).to be_present
+    end
+
+    it "should NOT auto create address on find" do
+      corporation = Dorsale::CustomerVault::Corporation.find(person_without_address.id)
+      expect(corporation.address).to be_nil
+    end
+
+    it "should auto create address before validation" do
+      corporation = Dorsale::CustomerVault::Corporation.find(person_without_address.id)
+      expect(corporation.address).to be_nil
+
+      corporation.save!
+      expect(corporation.address).to be_present
     end
   end # describe "address"
 end

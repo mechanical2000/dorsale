@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Person build address improvement
+
 ## 3.7.7
 
 - Change redirect after create task comment

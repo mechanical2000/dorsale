@@ -36,7 +36,8 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     order("LOWER(COALESCE(corporation_name, '') || COALESCE(last_name, '') || COALESCE(first_name, '')) ASC")
   }
 
-  after_initialize :build_address, unless: :address
+  after_initialize  :build_address, if: proc { new_record? && address.nil? }
+  before_validation :build_address, if: proc { address.nil? }
 
   def person_type
     self.class.to_s.demodulize.downcase.to_sym
