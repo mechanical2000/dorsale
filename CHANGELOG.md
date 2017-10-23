@@ -2,6 +2,10 @@
 
 ## Next version
 
+- Move CV comments to events
+- Add CV event contact type
+- Various fixes
+
 ## 3.7.8
 
 - Person build address improvement
