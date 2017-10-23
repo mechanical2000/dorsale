@@ -8,7 +8,7 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   def index
     authorize User, :list?
 
-    @users ||= scope.all
+    @users ||= scope.all.order(is_active: :desc)
   end
 
   def new

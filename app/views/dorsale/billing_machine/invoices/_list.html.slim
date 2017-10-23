@@ -11,6 +11,9 @@ table.default.invoices
         = ::Dorsale::BillingMachine::Invoice.t(:customer)
 
       th
+        = ::Dorsale::BillingMachine::Invoice.t(:label)
+
+      th
         = ::Dorsale::BillingMachine::Invoice.t(:total_excluding_taxes)
 
       th.hidden-xs
@@ -30,6 +33,9 @@ table.default.invoices
 
         td.customer_name
           = link_to_object(invoice.customer)
+
+        td.invoice_label
+          = invoice.label
 
         td.total_excluding_taxes
           = bm_currency invoice.total_excluding_taxes

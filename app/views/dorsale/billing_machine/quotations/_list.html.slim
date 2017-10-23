@@ -11,6 +11,9 @@ table.default.quotations
         = ::Dorsale::BillingMachine::Quotation.t(:customer)
 
       th
+        = ::Dorsale::BillingMachine::Quotation.t(:label)
+
+      th
         = ::Dorsale::BillingMachine::Quotation.t(:total_excluding_taxes)
 
       th.hidden-xs
@@ -33,6 +36,9 @@ table.default.quotations
 
         td.customer_name
           = link_to_object(quotation.customer)
+
+        td.quotation_label
+          = quotation.label
 
         td.total_excluding_taxes
           = bm_currency quotation.total_excluding_taxes
