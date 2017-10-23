@@ -5,19 +5,21 @@ class Dorsale::CustomerVault::Event < ::Dorsale::ApplicationRecord
 
   belongs_to :author,  class_name: User
   belongs_to :person,  class_name: Dorsale::CustomerVault::Person
-  belongs_to :comment, class_name: Dorsale::Comment
 
   validates :person,  presence: true
+  validates :date,    presence: true
+  validates :text,    presence: true
   validates :action,  presence: true, inclusion: {in: proc {ACTIONS} }
-  validates :comment, presence: true, if: proc { action == "comment" }
 
   default_scope -> {
     all
       .order(created_at: :desc, id: :desc)
-      .preload(:author, :person, :comment)
+      .preload(:author, :person)
   }
 
-  def date
-    created_at.try(:to_date)
+  private
+
+  def assign_default_values
+    assign_default :date, Date.current
   end
 end

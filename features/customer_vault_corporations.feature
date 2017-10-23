@@ -53,25 +53,25 @@ Feature: Manage corporations
   Scenario: Add a comment to a corporation
     Given an existing corporation
     When I go on this corporation
-    And I add a comment
+    And I add a comment on the person
     Then I am on the corporation page
-    And I see my new comment
+    And I see my new comment on the person
 
   Scenario: Update comment on a corporation
     Given an existing corporation
     And an existing comment on this corporation
     When I go on this corporation
-    And I update the comment
+    And I update the comment on the person
     Then I am on the corporation page
-    And I see my updated comment
+    And I see my updated comment on the person
 
   Scenario: Delete comment on a corporation
     Given an existing corporation
     And an existing comment on this corporation
     When I go on this corporation
-    And I delete the comment
+    And I delete the comment on the person
     Then I am on the corporation page
-    And I see do not see my comment
+    And I see do not see my comment on the person
 
   Scenario: People activity
     Given an existing individual with recent comments

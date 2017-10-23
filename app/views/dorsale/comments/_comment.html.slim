@@ -30,7 +30,7 @@
     span.comment-author
       = comment.author.to_s
 
-  - if truncate_comments_in_this_page? && text = truncate_comment_text(comment)
+  - if truncate_comments_in_this_page? && text = truncate_comment_text(comment.text)
     p.comment-text-truncated
       = text
       = " "

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915070538) do
+ActiveRecord::Schema.define(version: 20171023080507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,11 +228,12 @@ ActiveRecord::Schema.define(version: 20170915070538) do
   create_table "dorsale_customer_vault_events", force: :cascade do |t|
     t.integer  "author_id"
     t.integer  "person_id"
-    t.integer  "comment_id"
     t.string   "action"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text     "text"
+    t.string   "title"
+    t.date     "date"
   end
 
   create_table "dorsale_customer_vault_individuals_bak", force: :cascade do |t|

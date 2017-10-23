@@ -46,4 +46,8 @@ module Dorsale::CustomerVault::ApplicationHelper
       [model.t("action.#{action}"), action]
     end
   end
+
+  def new_event_for(person)
+    policy_scope(Dorsale::CustomerVault::Event).new(person: person, author: current_user)
+  end
 end

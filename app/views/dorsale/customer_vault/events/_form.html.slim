@@ -1,0 +1,27 @@
+- id = "new-dorsale-comment"  if event.new_record?
+- id = "edit-dorsale-comment" if event.persisted?
+
+= simple_form_for [dorsale, event], remote: true, as: :event, html: {id: id} do |f|
+  = f.hidden_field :person_id
+  = f.hidden_field :action, value: (f.object.action.presence || "comment")
+
+  .comment
+    - if event.author.try(:avatar_url).present?
+      = image_tag event.author.avatar_url, class: "avatar"
+    - else
+      = image_tag default_avatar_url, class: "avatar"
+
+    .comment-fields
+      .comment-title-field
+        = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
+
+      .comment-date-field
+        = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
+
+      .comment-text-field
+        = f.text_area :text, rows: 3, class: "form-control input-sm", placeholder: f.object.t(:text)
+
+      .comment-submit
+        input type="submit" value=t("actions.send") class="btn btn-success btn-xs"
+
+    .clearfix

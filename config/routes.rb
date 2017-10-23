@@ -58,7 +58,7 @@ Dorsale::Engine.routes.draw do
     resources :activity_types, except: [:destroy, :show]
     resources :origins, except: [:destroy, :show]
 
-    resources :events, only: [:index]
+    resources :events, only: [:index, :create, :edit, :update, :destroy]
 
     resources :people do
       resources :links

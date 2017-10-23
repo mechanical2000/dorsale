@@ -1,24 +1,4 @@
-.event id="event#{event.id}"
-  - if event.author.try(:avatar_url).present?
-    = image_tag event.author.avatar_url, class: "avatar"
-  - else
-    = image_tag default_avatar_url, class: "avatar"
-
-  p.event-infos
-    span.event-person-container
-      span.event-person = link_to_object(event.person)
-      span.event-separator   = " - "
-
-    span.event-date
-      = date(event.date)
-
-    - if event.author
-      = " "
-      = event.t(:authored_by)
-      = " "
-      span.event-author
-        = event.author.to_s
-
-  p.event-text = text2html(event.text)
-
-  .clearfix
+- if event.action == "comment"
+  = render "dorsale/customer_vault/events/action_comment", event: event
+- else
+  = render "dorsale/customer_vault/events/action_other", event: event

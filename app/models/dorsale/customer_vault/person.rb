@@ -72,22 +72,4 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   def destroy_links
     links.each(&:destroy!)
   end
-
-  def receive_comment_notification(comment, action)
-    scope = Pundit.policy_scope!(comment.author, ::Dorsale::CustomerVault::Event)
-
-    if action == :create
-      scope.create!(
-        :author  => comment.author,
-        :person  => self,
-        :comment => comment,
-        :action  => "comment",
-      )
-    end
-
-    if action == :delete
-      scope.where(comment: comment).destroy_all
-    end
-  end
-
 end
