@@ -65,54 +65,54 @@ When(/^I go on this corporation$/) do
   visit dorsale.customer_vault_corporation_path(@corporation)
 end
 
-When(/^I add a comment$/) do
-  @comments_count = Dorsale::Comment.count
-  fill_in "comment_text", with: "MyNewComment"
+When(/^I add a comment on the person$/) do
+  @events_count = Dorsale::CustomerVault::Event.count
+  fill_in "event_text", with: "MyNewComment"
   find("[type=submit]").click
 end
 
-Then(/^I see my new comment$/) do
-  expect(Dorsale::Comment.count).to eq(@comments_count + 1)
+Then(/^I see my new comment on the person$/) do
+  expect(Dorsale::CustomerVault::Event.count).to eq(@events_count + 1)
 
   expect(find("p.comment-text")).to have_content "MyNewComment"
 end
 
 Given(/^an existing comment on this corporation$/) do
-  @comment = create(:dorsale_comment, commentable: @corporation)
+  @event = create(:customer_vault_event_comment, person: @corporation)
 end
 
-When(/^I update the comment$/) do
+When(/^I update the comment on the person$/) do
   find(".comment [href*=edit]").click
   within "form[id*=edit]" do
-    fill_in :comment_text, with: "MyUpdatedComment"
+    fill_in :event_text, with: "MyUpdatedComment"
     find("[type=submit]").click
   end
 end
 
-Then(/^I see my updated comment$/) do
+Then(/^I see my updated comment on the person$/) do
   expect(find("p.comment-text")).to have_content "MyUpdatedComment"
 end
 
-When(/^I delete the comment$/) do
-  @comments_count = Dorsale::Comment.count
+When(/^I delete the comment on the person$/) do
+  @events_count = Dorsale::CustomerVault::Event.count
   find(".comment [data-method*=delete]").click
 end
 
-Then(/^I see do not see my comment$/) do
-  expect(Dorsale::Comment.count).to eq(@comments_count - 1)
-  expect(page).to have_no_content @comment.text
+Then(/^I see do not see my comment on the person$/) do
+  expect(Dorsale::CustomerVault::Event.count).to eq(@events_count - 1)
+  expect(page).to have_no_content @event.text
 end
 
 Given(/^an existing individual with recent comments$/) do
   @individual = create(:customer_vault_individual)
-  create(:dorsale_comment, commentable: @individual, text: "individual-comment-1")
-  create(:dorsale_comment, commentable: @individual, text: "individual-comment-2")
+  create(:customer_vault_event_comment, person: @individual, text: "individual-comment-1")
+  create(:customer_vault_event_comment, person: @individual, text: "individual-comment-2")
 end
 
 Given(/^an existing corporation with recent comments$/) do
   @corporation = create(:customer_vault_corporation)
-  create(:dorsale_comment, commentable: @corporation, text: "corporation-comment-1")
-  create(:dorsale_comment, commentable: @corporation, text: "corporation-comment-2")
+  create(:customer_vault_event_comment, person: @corporation, text: "corporation-comment-1")
+  create(:customer_vault_event_comment, person: @corporation, text: "corporation-comment-2")
 end
 
 When(/^I go on the people activity$/) do
@@ -130,7 +130,7 @@ Given(/^an existing corporation with (\d+) comments$/) do |n|
   step "an existing corporation"
 
   n.to_i.times do
-    create(:dorsale_comment, commentable: @corporation)
+    create(:customer_vault_event_comment, person: @corporation)
   end
 end
 

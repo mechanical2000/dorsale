@@ -1,23 +1,27 @@
 class Dorsale::CustomerVault::Event < ::Dorsale::ApplicationRecord
   self.table_name = :dorsale_customer_vault_events
 
-  ACTIONS = %w(create update comment)
+  ACTIONS       = %w(create update comment)
+  CONTACT_TYPES = %w(contact r1 r2)
 
   belongs_to :author,  class_name: User
   belongs_to :person,  class_name: Dorsale::CustomerVault::Person
-  belongs_to :comment, class_name: Dorsale::Comment
 
-  validates :person,  presence: true
-  validates :action,  presence: true, inclusion: {in: proc {ACTIONS} }
-  validates :comment, presence: true, if: proc { action == "comment" }
+  validates :person,       presence: true
+  validates :date,         presence: true
+  validates :text,         presence: true
+  validates :action,       presence: true,    inclusion: {in: proc {ACTIONS} }
+  validates :contact_type, allow_blank: true, inclusion: {in: proc {CONTACT_TYPES} }
 
   default_scope -> {
     all
       .order(created_at: :desc, id: :desc)
-      .preload(:author, :person, :comment)
+      .preload(:author, :person)
   }
 
-  def date
-    created_at.try(:to_date)
+  private
+
+  def assign_default_values
+    assign_default :date, Date.current
   end
 end

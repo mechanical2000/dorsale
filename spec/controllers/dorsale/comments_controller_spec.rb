@@ -29,20 +29,6 @@ describe Dorsale::CommentsController, type: :controller do
       post :create, params: valid_params
       expect(response).to redirect_to("/")
     end
-
-    describe "on person" do
-      it "should create an event" do
-        expect {
-          post :create, params: valid_params
-        }.to change(Dorsale::CustomerVault::Event, :count).by(1)
-
-        event = Dorsale::CustomerVault::Event.last_created
-        expect(event.author).to eq user
-        expect(event.person).to eq commentable
-        expect(event.comment).to eq Dorsale::Comment.last_created
-        expect(event.action).to eq "comment"
-      end
-    end # describe "on person"
   end
 
   describe "update" do
@@ -60,18 +46,5 @@ describe Dorsale::CommentsController, type: :controller do
       delete :destroy, params: {id: comment, back_url: "/"}
       expect(response).to redirect_to("/")
     end
-
-    describe "on person" do
-      it "should delete event" do
-        person  = create(:customer_vault_corporation)
-        comment = create(:dorsale_comment, commentable: person)
-        event   = create(:customer_vault_event, person: person, comment: comment, action: "comment")
-
-        delete :destroy, params: {id: comment}
-
-        expect { comment.reload }.to raise_error(ActiveRecord::RecordNotFound)
-        expect { event.reload   }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end # describe "on person"
   end
 end

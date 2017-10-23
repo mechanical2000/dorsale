@@ -7,7 +7,7 @@ Then(/^the file is downloaded$/) do
 end
 
 Given(/^a very long comment on this person$/) do
-  @comment = create(:dorsale_comment, commentable: @person, text: Faker::Lorem.paragraph(10))
+  @comment = create(:customer_vault_event_comment, person: @person, text: Faker::Lorem.paragraph(10))
 end
 
 Then(/^I see the truncated comment$/) do
@@ -21,5 +21,5 @@ Then(/^I see the full comment$/) do
 end
 
 Given(/^a short comment on this person$/) do
-  @comment = create(:dorsale_comment, commentable: @person, text: "i am short")
+  @comment = create(:customer_vault_event_comment, person: @person, text: "i am short")
 end

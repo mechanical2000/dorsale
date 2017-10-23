@@ -20,8 +20,8 @@ module Dorsale::CommentsHelper
     params[:controller].include?("customer_vault")
   end
 
-  def truncate_comment_text(comment)
-    text      = comment.text.to_s
+  def truncate_comment_text(text)
+    text      = text.to_s
     truncated = false
 
     if text.to_s.count("\n") > 3

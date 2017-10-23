@@ -1,5 +1,5 @@
 - content_for :page_body
-  = render "dorsale/comments/form", comment: new_comment_for(@person)
+  = render "dorsale/customer_vault/events/form", event: new_event_for(@person)
   = render "dorsale/customer_vault/events/list", events: @person.self_and_related_events
 
   - if @person.try(:context).present?

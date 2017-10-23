@@ -19,17 +19,20 @@
     input, textarea
       font-size: $font-size-base
 
-    .comment-title-field
-      display: inline-block
-      width: calc(100% - 10rem - 0.5rem)
-      margin-right: 0.5rem
+    .comment-infos-fields
+      display: flex
 
-    .comment-date-field
-      display: inline-block
-      width: 10rem
+      > div + div
+        margin-left: 5px
 
-      input
-        text-align: center
+      .comment-title-field
+        flex: 1
+
+      .comment-contact_type-field
+        width: 8rem
+
+      .comment-date-field
+        width: 10rem
 
     .comment-text-field
       margin-top: 0.5rem

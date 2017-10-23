@@ -1,0 +1,47 @@
+.comment id="comment#{event.id}"
+  - if event.author.try(:avatar_url).present?
+    = image_tag event.author.avatar_url, class: "avatar"
+  - else
+    = image_tag default_avatar_url, class: "avatar"
+
+  p.comment-actions
+    - if policy(event).update?
+      = icon_link_to :pencil, t("actions.edit"), dorsale.edit_customer_vault_event_path(event), class: "edit-dorsale-comment"
+
+    - if policy(event).delete?
+      = icon_link_to :trash, t("actions.delete"), dorsale.customer_vault_event_path(event), class: "delete-dorsale-comment", method: :delete, remote: true, data: {confirm: t("actions.confirm")}
+
+  p.comment-infos
+    span.comment-commentable-container
+      span.comment-commentable = link_to_object(event.person)
+      span.comment-separator   = " - "
+
+    - if event.title.present?
+      span.title-container
+        strong.title  = event.title
+        span.separator = " - "
+
+    - if event.contact_type.present?
+      span.contact_type-container
+        strong.contact_type  = event.tv(:contact_type)
+        span.separator = " - "
+
+    span.comment-date
+      = date(event.date)
+
+    = " "
+    = event.t(:written_by)
+    = " "
+    span.comment-author
+      = event.author.to_s
+
+  - if truncate_comments_in_this_page? && text = truncate_comment_text(event.text)
+    p.comment-text-truncated
+      = text
+      = " "
+      a.comment-show_more href="#"
+        = ta(:show_more)
+
+  p.comment-text = text2html(event.text)
+
+  .clearfix

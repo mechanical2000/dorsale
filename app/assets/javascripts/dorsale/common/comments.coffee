@@ -9,7 +9,7 @@ window.dorsaleComments =
   setupCreateForm: ->
     $(document).on "ajax:success", "form#new-dorsale-comment", (e, data) ->
       if data.length
-        $(this).find("#comment_title, #comment_text").val("")
+        $(this).find("input[id$=title], textarea[id$=text]").val("")
         $(".dorsale-comments-list").prepend(data)
 
   setupEditForm: ->
