@@ -1,6 +1,8 @@
 class Dorsale::CustomerVault::EventsController < ::Dorsale::CustomerVault::ApplicationController
   before_action :set_objects
 
+  layout false
+
   def index
     authorize model, :list?
 
