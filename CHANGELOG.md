@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.8.0
+
 - Move CV comments to events
 - Add CV event contact type
 - Various fixes
