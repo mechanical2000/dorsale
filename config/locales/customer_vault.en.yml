@@ -111,10 +111,15 @@ en:
         person: "Person"
         authored_by: "by"
         all_actions: "All types"
+        contact_type: "Contact type"
       dorsale/customer_vault/event/action:
         create: "Create"
         update: "Update"
         comment: "Comment"
+      dorsale/customer_vault/event/contact_type:
+        contact: "Contact"
+        r1: "R1"
+        r2: "R2"
       dorsale/customer_vault/event/text:
         create: "Creation of the person"
         update: "Update person informations"

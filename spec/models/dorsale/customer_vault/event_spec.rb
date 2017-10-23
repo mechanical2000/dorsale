@@ -8,6 +8,7 @@ RSpec.describe ::Dorsale::CustomerVault::Event, type: :model do
   it { is_expected.to validate_presence_of :action }
 
   it { is_expected.to_not validate_presence_of :author }
+  it { is_expected.to_not validate_presence_of :contact_type }
 
   it "should have a valid factory" do
     event = create(:customer_vault_event)

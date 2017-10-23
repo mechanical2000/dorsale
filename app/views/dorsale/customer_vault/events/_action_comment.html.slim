@@ -21,6 +21,11 @@
         strong.title  = event.title
         span.separator = " - "
 
+    - if event.contact_type.present?
+      span.contact_type-container
+        strong.contact_type  = event.tv(:contact_type)
+        span.separator = " - "
+
     span.comment-date
       = date(event.date)
 

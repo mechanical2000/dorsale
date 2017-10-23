@@ -12,11 +12,16 @@
       = image_tag default_avatar_url, class: "avatar"
 
     .comment-fields
-      .comment-title-field
-        = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
+      .comment-infos-fields
+        .comment-title-field
+          = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
 
-      .comment-date-field
-        = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
+        .comment-contact_type-field
+          = f.select :contact_type, customer_vault_event_contact_types_for_filter_select, {include_blank: true}, class: "form-control input-sm"
+
+        .comment-date-field
+          = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
+
 
       .comment-text-field
         = f.text_area :text, rows: 3, class: "form-control input-sm", placeholder: f.object.t(:text)

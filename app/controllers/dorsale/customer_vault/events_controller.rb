@@ -72,6 +72,7 @@ class Dorsale::CustomerVault::EventsController < ::Dorsale::CustomerVault::Appli
     safe_params = [
       :action,
       :title,
+      :contact_type,
       :date,
       :text,
     ]
