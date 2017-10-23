@@ -12,11 +12,12 @@
       = image_tag default_avatar_url, class: "avatar"
 
     .comment-fields
-      .comment-title-field
-        = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
+      .comment-infos-fields
+        .comment-title-field
+          = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
 
-      .comment-date-field
-        = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
+        .comment-date-field
+          = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
 
       .comment-text-field
         = f.text_area :text, rows: 3, class: "form-control input-sm", placeholder: f.object.t(:text)
