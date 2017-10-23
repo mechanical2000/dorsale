@@ -8,7 +8,8 @@ table#users-list.default
 
   tbody
     - users.each do |user|
-      tr.user
+      - active_class = user.is_active? ? "active" : "inactive hidden"
+      tr.user class=active_class
         td.user-avatar
           = avatar_img(user)
 

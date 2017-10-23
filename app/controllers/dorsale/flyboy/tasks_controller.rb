@@ -189,7 +189,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   end
 
   def set_owners
-    @owners ||= policy_scope(User).all
+    @owners ||= policy_scope(User).actives
   end
 
   def permitted_params

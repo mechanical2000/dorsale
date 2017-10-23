@@ -3,6 +3,8 @@ module Dorsale::Users::Active
     user_model.class_eval do
       validates :is_active, inclusion: {in: [true, false]}
 
+      scope :actives, -> { where(is_active: true) }
+
       def initialize(*)
         super
         self.is_active = true if is_active.nil?

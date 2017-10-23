@@ -10,4 +10,20 @@
   - content_for :table
     = render "dorsale/users/list", users: @users
 
+  - content_for :page_footer
+    .text-center = link_to "Afficher les inactifs", "#", class: "show_inactives_link"
+
   = render_dorsale_page
+
+coffee:
+  $(document).on "turbolinks:load", ->
+    show_text = "Afficher les inactifs"
+    hide_text = "Masquer les inactifs"
+    $(".show_inactives_link").click (event)->
+      event.preventDefault()
+      if $(this).text() == hide_text
+        $(".user.inactive").addClass("hidden")
+        $(this).text(show_text)
+      else
+        $(".user.inactive").removeClass("hidden")
+        $(this).text(hide_text)
