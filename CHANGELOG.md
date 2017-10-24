@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Change CV contact type default value
+
 ## 3.8.0
 
 - Move CV comments to events

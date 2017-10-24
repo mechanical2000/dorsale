@@ -17,7 +17,7 @@
           = f.text_field :title, class: "form-control input-sm", placeholder: f.object.t(:title)
 
         .comment-contact_type-field
-          = f.select :contact_type, customer_vault_event_contact_types_for_filter_select, {include_blank: true}, class: "form-control input-sm"
+          = f.select :contact_type, customer_vault_event_contact_types_for_filter_select, {include_blank: false}, class: "form-control input-sm"
 
         .comment-date-field
           = f.text_field :date, class: "form-control input-sm", placeholder: f.object.t(:date)
