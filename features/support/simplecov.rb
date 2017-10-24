@@ -1,1 +1,1 @@
-# require "simplecov"
+require "simplecov"

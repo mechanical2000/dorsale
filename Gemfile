@@ -47,4 +47,5 @@ group :test do
   gem "timecop"
   gem "pdf-inspector"
   gem "yomu"
+  gem "simplecov", require: false
 end
