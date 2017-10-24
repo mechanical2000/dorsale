@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.8.1
+
 - Change CV contact type default value
 
 ## 3.8.0
