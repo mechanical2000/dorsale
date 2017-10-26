@@ -21,8 +21,7 @@ module Dummy
 
     config.action_controller.permit_all_parameters = true
 
-    config.active_job.queue_adapter = :delayed_job
-    Delayed::Worker.delay_jobs = false
+    config.active_job.queue_adapter = :inline
 
     config.action_mailer.delivery_method = :sendmail
   end
