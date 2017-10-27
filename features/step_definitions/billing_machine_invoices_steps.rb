@@ -1,25 +1,25 @@
 Given(/^an existing emtpy invoice$/) do
-  @invoice = create(:billing_machine_invoice, label: nil, customer: nil, payment_term_id: nil, id_card: @id_card)
+  @invoice = create(:billing_machine_invoice, label: nil, customer: nil, payment_term_id: nil)
   @invoice.due_date = nil
   @invoice.save
 end
 
 Given(/^(\d+) existing invoices$/) do |count|
-  create_list(:billing_machine_invoice, count.to_i, id_card: @id_card)
+  create_list(:billing_machine_invoice, count.to_i)
 end
 
 Given(/^an existing invoice$/) do
-  @invoice = create(:billing_machine_invoice, id_card: @id_card, customer: @customer)
+  @invoice = create(:billing_machine_invoice, customer: @customer)
   @invoice.lines.create(quantity: 1, unit_price: 9.99)
 end
 
 Given(/^an existing invoice with a "(.*?)"% VAT rate$/) do |rate|
-  @invoice = create(:billing_machine_invoice, id_card: @id_card)
+  @invoice = create(:billing_machine_invoice)
   create(:billing_machine_invoice_line, vat_rate: rate, invoice: @invoice)
 end
 
 Given(/^an existing paid invoice$/) do
-  @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: true)
+  @invoice = create(:billing_machine_invoice, paid: true)
 end
 
 Given(/^billing machine in single vat mode$/) do
@@ -35,18 +35,18 @@ Given(/^a bunch of existing invoices$/) do
   i2 = create(:customer_vault_individual, first_name: "Ah")
   i3 = create(:customer_vault_individual, first_name: "Eh")
 
-  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.current, paid: true)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c2, date: Date.current)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c3, date: Date.current)
-  create(:billing_machine_invoice, id_card: @id_card, customer: c1, date: Date.current - 2.days)
+  create(:billing_machine_invoice, customer: c1, date: Date.current, paid: true)
+  create(:billing_machine_invoice, customer: c2, date: Date.current)
+  create(:billing_machine_invoice, customer: c3, date: Date.current)
+  create(:billing_machine_invoice, customer: c1, date: Date.current - 2.days)
 
-  create(:billing_machine_invoice, id_card: @id_card, customer: i1, date: Date.current - 3.days)
-  create(:billing_machine_invoice, id_card: @id_card, customer: i2, date: Date.current - 3.days)
-  create(:billing_machine_invoice, id_card: @id_card, customer: i3, date: Date.current - 3.days)
+  create(:billing_machine_invoice, customer: i1, date: Date.current - 3.days)
+  create(:billing_machine_invoice, customer: i2, date: Date.current - 3.days)
+  create(:billing_machine_invoice, customer: i3, date: Date.current - 3.days)
 end
 
 Given(/^an existing unpaid invoice$/) do
-  @invoice = create(:billing_machine_invoice, id_card: @id_card, paid: false)
+  @invoice = create(:billing_machine_invoice, paid: false)
 end
 
 Given(/^its due date is not yet passed$/) do

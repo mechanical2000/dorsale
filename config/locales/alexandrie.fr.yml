@@ -13,10 +13,6 @@ fr:
     create_ok : "La Catégorie a été créée."
     update_ok : "La Catégorie a été modifiée."
 
-  id_cards:
-    create_ok : "La Carte a été créée."
-    update_ok : "La Carte a été modifiée."
-
   payment_terms:
     create_ok : "La Paiement a été créé."
     update_ok : "La Paiement a été modifié."

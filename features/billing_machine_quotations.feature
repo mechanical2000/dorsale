@@ -6,7 +6,6 @@ Feature: Quotation Management
 
   Background:
     Given an authenticated user
-    Given an existing id card
     Given billing machine in single vat mode
 
   Scenario: Existing quotation displayed in quotations page

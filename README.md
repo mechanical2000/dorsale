@@ -1,4 +1,4 @@
-[![Build Status](https://semaphoreci.com/api/v1/agilidee/dorsale/branches/delete_id_cards/badge.svg)](https://semaphoreci.com/agilidee/dorsale)
+[![Build Status](https://semaphoreci.com/api/v1/agilidee/dorsale/branches/master/badge.svg)](https://semaphoreci.com/agilidee/dorsale)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c3b2143566f714fcb104/maintainability)](https://codeclimate.com/github/agilidee/dorsale/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c3b2143566f714fcb104/test_coverage)](https://codeclimate.com/github/agilidee/dorsale/test_coverage)
 

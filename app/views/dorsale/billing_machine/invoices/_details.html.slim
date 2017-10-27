@@ -6,11 +6,10 @@
     .col-md-6
       .well
         = info document, :label
+        = info document, :date
 
     .col-md-6
       .well
-        = info document, :date
-        hr
         - if document.customer.present?
           = document.customer
           br

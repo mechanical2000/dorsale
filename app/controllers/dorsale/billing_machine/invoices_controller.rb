@@ -26,8 +26,7 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     # callback in BillingMachine::ApplicationController
     @invoice ||= scope.new
 
-    @invoice.lines.build               if @invoice.lines.empty?
-    @invoice.id_card = @id_cards.first if @id_cards.one?
+    @invoice.lines.build if @invoice.lines.empty?
 
     authorize @invoice, :create?
   end
@@ -146,7 +145,6 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def permitted_params
     [
-      :id_card_id,
       :customer_guid,
       :payment_term_id,
       :label,

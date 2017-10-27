@@ -12,29 +12,26 @@ class Dorsale::BillingMachine::InvoiceMultipleVatPdf < ::Dorsale::BillingMachine
   end
 
   def build_table
-    left   = bounds.left
-    top    = bounds.top
-    width  = bounds.width - left
+    height = products_table_height
 
-    bounding_box [left, top], width: width, height: products_table_height do
+    # Empty table to draw lines
+    bb height: products_table_height do
       repeat :all do
         float do
-          data          = [["", "", "", "", "", ""]]
-          colomn_widths = [first_column_width, second_column_width, third_column_width, fourth_column_width, fifth_column_width, last_column_width]
-          cell_style    = {height: products_table_height}
-          table(data, column_widths: colomn_widths, cell_style: cell_style) do
-            row(0).style       text_color: BLACK
-            row(0).style       font_style: :bold
-            column(0).style    align:      :left
-            column(1..4).style align:      :right
-          end # table
-        end # flat
+          table [["", "", "", "", "", ""]],
+            :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, fifth_column_width, last_column_width],
+            :cell_style => {height: products_table_height} do
+              row(0).style :text_color => BLACK
+              row(0).style :font_style => :bold
+              column(0).style :align => :left
+              column(1..4).style :align => :right
+            end # table
+        end # float
       end # repeat
-    end # bounding_box
+    end # bb
 
-    bounding_box [left, top], width: width, height: products_table_height do
-      draw_bounds_debug
-
+    # Products table
+    bb height: height do
       table_products = [[
         main_document.t(:designation).mb_chars.upcase.to_s,
         main_document.t(:quantity).mb_chars.upcase.to_s,
@@ -56,27 +53,30 @@ class Dorsale::BillingMachine::InvoiceMultipleVatPdf < ::Dorsale::BillingMachine
       end
 
       table table_products,
-        :column_widths => [first_column_width, second_column_width, third_column_width, fourth_column_width, fifth_column_width, last_column_width],
+        :column_widths => [
+          first_column_width,
+          second_column_width,
+          third_column_width,
+          fourth_column_width,
+          fifth_column_width,
+          last_column_width,
+        ],
         :header => true,
-        :cell_style    => {border_width: 0} do
-          row(0).font_style = :bold
-          row(0).border_width = 1
-          cells.style do |c|
-            c.align = c.column.zero? ? :left : :right
-          end
-        end
-    end
-  end
+        :cell_style  => {border_width: 0} \
+      do
+        row(0).font_style = :bold
+        row(0).border_width =
+          1,
+          cells.style { |c| c.align = c.column.zero? ? :left : :right }
+      end # table
+    end # bb
+  end # build_table
 
   def build_total
-    left   = bounds.left
     top    = bounds.top - products_table_height - 5.mm
-    width  = bounds.width - left
-    height = middle_height - products_table_height
+    height = middle_height - products_table_height - 5.mm
 
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-
+    bb top: top, height: height do
       table_totals = [[]]
 
       if has_discount
@@ -117,7 +117,7 @@ class Dorsale::BillingMachine::InvoiceMultipleVatPdf < ::Dorsale::BillingMachine
         :column_widths => [fifth_column_width, last_column_width],
         :cell_style    => {border_width: [0, 1, 0, 0]},
         :position      => :right do
-          row(-1).style font_style: :bold
+          row(-1).style :font_style => :bold
           column(0).padding_right = 0.2.cm
           row(-1).borders = [:top, :right]
           row(-1).border_width = 1
@@ -125,6 +125,7 @@ class Dorsale::BillingMachine::InvoiceMultipleVatPdf < ::Dorsale::BillingMachine
             c.align = :right
           end
         end
+
       stroke do
         rectangle [(bounds.right - fifth_column_width - last_column_width), bounds.top], (fifth_column_width + last_column_width), (bounds.top-cursor)
       end

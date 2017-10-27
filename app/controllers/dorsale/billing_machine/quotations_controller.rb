@@ -26,8 +26,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     # callback in BillingMachine::ApplicationController
     @quotation ||= scope.new
 
-    @quotation.lines.build               if @quotation.lines.empty?
-    @quotation.id_card = @id_cards.first if @id_cards.one?
+    @quotation.lines.build if @quotation.lines.empty?
 
     authorize @quotation, :create?
   end
@@ -133,7 +132,6 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
       :state,
       :customer_guid,
       :payment_term_id,
-      :id_card_id,
       :date,
       :expires_at,
       :comments,

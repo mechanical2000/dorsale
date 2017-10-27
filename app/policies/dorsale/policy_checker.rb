@@ -8,7 +8,6 @@ class Dorsale::PolicyChecker
 
     check_policy! "Dorsale::Alexandrie::AttachmentPolicy"
     check_policy! "Dorsale::Alexandrie::AttachmentTypePolicy"
-    check_policy! "Dorsale::BillingMachine::IdCardPolicy"
     check_policy! "Dorsale::BillingMachine::InvoicePolicy"
     check_policy! "Dorsale::BillingMachine::PaymentTermPolicy"
     check_policy! "Dorsale::BillingMachine::QuotationPolicy"

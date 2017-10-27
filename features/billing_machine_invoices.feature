@@ -6,7 +6,6 @@ Feature: Invoice Management
 
   Background:
     Given an authenticated user
-    Given an existing id card
     Given billing machine in single vat mode
 
   Scenario: Existing invoice displayed in invoices page

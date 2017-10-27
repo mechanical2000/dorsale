@@ -32,15 +32,11 @@ describe ::Dorsale::BillingMachine::InvoiceMultipleVatPdf, pdfs: true do
     expect(content).to include "TVA %"
   end
 
-  describe "empty invoice" do
-    let(:invoice) {
-      id_card = Dorsale::BillingMachine::IdCard.new
-      id_card.save!(validate: false)
-      invoice = ::Dorsale::BillingMachine::Invoice.create!(id_card: id_card)
-    }
+  it "should work with empty invoice" do
+    invoice = ::Dorsale::BillingMachine::Invoice.new
 
-    it "should work" do
-      expect { generate! }.to_not raise_error
-    end
-  end # describe "empty invoice"
+    expect {
+      described_class.new(invoice).tap(&:build).render_with_attachments
+    }.to_not raise_error
+  end
 end

@@ -11,19 +11,12 @@
 
     .row
       .col-md-6
-        .well
-          - if @id_cards.one?
-            = f.hidden_field :id_card_id
-            = info document, :id_card
-          - else
-            = f.association :id_card, collection: @id_cards
-
-        = f.input :label
+        .well.well-sm
+          = f.input :label
+          = f.input :date, html5: true
 
       .col-md-6
-        .well
-          = f.input :date, html5: true
-          hr
+        .well.well-sm
           = f.input :customer_guid, collection: @people.map{ |e| [e.to_s, e.guid] }, input_html: {class: "select2"}
 
     table#lines-table

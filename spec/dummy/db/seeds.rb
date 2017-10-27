@@ -11,7 +11,6 @@ DatabaseCleaner.clean_with(:truncation, except: tables)
 
 user = User.create!(email: "demo@agilidee.com", password: "password")
 
-id_card = Dorsale::BillingMachine::IdCard.create!(id_card_name: "Bidule Corp", entity_name: "Bidule Corp")
 payment_term = Dorsale::BillingMachine::PaymentTerm.create!(label: "A réception")
 
 corporation1 = Dorsale::CustomerVault::Corporation.create!(
@@ -29,7 +28,6 @@ corporation1 = Dorsale::CustomerVault::Corporation.create!(
 
 Dorsale::BillingMachine::Invoice.create!(
   :label        => "Commande de bombons",
-  :id_card      => id_card,
   :customer     => corporation1,
   :payment_term => payment_term,
   :lines_attributes => [
@@ -59,7 +57,6 @@ corporation2.comments.create!(
 
 Dorsale::BillingMachine::Quotation.create!(
   :label            => "Application sur mesure",
-  :id_card          => id_card,
   :customer         => corporation2,
   :payment_term     => payment_term,
   :lines_attributes => [

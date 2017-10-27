@@ -6,7 +6,6 @@ Feature: Invoice Management
 
   Background:
     Given an authenticated user
-    Given an existing id card
     Given billing machine in multiple vat mode
     And an existing customer
     And an existing payment term

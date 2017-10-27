@@ -4,8 +4,8 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
   STATES = %w(pending accepted refused canceled)
 
   belongs_to :customer, polymorphic: true
-  belongs_to :id_card
   belongs_to :payment_term
+
   has_many :lines,
     :inverse_of => :quotation,
     :dependent  => :destroy,
@@ -22,9 +22,8 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
 
   mount_uploader :pdf_file, ::Dorsale::PdfUploader
 
-  validates :id_card, presence: true
-  validates :date,    presence: true
-  validates :state,   presence: true, inclusion: {in: proc { STATES }}
+  validates :date,  presence: true
+  validates :state, presence: true, inclusion: {in: proc { STATES }}
 
   default_scope -> {
     order(unique_index: :desc)

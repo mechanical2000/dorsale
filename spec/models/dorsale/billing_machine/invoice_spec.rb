@@ -10,7 +10,6 @@ describe Dorsale::BillingMachine::Invoice, type: :model do
   it { is_expected.to belong_to :payment_term }
   it { is_expected.to have_many(:lines).dependent(:destroy) }
 
-  it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
 
   it { is_expected.to respond_to :date }

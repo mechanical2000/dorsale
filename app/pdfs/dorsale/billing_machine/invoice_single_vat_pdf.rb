@@ -1,9 +1,5 @@
-require "prawn/measurement_extensions"
-
-class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
+class Dorsale::BillingMachine::InvoiceSingleVatPdf < Dorsale::ApplicationPdf
   include Dorsale::Alexandrie::Prawn::RenderWithAttachments
-  include Dorsale::AllHelpers
-  include ActionView::Helpers::NumberHelper
 
   def attachments
     @main_document.try(:attachments) || []
@@ -11,46 +7,41 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
 
   DEBUG = false
 
+  BLACK      = "000000"
+  WHITE      = "FFFFFF"
   GREY       = "808080"
   LIGHT_GREY = "C0C0C0"
-  WHITE      = "FFFFFF"
-  BLACK      = "000000"
-  BLUE       = "005F9E"
 
   def bm_currency(n)
     currency(n, Dorsale::BillingMachine.default_currency)
-  end
-
-  def has_advance
-    main_document.try(:advance) && main_document.advance != 0.0
-  end
-
-  def has_discount
-    main_document.try(:commercial_discount) && main_document.commercial_discount != 0.0
   end
 
   attr_reader :main_document
 
   def initialize(main_document)
     super(page_size: "A4", margin: 1.cm)
-    setup
     @main_document = main_document
-    @id_card       = main_document.id_card
+    setup
   end
 
   # rubocop:disable Style/SingleLineMethods, Layout/EmptyLineBetweenDefs
-  def header_height;         90.mm;  end
-  def logo_height;           32.mm;  end
-  def logo_width;            50.mm;  end
-  def footer_height;         40.mm;  end
-  def footer_top_height;     15.mm;  end
-  def footer_bottom_height;  15.mm;  end
-  def middle_height;         14.cm;  end
-  def products_table_height; 90.mm;  end
-  def first_column_width;    7.6.cm; end
-  def second_column_width;   2.4.cm; end
-  def third_column_width;    2.5.cm; end
-  def fourth_column_width;   2.9.cm; end
+  def header_height;         90.mm; end
+  def logo_height;           32.mm; end
+  def logo_width;            50.mm; end
+  def contact_infos_height;  30.mm; end
+
+  def footer_height;           40.mm; end
+  def footer_top_height;       15.mm; end
+  def footer_bottom_height;    15.mm; end
+  def footer_pagination_height; 5.mm; end
+
+  def middle_height;         14.cm; end
+  def products_table_height; 90.mm; end
+
+  def first_column_width;  7.6.cm; end
+  def second_column_width; 2.4.cm; end
+  def third_column_width;  2.5.cm; end
+  def fourth_column_width; 2.9.cm; end
   # rubocop:enable Style/SingleLineMethods, Layout/EmptyLineBetweenDefs
 
   def last_column_width
@@ -81,11 +72,10 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
   end
 
   def build_header
-    bounding_box [0, bounds.top], width: bounds.width, height: header_height do
-      draw_bounds_debug
+    bb height: header_height do
       build_title
       build_logo
-      build_contact
+      build_contact_infos
       build_subject
       build_customer
     end
@@ -93,75 +83,47 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
 
   def build_title
     top    = bounds.top - 1.5.cm
-    left   = bounds.left
-    width  = bounds.width
     height = 1.cm
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-      text "<b>#{main_document.t} n° #{main_document.tracking_id}</b>", inline_format: true, size: 20, align: :center
+
+    title = "<b>#{main_document.t} n° #{main_document.tracking_id}</b>"
+
+    bb top: top, height: height do
+      tb title, size: 20, align: :center
     end
   end
 
   def logo_path
-    main_document.id_card.logo.path
-  rescue NoMethodError
-    nil
   end
 
   def build_logo
-    return if logo_path.nil?
-
     height = logo_height
     width  = logo_width
 
-    bounding_box [bounds.left, bounds.top], width: width, height: height do
-      draw_bounds_debug
-      image logo_path, fit: [width, height]
+    bb width: width, height: height do
+      image logo_path, fit: [width, height] if logo_path
     end
   end
 
-  def contact_address_line
-    [
-      @id_card.address1,
-      @id_card.address2,
-      @id_card.zip,
-      @id_card.city,
-    ].select(&:present?).join(", ")
+  def contact_infos_content
+    placeholder __method__
   end
 
-  def contact_content
-    content = []
-    content << "<b>#{@id_card.entity_name}</b>"                                           if @id_card.entity_name.present?
-    content << "<b>#{contact_address_line}</b>"                                           if contact_address_line.present?
-    content << " "
-    content << "<b>#{main_document.t(:your_contact)} : #{@id_card.contact_full_name}</b>" if @id_card.contact_full_name.present?
-    content << "<b>#{main_document.t(:contact_phone)} : </b> #{@id_card.contact_phone}"   if @id_card.contact_phone.present?
-    content << "<b>#{main_document.t(:contact_fax)} : </b> #{@id_card.contact_fax}"       if @id_card.contact_fax.present?
-    content << "<b>#{main_document.t(:contact_email)} : </b> #{@id_card.contact_email}"   if @id_card.contact_email.present?
-    content.join("\n")
-  end
-
-  def build_contact
+  def build_contact_infos
     top    = bounds.top - 4.cm
-    left   = bounds.left
     width  = bounds.width / 2 - 1.1.cm
-    height = 2.5.cm
+    height = contact_infos_height
 
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-      text contact_content, inline_format: true, size: 8
+    bb top: top, width: width, height: height do
+      tb contact_infos_content.to_s, size: 9
     end
   end
 
   def build_subject
     top    = bounds.top - 7.5.cm
-    left   = bounds.left
     width  = bounds.width / 2 - 1.1.cm
     height = 15.mm
 
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-
+    bb top: top, width: width, height: height do
       if main_document.label.present?
         text "<b>#{main_document.t(:label)} : </b> #{main_document.label}", inline_format: true
       end
@@ -184,7 +146,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
     content << main_document.customer.address.country
 
     if main_document.customer.try(:european_union_vat_number).present?
-      content << main_document.customer.t(:european_union_vat_number)
+      content << main_document.customer.t(:european_union_vat_number) + " : "
       content << main_document.customer.european_union_vat_number
     end
 
@@ -192,50 +154,41 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
   end
 
   def build_customer
-    top    = bounds.top - 4.cm
-    left   = bounds.width / 2 + 1.1.cm
-    width  = bounds.width / 2 - 1.1.cm
-    height = 4.5.cm
+    top     = bounds.top - 4.cm
+    left    = bounds.width / 2 + 1.1.cm
+    width   = bounds.width / 2 - 1.1.cm
+    height  = 4.5.cm
     padding = 3.mm
 
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-      stroke do
-        fill_color LIGHT_GREY
-        fill_rounded_rectangle [cursor-bounds.height, cursor], bounds.width, bounds.height, 0
-        fill_color BLACK
-      end
-
-      bounding_box [bounds.left + padding, bounds.top - padding], height: bounds.height - padding, width: bounds.width - padding do
-        text customer_content
-      end
+    bb top: top, left: left, height: height, width: width, padding: padding, background: LIGHT_GREY do
+      tb customer_content.to_s
     end
   end # def build_customer
 
   def build_middle
-    left   = bounds.left
     top    = bounds.top - header_height
-    width  = bounds.width - left
     height = middle_height
 
-    bounding_box [left, top], width: width, height: height do
+    bb top: top, height: height do
       build_table
       build_total
-      build_payment_conditions
-      build_bank_informations
-      build_expiry
-      build_comments
+      build_document_infos
     end
   end
 
+  def has_advance
+    main_document.try(:advance) && main_document.advance != 0.0
+  end
+
+  def has_discount
+    main_document.try(:commercial_discount) && main_document.commercial_discount != 0.0
+  end
+
   def build_table
-    left   = bounds.left
-    top    = bounds.top
-    width  = bounds.width - left
     height = products_table_height
 
     # Empty table to draw lines
-    bounding_box [left, top], width: width, height: height do
+    bb height: products_table_height do
       repeat :all do
         float do
           table [["", "", "", "", ""]],
@@ -255,12 +208,10 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
           end # table
         end # float
       end # repeat all
-    end # bounding_box
+    end # bb
 
-    # products table
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-
+    # Products table
+    bb height: height do
       table_products = [[
         main_document.t(:designation).mb_chars.upcase.to_s,
         main_document.t(:quantity).mb_chars.upcase.to_s,
@@ -291,21 +242,18 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
         :cell_style => {border_width: 0} \
       do
         row(0).font_style = :bold
-        row(0).border_width = 1
-        cells.style { |c| c.align = c.column.zero? ? :left : :right }
+        row(0).border_width =
+          1,
+          cells.style { |c| c.align = c.column.zero? ? :left : :right }
       end # table
-    end # bounding_box
+    end # bb
   end # build_table
 
   def build_total
-    left   = bounds.left
     top    = bounds.top - products_table_height - 5.mm
-    width  = bounds.width - left
-    height = middle_height - products_table_height
+    height = middle_height - products_table_height - 5.mm
 
-    bounding_box [left, top], width: width, height: height do
-      draw_bounds_debug
-
+    bb top: top, height: height do
       table_totals = [[]]
 
       if has_discount
@@ -347,7 +295,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
         :column_widths => [fourth_column_width, last_column_width],
         :cell_style    => {border_width: [0, 1, 0, 0]},
         :position      => :right do
-          row(-1).style font_style: :bold
+          row(-1).style :font_style => :bold
           column(0).padding_right = 0.2.cm
           row(-1).borders = [:top, :right]
           row(-1).border_width = 1
@@ -355,140 +303,81 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
             c.align = :right
           end
         end
+
       stroke do
         rectangle [(bounds.right - fourth_column_width - last_column_width), bounds.top], (fourth_column_width + last_column_width), (bounds.top-cursor)
       end
     end
   end
 
-  def build_comments
-    return if main_document.comments.blank?
+  def document_infos_content
+    txt = []
 
-    top    = bounds.top - products_table_height - 35.mm
-    height = top - bounds.bottom
+    if main_document.try(:payment_term).present?
+      txt << "<b>#{main_document.t :payment_term}</b> : #{main_document.payment_term}"
+    end
+
+    if main_document.try(:expires_at).present?
+      txt << "<b>#{main_document.t :expires_at}</b> : #{date main_document.expires_at}"
+    end
+
+    txt << main_document.comments
+
+    txt.select(&:present?).join("\n\n")
+  end
+
+  def build_document_infos
+    top    = bounds.top - products_table_height - 5.mm
+    height = middle_height - products_table_height - 5.mm
     width  = 10.cm
 
-    text_box main_document.comments,
-      :at       => [bounds.left, top],
-      :height   => height,
-      :width    => width,
-      :overflow => :shrink_to_fit,
-      :size     => 9
-  end
-
-  def build_payment_conditions
-    return if main_document.payment_term.blank?
-
-    top    = bounds.top - products_table_height - 5.mm
-    height = 15.mm
-    width  = 7.5.cm
-
-    txt = "<b>#{main_document.t(:payment_terms)}</b> : #{main_document.payment_term}"
-
-    text_box txt,
-      :at            => [bounds.left, top],
-      :height        => height,
-      :width         => width,
-      :overflow      => :shrink_to_fit,
-      :inline_format => true,
-      :size          => 9
-  end
-
-  def build_expiry
-  end
-
-  def build_bank_informations
-    top = bounds.top - products_table_height - 20.mm
-    height = 1.cm
-    width  = 7.5.cm
-
-    bounding_box [bounds.left, top], height: height, width: width do
-      draw_bounds_debug
-      font_size 9 do
-        text "#{main_document.t(:iban)} : #{@id_card.iban}"           if @id_card.iban.present?
-        text "#{main_document.t(:bic_swift)} : #{@id_card.bic_swift}" if @id_card.bic_swift.present?
-      end
-    end
+    btb document_infos_content, top: top, height: height, width: width
   end
 
   def build_footer
-    top = bounds.bottom + footer_height
+    top    = bounds.bottom + footer_height
+    height = footer_height
 
-    bounding_box [0, top], width: bounds.width, height: footer_height do
-      draw_bounds_debug
+    bb top: top, height: height do
       build_footer_top
       build_footer_line
       build_footer_bottom
     end
   end
 
+  # TODO
   def footer_top_content
-    @id_card.custom_info_1.to_s
+    placeholder __method__
   end
 
   def build_footer_top
-    top    = bounds.top
-    height = footer_top_height
-    width  = bounds.width
-
-    text_box footer_top_content,
-      :at       => [bounds.left, top],
-      :height   => height,
-      :width    => width,
-      :overflow => :shrink_to_fit,
-      :size          => 9
+    btb footer_top_content, height: footer_top_height, size: 9
   end
 
   def build_footer_line
-    # Center line between the two footer parts
-    n = footer_top_height + (footer_height - footer_top_height - footer_bottom_height) / 2
-    move_down n
+    top = bounds.top - footer_top_height - (footer_height - footer_top_height - footer_bottom_height - footer_pagination_height) / 2
     stroke do
-      horizontal_rule
-      line_width 1
+      horizontal_line bounds.left, bounds.right, at: top
     end
   end
 
   def footer_bottom_content
-    infos_text = []
-    infos_text << @id_card.entity_name                                                                                if @id_card.entity_name.present?
-    infos_text << "#{main_document.t(:info_phone)} : #{@id_card.contact_phone}"                                       if @id_card.contact_phone.present?
-    infos_text << "#{main_document.t(:info_fax)} : #{@id_card.contact_fax}"                                           if @id_card.contact_fax.present?
-    infos_text << @id_card.contact_email.to_s                                                                         if @id_card.contact_email.present?
-    infos_text << @id_card.legal_form.to_s                                                                            if @id_card.legal_form.present?
-    infos_text << "#{main_document.t(:capital)} : #{bm_currency @id_card.capital}"                                    if @id_card.capital.present?
-    infos_text << "#{main_document.t(:registration)} : #{@id_card.registration_city} #{@id_card.registration_number}" if @id_card.registration_number.present?
-    infos_text << "#{main_document.t(:siret)} : #{@id_card.siret}"                                                    if @id_card.siret.present?
-    infos_text << "#{main_document.t(:intracommunity_vat)} : #{@id_card.intracommunity_vat}"                          if @id_card.intracommunity_vat.present?
-    infos_text.join(" - ")
+    placeholder __method__
   end
 
   def build_footer_bottom
     height = footer_bottom_height
-    top    = bounds.bottom + height
-    width  = bounds.width
+    top    = bounds.bottom + height + footer_pagination_height
 
-    text_box footer_bottom_content,
-      :at       => [bounds.left, top],
-      :height   => height,
-      :width    => width,
-      :overflow => :shrink_to_fit,
-      :size     => 9
+    btb footer_bottom_content, top: top, height: height, size: 9
   end
 
   def build_page_numbers
-    height = 5.mm
+    height = footer_pagination_height
     top    = bounds.bottom + height
-    width  = bounds.width
 
-    bounding_box [0, top], height: height, width: width do
-      float do
-        number_pages "page <page>/<total>", align: :right, size: 9
-      end
+    bb top: top, height: height do
+      number_pages "page <page>/<total>", align: :right, size: 9
     end
-  end
-
-  def draw_bounds_debug
-    transparent(0.5) { stroke_bounds } if DEBUG
   end
 end

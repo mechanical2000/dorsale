@@ -5,7 +5,6 @@ describe Dorsale::BillingMachine::Quotation do
   it { is_expected.to belong_to :payment_term }
   it { is_expected.to have_many(:lines).dependent(:destroy) }
 
-  it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
   it { is_expected.to validate_presence_of :state }
   it { is_expected.to ensure_inclusion_of(:state).in_array(described_class::STATES) }

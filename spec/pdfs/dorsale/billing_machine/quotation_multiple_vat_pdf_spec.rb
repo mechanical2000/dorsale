@@ -32,15 +32,11 @@ describe ::Dorsale::BillingMachine::QuotationMultipleVatPdf, pdfs: true do
     expect(content).to include "TVA %"
   end
 
-  describe "empty quotation" do
-    let(:quotation) {
-      id_card = Dorsale::BillingMachine::IdCard.new
-      id_card.save!(validate: false)
-      quotation = ::Dorsale::BillingMachine::Quotation.create!(id_card: id_card)
-    }
+  it "should work with empty quotation" do
+    quotation = ::Dorsale::BillingMachine::Quotation.new
 
-    it "should work" do
-      expect { generate! }.to_not raise_error
-    end
-  end # describe "empty quotation"
+    expect {
+      described_class.new(quotation).tap(&:build).render_with_attachments
+    }.to_not raise_error
+  end
 end
