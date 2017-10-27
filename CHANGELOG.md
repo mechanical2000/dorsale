@@ -2,6 +2,9 @@
 
 ## Next version
 
+- Remove BM id cards
+- Syntax improvements
+
 ## 3.8.1
 
 - Change CV contact type default value
