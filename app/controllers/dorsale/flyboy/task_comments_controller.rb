@@ -40,5 +40,4 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
   def task_comment_params_for_create
     task_comment_params.merge(author: current_user)
   end
-
 end

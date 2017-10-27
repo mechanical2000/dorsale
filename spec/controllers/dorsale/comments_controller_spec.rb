@@ -8,7 +8,7 @@ describe Dorsale::CommentsController, type: :controller do
   before(:each) { sign_in(user) }
 
   let(:commentable) { create(:customer_vault_corporation) }
-  let(:valid_params){
+  let(:valid_params) {
     {
       :comment => {
         :commentable_id   => commentable.id,

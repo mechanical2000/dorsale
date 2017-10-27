@@ -11,7 +11,7 @@ module Dorsale::Users::Active
       end
 
       def active_for_authentication?
-        super && self.is_active?
+        super && is_active?
       end
 
       def inactive_message

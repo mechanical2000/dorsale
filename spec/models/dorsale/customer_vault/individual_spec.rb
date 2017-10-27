@@ -40,6 +40,4 @@ RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
       expect(individual.activity_type).to eq nil
     end
   end
-
-
 end

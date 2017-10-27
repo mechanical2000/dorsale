@@ -34,7 +34,7 @@ describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
   describe "empty quotation" do
     let(:quotation) {
       id_card = Dorsale::BillingMachine::IdCard.new
-      id_card.save(validate: false)
+      id_card.save!(validate: false)
       quotation = ::Dorsale::BillingMachine::Quotation.create!(id_card: id_card)
     }
 
@@ -55,8 +55,4 @@ describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
       expect(content).to include "page 2"
     end
   end # describe "attachments"
-
 end
-
-
-

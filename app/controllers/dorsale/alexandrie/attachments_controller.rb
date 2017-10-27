@@ -98,7 +98,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   def common_permitted_params
     [
       :name,
-      :attachment_type_id
+      :attachment_type_id,
     ]
   end
 
@@ -138,5 +138,4 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   def notify_attachable
     @attachment.attachable.send(:try, :after_attachments_changes)
   end
-
 end

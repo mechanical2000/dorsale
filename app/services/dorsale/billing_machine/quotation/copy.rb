@@ -15,7 +15,7 @@ class Dorsale::BillingMachine::Quotation::Copy < ::Dorsale::Service
     @copy.unique_index = nil
     @copy.created_at   = nil
     @copy.updated_at   = nil
-    @copy.date         = Time.zone.now.to_date
+    @copy.date         = Date.current
     @copy.state        = ::Dorsale::BillingMachine::Quotation::STATES.first
 
     @copy.save!

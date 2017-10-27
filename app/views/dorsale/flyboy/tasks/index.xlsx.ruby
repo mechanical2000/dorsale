@@ -5,7 +5,7 @@ data = [
     model.t(:name),
     model.t(:progress),
     model.t(:term),
-  ]
+  ],
 ]
 
 @tasks_without_pagination.each do |task|

@@ -106,5 +106,4 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :routing do
       eq "/dorsale/customer_vault/individuals"
     end
   end # describe "route helpers"
-
 end

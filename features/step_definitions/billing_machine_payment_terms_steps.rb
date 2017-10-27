@@ -4,7 +4,7 @@ Given(/^the user goes on the new payment_term page$/) do
 end
 
 When(/^he fills the payment_term's information$/) do
-  fill_in 'billing_machine_payment_term_label', with: "Payment Term Label"
+  fill_in "billing_machine_payment_term_label", with: "Payment Term Label"
 end
 
 When(/^creates a new payment_term$/) do

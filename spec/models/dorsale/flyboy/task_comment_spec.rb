@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Dorsale::Flyboy::TaskComment do
   it { is_expected.to belong_to(:task) }
@@ -10,23 +10,23 @@ describe Dorsale::Flyboy::TaskComment do
   it { is_expected.to belong_to :author }
   it { is_expected.to validate_presence_of :author }
 
-  it 'should have a valid factory' do
+  it "should have a valid factory" do
     expect(build(:flyboy_task_comment)).to be_valid
   end
 
-  it 'should update the task progress upon creation' do
+  it "should update the task progress upon creation" do
     task    = create(:flyboy_task, progress: 10)
     comment = create(:flyboy_task_comment, progress: 20, task: task)
     expect(task.reload.progress).to eq(20)
   end
 
-  it 'should mark task as complete when progress == 100' do
+  it "should mark task as complete when progress == 100" do
     task    = create(:flyboy_task, progress: 10, done: false)
     comment = create(:flyboy_task_comment, progress: 100, task: task)
     expect(task.reload.done).to be true
   end
 
-  it 'should mark task as un complete when progress < 100' do
+  it "should mark task as un complete when progress < 100" do
     task    = create(:flyboy_task, progress: 100, done: true)
     comment = create(:flyboy_task_comment, progress: 90, task: task)
     expect(task.reload.done).to be false
@@ -50,6 +50,5 @@ describe Dorsale::Flyboy::TaskComment do
       expect(comment1.reload.progress).to eq 30
       expect(comment2.reload.progress).to eq 50
     end
-
   end
 end

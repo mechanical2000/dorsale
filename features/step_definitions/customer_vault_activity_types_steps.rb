@@ -4,7 +4,7 @@ Given(/^the user goes on the new activity type page$/) do
 end
 
 When(/^he fills the activity type's information$/) do
-fill_in 'activity_type_name', with: "Activity Name"
+  fill_in "activity_type_name", with: "Activity Name"
 end
 
 When(/^creates a new activity type$/) do

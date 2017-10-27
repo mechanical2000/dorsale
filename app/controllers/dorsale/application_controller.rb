@@ -30,5 +30,4 @@ class Dorsale::ApplicationController < ::ApplicationController
   end
 
   helper_method :scope
-
 end

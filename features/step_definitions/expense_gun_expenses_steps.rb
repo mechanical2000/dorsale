@@ -14,22 +14,22 @@ When(/^I create a new expense$/) do
   fill_in :expense_name, with: "ExpenseName"
 
   within all(".nested-fields").first do
-    find("input[id$='_name']").set            "ExpenseLine1Name"
-    find("input[id$='_date']").set            "21/06/2015"
+    find("input[id$='_name']").set "ExpenseLine1Name"
+    find("input[id$='_date']").set "21/06/2015"
     select @category.name
     find("input[id$='_total_all_taxes']").set "100"
-    find("input[id$='_vat']").set             "20"
+    find("input[id$='_vat']").set "20"
   end
 
   find(".add_fields").click
   expect(page).to have_selector(".nested-fields", count: 2)
 
   within all(".nested-fields").last do
-    find("input[id$='_name']").set            "ExpenseLine2Name"
-    find("input[id$='_date']").set            "12/06/2015"
+    find("input[id$='_name']").set "ExpenseLine2Name"
+    find("input[id$='_date']").set "12/06/2015"
     select @category.name
     find("input[id$='_total_all_taxes']").set "200"
-    find("input[id$='_vat']").set             "40"
+    find("input[id$='_vat']").set "40"
   end
 
   find("[type=submit]").click

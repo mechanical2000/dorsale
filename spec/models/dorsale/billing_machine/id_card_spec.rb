@@ -8,5 +8,4 @@ describe ::Dorsale::BillingMachine::IdCard do
   it { is_expected.to have_many :invoices }
 
   it { is_expected.to respond_to :logo }
-
 end

@@ -10,8 +10,8 @@ class Dorsale::CustomerVault::Event < ::Dorsale::ApplicationRecord
   validates :person,       presence: true
   validates :date,         presence: true
   validates :text,         presence: true
-  validates :action,       presence: true, inclusion: {in: proc {ACTIONS} }
-  validates :contact_type, presence: true, inclusion: {in: proc {CONTACT_TYPES} }
+  validates :action,       presence: true, inclusion: {in: proc { ACTIONS }}
+  validates :contact_type, presence: true, inclusion: {in: proc { CONTACT_TYPES }}
 
   default_scope -> {
     all

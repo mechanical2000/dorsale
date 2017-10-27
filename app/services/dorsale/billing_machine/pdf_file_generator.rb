@@ -17,8 +17,13 @@ class Dorsale::BillingMachine::PdfFileGenerator < Dorsale::Service
   private
 
   def pdf_klass
-    return ::Dorsale::BillingMachine.invoice_pdf_model   if document.is_a?(::Dorsale::BillingMachine::Invoice)
-    return ::Dorsale::BillingMachine.quotation_pdf_model if document.is_a?(::Dorsale::BillingMachine::Quotation)
+    if document.is_a?(::Dorsale::BillingMachine::Invoice)
+      return ::Dorsale::BillingMachine.invoice_pdf_model
+    end
+
+    if document.is_a?(::Dorsale::BillingMachine::Quotation)
+      return ::Dorsale::BillingMachine.quotation_pdf_model
+    end
   end
 
   def pdf_data

@@ -55,7 +55,7 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
     url_for(action: :index, id: nil)
   end
 
-  def permitted_params
+  def permitted_params # rubocop:disable Metrics/MethodLength
     [
       :id,
       :id_card_name,
@@ -102,5 +102,4 @@ class Dorsale::BillingMachine::IdCardsController < ::Dorsale::BillingMachine::Ap
   def id_card_params_for_update
     id_card_params
   end
-
 end

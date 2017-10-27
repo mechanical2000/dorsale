@@ -23,11 +23,10 @@ module Dorsale::BillingMachine
       "::Dorsale::BillingMachine::Quotation#{vat_mode.to_s.capitalize}VatPdf".constantize
     end
 
-    attr_accessor :default_currency
+    attr_writer :default_currency
 
     def default_currency
       @default_currency ||= "€"
     end
-
   end
 end

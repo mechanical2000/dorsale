@@ -1,8 +1,8 @@
 class Dorsale::BillingMachine::IdCard < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_id_cards"
 
-  has_many :invoices
-  has_many :quotations
+  has_many :invoices, dependent: :nullify
+  has_many :quotations, dependent: :nullify
 
   validates :id_card_name, presence: true
 

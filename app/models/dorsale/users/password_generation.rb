@@ -11,7 +11,6 @@ module Dorsale::Users::PasswordGeneration
       def send_welcome_email
         Dorsale::UserMailer.new_account(self, password).deliver_later
       end
-
     end
   end
 end

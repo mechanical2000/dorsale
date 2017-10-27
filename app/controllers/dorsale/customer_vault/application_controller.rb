@@ -15,5 +15,4 @@ class Dorsale::CustomerVault::ApplicationController < ::Dorsale::ApplicationCont
   def set_form_variables
     @tags ||= customer_vault_tag_list
   end
-
 end

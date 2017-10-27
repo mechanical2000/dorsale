@@ -5,14 +5,14 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
     expense = Dorsale::ExpenseGun::Expense.create!(
       :user  => create(:user),
       :name  => "ExpenseName",
-      :date  => Time.zone.now.to_date,
+      :date  => Date.current,
       :state => "accepted",
     )
 
     line = create(:expense_gun_expense_line,
       :expense => expense,
       :name    => "ExpenseLineName",
-      :date    => Time.zone.now.to_date,
+      :date    => Date.current,
     )
 
     expense.reload
@@ -28,19 +28,17 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
 
   it "should duplicate expense lines attributes" do
     expect(copy.expense_lines.length).to eq 1
-    expect(copy.expense_lines.first.name).to eq "ExpenseLineName"
+    expense_line = copy.expense_lines.first
 
-    expect(copy.expense_lines.first.category).to be_present
-    expect(copy.expense_lines.first.category).to eq expense.expense_lines.first.category
-
-    expect(copy.expense_lines.first.total_all_taxes).to be_present
-    expect(copy.expense_lines.first.total_all_taxes).to eq expense.expense_lines.first.total_all_taxes
-
-    expect(copy.expense_lines.first.vat).to be_present
-    expect(copy.expense_lines.first.vat).to eq expense.expense_lines.first.vat
-
-    expect(copy.expense_lines.first.company_part).to be_present
-    expect(copy.expense_lines.first.company_part).to eq expense.expense_lines.first.company_part
+    expect(expense_line.name).to eq "ExpenseLineName"
+    expect(expense_line.category).to be_present
+    expect(expense_line.category).to eq expense.expense_lines.first.category
+    expect(expense_line.total_all_taxes).to be_present
+    expect(expense_line.total_all_taxes).to eq expense.expense_lines.first.total_all_taxes
+    expect(expense_line.vat).to be_present
+    expect(expense_line.vat).to eq expense.expense_lines.first.vat
+    expect(expense_line.company_part).to be_present
+    expect(expense_line.company_part).to eq expense.expense_lines.first.company_part
   end
 
   it "should not be persisted" do
@@ -82,6 +80,4 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
     expect(expense.expense_lines.first.updated_at).to be_present
     expect(copy.expense_lines.first.updated_at).to be_nil
   end
-
 end
-

@@ -35,5 +35,4 @@ module Dorsale::ExpenseGun::ExpensePolicyHelper
     return false unless expense.may_go_to_canceled?
     super
   end
-
 end

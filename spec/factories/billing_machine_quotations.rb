@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :billing_machine_quotation, class: ::Dorsale::BillingMachine::Quotation do
     customer     { create(:customer_vault_corporation) }
     payment_term { create(:billing_machine_payment_term) }

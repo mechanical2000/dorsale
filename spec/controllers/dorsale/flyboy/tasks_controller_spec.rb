@@ -11,10 +11,12 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
     create(:flyboy_task, done: false)
   }
 
-  let(:valid_attributes) {{
-    :name => "New Task" ,
-    :term => Time.zone.now.to_date,
-  }}
+  let(:valid_attributes) {
+    {
+      :name => "New Task",
+      :term => Date.current,
+    }
+  }
 
   describe "#complete" do
     before(:each) do
@@ -52,19 +54,19 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         @task2 = create(:flyboy_task, done: false)
       end
 
-      it 'should display both when not filtered' do
+      it "should display both when not filtered" do
         get :index
         expect(assigns(:tasks).to_a.sort).to eq [@task1, @task2].sort
       end
 
-      it 'should filter by status closed' do
-        cookies["filters"] = {'fb_state' => "done"}.to_json
+      it "should filter by status closed" do
+        cookies["filters"] = {"fb_state" => "done"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task1]
       end
 
-      it 'should filter by status opened' do
-        cookies["filters"] = {'fb_state' => "undone"}.to_json
+      it "should filter by status opened" do
+        cookies["filters"] = {"fb_state" => "undone"}.to_json
         get :index
         expect(assigns(:tasks).to_a).to eq [@task2]
       end
@@ -77,9 +79,32 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         @corporation2 = create(:customer_vault_corporation, name: "dEF")
         @corporation3 = create(:customer_vault_corporation, name: "xyz")
 
-        @task1 = create(:flyboy_task, taskable: @corporation1, name: "Abc", progress: 100, term: "21/12/2012", reminder_type: "custom", reminder_date: "21/12/2012")
-        @task2 = create(:flyboy_task, taskable: @corporation2, name: "dEF", progress: 0,   term: "23/12/2012", reminder_type: "custom", reminder_date: "23/12/2012")
-        @task3 = create(:flyboy_task, taskable: @corporation3, name: "xyz", progress: 35,  term: "22/12/2012", reminder_type: "custom", reminder_date: "22/12/2012")
+        @task1 = create(:flyboy_task,
+          :taskable      => @corporation1,
+          :name          => "Abc",
+          :progress      => 100,
+          :term          => "21/12/2012",
+          :reminder_type => "custom",
+          :reminder_date => "21/12/2012",
+        )
+
+        @task2 = create(:flyboy_task,
+          :taskable      => @corporation2,
+          :name          => "dEF",
+          :progress      => 0,
+          :term          => "23/12/2012",
+          :reminder_type => "custom",
+          :reminder_date => "23/12/2012",
+        )
+
+        @task3 = create(:flyboy_task,
+          :taskable      => @corporation3,
+          :name          => "xyz",
+          :progress      => 35,
+          :term          => "22/12/2012",
+          :reminder_type => "custom",
+          :reminder_date => "22/12/2012",
+        )
       end
 
       it "sorting by taskable asc" do
@@ -140,7 +165,6 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
   describe "POST create" do
     describe "with valid params" do
-
       it "creates a new Task" do
         expect {
           post :create, params: {:task => valid_attributes}
@@ -205,7 +229,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
         patch :update, params: {
           :id   => task.to_param,
-          :task => {:name => nil}
+          :task => {:name => nil},
         }
 
         expect(assigns(:task)).to eq(task)
@@ -237,7 +261,9 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
     it "is expected to create a task comment" do
       task = create(:flyboy_task, term: 3.days.ago)
-      expect{patch :snooze, params: {:id => task.to_param}}.to change{Dorsale::Flyboy::TaskComment.count}.by(1)
+      expect {
+        patch :snooze, params: {:id => task.to_param}
+      }.to change(Dorsale::Flyboy::TaskComment, :count).by(1)
     end
   end
 
@@ -250,11 +276,11 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
 
       Timecop.freeze "2016-03-09 15:00:00"
       @delayed_task        = create(:flyboy_task, term: Date.yesterday)           # tuesday
-      @today_task          = create(:flyboy_task, term: Time.zone.now.to_date)    # thursday - today
+      @today_task          = create(:flyboy_task, term: Date.current)             # thursday - today
       @tomorrow_task       = create(:flyboy_task, term: Date.tomorrow)            # wednesday
       @this_week_task      = create(:flyboy_task, term: Date.parse("2016-03-12")) # sunday
       @next_week_task      = create(:flyboy_task, term: Date.parse("2016-03-14")) # monday next week
-      @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday next next week
+      @next_next_week_task = create(:flyboy_task, term: Date.parse("2016-03-22")) # tuesday 2 weeks
     end
 
     it "should not assign tasks when owner is an other person" do
@@ -296,7 +322,5 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       expect(assigns(:next_week_tasks)).to      eq [@next_week_task]
       expect(assigns(:next_next_week_tasks)).to eq [@next_next_week_task]
     end
-
   end # describe summary
-
 end

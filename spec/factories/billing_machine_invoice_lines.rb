@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :billing_machine_invoice_line, class: ::Dorsale::BillingMachine::InvoiceLine do
     invoice    { create(:billing_machine_invoice) }
 

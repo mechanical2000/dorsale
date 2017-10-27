@@ -58,6 +58,5 @@ describe ::Dorsale::BillingMachine::InvoicesController, type: :routing do
       expect(post "/billing_machine/invoices/1/email").to \
       route_to("dorsale/billing_machine/invoices#email", id: "1")
     end
-
   end
 end

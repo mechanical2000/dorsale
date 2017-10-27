@@ -12,8 +12,8 @@ class Dorsale::BillingMachine::Invoice::Copy < ::Dorsale::Service
       @copy.lines << line.dup
     end
 
-    @copy.date         = Time.zone.now.to_date
-    @copy.due_date     = Time.zone.now.to_date + 30.days
+    @copy.date         = Date.current
+    @copy.due_date     = Date.current + 30.days
     @copy.unique_index = nil
     @copy.paid         = false
 

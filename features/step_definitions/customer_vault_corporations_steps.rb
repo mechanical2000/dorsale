@@ -9,29 +9,29 @@ When(/^I create an new corporation$/) do
 end
 
 When(/^I add the corporation's informations$/) do
-  fill_in 'person_corporation_name', with: 'AGILiDEE'
-  fill_in 'person_email', with: 'contact@agilidee.com'
-  fill_in 'person_www', with: 'www.agilidee.com'
-  fill_in 'person_phone', with: '04 91 00 00 00'
-  fill_in 'person_fax', with: '09 00 00 00 00'
+  fill_in "person_corporation_name", with: "AGILiDEE"
+  fill_in "person_email", with: "contact@agilidee.com"
+  fill_in "person_www", with: "www.agilidee.com"
+  fill_in "person_phone", with: "04 91 00 00 00"
+  fill_in "person_fax", with: "09 00 00 00 00"
 end
 
 When(/^I fill the corporation capital, immatriculation, legal form$/) do
-  fill_in 'person_capital', with: '1000'
-  fill_in 'person_immatriculation_number', with: 'RCS 201523658'
-  fill_in 'person_legal_form', with: 'SARL'
-  fill_in 'person_number_of_employees', with: '45'
-  fill_in 'person_revenue', with: "450000"
-  fill_in 'person_context', with: "Le joli contexte"
-  fill_in 'person_societe_com', with: "societe_com"
+  fill_in "person_capital", with: "1000"
+  fill_in "person_immatriculation_number", with: "RCS 201523658"
+  fill_in "person_legal_form", with: "SARL"
+  fill_in "person_number_of_employees", with: "45"
+  fill_in "person_revenue", with: "450000"
+  fill_in "person_context", with: "Le joli contexte"
+  fill_in "person_societe_com", with: "societe_com"
 end
 
 When(/^I fill the corporation's address$/) do
-  fill_in 'person_address_attributes_street', with: '3 Rue Marx Dormoy'
-  fill_in 'person_address_attributes_street_bis', with: ''
-  fill_in 'person_address_attributes_city', with: 'Marseille'
-  fill_in 'person_address_attributes_zip', with: '13004'
-  fill_in 'person_address_attributes_country', with: 'France'
+  fill_in "person_address_attributes_street", with: "3 Rue Marx Dormoy"
+  fill_in "person_address_attributes_street_bis", with: ""
+  fill_in "person_address_attributes_city", with: "Marseille"
+  fill_in "person_address_attributes_zip", with: "13004"
+  fill_in "person_address_attributes_country", with: "France"
 end
 
 When(/^I validate the new corporation$/) do
@@ -43,7 +43,7 @@ When(/^I go on the corporate index$/) do
 end
 
 When(/^he go on the next page$/) do
-  click_link '2'
+  click_link "2"
 end
 
 Then(/^i see an error message for the missing name$/) do
@@ -51,7 +51,7 @@ Then(/^i see an error message for the missing name$/) do
 end
 
 Then(/^he can see (\d+) corporate$/) do |count|
-  page.should have_selector '.person', count: count
+  page.should have_selector ".person", count: count
 end
 
 Then(/^the corporation is created$/) do
@@ -178,15 +178,19 @@ Then(/^tags are removed$/) do
 end
 
 Given(/^an open task to this corporation$/) do
-  @open_task = ::Dorsale::Flyboy::Task.create!(taskable: @corporation, progress: 20, name: "I-am-open")
+  @open_task = @corporation.tasks.create!(progress: 20, name: "I-am-open")
 end
 
 Given(/^a closed task to this corporation$/) do
-  @closed_task = ::Dorsale::Flyboy::Task.create!(taskable: @corporation, progress: 100, done: true, name: "I-am-closed")
+  @closed_task = @corporation.tasks.create!(progress: 100, done: true, name: "I-am-closed")
 end
 
 Given(/^a link between this individual and this corporation$/) do
-  @link = ::Dorsale::CustomerVault::Link.create!(alice: @corporation, bob: @individual, title: "I-am-a-link")
+  @link = ::Dorsale::CustomerVault::Link.create!(
+    :alice => @corporation,
+    :bob   => @individual,
+    :title => "I-am-a-link",
+  )
 end
 
 Then(/^I see only the open task in the context$/) do
@@ -210,7 +214,7 @@ When(/^I delete this corporation$/) do
 end
 
 Then(/^the corporation is deleted$/) do
-  expect(::Dorsale::CustomerVault::Corporation.count).to eq (@corporations_count - 1)
+  expect(::Dorsale::CustomerVault::Corporation.count).to eq(@corporations_count - 1)
 end
 
 Then(/^I am on the people page$/) do

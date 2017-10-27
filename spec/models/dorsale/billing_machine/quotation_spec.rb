@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::Quotation do
+describe Dorsale::BillingMachine::Quotation do
   it { is_expected.to belong_to :customer }
   it { is_expected.to belong_to :payment_term }
   it { is_expected.to have_many(:lines).dependent(:destroy) }
@@ -8,7 +8,7 @@ describe ::Dorsale::BillingMachine::Quotation do
   it { is_expected.to validate_presence_of :id_card }
   it { is_expected.to validate_presence_of :date }
   it { is_expected.to validate_presence_of :state }
-  it { is_expected.to ensure_inclusion_of(:state).in_array(::Dorsale::BillingMachine::Quotation::STATES) }
+  it { is_expected.to ensure_inclusion_of(:state).in_array(described_class::STATES) }
   it { is_expected.to respond_to :date }
   it { is_expected.to respond_to :label }
   it { is_expected.to respond_to :vat_amount }
@@ -24,16 +24,16 @@ describe ::Dorsale::BillingMachine::Quotation do
 
   describe "default values" do
     it "default date should be today" do
-      expect(::Dorsale::BillingMachine::Quotation.new.date).to eq Time.zone.now.to_date
+      expect(described_class.new.date).to eq Date.current
     end
 
     it "default expires_at should be date + 1 month" do
-      quotation = ::Dorsale::BillingMachine::Quotation.new(date: "21/12/2012")
+      quotation = described_class.new(date: "21/12/2012")
       expect(quotation.expires_at).to eq Date.parse("21/01/2013")
     end
 
     it "default state should be pending" do
-      expect(::Dorsale::BillingMachine::Quotation.new.state).to eq "pending"
+      expect(described_class.new.state).to eq "pending"
     end
   end
 
@@ -44,34 +44,34 @@ describe ::Dorsale::BillingMachine::Quotation do
     quotation.save
   end
 
-  describe 'unique_index' do
-    context 'when unique index is 69' do
-      it 'should be assigned upon creation' do
-        quotation1 = create(:billing_machine_quotation, date: '2014-02-01', unique_index: 69)
-        quotation2 = create(:billing_machine_quotation, date: '2014-02-01')
+  describe "unique_index" do
+    context "when unique index is 69" do
+      it "should be assigned upon creation" do
+        quotation1 = create(:billing_machine_quotation, date: "2014-02-01", unique_index: 69)
+        quotation2 = create(:billing_machine_quotation, date: "2014-02-01")
         expect(quotation2.unique_index).to eq(70)
       end
     end
 
-    context 'when unique index is nil' do
-      it 'should be assigned upon creation' do
-        ::Dorsale::BillingMachine::Quotation.destroy_all
-        quotation1 = create(:billing_machine_quotation, date: '2014-02-01')
+    context "when unique index is nil" do
+      it "should be assigned upon creation" do
+        described_class.destroy_all
+        quotation1 = create(:billing_machine_quotation, date: "2014-02-01")
         expect(quotation1.unique_index).to eq(1)
       end
     end
   end
 
-  describe 'tracking_id' do
-    it 'should return correct tracking_id' do
-      quotation = create(:billing_machine_quotation, date: '2014-02-01')
-      expect(quotation.tracking_id).to eq('2014-01')
+  describe "tracking_id" do
+    it "should return correct tracking_id" do
+      quotation = create(:billing_machine_quotation, date: "2014-02-01")
+      expect(quotation.tracking_id).to eq("2014-01")
     end
   end
 
   describe "vat rate" do
     it "default vat rate should be 20" do
-      expect(::Dorsale::BillingMachine::Quotation.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
     end
 
     it "it should be specified vat rate" do
@@ -80,24 +80,24 @@ describe ::Dorsale::BillingMachine::Quotation do
 
     it "it should be first line vat rate" do
       quotation = create(:billing_machine_quotation)
-      line1   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
-      line2   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+      line1 = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+      line2 = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
       expect(quotation.vat_rate).to eq 10
     end
 
     it "it should raise if multiple vat_rates" do
       quotation = create(:billing_machine_quotation)
-      line1   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
+      line1     = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 10)
 
-      expect{
-        line2   = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 15)
+      expect {
+        line2 = create(:billing_machine_quotation_line, quotation: quotation, vat_rate: 15)
       }.to raise_error(RuntimeError)
     end
 
     it "it should raise when vat mode is multiple" do
       ::Dorsale::BillingMachine.vat_mode = :multiple
       quotation = build(:billing_machine_quotation)
-      expect{ quotation.vat_rate }.to raise_error(RuntimeError)
+      expect { quotation.vat_rate }.to raise_error(RuntimeError)
     end
   end
 
@@ -116,7 +116,7 @@ describe ::Dorsale::BillingMachine::Quotation do
         :vat_rate   => 20,
         :quantity   => 10,
         :unit_price => 5,
-        :quotation  => quotation
+        :quotation  => quotation,
       )
 
       expect(quotation.total_excluding_taxes).to eq(90.0)
@@ -165,5 +165,4 @@ describe ::Dorsale::BillingMachine::Quotation do
       expect(quotation.balance).to eq(0.0)
     end
   end
-
 end

@@ -4,7 +4,7 @@ Given(/^the user goes on the new origin page$/) do
 end
 
 When(/^he fills the origin's information$/) do
-fill_in 'origin_name', with: "Origin Name"
+  fill_in "origin_name", with: "Origin Name"
 end
 
 When(/^creates a new origin$/) do

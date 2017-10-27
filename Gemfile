@@ -8,44 +8,57 @@ else
 end
 
 gem "rails", "~> 5.0"
+gem "agilibox", ">= 1.0.9"
 
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise-i18n'
 gem 'pg'
 gem 'uglifier'
-gem "pry-rails"
-gem "awesome_print"
 gem "puma"
 
 gemspec
 
-group :development, :test do
-  gem "byebug"
-  gem "faker"
-  gem "database_cleaner"
-  gem "desktop_delivery"
-  gem "bullet"
-end
-
 group :test do
   gem "minitest"
-  gem "thor"
-  gem "sqlite3"
-  gem "rspec-rails"
   gem "rspec-wait"
-  gem "shoulda-matchers", "2.5.0"
   gem "rails-controller-testing"
+  gem "rspec-repeat"
+  gem "shoulda-matchers"
   gem "cucumber-rails", require: false
   gem "capybara"
   gem "poltergeist"
-  gem "factory_girl_rails"
+  gem "spring-commands-rspec"
+  gem "spring-commands-cucumber"
   gem "guard"
   gem "guard-cucumber"
-  gem "guard-rspec"
+  gem "guard-rspec", "4.5.2" # https://github.com/guard/guard-rspec/issues/334
   gem "guard-rubocop"
   gem "timecop"
-  gem "pdf-inspector"
-  gem "yomu"
   gem "simplecov", require: false
+  gem "pundit-matchers"
+  gem "zonebie"
+  gem "yomu"
+end
+
+group :development do
+  gem "desktop_delivery"
+  gem "better_errors"
+  gem "meta_request"
+  gem "bullet"
+
+  # Please do not use this gem, it create Rails reloader problems
+  # gem "binding_of_caller"
+end
+
+group :development, :test do
+  gem "spring"
+  gem "launchy"
+  gem "rails-erd"
+  gem "thor"
+  gem "faker"
+  gem "database_cleaner"
+  gem "factory_bot_rails"
+  gem "byebug"
+  gem "rspec-rails" # must be in both environments for generators
 end

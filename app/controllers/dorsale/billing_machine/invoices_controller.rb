@@ -103,26 +103,16 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def email
     authorize @invoice, :email?
 
-    @subject =
-    begin
-      params[:email][:subject]
-    rescue
-      "#{model.t} #{@invoice.tracking_id} : #{@invoice.label}"
-    end
+    default_subject = "#{model.t} #{@invoice.tracking_id} : #{@invoice.label}"
+    default_body    = t("emails.invoices.send_invoice_to_customer",
+      :from => current_user.to_s,
+      :to   => @invoice.customer.to_s,
+    )
 
-    @body =
-    begin
-      params[:email][:body]
-    rescue
-      t("emails.invoices.send_invoice_to_customer",
-        :from => current_user.to_s,
-        :to   => @invoice.customer.to_s,
-      )
-    end
+    @subject = params.dig(:email, :subject) || default_subject
+    @body    = params.dig(:email, :body)    || default_body
 
-    if request.get?
-      return
-    end
+    return if request.get?
 
     email = ::Dorsale::BillingMachine::InvoiceMailer
       .send_invoice_to_customer(@invoice, @subject, @body, current_user)
@@ -190,5 +180,4 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def invoice_params_for_update
     invoice_params
   end
-
 end

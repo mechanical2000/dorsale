@@ -24,7 +24,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
 
   validates :id_card, presence: true
   validates :date,    presence: true
-  validates :state,   presence: true, inclusion: {in: proc { STATES } }
+  validates :state,   presence: true, inclusion: {in: proc { STATES }}
 
   default_scope -> {
     order(unique_index: :desc)
@@ -45,7 +45,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
 
   def assign_default_values
     assign_default :state,                  STATES.first
-    assign_default :date,                   Time.zone.now.to_date
+    assign_default :date,                   Date.current
     assign_default :expires_at,             date + 1.month
     assign_default :commercial_discount,    0
     assign_default :vat_amount,             0
@@ -76,17 +76,14 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     self.total_including_taxes = total_excluding_taxes + vat_amount
   end
 
-  def total_excluding_taxes=(*); super; end
-  private :total_excluding_taxes=
-
-  def vat_amount=(*); super; end
-  private :vat_amount=
-
-  def total_including_taxes=(*); super; end
-  private :total_including_taxes=
+  # rubocop:disable Style/SingleLineMethods
+  private def total_excluding_taxes=(*); super; end
+  private def vat_amount=(*);            super; end
+  private def total_including_taxes=(*); super; end
+  # rubocop:enable Style/SingleLineMethods
 
   def balance
-    self.total_including_taxes
+    total_including_taxes
   end
 
   def vat_rate
@@ -105,9 +102,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
   end
 
-  def vat_rate=(value)
-    @vat_rate = value
-  end
+  attr_writer :vat_rate
 
   before_validation :apply_vat_rate_to_lines
 

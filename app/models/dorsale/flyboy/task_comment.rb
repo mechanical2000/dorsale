@@ -22,7 +22,7 @@ class Dorsale::Flyboy::TaskComment < ::Dorsale::ApplicationRecord
   def update_task_progress
     task.update!(
       :progress => progress,
-      :done     => progress.equal?(100)
+      :done     => progress.equal?(100),
     )
   end
 end

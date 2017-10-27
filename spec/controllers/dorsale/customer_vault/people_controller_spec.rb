@@ -32,10 +32,10 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   describe "#list" do
     describe "sorting" do
       it "should sort people by name by default" do
-        abc   = create(:customer_vault_corporation, name: 'Abc Corp')
-        bob   = create(:customer_vault_individual, last_name: 'Bob')
-        alice = create(:customer_vault_individual, last_name: 'Alice')
-        zorg  = create(:customer_vault_corporation, name: 'Zorg Corp')
+        abc   = create(:customer_vault_corporation, name: "Abc Corp")
+        bob   = create(:customer_vault_individual, last_name: "Bob")
+        alice = create(:customer_vault_individual, last_name: "Alice")
+        zorg  = create(:customer_vault_corporation, name: "Zorg Corp")
 
         get :index
 
@@ -56,28 +56,25 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
       end
 
       it "should filter by person origin" do
-        @origin = create(:customer_vault_origin)
-        individual  = create(:customer_vault_individual, origin: @origin)
-        corporation = create(:customer_vault_corporation)
+        origin      = create(:customer_vault_origin)
+        individual1 = create(:customer_vault_individual, origin: origin)
+        individual2 = create(:customer_vault_individual)
 
-        cookies[:filters] = {person_origin: @origin.id}.to_json
-
+        cookies[:filters] = {person_origin: origin.id}.to_json
         get :index
 
-        expect(assigns(:people)).to eq [individual]
+        expect(assigns(:people)).to eq [individual1]
       end
 
-      it "should filter by person activity" do
-        @activity = create(:customer_vault_activity_type)
-        corpo1 = create(:customer_vault_corporation, activity_type: @activity)
-        individual  = create(:customer_vault_individual, corporation: corpo1)
-        corpo2 = create(:customer_vault_corporation)
+      it "should filter by person activity_type" do
+        activity_type = create(:customer_vault_activity_type)
+        corporation1  = create(:customer_vault_corporation, activity_type: activity_type)
+        corporation2  = create(:customer_vault_corporation)
 
-        cookies[:filters] = {person_activity: @activity.id}.to_json
-
+        cookies[:filters] = {person_activity: activity_type.id}.to_json
         get :index
 
-        expect(assigns(:people)).to contain_exactly(corpo1, individual)
+        expect(assigns(:people)).to eq [corporation1]
       end
     end # describe "filters"
 
@@ -129,5 +126,4 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
       expect(event.action).to eq "update"
     end
   end # describe "#update"
-
 end

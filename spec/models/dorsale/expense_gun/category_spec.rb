@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe ::Dorsale::ExpenseGun::Category, type: :model  do
+RSpec.describe ::Dorsale::ExpenseGun::Category, type: :model do
   it { is_expected.to validate_presence_of :name }
 
   it "category factory should be valid?" do

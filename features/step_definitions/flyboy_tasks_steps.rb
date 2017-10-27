@@ -15,9 +15,7 @@ Given(/^an existing task$/) do
 end
 
 Given(/^an existing snoozable task$/) do
-  @task = create(:flyboy_task,
-    :term => Time.zone.now.to_date,
-  )
+  @task = create(:flyboy_task, term: Date.current)
 end
 
 Given(/^(\d+) existing tasks$/) do |n|
@@ -28,7 +26,7 @@ end
 
 Given(/^a task with an owner that's the term is today$/) do
   @task = create(:flyboy_task,
-    :term          => Time.zone.now.to_date,
+    :term          => Date.current,
     :reminder_type => "custom",
     :reminder_date => Date.yesterday,
     :owner         => create(:user),
@@ -37,7 +35,7 @@ end
 
 Given(/^a task without owner$/) do
   @task = create(:flyboy_task,
-    :term          => Time.zone.now.to_date,
+    :term          => Date.current,
     :reminder_type => "custom",
     :reminder_date => Date.yesterday,
     :owner         => nil,
@@ -46,7 +44,7 @@ end
 
 Given(/^a closed task with an owner$/) do
   @task = create(:flyboy_task,
-    :term          => Time.zone.now.to_date,
+    :term          => Date.current,
     :reminder_type => "custom",
     :reminder_date => Date.yesterday,
     :owner         => create(:user),
@@ -162,7 +160,6 @@ Then(/^only undone tasks appear$/) do
   expect(page).to have_no_content @done_task.name
   expect(page).to have_content @undone_task.name
 end
-
 
 Then(/^all tasks appear$/) do
   expect(page).to have_content @done_task.name

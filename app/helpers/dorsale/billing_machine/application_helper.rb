@@ -9,10 +9,10 @@ module Dorsale::BillingMachine::ApplicationHelper
   end
 
   def billing_machine_quotation_states_for_filter_select
-      [
-        [::Dorsale::BillingMachine::Quotation.t("state.all"), ""],
-        [::Dorsale::BillingMachine::Quotation.t("state.not_canceled"), "not_canceled"],
-      ] + billing_machine_quotation_states_for_select
+    [
+      [::Dorsale::BillingMachine::Quotation.t("state.all"), ""],
+      [::Dorsale::BillingMachine::Quotation.t("state.not_canceled"), "not_canceled"],
+    ] + billing_machine_quotation_states_for_select
   end
 
   def billing_machine_payment_status_for_filter_select
@@ -27,9 +27,9 @@ module Dorsale::BillingMachine::ApplicationHelper
 
   def quotation_state_classes(quotation)
     if quotation.state == "pending" && quotation.date < 1.month.ago
-      return "pending late"
+      "pending late"
     else
-      return quotation.state
+      quotation.state
     end
   end
 

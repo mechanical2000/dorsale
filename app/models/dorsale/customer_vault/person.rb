@@ -24,7 +24,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   has_one :address, class_name: ::Dorsale::Address, as: :addressable, inverse_of: :addressable, dependent: :destroy
   has_many :tasks, class_name: ::Dorsale::Flyboy::Task, as: :taskable, dependent: :destroy
   has_many :events, dependent: :destroy
-  has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer
+  has_many :invoices, class_name: ::Dorsale::BillingMachine::Invoice, as: :customer, dependent: :nullify
   accepts_nested_attributes_for :address, allow_destroy: true
 
   belongs_to :activity_type, class_name: ::Dorsale::CustomerVault::ActivityType
@@ -33,7 +33,17 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   after_destroy :destroy_links
 
   default_scope -> {
-    order("LOWER(COALESCE(corporation_name, '') || COALESCE(last_name, '') || COALESCE(first_name, '')) ASC")
+    order_by_name
+  }
+
+  scope :order_by_name, -> {
+    order %(
+      LOWER(
+        COALESCE(corporation_name, '') ||
+        COALESCE(last_name, '') ||
+        COALESCE(first_name, '')
+      ) ASC
+    )
   }
 
   after_initialize  :build_address, if: proc { new_record? && address.nil? }
@@ -59,12 +69,12 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     a = ::Dorsale::CustomerVault::Link
       .where(alice_id: id)
       .preload(:alice => :taggings, :bob => :taggings)
-      .each { |l| l.person = l.alice ; l.other_person = l.bob }
+      .each { |l| l.person = l.alice; l.other_person = l.bob }
 
     b = ::Dorsale::CustomerVault::Link
       .where(bob_id: id)
       .preload(:alice => :taggings, :bob => :taggings)
-      .each { |l| l.person = l.bob ; l.other_person = l.alice }
+      .each { |l| l.person = l.bob; l.other_person = l.alice }
 
     return a + b
   end

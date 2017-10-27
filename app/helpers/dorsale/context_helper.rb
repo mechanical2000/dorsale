@@ -1,5 +1,5 @@
 module Dorsale::ContextHelper
-  def actions_for(obj, opts={})
+  def actions_for(obj, opts = {})
     url        = opts[:url]
     edit_url   = opts[:edit_url]
     delete_url = opts[:delete_url]

@@ -10,7 +10,8 @@ class Dorsale::ExpenseGun::ExpenseLine < ::Dorsale::ApplicationRecord
   validates :category,        presence: true
   validates :total_all_taxes, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :vat,             presence: true, numericality: {greater_than_or_equal_to: 0}
-  validates :company_part,    presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100.0}
+  validates :company_part,    presence: true
+  validates :company_part, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
 
   def assign_default_values
     assign_default :company_part, 100
@@ -23,5 +24,4 @@ class Dorsale::ExpenseGun::ExpenseLine < ::Dorsale::ApplicationRecord
   def total_vat_deductible
     category.vat_deductible == true ? (vat * company_part / 100) : 0.0
   end
-
 end

@@ -35,7 +35,7 @@ describe ::Dorsale::BillingMachine::QuotationMultipleVatPdf, pdfs: true do
   describe "empty quotation" do
     let(:quotation) {
       id_card = Dorsale::BillingMachine::IdCard.new
-      id_card.save(validate: false)
+      id_card.save!(validate: false)
       quotation = ::Dorsale::BillingMachine::Quotation.create!(id_card: id_card)
     }
 
@@ -43,5 +43,4 @@ describe ::Dorsale::BillingMachine::QuotationMultipleVatPdf, pdfs: true do
       expect { generate! }.to_not raise_error
     end
   end # describe "empty quotation"
-
 end

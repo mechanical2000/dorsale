@@ -9,9 +9,7 @@ class Dorsale::BillingMachine::Quotation::ToInvoice < ::Dorsale::Service
     @invoice = Dorsale::BillingMachine::Invoice.new
 
     quotation.attributes.each do |k, v|
-      next if k.to_s == "id"
-      next if k.to_s.match /index|tracking|state/
-      next if k.to_s.end_with?("_at")
+      next if ignored_key?(k)
 
       if invoice.respond_to?("#{k}=")
         invoice.public_send("#{k}=", v)
@@ -22,9 +20,7 @@ class Dorsale::BillingMachine::Quotation::ToInvoice < ::Dorsale::Service
       invoice_line = invoice.lines.new
 
       quotation_line.attributes.each do |k, v|
-        next if k.to_s == "id"
-        next if k.to_s.match /index|tracking|state/
-        next if k.to_s.end_with?("_at")
+        next if ignored_key?(k)
 
         if invoice_line.respond_to?("#{k}=")
           invoice_line.public_send("#{k}=", v)
@@ -32,8 +28,15 @@ class Dorsale::BillingMachine::Quotation::ToInvoice < ::Dorsale::Service
       end
     end
 
-    invoice.date = Time.zone.now.to_date
+    invoice.date = Date.current
 
     invoice
+  end
+
+  private
+
+  def ignored_key?(k)
+    k = k.to_s
+    k == "id" || k.match?(/index|tracking|state/) || k.end_with?("_at")
   end
 end

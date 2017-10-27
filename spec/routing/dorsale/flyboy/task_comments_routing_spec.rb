@@ -7,6 +7,5 @@ describe ::Dorsale::Flyboy::TaskCommentsController, type: :routing do
     it "routes to #create" do
       expect(post("flyboy/task_comments")).to route_to("dorsale/flyboy/task_comments#create")
     end
-
   end
 end

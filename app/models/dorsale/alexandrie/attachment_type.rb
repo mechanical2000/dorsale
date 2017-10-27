@@ -8,5 +8,4 @@ class Dorsale::Alexandrie::AttachmentType < ::Dorsale::ApplicationRecord
   default_scope -> {
     order(:name)
   }
-
 end

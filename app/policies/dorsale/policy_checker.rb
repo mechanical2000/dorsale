@@ -37,28 +37,24 @@ class Dorsale::PolicyChecker
   private
 
   def check_policy!(policy)
-    begin
-      policy_klass = policy.constantize
-    rescue NameError
+    if (policy_klass = policy.safe_constantize).nil?
       errors << "#{policy} does not exist"
       return
     end
 
-    begin
-      helper_klass = "#{policy}Helper".constantize
-    rescue NameError
+    if (helper_klass = "#{policy}Helper".safe_constantize).nil?
       errors << "#{policy}Helper does not exist"
       return
     end
 
-    begin
-      scope_klass = "#{policy}::Scope".constantize
-
-      unless scope_klass.public_instance_methods.include?(:resolve)
-        errors << "#{policy}::Scope#resolve is not defined"
-      end
-    rescue NameError
+    if (scope_klass = "#{policy}::Scope".constantize).nil?
       errors << "#{policy}::Scope does not exist"
+      return
+    end
+
+    if scope_klass.public_instance_methods.exclude?(:resolve)
+      errors << "#{policy}::Scope#resolve is not defined"
+      return
     end
 
     unless policy_klass < helper_klass
@@ -67,11 +63,9 @@ class Dorsale::PolicyChecker
     end
 
     helper_klass::POLICY_METHODS.each do |method|
-      unless policy_klass.public_instance_methods(false).include?(method)
+      if policy_klass.public_instance_methods(false).exclude?(method)
         errors << "#{policy_klass}##{method} is not defined"
-        next
       end
     end
-  end
-
+  end # def check_policy
 end

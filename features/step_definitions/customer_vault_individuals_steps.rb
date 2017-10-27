@@ -5,17 +5,17 @@ When(/^I create an new individual$/) do
 end
 
 When(/^I add his first_name, last_name and email$/) do
-  fill_in 'person_first_name', with: 'Benoit'
-  fill_in 'person_last_name', with: 'Gantaume'
-  fill_in 'person_email', with: 'benoit@agilidee.com'
+  fill_in "person_first_name", with: "Benoit"
+  fill_in "person_last_name", with: "Gantaume"
+  fill_in "person_email", with: "benoit@agilidee.com"
 end
 
 When(/^I fill the address$/) do
-  fill_in 'person_address_attributes_street', with: '3 Rue Marx Dormoy'
-  fill_in 'person_address_attributes_street_bis', with: ''
-  fill_in 'person_address_attributes_city', with: 'Marseille'
-  fill_in 'person_address_attributes_zip', with: '13004'
-  fill_in 'person_address_attributes_country', with: 'France'
+  fill_in "person_address_attributes_street", with: "3 Rue Marx Dormoy"
+  fill_in "person_address_attributes_street_bis", with: ""
+  fill_in "person_address_attributes_city", with: "Marseille"
+  fill_in "person_address_attributes_zip", with: "13004"
+  fill_in "person_address_attributes_country", with: "France"
 end
 
 When(/^I validate the new individual$/) do
@@ -65,4 +65,3 @@ end
 When(/^I go on this individual$/) do
   visit dorsale.customer_vault_individual_path(@individual)
 end
-

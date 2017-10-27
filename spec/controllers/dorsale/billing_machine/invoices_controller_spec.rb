@@ -122,5 +122,4 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
       )
     end
   end # describe "filters"
-
 end

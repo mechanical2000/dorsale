@@ -39,14 +39,13 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     assign_default :commercial_discount,   0.0
     assign_default :total_excluding_taxes, 0.0
     assign_default :paid,                  false
-
   end
 
   after_initialize :assign_default_dates
 
   def assign_default_dates
-    assign_default :date,     Time.zone.now.to_date
-    assign_default :due_date, Time.zone.now.to_date + 30.days
+    assign_default :date,     Date.current
+    assign_default :due_date, Date.current + 30.days
   end
 
   before_save :update_totals
@@ -90,9 +89,7 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
   end
 
-  def vat_rate=(value)
-    @vat_rate = value
-  end
+  attr_writer :vat_rate
 
   before_validation :apply_vat_rate_to_lines
 
@@ -106,38 +103,32 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
 
   def payment_status
     if paid?
-      return :paid
-    elsif due_date == nil
-      return :on_alert
-    elsif Time.zone.now.to_date >= due_date + 15
-      return :on_alert
-    elsif Time.zone.now.to_date > due_date
-      return :late
+      :paid
+    elsif due_date.nil?
+      :on_alert
+    elsif Date.current >= due_date + 15
+      :on_alert
+    elsif Date.current > due_date
+      :late
     else
-      return :pending
+      :pending
     end
   end
 
   def t(*args)
     return super if args.any?
 
-    if balance && balance < 0
+    if balance&.negative?
       super(:credit_note)
     else
       self.class.t
     end
   end
 
-  def total_excluding_taxes=(*); super; end
-  private :total_excluding_taxes=
-
-  def vat_amount=(*); super; end
-  private :vat_amount=
-
-  def total_including_taxes=(*); super; end
-  private :total_including_taxes=
-
-  def balance=(*); super; end
-  private :balance=
-
+  # rubocop:disable Style/SingleLineMethods
+  private def total_excluding_taxes=(*); super; end
+  private def vat_amount=(*);            super; end
+  private def total_including_taxes=(*); super; end
+  private def balance=(*);               super; end
+  # rubocop:enable Style/SingleLineMethods
 end

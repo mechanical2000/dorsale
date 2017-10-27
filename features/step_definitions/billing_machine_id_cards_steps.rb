@@ -8,9 +8,9 @@ Given(/^an existing id_card$/) do
 end
 
 When(/^he fills the id_card's information$/) do
-  fill_in 'billing_machine_id_card_id_card_name', with: "Id Card name"
-  fill_in 'billing_machine_id_card_entity_name', with: "Id Card entity name"
-  fill_in 'billing_machine_id_card_contact_full_name', with: "Id Card contact full name"
+  fill_in "billing_machine_id_card_id_card_name", with: "Id Card name"
+  fill_in "billing_machine_id_card_entity_name", with: "Id Card entity name"
+  fill_in "billing_machine_id_card_contact_full_name", with: "Id Card contact full name"
 end
 
 When(/^creates a new id_card$/) do
@@ -25,7 +25,6 @@ Then(/^the id_card is added to the id_card list$/) do
   expect(page).to have_content "Id Card name"
   expect(page).to have_content "Id Card entity name"
   expect(page).to have_content "Id Card contact full name"
-
 end
 
 Then(/^the current id_card's label should be pre\-filled$/) do

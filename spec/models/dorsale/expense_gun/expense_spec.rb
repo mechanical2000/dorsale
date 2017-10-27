@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
+RSpec.describe Dorsale::ExpenseGun::Expense, type: :model do
   it { is_expected.to have_many(:expense_lines).dependent(:destroy) }
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_presence_of :date }
@@ -10,11 +10,11 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "default #date should be tody" do
-    expect(::Dorsale::ExpenseGun::Expense.new.date).to eq Time.zone.now.to_date
+    expect(described_class.new.date).to eq Date.current
   end
 
   it "new expense should have new state" do
-    expect(::Dorsale::ExpenseGun::Expense.new.current_state).to be :draft
+    expect(described_class.new.current_state).to be :draft
   end
 
   describe "new state" do
@@ -142,25 +142,35 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense, type: :model do
 
   it "#total_employee_payback should return sum of lines" do
     expense = build(:expense_gun_expense, expense_lines: [])
-    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 100)
-    expense.expense_lines << build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 50)
+
+    line1 = build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 100)
+    expense.expense_lines << line1
+
+    line2 = build(:expense_gun_expense_line, total_all_taxes: 10, company_part: 50)
+    expense.expense_lines << line2
+
     expect(expense.total_employee_payback).to eq 15.0
   end
 
   it "#total_vat_deductible should return sum of lines" do
     expense = build(:expense_gun_expense, expense_lines: [])
+
     category1 = build(:expense_gun_category, vat_deductible: true)
+    line1 = build(:expense_gun_expense_line, vat: 10, category: category1, company_part: 50)
+    expense.expense_lines << line1
+
     category2 = build(:expense_gun_category, vat_deductible: false)
-    expense.expense_lines << build(:expense_gun_expense_line, vat: 10, category: category1, company_part: 50)
-    expense.expense_lines << build(:expense_gun_expense_line, vat: 10, category: category2, company_part: 50)
+    line2 = build(:expense_gun_expense_line, vat: 10, category: category2, company_part: 50)
+    expense.expense_lines << line2
+
     expect(expense.total_vat_deductible).to eq 5.0
   end
 
   it "#may_edit? should return false unless expense is not submitted" do
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :draft).may_edit?).to be true
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :submitted).may_edit?).to be false
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :acceped).may_edit?).to be false
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :refused).may_edit?).to be false
-    expect(::Dorsale::ExpenseGun::Expense.new(state: :canceled).may_edit?).to be false
+    expect(described_class.new(state: :draft).may_edit?).to be true
+    expect(described_class.new(state: :submitted).may_edit?).to be false
+    expect(described_class.new(state: :acceped).may_edit?).to be false
+    expect(described_class.new(state: :refused).may_edit?).to be false
+    expect(described_class.new(state: :canceled).may_edit?).to be false
   end
 end

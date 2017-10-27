@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Dorsale::Flyboy::Task do
   it { is_expected.to belong_to(:taskable) }
@@ -36,8 +36,8 @@ describe Dorsale::Flyboy::Task do
     end
   end
 
-  describe '#validation' do
-    it 'factory should be #valid?' do
+  describe "#validation" do
+    it "factory should be #valid?" do
       expect(create(:flyboy_task)).to be_valid
     end
   end # describe '#validation'
@@ -60,28 +60,52 @@ describe Dorsale::Flyboy::Task do
     end
 
     it "should auto reset reminder_date" do
-      task = described_class.new(term: "2017-04-12", reminder_type: "custom", reminder_date: "2017-04-11")
+      task = described_class.new(
+        :term          => "2017-04-12",
+        :reminder_type => "custom",
+        :reminder_date => "2017-04-11",
+      )
       task.reminder_type = nil
       expect(task.reminder_date).to eq nil
     end
 
     it "should auto set reminder_date by with days" do
-      task = described_class.new(term: "2017-04-12", reminder_type: "duration", reminder_duration: 1, reminder_unit: "days")
+      task = described_class.new(
+        :term              => "2017-04-12",
+        :reminder_type     => "duration",
+        :reminder_duration => 1,
+        :reminder_unit     => "days",
+      )
       expect(task.reminder_date).to eq Date.parse("2017-04-11")
     end
 
     it "should auto set reminder_date by with weeks" do
-      task = described_class.new(term: "2017-04-12", reminder_type: "duration", reminder_duration: 2, reminder_unit: "weeks")
+      task = described_class.new(
+        :term              => "2017-04-12",
+        :reminder_type     => "duration",
+        :reminder_duration => 2,
+        :reminder_unit     => "weeks",
+      )
       expect(task.reminder_date).to eq Date.parse("2017-03-29")
     end
 
     it "should auto set reminder_date by with months" do
-      task = described_class.new(term: "2017-04-12", reminder_type: "duration", reminder_duration: 1, reminder_unit: "months")
+      task = described_class.new(
+        :term              => "2017-04-12",
+        :reminder_type     => "duration",
+        :reminder_duration => 1,
+        :reminder_unit     => "months",
+      )
       expect(task.reminder_date).to eq Date.parse("2017-03-12")
     end
 
     it "update term should update reminder_date" do
-      task = described_class.new(term: "2017-04-12", reminder_type: "duration", reminder_duration: 1, reminder_unit: "days")
+      task = described_class.new(
+        :term              => "2017-04-12",
+        :reminder_type     => "duration",
+        :reminder_duration => 1,
+        :reminder_unit     => "days",
+      )
       expect(task.reminder_date).to eq Date.parse("2017-04-11")
       task.term = "2017-04-25"
       expect(task.reminder_date).to eq Date.parse("2017-04-24")
@@ -90,51 +114,51 @@ describe Dorsale::Flyboy::Task do
 
   describe "scopes" do
     it "should return delayed undone tasks" do
-      task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+1)
-      task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-1, done: true)
-      task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-1, done: false)
-      task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-2, done: true)
-      task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-2, done: false)
+      task  = create(:flyboy_task, owner: @user1, term: Date.current+1)
+      task1 = create(:flyboy_task, owner: @user1, term: Date.current-1, done: true)
+      task2 = create(:flyboy_task, owner: @user1, term: Date.current-1, done: false)
+      task3 = create(:flyboy_task, owner: @user1, term: Date.current-2, done: true)
+      task4 = create(:flyboy_task, owner: @user1, term: Date.current-2, done: false)
       tasks = ::Dorsale::Flyboy::Task.delayed
-      expect(tasks).to contain_exactly(task_2, task_4)
+      expect(tasks).to contain_exactly(task2, task4)
     end
 
     it "should return today undone tasks" do
-      task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+1)
-      task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: true)
-      task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: false)
+      task = create(:flyboy_task, owner: @user1, term: Date.current+1)
+      task1 = create(:flyboy_task, owner: @user1, term: Date.current, done: true)
+      task2 = create(:flyboy_task, owner: @user1, term: Date.current, done: false)
       tasks = ::Dorsale::Flyboy::Task.today
-      expect(tasks).to contain_exactly(task_2)
+      expect(tasks).to contain_exactly(task2)
     end
 
     it "should return tomorrow undone tasks" do
-      task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date)
-      task_1 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: true)
-      task_2 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: false)
+      task = create(:flyboy_task, owner: @user1, term: Date.current)
+      task1 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: true)
+      task2 = create(:flyboy_task, owner: @user1, term: Date.tomorrow, done: false)
       tasks = ::Dorsale::Flyboy::Task.tomorrow
-      expect(tasks).to contain_exactly(task_2)
+      expect(tasks).to contain_exactly(task2)
     end
 
     it "should return this week undone tasks" do
       Timecop.freeze(2015, 5, 21, 12, 0, 0)
-      task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date-7, done: false)
-      task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+2, done: true)
-      task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+2, done: false)
-      task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+3, done: false)
-      task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+5, done: false)
+      task = create(:flyboy_task, owner: @user1, term: Date.current-7, done: false)
+      task1 = create(:flyboy_task, owner: @user1, term: Date.current+2, done: true)
+      task2 = create(:flyboy_task, owner: @user1, term: Date.current+2, done: false)
+      task3 = create(:flyboy_task, owner: @user1, term: Date.current+3, done: false)
+      task4 = create(:flyboy_task, owner: @user1, term: Date.current+5, done: false)
       tasks = ::Dorsale::Flyboy::Task.this_week
-      expect(tasks).to contain_exactly(task_2, task_3)
+      expect(tasks).to contain_exactly(task2, task3)
     end
 
     it "should return next week undone tasks" do
       Timecop.freeze(2015, 5, 21)
-      task = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date, done: false)
-      task_1 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+7, done: true)
-      task_2 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+7, done: false)
-      task_3 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+9, done: false)
-      task_4 = create(:flyboy_task, owner: @user1, term: Time.zone.now.to_date+12, done: false)
+      task = create(:flyboy_task, owner: @user1, term: Date.current, done: false)
+      task1 = create(:flyboy_task, owner: @user1, term: Date.current+7, done: true)
+      task2 = create(:flyboy_task, owner: @user1, term: Date.current+7, done: false)
+      task3 = create(:flyboy_task, owner: @user1, term: Date.current+9, done: false)
+      task4 = create(:flyboy_task, owner: @user1, term: Date.current+12, done: false)
       tasks = ::Dorsale::Flyboy::Task.next_week
-      expect(tasks).to contain_exactly(task_2, task_3)
+      expect(tasks).to contain_exactly(task2, task3)
     end
   end # describe "scopes"
 
@@ -144,8 +168,8 @@ describe Dorsale::Flyboy::Task do
     let(:task_ontime) {
       create(:flyboy_task,
         :reminder_type => "custom",
-        :reminder_date => Time.zone.now.to_date + 1.day,
-        :term          => Time.zone.now.to_date + 3.days,
+        :reminder_date => Date.current + 1.day,
+        :term          => Date.current + 3.days,
         :done          => false,
       )
     }
@@ -159,8 +183,8 @@ describe Dorsale::Flyboy::Task do
     let(:task_onwarning) {
       create(:flyboy_task,
         :reminder_type => "custom",
-        :reminder_date => Time.zone.now.to_date,
-        :term          => Time.zone.now.to_date + 3.days,
+        :reminder_date => Date.current,
+        :term          => Date.current + 3.days,
         :done          => false,
       )
     }
@@ -174,8 +198,8 @@ describe Dorsale::Flyboy::Task do
     let(:task_onalert) {
       create(:flyboy_task,
         :reminder_type => "custom",
-        :reminder_date => Time.zone.now.to_date - 3.days,
-        :term          => Time.zone.now.to_date,
+        :reminder_date => Date.current - 3.days,
+        :term          => Date.current,
         :done          => false,
       )
     }
@@ -189,8 +213,8 @@ describe Dorsale::Flyboy::Task do
     let(:task_done) {
       create(:flyboy_task,
         :reminder_type => "custom",
-        :reminder_date => Time.zone.now.to_date - 3.days,
-        :term          => Time.zone.now.to_date - 1.day,
+        :reminder_date => Date.current - 3.days,
+        :term          => Date.current - 1.day,
         :done          => true,
       )
     }

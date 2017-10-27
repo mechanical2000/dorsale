@@ -31,8 +31,8 @@ require "agilibox"
 
 if Rails.env.test? || Rails.env.development?
   require "pry"
-  require "factory_girl_rails"
-  require "factory_girl"
+  require "factory_bot_rails"
+  require "factory_bot"
 end
 
 require "acts-as-taggable-on"
@@ -41,9 +41,9 @@ module Dorsale
   class Engine < ::Rails::Engine
     isolate_namespace Dorsale
 
-    initializer "factory_girl" do
+    initializer "factory_bot" do
       if Rails.env.test? || Rails.env.development?
-        FactoryGirl.definition_file_paths.unshift Dorsale::Engine.root.join("spec/factories/").to_s
+        FactoryBot.definition_file_paths.unshift Dorsale::Engine.root.join("spec/factories/").to_s
       end
     end
 
@@ -54,13 +54,13 @@ module Dorsale
     end
 
     initializer "check_pundit_policies" do
-      if Rails.env.test? || Rails.env.development?
-        Dorsale::PolicyChecker.check!
-      end
+      Dorsale::PolicyChecker.check! if Rails.env.test? || Rails.env.development?
     end
 
     initializer "assets" do
-      Rails.application.config.assets.precompile += %w( dorsale/avatar.png )
+      Rails.application.config.assets.precompile += %w(
+        dorsale/avatar.png
+      )
     end
 
     initializer "simple_form" do

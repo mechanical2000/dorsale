@@ -32,5 +32,4 @@ RSpec.describe Dorsale::BillingMachine do
     bm.default_currency = "$"
     expect(bm.default_currency).to eq "$"
   end
-
 end

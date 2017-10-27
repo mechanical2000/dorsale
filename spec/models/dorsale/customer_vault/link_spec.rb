@@ -12,4 +12,3 @@ RSpec.describe ::Dorsale::CustomerVault::Link, type: :model do
   it { should validate_presence_of :alice }
   it { should validate_presence_of :bob }
 end
-

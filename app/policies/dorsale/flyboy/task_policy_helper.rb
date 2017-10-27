@@ -30,9 +30,9 @@ module Dorsale::Flyboy::TaskPolicyHelper
   private
 
   def cannot_read_taskable?
-    return false unless task.is_a?(::Dorsale::Flyboy::Task)
-    return false unless task.taskable.present?
+    return false if task == Dorsale::Flyboy::Task
+    return false if task.taskable.blank?
 
-    ! policy(task.taskable).read?
+    !policy(task.taskable).read?
   end
 end

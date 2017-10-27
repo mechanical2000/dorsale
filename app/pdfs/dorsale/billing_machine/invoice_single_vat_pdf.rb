@@ -32,27 +32,27 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
   attr_reader :main_document
 
   def initialize(main_document)
-    super(page_size: 'A4', margin: 1.cm)
+    super(page_size: "A4", margin: 1.cm)
     setup
     @main_document = main_document
     @id_card       = main_document.id_card
   end
 
-  def header_height;         90.mm; end
-  def logo_height;           32.mm; end
-  def logo_width;            50.mm; end
+  # rubocop:disable Style/SingleLineMethods, Layout/EmptyLineBetweenDefs
+  def header_height;         90.mm;  end
+  def logo_height;           32.mm;  end
+  def logo_width;            50.mm;  end
+  def footer_height;         40.mm;  end
+  def footer_top_height;     15.mm;  end
+  def footer_bottom_height;  15.mm;  end
+  def middle_height;         14.cm;  end
+  def products_table_height; 90.mm;  end
+  def first_column_width;    7.6.cm; end
+  def second_column_width;   2.4.cm; end
+  def third_column_width;    2.5.cm; end
+  def fourth_column_width;   2.9.cm; end
+  # rubocop:enable Style/SingleLineMethods, Layout/EmptyLineBetweenDefs
 
-  def footer_height;         40.mm; end
-  def footer_top_height;     15.mm; end
-  def footer_bottom_height;  15.mm; end
-
-  def middle_height;         14.cm; end
-  def products_table_height; 90.mm; end
-
-  def first_column_width;  7.6.cm; end
-  def second_column_width; 2.4.cm; end
-  def third_column_width;  2.5.cm; end
-  def fourth_column_width; 2.9.cm; end
   def last_column_width
     bounds.width - first_column_width - second_column_width - third_column_width - fourth_column_width
   end
@@ -69,11 +69,11 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
 
   def setup
     font_root = ::Dorsale::Engine.root.join("app/assets/fonts")
-    font_families.update(
+    font_families.update( # rubocop:disable Rails/SaveBang
       "BryantPro" => {
         normal: "#{font_root}/BryantPro-Regular.ttf",
         bold:   "#{font_root}/BryantPro-Bold.ttf",
-      }
+      },
     )
 
     font("BryantPro")
@@ -202,7 +202,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
       draw_bounds_debug
       stroke do
         fill_color LIGHT_GREY
-        fill_rounded_rectangle [cursor-bounds.height,cursor], bounds.width, bounds.height, 0
+        fill_rounded_rectangle [cursor-bounds.height, cursor], bounds.width, bounds.height, 0
         fill_color BLACK
       end
 
@@ -238,7 +238,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
     bounding_box [left, top], width: width, height: height do
       repeat :all do
         float do
-          table [["","","","",""]],
+          table [["", "", "", "", ""]],
             :column_widths => [
               first_column_width,
               second_column_width,
@@ -272,7 +272,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
       main_document.lines.each do |line|
         table_products.push [
           line.label,
-          number(line.quantity).gsub(",00","").gsub(".00",""),
+          number(line.quantity).gsub(",00", "").gsub(".00", ""),
           line.unit,
           bm_currency(line.unit_price),
           bm_currency(line.total),
@@ -291,8 +291,8 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
         :cell_style => {border_width: 0} \
       do
         row(0).font_style = :bold
-        row(0).border_width = 1,
-        cells.style { |c| c.align = c.column == 0 ? :left : :right }
+        row(0).border_width = 1
+        cells.style { |c| c.align = c.column.zero? ? :left : :right }
       end # table
     end # bounding_box
   end # build_table
@@ -322,7 +322,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
 
       vat_rate = number(main_document.vat_rate)
       table_totals.push [
-        "#{main_document.t(:vat).mb_chars.upcase.to_s} #{percentage vat_rate}",
+        "#{main_document.t(:vat).mb_chars.upcase} #{percentage vat_rate}",
         bm_currency(main_document.vat_amount),
       ]
 
@@ -345,9 +345,9 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
 
       table table_totals,
         :column_widths => [fourth_column_width, last_column_width],
-        :cell_style    => {border_width: [0, 1, 0 ,0]},
+        :cell_style    => {border_width: [0, 1, 0, 0]},
         :position      => :right do
-          row(-1).style :font_style       => :bold
+          row(-1).style font_style: :bold
           column(0).padding_right = 0.2.cm
           row(-1).borders = [:top, :right]
           row(-1).border_width = 1
@@ -454,13 +454,13 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
     infos_text << @id_card.entity_name                                                                                if @id_card.entity_name.present?
     infos_text << "#{main_document.t(:info_phone)} : #{@id_card.contact_phone}"                                       if @id_card.contact_phone.present?
     infos_text << "#{main_document.t(:info_fax)} : #{@id_card.contact_fax}"                                           if @id_card.contact_fax.present?
-    infos_text << "#{@id_card.contact_email}"                                                                         if @id_card.contact_email.present?
-    infos_text << "#{@id_card.legal_form.to_s}"                                                                       if @id_card.legal_form.present?
-    infos_text << "#{main_document.t(:capital)} : #{bm_currency @id_card.capital}"                                          if @id_card.capital.present?
+    infos_text << @id_card.contact_email.to_s                                                                         if @id_card.contact_email.present?
+    infos_text << @id_card.legal_form.to_s                                                                            if @id_card.legal_form.present?
+    infos_text << "#{main_document.t(:capital)} : #{bm_currency @id_card.capital}"                                    if @id_card.capital.present?
     infos_text << "#{main_document.t(:registration)} : #{@id_card.registration_city} #{@id_card.registration_number}" if @id_card.registration_number.present?
     infos_text << "#{main_document.t(:siret)} : #{@id_card.siret}"                                                    if @id_card.siret.present?
     infos_text << "#{main_document.t(:intracommunity_vat)} : #{@id_card.intracommunity_vat}"                          if @id_card.intracommunity_vat.present?
-    infos_text = infos_text.join(" - ")
+    infos_text.join(" - ")
   end
 
   def build_footer_bottom
@@ -481,7 +481,7 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Prawn::Document
     top    = bounds.bottom + height
     width  = bounds.width
 
-    bounding_box [0, top], height: height, width: bounds.width do
+    bounding_box [0, top], height: height, width: width do
       float do
         number_pages "page <page>/<total>", align: :right, size: 9
       end

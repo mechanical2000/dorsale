@@ -11,16 +11,18 @@ class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
   end
 
   def name
-    [self.last_name, self.first_name].join(", ")
+    [last_name, first_name].join(", ")
   end
 
   def activity_type
     corporation.try(:activity_type)
   end
 
+  # rubocop:disable Style/SingleLineMethods
   private def corporation_name;  raise NoMethodError; end
   private def corporation_name=; raise NoMethodError; end
-  private def activity_type=; raise NoMethodError; end
+  private def activity_type=;    raise NoMethodError; end
   private def activity_type_id;  raise NoMethodError; end
   private def activity_type_id=; raise NoMethodError; end
+  # rubocop:enable Style/SingleLineMethods
 end

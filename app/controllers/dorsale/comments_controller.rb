@@ -74,8 +74,9 @@ class Dorsale::CommentsController < ::Dorsale::ApplicationController
     [
       params[:form_url],
       request.referer,
-      (main_app.root_path rescue "/"),
-    ].select(&:present?).first
+      main_app.try(:root_path),
+      "/",
+    ].find(&:present?)
   end
 
   def model

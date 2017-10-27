@@ -7,5 +7,4 @@ class Dorsale::UserMailer < ::Dorsale::ApplicationMailer
       :subject => t("emails.user.new_account.title"),
     )
   end
-
 end

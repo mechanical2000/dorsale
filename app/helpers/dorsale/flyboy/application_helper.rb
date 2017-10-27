@@ -52,10 +52,10 @@ module Dorsale::Flyboy::ApplicationHelper
   end
 
   def task_term_values_for_select
-    today     = Time.zone.now.to_date
-    tomorrow  = (Time.zone.now + 1.day).to_date
-    this_week = Time.zone.now.to_date.end_of_week
-    next_week = (Time.zone.now + 1.week).to_date.end_of_week
+    today     = Date.current
+    tomorrow  = Date.tomorrow
+    this_week = Date.current.end_of_week
+    next_week = (Date.current + 1.week).end_of_week
 
     # Because today or tomorrow can be equal to this week
     if @task.term == today
@@ -78,5 +78,4 @@ module Dorsale::Flyboy::ApplicationHelper
       [Dorsale::Flyboy::Task.t("term_value.custom"),    :custom,        {selected: is_custom}],
     ]
   end
-
 end

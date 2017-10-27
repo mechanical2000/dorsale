@@ -11,5 +11,4 @@ module Dorsale::Flyboy::TasksSummaryConcern
     @next_week_tasks      = tasks.next_week
     @next_next_week_tasks = tasks.next_next_week
   end
-
 end

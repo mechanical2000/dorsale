@@ -15,7 +15,7 @@ data = [
     Dorsale::BillingMachine::Invoice.t(:total_including_taxes),
     Dorsale::BillingMachine::Invoice.t(:advance),
     Dorsale::BillingMachine::Invoice.t(:balance),
-  ]
+  ],
 ]
 
 @invoices_without_pagination.each do |invoice|

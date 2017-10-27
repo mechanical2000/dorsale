@@ -81,5 +81,4 @@ class Dorsale::UsersController < ::Dorsale::ApplicationController
   def user_params_for_update
     user_params
   end
-
 end

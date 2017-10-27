@@ -1,14 +1,13 @@
-# encoding: utf-8
-
 puts "Stating data seed"
 
 require "database_cleaner"
 
-DatabaseCleaner.clean_with(:truncation, {except: %w(
+tables = %w(
   ar_internal_metadata
   schema_migrations
   spatial_ref_sys
-)})
+)
+DatabaseCleaner.clean_with(:truncation, except: tables)
 
 user = User.create!(email: "demo@agilidee.com", password: "password")
 
@@ -25,11 +24,11 @@ corporation1 = Dorsale::CustomerVault::Corporation.create!(
   :address_attributes => {
     :city    => "Marseille",
     :country => "France",
-  }
+  },
 )
 
 Dorsale::BillingMachine::Invoice.create!(
-  :label        => 'Commande de bombons',
+  :label        => "Commande de bombons",
   :id_card      => id_card,
   :customer     => corporation1,
   :payment_term => payment_term,
@@ -38,8 +37,8 @@ Dorsale::BillingMachine::Invoice.create!(
       :label      => "Bombons en sucre",
       :quantity   => 3.2,
       :unit_price => 14,
-   }
-  ]
+    },
+  ],
 )
 
 corporation2 = Dorsale::CustomerVault::Corporation.create!(
@@ -50,31 +49,31 @@ corporation2 = Dorsale::CustomerVault::Corporation.create!(
   :address_attributes => {
     :city    => "Marseille",
     :country => "France",
-  }
+  },
 )
 
 corporation2.comments.create!(
-  :text => "Je viens d'avoir cette boite au téléphone, il faut leur faire un devis.",
-  author: user
+  :text   => "Je viens d'avoir cette boite au téléphone, il faut leur faire un devis.",
+  :author => user,
 )
 
 Dorsale::BillingMachine::Quotation.create!(
-  :label            => 'Application sur mesure',
+  :label            => "Application sur mesure",
   :id_card          => id_card,
   :customer         => corporation2,
   :payment_term     => payment_term,
   :lines_attributes => [
     {
-        :label      => "Développement",
-        :quantity   => 14,
-        :unit_price => 750,
+      :label      => "Développement",
+      :quantity   => 14,
+      :unit_price => 750,
     },
     {
-        :label      => "Gestion de projet",
-        :quantity   => 5,
-        :unit_price => 1200,
-    }
-  ]
+      :label      => "Gestion de projet",
+      :quantity   => 5,
+      :unit_price => 1200,
+    },
+  ],
 )
 
 individual1 = Dorsale::CustomerVault::Individual.create!(
@@ -86,7 +85,7 @@ individual1 = Dorsale::CustomerVault::Individual.create!(
   :address_attributes => {
     :city    => "Marseille",
     :country => "France",
-  }
+  },
 )
 
 individual2 = Dorsale::CustomerVault::Individual.create!(
@@ -98,7 +97,7 @@ individual2 = Dorsale::CustomerVault::Individual.create!(
   :address_attributes => {
     :city    => "Marseille",
     :country => "France",
-  }
+  },
 )
 
 individual2.comments.create!(
@@ -108,7 +107,7 @@ individual2.comments.create!(
 
 task1 = Dorsale::Flyboy::Task.create!(
   :name        => "Traduction",
-  :description => "Traduire en français et en anglais"
+  :description => "Traduire en français et en anglais",
 )
 
 task1.comments.create!(
@@ -119,12 +118,12 @@ task1.comments.create!(
 
 task2 = Dorsale::Flyboy::Task.create!(
   :name        => "Rediger les documentations",
-  :description => "Dorsale, CustomerVault, Flyboy, ..."
+  :description => "Dorsale, CustomerVault, Flyboy, ...",
 )
 
 corporation2_task1 = Dorsale::Flyboy::Task.create!(
   :taskable    => corporation2,
-  :name        => "Relancer et se faire payer"
+  :name        => "Relancer et se faire payer",
 )
 
 corporation2_task1.comments.create!(

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::Invoice, type: :model do
+describe Dorsale::BillingMachine::Invoice, type: :model do
   # Reset to default mode before each test
   before :each do
     ::Dorsale::BillingMachine.vat_mode = :single
@@ -19,8 +19,8 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
   it { is_expected.to respond_to :unique_index }
   it { is_expected.to respond_to :commercial_discount }
 
-  it {is_expected.to respond_to :total_excluding_taxes}
-  it {is_expected.to respond_to :total_including_taxes}
+  it { is_expected.to respond_to :total_excluding_taxes }
+  it { is_expected.to respond_to :total_including_taxes }
 
   it { is_expected.to respond_to :advance }
 
@@ -39,7 +39,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
     context "when unique index is nil" do
       it "should be assigned upon creation" do
-        ::Dorsale::BillingMachine::Invoice.destroy_all
+        described_class.destroy_all
         invoice1 = create(:billing_machine_invoice, date: "2014-02-01")
         expect(invoice1.unique_index).to eq(1)
       end
@@ -55,33 +55,49 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
   describe "payment_status" do
     it "should be pending if nothing special" do
-      invoice = create(:billing_machine_invoice, due_date: Time.zone.now.to_date, date: Time.zone.now.to_date, paid: false)
+      invoice = create(:billing_machine_invoice,
+        :due_date => Date.current,
+        :date     => Date.current,
+        :paid     => false,
+      )
       expect(invoice.payment_status).to eq(:pending)
     end
 
     it "should be late if a bit late" do
-        invoice = create(:billing_machine_invoice, due_date: Time.zone.now.to_date-1, date: Time.zone.now.to_date-1, paid: false)
-        expect(invoice.payment_status).to eq(:late)
+      invoice = create(:billing_machine_invoice,
+        :due_date => Date.current-1,
+        :date     => Date.current-1,
+        :paid     => false,
+      )
+      expect(invoice.payment_status).to eq(:late)
     end
 
     it "should be on_alert if a too late" do
-        invoice = create(:billing_machine_invoice, due_date: Time.zone.now.to_date-16, date: Time.zone.now.to_date-16, paid: false)
-        expect(invoice.payment_status).to eq(:on_alert)
+      invoice = create(:billing_machine_invoice,
+        :due_date => Date.current-16,
+        :date     => Date.current-16,
+        :paid     => false,
+      )
+      expect(invoice.payment_status).to eq(:on_alert)
     end
 
     it "should be paid if paid" do
-        invoice = create(:billing_machine_invoice, due_date: Time.zone.now.to_date-16, date: Time.zone.now.to_date-16, paid: true)
-        expect(invoice.payment_status).to eq(:paid)
+      invoice = create(:billing_machine_invoice,
+        :due_date => Date.current-16,
+        :date     => Date.current-16,
+        :paid     => true,
+      )
+      expect(invoice.payment_status).to eq(:paid)
     end
 
     it "should be on_alert if no due date is defined" do
-        invoice = create(:billing_machine_invoice, due_date: nil, date: Time.zone.now.to_date, paid: false)
-        expect(invoice.payment_status).to eq(:on_alert)
+      invoice = create(:billing_machine_invoice, due_date: nil, date: Date.current, paid: false)
+      expect(invoice.payment_status).to eq(:on_alert)
     end
 
     it "should be on_alert if no due date is defined" do
-        invoice = create(:billing_machine_invoice, due_date: nil, date: Time.zone.now.to_date, paid: true)
-        expect(invoice.payment_status).to eq(:paid)
+      invoice = create(:billing_machine_invoice, due_date: nil, date: Date.current, paid: true)
+      expect(invoice.payment_status).to eq(:paid)
     end
 
     it "should work fine upon creation" do
@@ -101,7 +117,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
 
   describe "vat rate" do
     it "default vat rate should be 20" do
-      expect(::Dorsale::BillingMachine::Invoice.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
     end
 
     it "it should be specified vat rate" do
@@ -119,15 +135,15 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       invoice = create(:billing_machine_invoice)
       line1   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 10)
 
-      expect{
-        line2   = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 15)
+      expect {
+        line2 = create(:billing_machine_invoice_line, invoice: invoice, vat_rate: 15)
       }.to raise_error(RuntimeError)
     end
 
     it "it should raise when vat mode is multiple" do
       ::Dorsale::BillingMachine.vat_mode = :multiple
       invoice = build(:billing_machine_invoice)
-      expect{ invoice.vat_rate }.to raise_error(RuntimeError)
+      expect { invoice.vat_rate }.to raise_error(RuntimeError)
     end
   end
 
@@ -143,7 +159,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
         :unit_price => 5,
         :vat_rate   => 20,
         :invoice    => invoice,
-      ) #total 50
+      ) # total 50
 
       create(:billing_machine_invoice_line,
         :quantity   => 10,
@@ -168,7 +184,7 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
         :unit_price => 5,
         :vat_rate   => 20,
         :invoice    => invoice,
-      ) #total 50
+      ) # total 50
 
       create(:billing_machine_invoice_line,
         :quantity   => 10,
@@ -194,5 +210,4 @@ describe ::Dorsale::BillingMachine::Invoice, type: :model do
       expect(invoice.balance).to eq(0)
     end
   end
-
 end

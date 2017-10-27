@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :customer_vault_individual, class: ::Dorsale::CustomerVault::Individual do
-    origin     { create(:customer_vault_origin)                    }
+    origin     { create(:customer_vault_origin)                      }
     first_name { Faker::Name.first_name                              }
     last_name  { Faker::Name.last_name                               }
     short_name { "SN"                                                }

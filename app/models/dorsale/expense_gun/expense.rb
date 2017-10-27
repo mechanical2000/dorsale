@@ -24,7 +24,7 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   }
 
   def assign_default_values
-    assign_default :date, Time.zone.now.to_date
+    assign_default :date, Date.current
   end
 
   # Sum of line amounts
@@ -42,9 +42,7 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
     expense_lines.map(&:total_vat_deductible).sum
   end
 
-  def current_state
-    aasm.current_state
-  end
+  delegate :current_state, to: :aasm
 
   aasm(column: :state, whiny_transitions: false) do
     state :draft, initial: true
@@ -73,5 +71,4 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   def may_edit?
     current_state == :draft
   end
-
 end

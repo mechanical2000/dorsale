@@ -19,8 +19,8 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   def state
     return "done"      if done
-    return "onalert"   if term          && term          <= Time.zone.now.to_date
-    return "onwarning" if reminder_date && reminder_date <= Time.zone.now.to_date
+    return "onalert"   if term          && term          <= Date.current
+    return "onwarning" if reminder_date && reminder_date <= Date.current
     return "ontime"
   end
 
@@ -29,40 +29,40 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   scope :ontime, -> {
     undone
-      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Time.zone.now.to_date)
-      .where("#{table_name}.reminder_date IS NULL OR #{table_name}.reminder_date > ?", Time.zone.now.to_date)
+      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Date.current)
+      .where("#{table_name}.reminder_date IS NULL OR #{table_name}.reminder_date > ?", Date.current)
   }
 
   scope :onwarning, -> {
     undone
-      .where("#{table_name}.reminder_date <= ?", Time.zone.now.to_date)
-      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Time.zone.now.to_date)
+      .where("#{table_name}.reminder_date <= ?", Date.current)
+      .where("#{table_name}.term IS NULL OR #{table_name}.term > ?", Date.current)
   }
 
   scope :onalert, -> {
     undone
-      .where("#{table_name}.term <= ?", Time.zone.now.to_date)
+      .where("#{table_name}.term <= ?", Date.current)
   }
 
-  scope :delayed,  -> { where(done: false).where("#{table_name}.term < ?", Time.zone.now.to_date) }
-  scope :today,    -> { where(done: false).where("#{table_name}.term = ?", Time.zone.now.to_date) }
-  scope :tomorrow, -> { where(done: false).where("#{table_name}.term = ?", Date.tomorrow)         }
+  scope :delayed,  -> { where(done: false).where("#{table_name}.term < ?", Date.current)  }
+  scope :today,    -> { where(done: false).where("#{table_name}.term = ?", Date.current)  }
+  scope :tomorrow, -> { where(done: false).where("#{table_name}.term = ?", Date.tomorrow) }
 
   scope :this_week, -> {
     min = Date.tomorrow
-    max = Time.zone.now.to_date.end_of_week
+    max = Date.current.end_of_week
     where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
   scope :next_week, -> {
-    min = Time.zone.now.to_date.end_of_week
-    max = Time.zone.now.to_date.next_week.end_of_week
+    min = Date.current.end_of_week
+    max = Date.current.next_week.end_of_week
     where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
   scope :next_next_week, -> {
-    min = Time.zone.now.to_date.next_week.end_of_week
-    max = Time.zone.now.to_date.next_week.next_week.end_of_week
+    min = Date.current.next_week.end_of_week
+    max = Date.current.next_week.next_week.end_of_week
     where(done: false).where("#{table_name}.term > ?", min).where("#{table_name}.term <= ?", max)
   }
 
@@ -77,7 +77,7 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   def assign_default_values
     assign_default :progress, 0
     assign_default :done,     false
-    assign_default :term,     Time.zone.now.to_date.end_of_week
+    assign_default :term,     Date.current.end_of_week
   end
 
   def snoozer
@@ -112,7 +112,7 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
     end
 
     if reminder_type == "duration" && term && reminder_duration && reminder_unit.in?(REMINDER_UNITS)
-      self.reminder_date = term - eval("#{reminder_duration}.#{reminder_unit}")
+      self.reminder_date = term - reminder_duration.public_send(reminder_unit)
     end
 
     true
@@ -123,5 +123,4 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
       errors.add(:reminder_date, :less_than, count: term)
     end
   end
-
 end

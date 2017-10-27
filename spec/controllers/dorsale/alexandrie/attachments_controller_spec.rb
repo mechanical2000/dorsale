@@ -3,12 +3,12 @@ require "rails_helper"
 describe Dorsale::Alexandrie::AttachmentsController, type: :controller do
   routes { Dorsale::Engine.routes }
 
-  let(:uploaded_file){
-    path = Rails.root.join("../../spec/files/pdf.pdf").to_s
+  let(:uploaded_file) {
+    path = Rails.root.join("..", "..", "spec", "files", "pdf.pdf").to_s
     Rack::Test::UploadedFile.new(path, "application/pdf")
   }
 
-  let(:valid_attributes){
+  let(:valid_attributes) {
     attachable = DummyModel.create!(name: "A")
 
     {

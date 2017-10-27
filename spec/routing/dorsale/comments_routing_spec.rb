@@ -4,7 +4,6 @@ RSpec.describe Dorsale::CommentsController, type: :routing do
   routes { Dorsale::Engine.routes }
 
   describe "routing" do
-
     it "routes to #create" do
       expect(post: "/comments").to route_to("dorsale/comments#create")
     end
@@ -20,6 +19,5 @@ RSpec.describe Dorsale::CommentsController, type: :routing do
     it "routes to #destroy" do
       expect(delete: "/comments/3").to route_to("dorsale/comments#destroy", id: "3")
     end
-
   end
 end

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Dorsale::Flyboy::Task::Snoozer do
   describe "#snooze" do
@@ -54,7 +54,7 @@ describe Dorsale::Flyboy::Task::Snoozer do
     it "should true if term is today" do
       task = create(:flyboy_task,
         :done              => false,
-        :term              => Date.today,
+        :term              => Date.current,
         :reminder_type     => nil,
       )
 
@@ -86,7 +86,7 @@ describe Dorsale::Flyboy::Task::Snoozer do
         :done              => false,
         :term              => "2017-04-20", # future
         :reminder_type     => "custom",
-        :reminder_date     => Date.today,
+        :reminder_date     => Date.current,
       )
 
       expect(task.snoozer.snoozable?).to be true

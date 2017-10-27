@@ -66,21 +66,32 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   end
 
   def set_objects
+    set_people
+    set_person
+    set_link
+  end
+
+  def set_people
     @people ||= person_scope.all
+  end
+
+  def set_person
     @person ||= person_scope.find(params[:person_id])
+  end
 
-    if params.key?(:id)
-      @link ||= scope.find(params[:id])
+  def set_link
+    return unless params.key?(:id)
 
-      if @person == @link.alice
-        @link.person       = @link.alice
-        @link.other_person = @link.bob
-      end
+    @link ||= scope.find(params[:id])
 
-      if @person == @link.bob
-        @link.person       = @link.bob
-        @link.other_person = @link.alice
-      end
+    if @person == @link.alice
+      @link.person       = @link.alice
+      @link.other_person = @link.bob
+    end
+
+    if @person == @link.bob
+      @link.person       = @link.bob
+      @link.other_person = @link.alice
     end
   end
 
@@ -97,12 +108,11 @@ class Dorsale::CustomerVault::LinksController < ::Dorsale::CustomerVault::Applic
   def link_params_for_create
     link_params.merge(
       :alice  => @person,
-      :bob_id => params.dig(:link, :bob_id)
+      :bob_id => params.dig(:link, :bob_id),
     )
   end
 
   def link_params_for_update
     link_params
   end
-
 end

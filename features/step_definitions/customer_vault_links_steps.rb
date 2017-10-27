@@ -32,7 +32,7 @@ end
 
 When(/^I provide the link and the target corporation$/) do
   select @corporation.name
-  fill_in 'link_title', with: 'Manager'
+  fill_in "link_title", with: "Manager"
 end
 
 When(/^I validate the link$/) do
@@ -44,7 +44,7 @@ When(/^I edit the link$/) do
 end
 
 When(/^I change the title$/) do
-  fill_in 'link_title', with: 'Manager 2'
+  fill_in "link_title", with: "Manager 2"
 end
 
 When(/^I navigate to the link section of the corporation details$/) do
@@ -54,7 +54,7 @@ end
 
 When(/^I provide the link and the target individual$/) do
   select @individual.name
-  fill_in 'link_title', with: 'Manager'
+  fill_in "link_title", with: "Manager"
 end
 
 When(/^I delete the link$/) do
@@ -62,13 +62,13 @@ When(/^I delete the link$/) do
 end
 
 Then(/^the new link is displayed$/) do
-  expect(page).to have_selector '.title', text: 'Manager'
+  expect(page).to have_selector ".title", text: "Manager"
 end
 
 Then(/^the edited link is displayed$/) do
-  expect(page).to have_selector '.title', text: 'Manager 2'
+  expect(page).to have_selector ".title", text: "Manager 2"
 end
 
 Then(/^the targeted link is removed$/) do
-  expect(page).to_not have_selector '.title', text: 'Manager'
+  expect(page).to_not have_selector ".title", text: "Manager"
 end

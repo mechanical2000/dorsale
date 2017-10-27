@@ -16,6 +16,6 @@ class Dorsale::Comment < ::Dorsale::ApplicationRecord
   private
 
   def assign_default_values
-    assign_default :date, Time.zone.now.to_date
+    assign_default :date, Date.current
   end
 end

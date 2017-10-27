@@ -1,13 +1,13 @@
 Given(/^an expired tasks$/) do
-  @task = create(:flyboy_task, owner: @user, term: Time.zone.now.to_date-1)
+  @task = create(:flyboy_task, owner: @user, term: Date.current-1)
 end
 
 Given(/^a task that expire tommorow$/) do
- @task = create(:flyboy_task, owner: @user, term: Time.zone.now.to_date+1)
+  @task = create(:flyboy_task, owner: @user, term: Date.current+1)
 end
 
 Given(/^a task that expire today$/) do
-  @task = create(:flyboy_task, owner: @user, term: Time.zone.now.to_date)
+  @task = create(:flyboy_task, owner: @user, term: Date.current)
 end
 
 When(/^he go to the tasks summary page$/) do

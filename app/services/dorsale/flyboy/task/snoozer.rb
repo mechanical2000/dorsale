@@ -36,7 +36,7 @@ class Dorsale::Flyboy::Task::Snoozer < ::Dorsale::Service
   private
 
   def current_date
-    Time.zone.now.to_date
+    Date.current
   end
 
   def snooze_term_value

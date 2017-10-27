@@ -35,7 +35,7 @@ describe ::Dorsale::BillingMachine::InvoiceMultipleVatPdf, pdfs: true do
   describe "empty invoice" do
     let(:invoice) {
       id_card = Dorsale::BillingMachine::IdCard.new
-      id_card.save(validate: false)
+      id_card.save!(validate: false)
       invoice = ::Dorsale::BillingMachine::Invoice.create!(id_card: id_card)
     }
 
@@ -43,5 +43,4 @@ describe ::Dorsale::BillingMachine::InvoiceMultipleVatPdf, pdfs: true do
       expect { generate! }.to_not raise_error
     end
   end # describe "empty invoice"
-
 end

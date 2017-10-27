@@ -29,5 +29,4 @@ class Dorsale::Flyboy::TaskMailer < ::Dorsale::ApplicationMailer
       :subject => t("task_mailer.term_email.subject", @locals),
     )
   end
-
 end

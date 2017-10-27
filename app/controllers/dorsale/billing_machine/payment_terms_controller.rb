@@ -72,5 +72,4 @@ class Dorsale::BillingMachine::PaymentTermsController < ::Dorsale::BillingMachin
   def payment_term_params_for_update
     payment_term_params
   end
-
 end

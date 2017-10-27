@@ -10,5 +10,4 @@ class Dorsale::BillingMachine::InvoiceMailer < ::Dorsale::ApplicationMailer
       :body     => body,
     )
   end
-
 end

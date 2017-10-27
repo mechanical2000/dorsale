@@ -4,8 +4,8 @@ Given(/^the user goes on the new expense category page$/) do
 end
 
 When(/^he fills the category's information$/) do
-  fill_in 'category_name', with: "Category Name"
-  fill_in 'category_code', with: "Category Code"
+  fill_in "category_name", with: "Category Name"
+  fill_in "category_code", with: "Category Code"
   select "Oui"
 end
 

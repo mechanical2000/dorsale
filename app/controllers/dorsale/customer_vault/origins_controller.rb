@@ -72,5 +72,4 @@ class Dorsale::CustomerVault::OriginsController < ::Dorsale::CustomerVault::Appl
   def origin_params_for_update
     origin_params
   end
-
 end

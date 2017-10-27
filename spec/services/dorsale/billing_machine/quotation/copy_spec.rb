@@ -36,8 +36,8 @@ RSpec.describe Dorsale::BillingMachine::Quotation::Copy do
   end
 
   it "should reset date" do
-    expect(quotation.date).to_not eq Time.zone.now.to_date
-    expect(copy.date).to          eq Time.zone.now.to_date
+    expect(quotation.date).to_not eq Date.current
+    expect(copy.date).to          eq Date.current
   end
 
   it "should reset unique_index, tracking_id, created_at, updated_at" do

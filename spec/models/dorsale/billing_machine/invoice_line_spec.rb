@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
+describe Dorsale::BillingMachine::InvoiceLine, type: :model do
   it { is_expected.to belong_to :invoice }
   it { is_expected.to validate_presence_of :invoice }
 
@@ -17,26 +17,26 @@ describe ::Dorsale::BillingMachine::InvoiceLine, type: :model do
 
   describe "default values" do
     it "quantity should be 0" do
-      expect(::Dorsale::BillingMachine::InvoiceLine.new.quantity).to eq 0
+      expect(described_class.new.quantity).to eq 0
     end
 
     it "unit_price should be 0" do
-      expect(::Dorsale::BillingMachine::InvoiceLine.new.unit_price).to eq 0
+      expect(described_class.new.unit_price).to eq 0
     end
 
     it "vat_rate should be 0" do
-      expect(::Dorsale::BillingMachine::InvoiceLine.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq Dorsale::BillingMachine::DEFAULT_VAT_RATE
     end
   end
 
   it "should be sorted by created_at" do
-    line1 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 1.minutes)
+    line1 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 1.minute)
     line2 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 2.minutes)
     line3 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 3.minutes)
     line4 = create(:billing_machine_invoice_line, :created_at => Time.zone.now + 4.minutes)
     line3.update!(:created_at => Time.zone.now + 5.minutes)
 
-    lines = ::Dorsale::BillingMachine::InvoiceLine.all
+    lines = described_class.all
     expect(lines).to eq [line1, line2, line4, line3]
   end
 

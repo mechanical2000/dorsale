@@ -11,7 +11,7 @@ describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
   let(:task_comment) { create(:flyboy_task_comment, task: task) }
 
   describe "#create" do
-    let(:valid_params) {{task_id: task.id, task_comment: task_comment.attributes}}
+    let(:valid_params) { {task_id: task.id, task_comment: task_comment.attributes} }
 
     it "should create the task_comment" do
       post :create, params: valid_params
@@ -29,5 +29,4 @@ describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
       expect(response).to redirect_to flyboy_task_path(task)
     end
   end
-
 end

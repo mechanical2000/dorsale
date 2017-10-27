@@ -155,7 +155,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
         :street_bis,
         :zip,
         :city,
-        :country
+        :country,
       ],
     ]
   end
@@ -205,8 +205,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
       :author => current_user,
       :person => @person,
       :action => action,
-      :text   => ::Dorsale::CustomerVault::Event.t("text.#{action}")
+      :text   => ::Dorsale::CustomerVault::Event.t("text.#{action}"),
     )
   end
-
 end

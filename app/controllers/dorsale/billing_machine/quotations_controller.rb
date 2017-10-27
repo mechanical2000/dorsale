@@ -162,5 +162,4 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   def quotation_params_for_update
     quotation_params
   end
-
 end

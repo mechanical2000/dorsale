@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :flyboy_task_comment, class: ::Dorsale::Flyboy::TaskComment do
     task { create(:flyboy_task) }
     date { Time.zone.now }

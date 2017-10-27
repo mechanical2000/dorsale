@@ -74,5 +74,4 @@ class Dorsale::ExpenseGun::CategoriesController < ::Dorsale::ExpenseGun::Applica
   def category_params_for_update
     category_params
   end
-
 end

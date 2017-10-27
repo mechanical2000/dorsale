@@ -14,5 +14,4 @@ class Dorsale::BillingMachine::ApplicationController < ::Dorsale::ApplicationCon
     @id_cards      ||= policy_scope(::Dorsale::BillingMachine::IdCard)
     @people        ||= policy_scope(::Dorsale::CustomerVault::Person)
   end
-
 end

@@ -8,11 +8,10 @@ class Dorsale::CustomerVault::PersonData
   end
 
   def self.load(json_string)
-    new JSON.load(json_string)
+    new JSON.parse(json_string.presence || "{}")
   end
 
   def self.methods_to_delegate
     instance_methods - Dorsale::CustomerVault::PersonData.instance_methods
   end
 end
-

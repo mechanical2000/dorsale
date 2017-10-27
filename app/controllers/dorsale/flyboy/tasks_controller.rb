@@ -24,23 +24,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
     @tasks ||= scope.all.preload(:taskable)
 
-    @order ||= sortable_column_order do |column, direction|
-      case column
-      when :name, :status
-        %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-      when :progress, :term
-        %(dorsale_flyboy_tasks.#{column} #{direction})
-      when :taskable
-        if direction == :asc
-          proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
-        else
-          proc { |a, b| b.taskable.to_s.downcase <=> a.taskable.to_s.downcase }
-        end
-      else
-        params["sort"] = "term"
-        "term ASC"
-      end
-    end
+    @order ||= order_from_params
 
     @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(filters_jar)
 
@@ -90,7 +74,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
 
   def edit
     authorize @task, :update?
-
   end
 
   def update
@@ -123,7 +106,7 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       :progress    => 100,
       :description => t("messages.tasks.complete_ok"),
       :date        => Time.zone.now,
-      :author      => current_user
+      :author      => current_user,
     )
 
     if @task_comment.save
@@ -139,8 +122,13 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     authorize @task, :snooze?
 
     if @task.snoozer.snooze
-      comment = Dorsale::Flyboy::TaskComment.new(task: @task, progress: @task.progress, description: t("messages.tasks.snooze_ok"), author: current_user)
-      comment.save!
+      Dorsale::Flyboy::TaskComment.create!(
+        :task        => @task,
+        :progress    => @task.progress,
+        :description => t("messages.tasks.snooze_ok"),
+        :author      => current_user,
+      )
+
       flash[:success] = t("messages.tasks.snooze_ok")
     else
       flash[:danger] = t("messages.tasks.snooze_error")
@@ -212,4 +200,23 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     params.fetch(:task, {}).permit(permitted_params)
   end
 
+  def order_from_params
+    sortable_column_order do |column, direction|
+      case column
+      when :name, :status
+        %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
+      when :progress, :term
+        %(dorsale_flyboy_tasks.#{column} #{direction})
+      when :taskable
+        if direction == :asc
+          proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
+        else
+          proc { |a, b| b.taskable.to_s.downcase <=> a.taskable.to_s.downcase }
+        end
+      else
+        params["sort"] = "term"
+        "term ASC"
+      end
+    end
+  end
 end

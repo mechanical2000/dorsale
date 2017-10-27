@@ -72,5 +72,4 @@ class Dorsale::CustomerVault::ActivityTypesController < ::Dorsale::CustomerVault
   def activity_type_params_for_update
     activity_type_params
   end
-
 end
