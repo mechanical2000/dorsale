@@ -2,8 +2,10 @@
 
 ## Next version
 
+## 3.9.0
+
 - Remove BM id cards
-- Syntax improvements
+- Syntax improvements and refactors
 
 ## 3.8.1
 
