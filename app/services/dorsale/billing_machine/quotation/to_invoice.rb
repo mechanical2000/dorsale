@@ -37,6 +37,6 @@ class Dorsale::BillingMachine::Quotation::ToInvoice < ::Dorsale::Service
 
   def ignored_key?(k)
     k = k.to_s
-    k == "id" || k.match?(/index|tracking|state/) || k.end_with?("_at")
+    k == "id" || k.match(/index|tracking|state/) || k.end_with?("_at")
   end
 end
