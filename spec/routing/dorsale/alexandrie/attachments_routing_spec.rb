@@ -6,27 +6,27 @@ RSpec.describe Dorsale::Alexandrie::AttachmentsController, type: :routing do
   describe "routing" do
     it "#create" do
       expect(get "/alexandrie/attachments").to \
-      route_to("dorsale/alexandrie/attachments#index")
+        route_to("dorsale/alexandrie/attachments#index")
     end
 
     it "#create" do
       expect(post "/alexandrie/attachments").to \
-      route_to("dorsale/alexandrie/attachments#create")
+        route_to("dorsale/alexandrie/attachments#create")
     end
 
     it "#edit" do
       expect(get "/alexandrie/attachments/3/edit").to \
-      route_to("dorsale/alexandrie/attachments#edit", id: "3")
+        route_to("dorsale/alexandrie/attachments#edit", id: "3")
     end
 
     it "#update" do
       expect(patch "/alexandrie/attachments/3").to \
-      route_to("dorsale/alexandrie/attachments#update", id: "3")
+        route_to("dorsale/alexandrie/attachments#update", id: "3")
     end
 
     it "#destroy" do
       expect(delete "/alexandrie/attachments/3").to \
-      route_to("dorsale/alexandrie/attachments#destroy", id: "3")
+        route_to("dorsale/alexandrie/attachments#destroy", id: "3")
     end
   end
 end

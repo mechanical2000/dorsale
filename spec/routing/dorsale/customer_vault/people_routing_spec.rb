@@ -6,104 +6,104 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :routing do
   describe "routing" do
     it "#index" do
       expect(get "/customer_vault/people").to \
-      route_to("dorsale/customer_vault/people#index")
+        route_to("dorsale/customer_vault/people#index")
     end
 
     it "#corporations via get" do
       expect(get "/customer_vault/corporations").to \
-      route_to("dorsale/customer_vault/people#corporations")
+        route_to("dorsale/customer_vault/people#corporations")
     end
 
     it "#individuals via get" do
       expect(get "/customer_vault/individuals").to \
-      route_to("dorsale/customer_vault/people#individuals")
+        route_to("dorsale/customer_vault/people#individuals")
     end
 
     it "#new person" do
       expect(get "/customer_vault/people/new").to \
-      route_to("dorsale/customer_vault/people#new")
+        route_to("dorsale/customer_vault/people#new")
     end
 
     it "#new corporation" do
       expect(get "/customer_vault/corporations/new").to \
-      route_to("dorsale/customer_vault/people#new")
+        route_to("dorsale/customer_vault/people#new")
     end
 
     it "#new individual" do
       expect(get "/customer_vault/individuals/new").to \
-      route_to("dorsale/customer_vault/people#new")
+        route_to("dorsale/customer_vault/people#new")
     end
 
     it "#create person" do
       expect(post "/customer_vault/people").to \
-      route_to("dorsale/customer_vault/people#create")
+        route_to("dorsale/customer_vault/people#create")
     end
 
     it "#create individual" do
       expect(post "/customer_vault/individuals").to \
-      route_to("dorsale/customer_vault/people#create")
+        route_to("dorsale/customer_vault/people#create")
     end
 
     it "#create corporation" do
       expect(post "/customer_vault/corporations").to \
-      route_to("dorsale/customer_vault/people#create")
+        route_to("dorsale/customer_vault/people#create")
     end
 
     it "#show" do
       expect(get "/customer_vault/people/1").to \
-      route_to("dorsale/customer_vault/people#show", id: "1")
+        route_to("dorsale/customer_vault/people#show", id: "1")
     end
 
     it "#tasks" do
       expect(get "/customer_vault/people/1/tasks").to \
-      route_to("dorsale/customer_vault/people#tasks", id: "1")
+        route_to("dorsale/customer_vault/people#tasks", id: "1")
     end
 
     it "#invoices" do
       expect(get "/customer_vault/people/1/invoices").to \
-      route_to("dorsale/customer_vault/people#invoices", id: "1")
+        route_to("dorsale/customer_vault/people#invoices", id: "1")
     end
 
     it "#links" do
       expect(get "/customer_vault/people/1/links").to \
-      route_to("dorsale/customer_vault/links#index", person_id: "1")
+        route_to("dorsale/customer_vault/links#index", person_id: "1")
     end
 
     it "#edit" do
       expect(get "/customer_vault/people/1/edit").to \
-      route_to("dorsale/customer_vault/people#edit", id: "1")
+        route_to("dorsale/customer_vault/people#edit", id: "1")
     end
 
     it "#update" do
       expect(patch "/customer_vault/people/1").to \
-      route_to("dorsale/customer_vault/people#update", id: "1")
+        route_to("dorsale/customer_vault/people#update", id: "1")
     end
 
     it "#destroy" do
       expect(delete "/customer_vault/people/1").to \
-      route_to("dorsale/customer_vault/people#destroy", id: "1")
+        route_to("dorsale/customer_vault/people#destroy", id: "1")
     end
   end # describe "routing"
 
   describe "route helpers" do
     it "#new_customer_vault_corporation_path" do
       expect(new_customer_vault_corporation_path).to \
-      eq "/dorsale/customer_vault/corporations/new"
+        eq "/dorsale/customer_vault/corporations/new"
     end
 
     it "#new_customer_vault_individual_path" do
       expect(new_customer_vault_individual_path).to \
-      eq "/dorsale/customer_vault/individuals/new"
+        eq "/dorsale/customer_vault/individuals/new"
     end
 
     it "#customer_vault_corporation_path" do
       expect(customer_vault_corporations_path).to \
-      eq "/dorsale/customer_vault/corporations"
+        eq "/dorsale/customer_vault/corporations"
     end
 
     it "#customer_vault_individual_path" do
       expect(customer_vault_individuals_path).to \
-      eq "/dorsale/customer_vault/individuals"
+        eq "/dorsale/customer_vault/individuals"
     end
   end # describe "route helpers"
 end

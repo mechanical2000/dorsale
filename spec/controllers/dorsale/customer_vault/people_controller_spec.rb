@@ -92,7 +92,7 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   describe "#create" do
     before do
       allow_any_instance_of(Dorsale::CustomerVault::PeopleController).to \
-      receive(:model) { Dorsale::CustomerVault::Corporation }
+        receive(:model) { Dorsale::CustomerVault::Corporation }
     end
 
     it "should generate an event" do
@@ -110,7 +110,7 @@ RSpec.describe ::Dorsale::CustomerVault::PeopleController, type: :controller do
   describe "#update" do
     before do
       allow_any_instance_of(Dorsale::CustomerVault::PeopleController).to \
-      receive(:model) { Dorsale::CustomerVault::Corporation }
+        receive(:model) { Dorsale::CustomerVault::Corporation }
     end
 
     it "should generate an event" do

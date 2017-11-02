@@ -6,7 +6,7 @@ RSpec.describe ::Dorsale::CustomerVault::EventsController, type: :routing do
   describe "routing" do
     it "#index" do
       expect(get "/customer_vault/events").to \
-      route_to("dorsale/customer_vault/events#index")
+        route_to("dorsale/customer_vault/events#index")
     end
   end # describe "routing"
 end
