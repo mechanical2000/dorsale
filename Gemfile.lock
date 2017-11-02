@@ -509,6 +509,7 @@ DEPENDENCIES
   rspec-rails
   rspec-repeat
   rspec-wait
+  rubocop
   shoulda-matchers
   simplecov
   spring
