@@ -9,6 +9,9 @@ table#tasks-list
       th.task-name
         = sortable_column Dorsale::Flyboy::Task.t, :name
 
+      th.task-tags
+        = sortable_column Dorsale::Flyboy::Task.t(:tags), :tags
+
       - unless nested
         th.taskable-name.hidden-xs
           = sortable_column Dorsale::Flyboy::Task.t(:taskable), :taskable
@@ -52,6 +55,9 @@ table#tasks-list
 
         td.task-name
           = link_to_object(task)
+
+        td.task-tags
+          = tags(task)
 
         - unless nested
           td.taskable-name.hidden-xs

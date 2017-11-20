@@ -70,6 +70,14 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
         get :index
         expect(assigns(:tasks).to_a).to eq [@task2]
       end
+
+      it "should filter by tags" do
+        task1 = create(:flyboy_task, tag_list: "abc")
+        task2 = create(:flyboy_task, tag_list: "xyz")
+        cookies["filters"] = {fb_tags: ["abc"]}.to_json
+        get :index
+        expect(assigns(:tasks)).to eq [task1]
+      end
     end
 
     context "when sorting" do
@@ -86,6 +94,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
           :term          => "21/12/2012",
           :reminder_type => "custom",
           :reminder_date => "21/12/2012",
+          :tag_list      => "aaa",
         )
 
         @task2 = create(:flyboy_task,
@@ -95,6 +104,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
           :term          => "23/12/2012",
           :reminder_type => "custom",
           :reminder_date => "23/12/2012",
+          :tag_list      => "bbb",
         )
 
         @task3 = create(:flyboy_task,
@@ -104,6 +114,7 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
           :term          => "22/12/2012",
           :reminder_type => "custom",
           :reminder_date => "22/12/2012",
+          :tag_list      => "",
         )
       end
 
@@ -145,6 +156,16 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
       it "sorting by term desc" do
         get :index, params: {sort: "-term"}
         expect(assigns(:tasks).to_a).to eq [@task2, @task3, @task1]
+      end
+
+      it "sorting by tags asc" do
+        get :index, params: {sort: "tags"}
+        expect(assigns(:tasks).to_a).to eq [@task1, @task2, @task3]
+      end
+
+      it "sorting by tags desc" do
+        get :index, params: {sort: "-tags"}
+        expect(assigns(:tasks).to_a).to eq [@task3, @task2, @task1]
       end
     end
   end

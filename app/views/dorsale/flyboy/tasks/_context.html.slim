@@ -5,11 +5,12 @@
     = task
 
   .context-body class=task.state
+    = info task, :tags, tags(task)
     = info task, :progress, progress_bar(percentage: task.progress, label: true)
     = info task, :owner
     = info task, :created_at
-    = info task, :term
     = info task, :reminder_date
+    = info task, :term
     = info task, :done
 
   .context-footer

@@ -1,5 +1,4 @@
 en:
-  update: "Update"
   messages:
     comments:
       create_ok    : "Comment created."

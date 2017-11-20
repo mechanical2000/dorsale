@@ -11,34 +11,20 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     :copy,
   ]
 
-  before_action :set_owners, only: [
-    :new,
-    :create,
-    :edit,
-    :update,
-    :copy,
-  ]
-
   def index
     authorize model, :list?
 
-    @tasks ||= scope.all.preload(:taskable)
-
-    @order ||= order_from_params
-
+    @tasks ||= scope.all.preload(:taskable, :taggings)
     @filters ||= ::Dorsale::Flyboy::SmallData::FilterForTasks.new(filters_jar)
-
     @tasks = @filters.apply(@tasks)
     @tasks = @tasks.search(params[:q])
+    @tasks_without_pagination = @tasks
+    @tasks = Dorsale::Flyboy::TasksSorter.(@tasks, params["sort"] ||= "term")
 
-    if @order.is_a?(Proc) # when sorting by a polymorphic attribute
-      @tasks = @tasks.sort(&@order)
-      @tasks_without_pagination = @tasks
-      @tasks = Kaminari.paginate_array(@tasks).page(params[:page])
-    else
-      @tasks = @tasks.order(@order)
-      @tasks_without_pagination = @tasks
+    if @tasks.is_a?(ActiveRecord::Relation)
       @tasks = @tasks.page(params[:page])
+    else
+      @tasks = Kaminari.paginate_array(@tasks).page(params[:page])
     end
   end
 
@@ -176,10 +162,6 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
     @taskable ||= @task.taskable
   end
 
-  def set_owners
-    @owners ||= policy_scope(User).actives
-  end
-
   def permitted_params
     [
       :taskable_id,
@@ -193,30 +175,11 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
       :reminder_duration,
       :reminder_unit,
       :owner_id,
+      :tag_list => [],
     ]
   end
 
   def task_params
     params.fetch(:task, {}).permit(permitted_params)
-  end
-
-  def order_from_params
-    sortable_column_order do |column, direction|
-      case column
-      when :name, :status
-        %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-      when :progress, :term
-        %(dorsale_flyboy_tasks.#{column} #{direction})
-      when :taskable
-        if direction == :asc
-          proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
-        else
-          proc { |a, b| b.taskable.to_s.downcase <=> a.taskable.to_s.downcase }
-        end
-      else
-        params["sort"] = "term"
-        "term ASC"
-      end
-    end
   end
 end

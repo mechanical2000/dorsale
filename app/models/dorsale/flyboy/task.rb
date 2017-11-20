@@ -15,6 +15,11 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   polymorphic_id_for :taskable
   polymorphic_id_for :owner
 
+  acts_as_taggable
+  def tag_list
+    super.sort
+  end
+
   STATES = %w(done undone ontime onwarning onalert)
 
   def state
