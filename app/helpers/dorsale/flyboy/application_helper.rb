@@ -31,8 +31,20 @@ module Dorsale::Flyboy::ApplicationHelper
     end
   end
 
+  def flyboy_tasks_owners_for_select
+    ([@task&.owner].compact + policy_scope(User).actives).uniq
+  end
+
   def flyboy_tasks_owners_for_filters_select
-    policy_scope(User)
+    flyboy_tasks_owners_for_select
+  end
+
+  def flyboy_tasks_tags_for_select
+    Dorsale::TagListForModel.(Dorsale::Flyboy::Task)
+  end
+
+  def flyboy_tasks_tags_for_filters_select
+    flyboy_tasks_tags_for_select
   end
 
   def flyboy_reminder_types_for_select

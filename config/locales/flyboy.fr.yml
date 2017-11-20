@@ -53,6 +53,7 @@ fr:
         done: "Fait"
         description: "Description"
         progress: "Progression"
+        all_tags: "Tous les tags"
 
       dorsale/flyboy/task/state:
         all: "Tous les états"

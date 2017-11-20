@@ -17,11 +17,12 @@
 
       .row
         .col-sm-8 = f.input :name
-        .col-sm-4 = f.input :owner_id, collection: @owners
+        .col-sm-4 = f.input :owner_id, collection: flyboy_tasks_owners_for_select
 
+      = f.input :tag_list, collection: flyboy_tasks_tags_for_select, input_html: {multiple: true}
       = f.input :description, input_html: {rows: 5}
-      = render "dorsale/flyboy/tasks/term_fields", f: f
       = render "dorsale/flyboy/tasks/reminder_fields", f: f
+      = render "dorsale/flyboy/tasks/term_fields", f: f
       = f.hidden_field :taskable_id
       = f.hidden_field :taskable_type
 

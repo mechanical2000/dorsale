@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Add tags to tasks
+
 ## 3.9.0
 
 - Remove BM id cards
