@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.9.1
+
 - Add tags to tasks
 
 ## 3.9.0
