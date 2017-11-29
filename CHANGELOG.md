@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.9.2
+
+- CustomerVault : Add secondary emails + uniqueness validation
+
 ## 3.9.1
 
 - Add tags to tasks
