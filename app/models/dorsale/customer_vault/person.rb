@@ -46,8 +46,46 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     )
   }
 
+  scope :having_email, -> (email) { where("email = :e OR :e = ANY (secondary_emails)", e: email) }
+
   after_initialize  :build_address, if: proc { new_record? && address.nil? }
   before_validation :build_address, if: proc { address.nil? }
+
+  def taken_emails
+    taken_emails = {}
+    ([email] + secondary_emails).select(&:present?).each do |e|
+      person = Dorsale::CustomerVault::Person.where.not(id: id).having_email(e).first
+      taken_emails[e] = person if person.present?
+    end
+    taken_emails
+  end
+
+  validate :validate_taken_emails
+
+  def validate_taken_emails
+    return if taken_emails.empty?
+
+    if taken_emails.keys.include?(email)
+      errors.add(:email, :taken)
+    end
+
+    if (taken_emails.keys & secondary_emails).any?
+      errors.add(:secondary_emails, :taken)
+      errors.add(:secondary_emails_str, :taken)
+    end
+  end
+
+  def email=(incoming_email)
+    super(incoming_email.to_s.strip.presence)
+  end
+
+  def secondary_emails_str
+    secondary_emails.join("\n")
+  end
+
+  def secondary_emails_str=(emails)
+    self.secondary_emails = emails.strip.split
+  end
 
   def person_type
     self.class.to_s.demodulize.downcase.to_sym

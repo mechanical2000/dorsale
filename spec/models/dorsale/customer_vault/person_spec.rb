@@ -62,4 +62,51 @@ RSpec.describe ::Dorsale::CustomerVault::Person, type: :model do
       expect(corporation.address).to be_present
     end
   end # describe "address"
+
+  describe "emails" do
+    it "should strip email" do
+      individual = create(:customer_vault_individual, email: " myemail@example.org ")
+      expect(individual.email).to eq "myemail@example.org"
+    end
+
+    it "should create an array of strings without blank characters" do
+      test_individual = create(:customer_vault_individual, email: "primary@example.org")
+      test_individual.secondary_emails_str = " first@example.org \n second@example.org "
+      expect(test_individual.secondary_emails).to eq ["first@example.org", "second@example.org"]
+    end
+
+    it "should return one object in the scope" do
+      individual = create(:customer_vault_individual,
+        :email            => "primary@example.org",
+        :secondary_emails => ["first@example.org"],
+      )
+
+      individual2 = Dorsale::CustomerVault::Person.having_email("primary@example.org")
+      expect(individual2).to eq [individual]
+
+      individual3 = Dorsale::CustomerVault::Person.having_email("first@example.org")
+      expect(individual3).to eq [individual]
+    end
+
+    it "should check whether a new email address already is in the database" do
+      individual = create(:customer_vault_individual,
+        :email            => "primary@example.org",
+        :secondary_emails => ["first@example.org", "second@example.org"],
+      )
+
+      individual2 = create(:customer_vault_individual)
+      individual2.email = "primary@example.org"
+      expect(individual2).to be_invalid
+      expect(individual2.errors).to have_key :email
+      expect(individual2.errors).to_not have_key :secondary_emails
+      expect(individual2.errors).to_not have_key :secondary_emails_str
+
+      individual3 = create(:customer_vault_individual)
+      individual3.secondary_emails << "first@example.org"
+      expect(individual3).to be_invalid
+      expect(individual3.errors).to have_key :secondary_emails
+      expect(individual3.errors).to have_key :secondary_emails_str
+      expect(individual3.errors).to_not have_key :email
+    end
+  end # describe "emails"
 end

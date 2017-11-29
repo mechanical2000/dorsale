@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026090925) do
+ActiveRecord::Schema.define(version: 20171115171425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,13 +237,15 @@ ActiveRecord::Schema.define(version: 20171026090925) do
     t.text     "linkedin"
     t.text     "viadeo"
     t.text     "data"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.text     "context"
     t.integer  "corporation_id"
     t.integer  "activity_type_id"
     t.integer  "origin_id"
+    t.string   "secondary_emails", default: [], null: false, array: true
     t.index ["old_id"], name: "index_dorsale_customer_vault_people_on_old_id", using: :btree
+    t.index ["secondary_emails"], name: "index_dorsale_customer_vault_people_on_secondary_emails", using: :gin
   end
 
   create_table "dorsale_expense_gun_categories", force: :cascade do |t|

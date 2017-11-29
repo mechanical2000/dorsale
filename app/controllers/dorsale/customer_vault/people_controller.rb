@@ -137,6 +137,7 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
       :short_name,
       :avatar,
       :email,
+      :secondary_emails_str,
       :phone,
       :mobile,
       :fax,

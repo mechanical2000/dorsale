@@ -8,6 +8,7 @@
     = info person, :title
 
   = info person, :email,  helper: :email_link
+  = info person, :secondary_emails, person.secondary_emails.map { |e| email_link(e) }.join(tag(:br)).html_safe
   = info person, :phone,  helper: :tel_link
   = info person, :mobile, helper: :tel_link
   = info person, :fax,    helper: :tel_link

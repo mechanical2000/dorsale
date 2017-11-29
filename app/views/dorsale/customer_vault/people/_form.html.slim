@@ -36,6 +36,9 @@
     .panel-heading: .panel-title = t("customer_vault.contact_informations")
     .panel-body
       = f.input :email
+      = f.input :secondary_emails_str, as: :text, input_html: {rows: 2}
+      - if @person.errors.key?(:email) || @person.errors.key?(:secondary_emails)
+        = render "emails_errors", person: @person
       = f.input :phone
       = f.input :mobile
       = f.input :fax

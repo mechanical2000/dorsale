@@ -17,6 +17,7 @@ fr:
   messages:
     no_people: "Aucune personne trouvée."
     no_activity: "Aucune activité récente."
+    email_taken_by: "%{email} est déjà pris par %{person}"
 
     corporations:
       create_ok    : "La personne a été créée."
@@ -97,6 +98,8 @@ fr:
         individuals: "Individus"
         origin: "Origine"
         activity_type: "Type d'activité"
+        secondary_emails: "E-mails secondaires"
+        secondary_emails_str: "E-mails secondaires"
 
       dorsale/customer_vault/individual:
         <<: *customer_vault_person_attributes
