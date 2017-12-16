@@ -1,10 +1,6 @@
 class Dorsale::BillingMachine::InvoiceSingleVatPdf < Dorsale::ApplicationPdf
   include Dorsale::Alexandrie::Prawn::RenderWithAttachments
 
-  def attachments
-    @main_document.try(:attachments) || []
-  end
-
   DEBUG = false
 
   BLACK      = "000000"
@@ -12,16 +8,20 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Dorsale::ApplicationPdf
   GREY       = "808080"
   LIGHT_GREY = "C0C0C0"
 
-  def bm_currency(n)
-    currency(n, Dorsale::BillingMachine.default_currency)
-  end
-
   attr_reader :main_document
 
   def initialize(main_document)
     super(page_size: "A4", margin: 1.cm)
     @main_document = main_document
     setup
+  end
+
+  def attachments
+    @main_document.try(:attachments) || []
+  end
+
+  def bm_currency(n)
+    currency(n, Dorsale::BillingMachine.default_currency)
   end
 
   # rubocop:disable Style/SingleLineMethods, Layout/EmptyLineBetweenDefs

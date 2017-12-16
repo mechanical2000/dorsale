@@ -57,4 +57,16 @@ module Dorsale::CustomerVault::ApplicationHelper
   def new_event_for(person)
     policy_scope(Dorsale::CustomerVault::Event).new(person: person, author: current_user)
   end
+
+  def customer_vault_tag_list
+    Dorsale::TagListForModel.(Dorsale::CustomerVault::Person)
+  end
+
+  def customer_vault_origins_for_select
+    policy_scope(Dorsale::CustomerVault::Origin)
+  end
+
+  def customer_vault_activity_types_for_select
+    policy_scope(Dorsale::CustomerVault::ActivityType)
+  end
 end

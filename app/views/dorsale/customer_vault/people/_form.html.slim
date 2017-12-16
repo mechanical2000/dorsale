@@ -14,7 +14,7 @@
       = f.association :origin, collection: policy_scope(Dorsale::CustomerVault::Origin), input_html: {class: 'select2'}
       - if @person.corporation?
         = f.association :activity_type, collection: policy_scope(Dorsale::CustomerVault::ActivityType), input_html: {class: 'select2'}
-      = f.input :tag_list, collection: @tags, input_html: {multiple: true}
+      = f.input :tag_list, collection: customer_vault_tag_list, input_html: {multiple: true}
 
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.additional_informations")

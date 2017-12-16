@@ -1,10 +1,11 @@
 class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
-  REMINDER_TYPES = %w(duration custom)
-  REMINDER_UNITS = %w(days weeks months)
+  include ::Agilibox::Search
 
   self.table_name = "dorsale_flyboy_tasks"
 
-  include ::Agilibox::Search
+  REMINDER_TYPES = %w(duration custom)
+  REMINDER_UNITS = %w(days weeks months)
+  STATES         = %w(done undone ontime onwarning onalert)
 
   paginates_per 50
 
@@ -19,8 +20,6 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
   def tag_list
     super.sort
   end
-
-  STATES = %w(done undone ontime onwarning onalert)
 
   def state
     return "done"      if done

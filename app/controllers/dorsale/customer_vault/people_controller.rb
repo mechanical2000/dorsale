@@ -4,13 +4,8 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
   def index
     authorize model, :list?
 
-    @filters        ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(filters_jar)
-    @tags           ||= customer_vault_tag_list
-    @origins        ||= policy_scope(Dorsale::CustomerVault::Origin)
-    @activity_types ||= policy_scope(Dorsale::CustomerVault::ActivityType)
-    @people         ||= policy_scope(model)
-      .search(params[:q])
-      .preload(:taggings)
+    @filters ||= ::Dorsale::CustomerVault::SmallData::FilterForPeople.new(filters_jar)
+    @people  ||= policy_scope(model).search(params[:q]).preload(:taggings)
 
     if params[:q].blank?
       @people = @filters.apply(@people)
