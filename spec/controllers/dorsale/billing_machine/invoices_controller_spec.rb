@@ -60,67 +60,43 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
 
       it "should filter by today" do
         filter :today
-        expect(assigns :invoices).to contain_exactly(
-          @today,
-        )
+        expect(assigns :invoices).to contain_exactly(@today)
       end
 
       it "should filter by yesterday" do
         filter :yesterday
-        expect(assigns :invoices).to contain_exactly(
-          @yesterday,
-        )
+        expect(assigns :invoices).to contain_exactly(@yesterday)
       end
 
       it "should filter by this_week" do
         filter :this_week
-        expect(assigns :invoices).to contain_exactly(
-          @today,
-          @yesterday,
-          @tomorrow,
-        )
+        expect(assigns :invoices).to contain_exactly(@today, @yesterday, @tomorrow)
       end
 
       it "should filter by this_month" do
         filter :this_month
-        expect(assigns :invoices).to contain_exactly(
-          @today,
-          @yesterday,
-          @tomorrow,
-          @last_week,
-        )
+        expect(assigns :invoices).to contain_exactly(@today, @yesterday, @tomorrow, @last_week)
       end
 
       it "should filter by this_year" do
         filter :this_year
-        expect(assigns :invoices).to contain_exactly(
-          @today,
-          @yesterday,
-          @tomorrow,
-          @last_week,
-          @last_month,
-        )
+        expect(assigns :invoices).to \
+          contain_exactly(@today, @yesterday, @tomorrow, @last_week, @last_month)
       end
 
       it "should filter by last_week" do
         filter :last_week
-        expect(assigns :invoices).to contain_exactly(
-          @last_week,
-        )
+        expect(assigns :invoices).to contain_exactly(@last_week)
       end
 
       it "should filter by last_month" do
         filter :last_month
-        expect(assigns :invoices).to contain_exactly(
-          @last_month,
-        )
+        expect(assigns :invoices).to contain_exactly(@last_month)
       end
 
       it "should filter by last_year" do
         filter :last_year
-        expect(assigns :invoices).to contain_exactly(
-          @last_year,
-        )
+        expect(assigns :invoices).to contain_exactly(@last_year)
       end
     end # describe "filter by date"
 
