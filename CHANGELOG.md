@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.9.3
+
+- BillingMachine : Fix payment status filter
+
 ## 3.9.2
 
 - CustomerVault : Add secondary emails + uniqueness validation
