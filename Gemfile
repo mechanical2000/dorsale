@@ -9,6 +9,7 @@ end
 
 gem "rails", "~> 5.0"
 gem "agilibox", ">= 1.0.9"
+gem "axlsx", github: "randym/axlsx"
 
 gem 'devise'
 gem 'devise-bootstrap-views'
