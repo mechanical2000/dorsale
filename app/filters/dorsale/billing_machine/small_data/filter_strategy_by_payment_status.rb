@@ -13,7 +13,7 @@ class Dorsale::BillingMachine::SmallData::FilterStrategyByPaymentStatus < ::Agil
     elsif value == "late"
       query
         .where(paid: false)
-        .where("#{table_name}.due_date < ? OR #{table_name}.due_date IS NULL)", Date.current)
+        .where("#{table_name}.due_date < ? OR #{table_name}.due_date IS NULL", Date.current)
     else
       query
     end
