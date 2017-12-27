@@ -9,9 +9,4 @@ module Dorsale::BillingMachine::InvoicePolicyHelper
     :copy?,
     :email?,
   ]
-
-  def email?
-    return false if invoice.customer.try(:email).nil?
-    super
-  end
 end

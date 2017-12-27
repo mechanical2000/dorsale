@@ -3,48 +3,13 @@
     .panel-heading: .panel-title = t("actions.email")
 
     .panel-body
-      = horizontal_form_for :email do |f|
-        = f.input(:subject,
-          :as => :string,
-          :label => t("attributes.email_subject"),
-          :input_html => {value: @subject},
-        )
-
-        = f.input(:from,
-          :disabled => true,
-          :label => t("attributes.email_from"),
-          :input_html => {value: "#{current_user} <#{current_user.email}>"},
-        )
-
-        = f.input(:to,
-          :disabled => true,
-          :label => t("attributes.email_to"),
-          :input_html => {value: "#{@invoice.customer} <#{@invoice.customer.email}>"},
-        )
-
-        = f.input(:attachment,
-          :disabled => true,
-          :label => t("attributes.email_attachment"),
-          :input_html => {value: "#{@invoice.class.t}_#{@invoice.tracking_id}.pdf"},
-        )
-
-        = f.input(:body,
-          :as => :text,
-          :label => t("attributes.email_body"),
-          :input_html => {value: @body},
-        )
-
-
-        .actions
-          button.btn.btn-success type="submit"
-            = icon(:send)
-            = " "
-            = t("actions.send")
-
-          a.btn.btn-default href=dorsale.billing_machine_invoice_path(@invoice)
-            = icon(:times)
-            = " "
-            = t("actions.cancel")
+      = horizontal_form_for @email, as: :email, url: url_for do |f|
+        = f.input :from, disabled: true
+        = f.input :to
+        = f.input :subject
+        = f.input :attachment_names, disabled: true
+        = f.input :body, as: :text
+        = render "dorsale/forms/send_email_buttons", back_url: url_for(action: :show, id: @invoice)
 
   hr
 

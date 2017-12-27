@@ -72,9 +72,10 @@ en:
         canceled: "Canceled"
         not_canceled: "Not canceled"
 
-  emails:
-    invoices:
-      send_invoice_to_customer: ""
+  billing_machine:
+    emails:
+      invoice:
+        body: ""
 
   messages:
     invoices:
@@ -94,4 +95,3 @@ en:
       update_error : "Impossible to update this quotation."
       copy_ok : "Quotation successfully duplicated."
       create_invoice_ok : "Invoice successfully created from quotation."
-

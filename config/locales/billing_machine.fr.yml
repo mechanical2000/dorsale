@@ -72,9 +72,10 @@ fr:
         canceled: "Annulé"
         not_canceled: "Non annulé"
 
-  emails:
-    invoices:
-      send_invoice_to_customer: "Bonjour,\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
+  billing_machine:
+    emails:
+      invoice:
+        body: "Bonjour,\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
 
   messages:
     invoices:
