@@ -34,6 +34,9 @@ Dorsale::Engine.routes.draw do
     resources :payment_terms, except: [:destroy, :show]
 
     resources :invoices, except: [:destroy] do
+      collection do
+        post :preview
+      end
       member do
         get :copy
         patch :pay
@@ -42,8 +45,14 @@ Dorsale::Engine.routes.draw do
     end
 
     resources :quotations do
-      post :copy, on: :member
-      get :create_invoice, on: :member
+      collection do
+        post :preview
+      end
+      member do
+        post :copy
+        get :create_invoice
+        match :email, via: [:get, :post]
+      end
     end
   end
 
@@ -53,7 +62,6 @@ Dorsale::Engine.routes.draw do
   get "customer_vault/individuals"  => "customer_vault/people#individuals"
 
   namespace :customer_vault do
-
     resources :activity_types, except: [:destroy, :show]
     resources :origins, except: [:destroy, :show]
 
@@ -97,5 +105,4 @@ Dorsale::Engine.routes.draw do
 
     get "/" => redirect{ ExpenseGun::Engine.routes.url_helpers.expenses_path }
   end
-
 end

@@ -1,9 +1,1 @@
-.well.text-center
-  .row
-    .col-md-4 = info @statistics, :total_excluding_taxes, helper: :bm_currency
-    .col-md-4 = info @statistics, :vat_amount,            helper: :bm_currency
-    .col-md-4 = info @statistics, :total_including_taxes, helper: :bm_currency
-
-  - if params[:controller].end_with?("invoices")
-    hr
-    = billing_machine_invoices_chart
+= render "dorsale/billing_machine/commons/header_infos"

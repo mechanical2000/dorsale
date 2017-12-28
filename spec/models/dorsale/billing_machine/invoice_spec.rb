@@ -27,6 +27,10 @@ describe Dorsale::BillingMachine::Invoice, type: :model do
     expect(create(:billing_machine_invoice)).to be_valid
   end
 
+  it "should return document_type" do
+    expect(described_class.new.document_type).to eq :invoice
+  end
+
   describe "unique_index" do
     context "when unique index is 69" do
       it "should be assigned upon creation" do

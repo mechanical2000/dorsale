@@ -86,6 +86,16 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     end
   end
 
+  def preview
+    authorize model, :preview?
+
+    @invoice ||= scope.new(invoice_params_for_preview)
+    @invoice.update_totals
+    Dorsale::BillingMachine::PdfFileGenerator.(@invoice)
+
+    render :show, formats: :pdf
+  end
+
   def pay
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :update?
@@ -102,21 +112,11 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   def email
     authorize @invoice, :email?
 
-    default_subject = "#{model.t} #{@invoice.tracking_id} : #{@invoice.label}"
-    default_body    = t("emails.invoices.send_invoice_to_customer",
-      :from => current_user.to_s,
-      :to   => @invoice.customer.to_s,
-    )
-
-    @subject = params.dig(:email, :subject) || default_subject
-    @body    = params.dig(:email, :body)    || default_body
+    @email = Dorsale::BillingMachine::Email.new(@invoice, email_params)
 
     return if request.get?
 
-    email = ::Dorsale::BillingMachine::InvoiceMailer
-      .send_invoice_to_customer(@invoice, @subject, @body, current_user)
-
-    if email.deliver_later
+    if @email.save
       flash[:notice] = t("messages.invoices.email_ok")
       redirect_to back_url
     else
@@ -176,6 +176,10 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def invoice_params_for_update
+    invoice_params
+  end
+
+  def invoice_params_for_preview
     invoice_params
   end
 end

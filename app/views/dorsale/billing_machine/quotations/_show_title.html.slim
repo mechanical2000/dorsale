@@ -1,1 +1,7 @@
-= render "dorsale/billing_machine/invoices/show_title", document: document
+= document.t
+- if document.tracking_id.present?
+  = " n° "
+  = document.tracking_id
+
+.label class="quotation #{quotation_state_classes(document)}"
+  = document.t("state.#{document.state}")

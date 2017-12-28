@@ -5,13 +5,9 @@ module Dorsale::BillingMachine::InvoicePolicyHelper
     :create?,
     :read?,
     :update?,
+    :preview?,
     :download?,
     :copy?,
     :email?,
   ]
-
-  def email?
-    return false if invoice.customer.try(:email).nil?
-    super
-  end
 end

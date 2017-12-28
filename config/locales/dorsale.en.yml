@@ -40,3 +40,14 @@ en:
       dorsale/comment:
         title: "Title (optional)"
         text: "Comment"
+
+  activemodel:
+    attributes:
+      dorsale/email:
+        from: "From"
+        to: "To"
+        cc: "Copy"
+        subject: "Subject"
+        body: "Message"
+        attachments: "Attachments"
+        attachment_names: "Attachments"

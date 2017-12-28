@@ -18,6 +18,10 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     order(unique_index: :desc)
   }
 
+  def document_type
+    :invoice
+  end
+
   before_create :assign_unique_index
   before_create :assign_tracking_id
 
@@ -50,6 +54,9 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
 
   def update_totals
     assign_default_values
+    lines.each(&:update_total)
+    apply_vat_rate_to_lines
+
     lines_sum = lines.map(&:total).sum
 
     self.total_excluding_taxes = lines_sum - commercial_discount
@@ -88,8 +95,6 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
   end
 
   attr_writer :vat_rate
-
-  before_validation :apply_vat_rate_to_lines
 
   def apply_vat_rate_to_lines
     return if ::Dorsale::BillingMachine.vat_mode == :multiple

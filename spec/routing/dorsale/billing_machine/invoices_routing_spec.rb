@@ -49,6 +49,11 @@ describe ::Dorsale::BillingMachine::InvoicesController, type: :routing do
         route_to("dorsale/billing_machine/invoices#update", id: "1")
     end
 
+    it "#preview" do
+      expect(post "/billing_machine/invoices/preview").to \
+        route_to("dorsale/billing_machine/invoices#preview")
+    end
+
     it "#email via GET" do
       expect(get "/billing_machine/invoices/1/email").to \
         route_to("dorsale/billing_machine/invoices#email", id: "1")

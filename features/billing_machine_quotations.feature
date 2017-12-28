@@ -35,11 +35,25 @@ Feature: Quotation Management
     When the user goes to the quotation details
     Then he can see all the quotation informations
 
+  Scenario: Quotation preview
+    When the user goes to the quotations page
+    And he creates a new quotation
+    And he click on the preview quotation button
+    Then he see the quotation preview
+    And no quotation is created
+
   Scenario: Quotation copy
     Given an existing quotation
     When the user goes to the quotation details
     And he copy the quotation
     Then he is on the created quotation edit page
+
+  Scenario: Send quotation by email
+    Given an existing customer
+    And an existing quotation
+    When the user goes to the quotation details
+    And he send quotation to customer by email
+    Then an quotation is sent to customer
 
   Scenario: Quotation to invoice
     Given an existing quotation

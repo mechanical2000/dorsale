@@ -1,0 +1,25 @@
+- if policy(document.class).preview?
+  button(
+    id       = "preview-button"
+    class    = "btn btn-default"
+    type     = "button"
+    data-url = url_for(action: :preview, format: :pdf)
+  )
+    = icon(:eye)
+    = " "
+    = ta(:preview)
+
+  coffee:
+    $button = $("#preview-button").detach()
+    $button.click ->
+      $form = $("form").clone()
+      $form.find("input[name='_method']").remove()
+      $form.find("input[id*='lines_attributes'][id$=id]").remove()
+      $form.attr(action: $button.data("url"), method: "post", target: "_blank")
+      $form.hide()
+      $(document.body).append($form)
+      $form.submit()
+      $form.remove()
+
+    $submit = $("form [type=submit]")
+    $button.insertBefore($submit)

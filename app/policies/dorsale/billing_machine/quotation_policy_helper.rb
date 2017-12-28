@@ -6,6 +6,9 @@ module Dorsale::BillingMachine::QuotationPolicyHelper
     :update?,
     :delete?,
     :download?,
+    :preview?,
     :copy?,
+    :email?,
+    :create_invoice?,
   ]
 end

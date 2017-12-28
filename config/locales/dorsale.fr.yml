@@ -40,3 +40,14 @@ fr:
       dorsale/comment:
         title: "Titre (facultatif)"
         text: "Commentaire"
+
+  activemodel:
+    attributes:
+      dorsale/email:
+        from: "Expéditeur"
+        to: "Destinataire"
+        cc: "Copie cachée"
+        subject: "Objet"
+        body: "Message"
+        attachments: "Pièces jointes"
+        attachment_names: "Pièces jointes"

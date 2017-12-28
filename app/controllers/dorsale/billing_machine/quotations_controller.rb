@@ -6,6 +6,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     :destroy,
     :copy,
     :create_invoice,
+    :email,
   ]
 
   def index
@@ -88,6 +89,16 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     redirect_to url_for(action: :index, id: nil)
   end
 
+  def preview
+    authorize model, :preview?
+
+    @quotation ||= scope.new(quotation_params_for_preview)
+    @quotation.update_totals
+    Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
+
+    render :show, formats: :pdf
+  end
+
   def copy
     authorize @quotation, :copy?
 
@@ -100,12 +111,27 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def create_invoice
-    authorize @quotation, :read?
-    authorize ::Dorsale::BillingMachine::Invoice, :create?
+    authorize @quotation, :create_invoice?
 
     @invoice = Dorsale::BillingMachine::Quotation::ToInvoice.(@quotation)
 
     render "dorsale/billing_machine/invoices/new"
+  end
+
+  def email
+    authorize @quotation, :email?
+
+    @email = Dorsale::BillingMachine::Email.new(@quotation, email_params)
+
+    return if request.get?
+
+    if @email.save
+      flash[:notice] = t("messages.quotations.email_ok")
+      redirect_to back_url
+    else
+      flash.now[:alert] = t("messages.quotations.email_error")
+      render
+    end
   end
 
   private
@@ -158,6 +184,10 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def quotation_params_for_update
+    quotation_params
+  end
+
+  def quotation_params_for_preview
     quotation_params
   end
 end
