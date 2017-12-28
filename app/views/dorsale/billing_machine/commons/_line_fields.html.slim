@@ -1,0 +1,27 @@
+tr.line
+  td.actions
+    a.delete href="#"
+      span.fa.fa-fw.fa-trash
+    = f.hidden_field :_destroy
+
+  td.line-label
+    = f.text_area :label, rows: 1
+
+  td.line-quantity
+    = f.text_field :quantity, class: "number"
+
+  td.line-unit
+    = f.text_field :unit
+
+  - if ::Dorsale::BillingMachine.vat_mode == :multiple
+    td.line-vat_rate
+      = f.text_field :vat_rate, class: "number"
+      span.unit = "%"
+
+  td.line-unit_price
+    = f.text_field :unit_price, class: "number"
+    span.unit = Dorsale::BillingMachine.default_currency
+
+  td.line-total
+    = f.text_field :total, class: "number", disabled: true
+    span.unit = Dorsale::BillingMachine.default_currency

@@ -1,1 +1,6 @@
-= render "dorsale/billing_machine/invoices/details", document: document
+= render "dorsale/billing_machine/commons/details", document: document
+
+
+- if action_name == "show"
+  .attachments-panel
+    = attachments_for(document)
