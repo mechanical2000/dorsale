@@ -77,6 +77,9 @@ fr:
       invoice:
         body: "Bonjour,\n\nVeuillez-trouver ci-joint votre facture.\n\nCordialement,\n%{from}"
 
+      quotation:
+        body: "Bonjour,\n\nVeuillez-trouver ci-joint votre devis.\n\nCordialement,\n%{from}"
+
   messages:
     invoices:
       create_ok : "La facture a été créée."
@@ -86,7 +89,7 @@ fr:
       pay_ok    : "La facture a été marquée comme payée."
       pay_error : "Impossible de marquer la facture comme payée."
       email_ok : "La facture a été envoyée au client."
-      email_error : "Impossible d'envoyer la facture au client, vérifiez son adresse email."
+      email_error : "Impossible d'envoyer la facture au client."
 
     quotations:
       create_ok : "Le devis a été créé."
@@ -95,3 +98,5 @@ fr:
       update_error : "Erreur dans la modification du devis."
       copy_ok : "Le devis a été dupliqué."
       create_invoice_ok : "La facture a été créée depuis le devis"
+      email_ok : "Le devis a été envoyée au client."
+      email_error : "Impossible d'envoyer le devis au client."

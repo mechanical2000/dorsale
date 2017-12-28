@@ -208,3 +208,26 @@ Then(/^only the "(.*?)" quotations appear$/) do |state|
   expect(page).to have_selector("tr.quotation", count: 1)
   expect(find("tr.quotation")).to have_content(state_i18n)
 end
+
+When(/^he send quotation to customer by email$/) do
+  ActionMailer::Base.deliveries.clear
+
+  Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
+  @quotation.customer = create(:customer_vault_corporation, email: "aaa@example.org")
+  @quotation.save!
+
+  find("[href$=email]").click
+  fill_in :email_subject, with: "abc"
+  fill_in :email_body, with: "def"
+  find("[type=submit]").click
+end
+
+Then(/^an quotation is sent to customer$/) do
+  expect(ActionMailer::Base.deliveries.count).to eq 1
+  email = ActionMailer::Base.deliveries.first
+
+  expect(email.to).to include "aaa@example.org"
+  expect(email.subject).to eq "abc"
+  expect(email.parts.first.body).to eq "def"
+  expect(email.attachments.count).to eq 1
+end

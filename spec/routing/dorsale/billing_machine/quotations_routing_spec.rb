@@ -48,5 +48,15 @@ describe ::Dorsale::BillingMachine::QuotationsController do
       expect(get "/billing_machine/quotations/1/create_invoice").to \
         route_to("dorsale/billing_machine/quotations#create_invoice", id: "1")
     end
+
+    it "#email via GET" do
+      expect(get "/billing_machine/quotations/1/email").to \
+        route_to("dorsale/billing_machine/quotations#email", id: "1")
+    end
+
+    it "#email via PORT" do
+      expect(post "/billing_machine/quotations/1/email").to \
+        route_to("dorsale/billing_machine/quotations#email", id: "1")
+    end
   end
 end

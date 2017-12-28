@@ -18,6 +18,10 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     order(unique_index: :desc)
   }
 
+  def document_type
+    :invoice
+  end
+
   before_create :assign_unique_index
   before_create :assign_tracking_id
 

@@ -77,6 +77,9 @@ en:
       invoice:
         body: ""
 
+      quotation:
+        body: ""
+
   messages:
     invoices:
       create_ok : "Invoice successfully created."
@@ -86,7 +89,7 @@ en:
       pay_ok    : "This invoice has been marked payed."
       pay_error : "Impossible to mark this invoice as payed."
       email_ok : "Invoice successfully sent to customer."
-      email_error : "Unable to send invoice to customer, please verify customer email."
+      email_error : "Unable to send invoice to customer."
 
     quotations:
       create_ok : "Quotation successfully created."
@@ -95,3 +98,5 @@ en:
       update_error : "Impossible to update this quotation."
       copy_ok : "Quotation successfully duplicated."
       create_invoice_ok : "Invoice successfully created from quotation."
+      email_ok : "Quotation successfully sent to customer."
+      email_error : "Unable to send quotation to customer."

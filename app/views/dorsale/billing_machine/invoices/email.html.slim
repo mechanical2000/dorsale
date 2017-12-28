@@ -1,16 +1,1 @@
-.billing_machine
-  .panel.panel-default
-    .panel-heading: .panel-title = t("actions.email")
-
-    .panel-body
-      = horizontal_form_for @email, as: :email, url: url_for do |f|
-        = f.input :from, disabled: true
-        = f.input :to
-        = f.input :subject
-        = f.input :attachment_names, disabled: true
-        = f.input :body, as: :text
-        = render "dorsale/forms/send_email_buttons", back_url: url_for(action: :show, id: @invoice)
-
-  hr
-
-  = render "dorsale/billing_machine/invoices/details", document: @invoice
+= render "dorsale/billing_machine/commons/email", document: @invoice

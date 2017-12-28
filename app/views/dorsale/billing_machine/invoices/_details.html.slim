@@ -1,5 +1,4 @@
 - vat_mode      = ::Dorsale::BillingMachine.vat_mode
-- document_type = document.class.to_s.split("::").last.downcase.to_sym
 
 #billing_machine-show
   .row
@@ -51,10 +50,10 @@
         = info document, :payment_term
         br
 
-        - if document_type == :invoice
+        - if document.document_type == :invoice
           = info document, :due_date
 
-        - if document_type == :quotation
+        - if document.document_type == :quotation
 
           = info document, :expires_at
           br
@@ -121,6 +120,6 @@
                 td.balance
                   = bm_currency document.balance
 
-- if document_type == :quotation
+- if document.document_type == :quotation && action_name == "show"
   .attachments-panel
     = attachments_for(document)

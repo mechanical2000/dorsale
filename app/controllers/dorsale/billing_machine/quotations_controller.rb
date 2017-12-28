@@ -6,6 +6,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     :destroy,
     :copy,
     :create_invoice,
+    :email,
   ]
 
   def index
@@ -106,6 +107,22 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     @invoice = Dorsale::BillingMachine::Quotation::ToInvoice.(@quotation)
 
     render "dorsale/billing_machine/invoices/new"
+  end
+
+  def email
+    authorize @quotation, :email?
+
+    @email = Dorsale::BillingMachine::Email.new(@quotation, email_params)
+
+    return if request.get?
+
+    if @email.save
+      flash[:notice] = t("messages.quotations.email_ok")
+      redirect_to back_url
+    else
+      flash.now[:alert] = t("messages.quotations.email_error")
+      render
+    end
   end
 
   private

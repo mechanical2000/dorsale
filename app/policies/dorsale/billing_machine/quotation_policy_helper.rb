@@ -7,5 +7,6 @@ module Dorsale::BillingMachine::QuotationPolicyHelper
     :delete?,
     :download?,
     :copy?,
+    :email?,
   ]
 end

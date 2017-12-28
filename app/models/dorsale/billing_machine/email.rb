@@ -8,11 +8,6 @@ class Dorsale::BillingMachine::Email < Dorsale::Email
 
   private
 
-  def document_type
-    return :invoice   if model == Dorsale::BillingMachine::Invoice
-    return :quotation if model == Dorsale::BillingMachine::Quotation
-  end
-
   def model
     document.class
   end
@@ -26,7 +21,7 @@ class Dorsale::BillingMachine::Email < Dorsale::Email
   end
 
   def default_body
-    I18n.t("billing_machine.emails.#{document_type}.body",
+    I18n.t("billing_machine.emails.#{document.document_type}.body",
       :from => current_user.to_s,
       :to   => document.customer.to_s,
     )

@@ -41,6 +41,13 @@ Feature: Quotation Management
     And he copy the quotation
     Then he is on the created quotation edit page
 
+  Scenario: Send quotation by email
+    Given an existing customer
+    And an existing quotation
+    When the user goes to the quotation details
+    And he send quotation to customer by email
+    Then an quotation is sent to customer
+
   Scenario: Quotation to invoice
     Given an existing quotation
     When the user goes to the quotation details

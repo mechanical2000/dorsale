@@ -21,6 +21,10 @@ describe Dorsale::BillingMachine::Quotation do
     expect(create(:billing_machine_quotation)).to be_valid
   end
 
+  it "should return document_type" do
+    expect(described_class.new.document_type).to eq :quotation
+  end
+
   describe "default values" do
     it "default date should be today" do
       expect(described_class.new.date).to eq Date.current

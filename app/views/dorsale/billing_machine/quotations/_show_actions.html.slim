@@ -7,6 +7,9 @@
 - if policy(@quotation).copy?
   = copy_button dorsale.copy_billing_machine_quotation_path(@quotation), method: :post, confirm: true
 
+- if policy(@quotation).email?
+  = bs_button dorsale.email_billing_machine_quotation_path(@quotation), action: :email, icon: :send
+
 - if policy(@quotation).create?
   = bs_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 
