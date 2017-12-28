@@ -8,5 +8,6 @@ module Dorsale::BillingMachine::QuotationPolicyHelper
     :download?,
     :copy?,
     :email?,
+    :create_invoice?,
   ]
 end

@@ -101,8 +101,7 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def create_invoice
-    authorize @quotation, :read?
-    authorize ::Dorsale::BillingMachine::Invoice, :create?
+    authorize @quotation, :create_invoice?
 
     @invoice = Dorsale::BillingMachine::Quotation::ToInvoice.(@quotation)
 

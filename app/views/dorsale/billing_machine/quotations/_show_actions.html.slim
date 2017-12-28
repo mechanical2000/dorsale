@@ -10,7 +10,7 @@
 - if policy(@quotation).email?
   = bs_button dorsale.email_billing_machine_quotation_path(@quotation), action: :email, icon: :send
 
-- if policy(@quotation).create?
+- if policy(@quotation).create_invoice?
   = bs_button dorsale.create_invoice_billing_machine_quotation_path(@quotation), action: :create_invoice, icon: :magic
 
 - if policy(@quotation).delete?
