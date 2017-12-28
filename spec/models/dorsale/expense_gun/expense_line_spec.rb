@@ -11,7 +11,7 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpenseLine, type: :model do
   it { is_expected.to validate_presence_of :company_part }
   it { is_expected.to validate_numericality_of(:total_all_taxes).is_greater_than_or_equal_to(0) }
   it { is_expected.to validate_numericality_of(:company_part).is_greater_than_or_equal_to(0) }
-  it { is_expected.to validate_numericality_of(:company_part).is_less_than_or_equal_to(100.0) }
+  it { is_expected.to validate_numericality_of(:company_part).is_less_than_or_equal_to(100) }
 
   it "expense line factory should be valid?" do
     expense_line = build :expense_gun_expense_line, expense: build(:expense_gun_expense)
