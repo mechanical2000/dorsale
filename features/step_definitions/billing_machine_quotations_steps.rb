@@ -234,9 +234,10 @@ end
 
 When(/^he click on the preview quotation button$/) do
   @invoices_count = Dorsale::BillingMachine::Quotation.count
-  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to receive(:preview).and_call_original
-  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to_not receive(:create)
-  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to_not receive(:update)
+  controller = Dorsale::BillingMachine::QuotationsController
+  expect_any_instance_of(controller).to receive(:preview).and_call_original
+  expect_any_instance_of(controller).to_not receive(:create)
+  expect_any_instance_of(controller).to_not receive(:update)
   find("#preview-button").click
 end
 

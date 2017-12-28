@@ -361,9 +361,10 @@ end
 
 When(/^he click on the preview invoice button$/) do
   @invoices_count = Dorsale::BillingMachine::Invoice.count
-  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to receive(:preview).and_call_original
-  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to_not receive(:create)
-  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to_not receive(:update)
+  controller = Dorsale::BillingMachine::InvoicesController
+  expect_any_instance_of(controller).to receive(:preview).and_call_original
+  expect_any_instance_of(controller).to_not receive(:create)
+  expect_any_instance_of(controller).to_not receive(:update)
   find("#preview-button").click
 end
 
