@@ -55,7 +55,7 @@ end
 
 When(/^the flyboy daily crons run$/) do
   ActionMailer::Base.deliveries.clear
-  Dorsale::Flyboy::TaskCommands.send_daily_term_emails!
+  Dorsale::Flyboy::TaskCrons.send_daily_term_emails!
 end
 
 When(/^I create a task$/) do

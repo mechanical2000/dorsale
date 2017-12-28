@@ -1,4 +1,4 @@
-module Dorsale::Flyboy::TaskCommands
+module Dorsale::Flyboy::TaskCrons
   def self.send_daily_term_emails!
     ::Dorsale::Flyboy::Task.all.each do |task|
       next if task.done?
