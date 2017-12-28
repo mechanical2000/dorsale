@@ -7,7 +7,7 @@ describe Dorsale::BillingMachine::Quotation do
 
   it { is_expected.to validate_presence_of :date }
   it { is_expected.to validate_presence_of :state }
-  it { is_expected.to ensure_inclusion_of(:state).in_array(described_class::STATES) }
+  it { is_expected.to validate_inclusion_of(:state).in_array(described_class::STATES) }
   it { is_expected.to respond_to :date }
   it { is_expected.to respond_to :label }
   it { is_expected.to respond_to :vat_amount }

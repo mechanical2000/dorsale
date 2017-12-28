@@ -7,7 +7,7 @@ else
   puts ".ruby-version file not found"
 end
 
-gem "rails", "~> 5.0"
+gem "rails", "~> 5.0.0"
 gem "agilibox", ">= 1.0.9"
 gem "axlsx", github: "randym/axlsx"
 
