@@ -2,6 +2,10 @@
 
 ## Next version
 
+- BillingMachine : add invoice/quotation preview
+- BillingMachine : add quotation email + refactor email service
+- Various small fixes
+
 ## 3.9.3
 
 - BillingMachine : Fix payment status filter
