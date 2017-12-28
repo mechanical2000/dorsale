@@ -39,6 +39,11 @@ describe ::Dorsale::BillingMachine::QuotationsController do
         route_to("dorsale/billing_machine/quotations#destroy", id: "1")
     end
 
+    it "#preview" do
+      expect(post "/billing_machine/quotations/preview").to \
+        route_to("dorsale/billing_machine/quotations#preview")
+    end
+
     it "#copy" do
       expect(post "/billing_machine/quotations/1/copy").to \
         route_to("dorsale/billing_machine/quotations#copy", id: "1")

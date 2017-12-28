@@ -89,6 +89,16 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
     redirect_to url_for(action: :index, id: nil)
   end
 
+  def preview
+    authorize model, :preview?
+
+    @quotation ||= scope.new(quotation_params_for_preview)
+    @quotation.update_totals
+    Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
+
+    render :show, formats: :pdf
+  end
+
   def copy
     authorize @quotation, :copy?
 
@@ -174,6 +184,10 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
   end
 
   def quotation_params_for_update
+    quotation_params
+  end
+
+  def quotation_params_for_preview
     quotation_params
   end
 end

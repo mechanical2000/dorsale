@@ -231,3 +231,19 @@ Then(/^an quotation is sent to customer$/) do
   expect(email.parts.first.body).to eq "def"
   expect(email.attachments.count).to eq 1
 end
+
+When(/^he click on the preview quotation button$/) do
+  @invoices_count = Dorsale::BillingMachine::Quotation.count
+  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to receive(:preview).and_call_original
+  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to_not receive(:create)
+  expect_any_instance_of(Dorsale::BillingMachine::QuotationsController).to_not receive(:update)
+  find("#preview-button").click
+end
+
+Then(/^he see the quotation preview$/) do
+  expect(windows.count).to eq 2
+end
+
+Then(/^no quotation is created$/) do
+  expect(Dorsale::BillingMachine::Quotation.count).to eq @invoices_count
+end

@@ -358,3 +358,19 @@ When(/^he filters invoices between two date$/) do
   fill_in :filters_bm_date_end,   with: I18n.l(Date.current)
   find(".filter-submit").click
 end
+
+When(/^he click on the preview invoice button$/) do
+  @invoices_count = Dorsale::BillingMachine::Invoice.count
+  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to receive(:preview).and_call_original
+  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to_not receive(:create)
+  expect_any_instance_of(Dorsale::BillingMachine::InvoicesController).to_not receive(:update)
+  find("#preview-button").click
+end
+
+Then(/^he see the invoice preview$/) do
+  expect(windows.count).to eq 2
+end
+
+Then(/^no invoice is created$/) do
+  expect(Dorsale::BillingMachine::Invoice.count).to eq @invoices_count
+end

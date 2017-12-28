@@ -5,6 +5,7 @@ module Dorsale::BillingMachine::InvoicePolicyHelper
     :create?,
     :read?,
     :update?,
+    :preview?,
     :download?,
     :copy?,
     :email?,

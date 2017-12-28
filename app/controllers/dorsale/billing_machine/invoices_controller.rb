@@ -86,6 +86,16 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
     end
   end
 
+  def preview
+    authorize model, :preview?
+
+    @invoice ||= scope.new(invoice_params_for_preview)
+    @invoice.update_totals
+    Dorsale::BillingMachine::PdfFileGenerator.(@invoice)
+
+    render :show, formats: :pdf
+  end
+
   def pay
     # callback in BillingMachine::ApplicationController
     authorize @invoice, :update?
@@ -166,6 +176,10 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
   end
 
   def invoice_params_for_update
+    invoice_params
+  end
+
+  def invoice_params_for_preview
     invoice_params
   end
 end

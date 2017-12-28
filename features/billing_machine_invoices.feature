@@ -48,6 +48,13 @@ Feature: Invoice Management
     When the user goes to the invoice details
     Then he can see all the informations
 
+  Scenario: Invoice preview
+    When the user goes to the invoices page
+    And he creates a new invoice
+    And he click on the preview invoice button
+    Then he see the invoice preview
+    And no invoice is created
+
   Scenario: New invoice for existing customer
     And an existing customer
     And an existing payment term

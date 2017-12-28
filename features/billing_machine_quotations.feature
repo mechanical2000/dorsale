@@ -35,6 +35,13 @@ Feature: Quotation Management
     When the user goes to the quotation details
     Then he can see all the quotation informations
 
+  Scenario: Quotation preview
+    When the user goes to the quotations page
+    And he creates a new quotation
+    And he click on the preview quotation button
+    Then he see the quotation preview
+    And no quotation is created
+
   Scenario: Quotation copy
     Given an existing quotation
     When the user goes to the quotation details

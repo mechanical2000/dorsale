@@ -34,6 +34,9 @@ Dorsale::Engine.routes.draw do
     resources :payment_terms, except: [:destroy, :show]
 
     resources :invoices, except: [:destroy] do
+      collection do
+        post :preview
+      end
       member do
         get :copy
         patch :pay
@@ -42,6 +45,9 @@ Dorsale::Engine.routes.draw do
     end
 
     resources :quotations do
+      collection do
+        post :preview
+      end
       member do
         post :copy
         get :create_invoice

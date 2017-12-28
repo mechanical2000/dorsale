@@ -6,6 +6,22 @@ describe Dorsale::BillingMachine::InvoicesController, type: :controller do
   let(:user) { create(:user) }
   before(:each) { sign_in(user) }
 
+  describe "#preview" do
+    render_views
+
+    it "should render show" do
+      post :preview
+      expect(response).to render_template(:show)
+    end
+
+    it "should not save" do
+      post :preview
+      @invoice = assigns(:invoice)
+      expect(@invoice).to be_valid
+      expect(@invoice).to_not be_persisted
+    end
+  end # describe "#preview" do
+
   describe "XLSX export" do
     render_views
 
