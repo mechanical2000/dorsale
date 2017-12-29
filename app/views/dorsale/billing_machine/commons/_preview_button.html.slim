@@ -12,9 +12,16 @@
   coffee:
     $button = $("#preview-button").detach()
     $button.click ->
-      $form = $("form").clone()
-      $form.find("input[name='_method']").remove()
-      $form.find("input[id*='lines_attributes'][id$=id]").remove()
+      data  = $(this).parents("form").serializeArray()
+      $form = $("<form>")
+
+      # jQuery's form clone() does not work with select2
+      data.map (e) ->
+        return if e.name == "_method" # always post
+        return if e.name.indexOf("[lines_attributes]") >= 0 && e.name.indexOf("[id]") >= 0
+        $input = $("<input/>").attr(type: "hidden", name: e.name, value: e.value)
+        $form.append($input)
+
       $form.attr(action: $button.data("url"), method: "post", target: "_blank")
       $form.hide()
       $(document.body).append($form)
