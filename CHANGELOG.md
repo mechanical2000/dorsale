@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.9.5
+
 - Fix BillingMachine preview JS
 
 ## 3.9.4
