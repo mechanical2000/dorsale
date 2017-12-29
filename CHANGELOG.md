@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Fix BillingMachine preview JS
+
 ## 3.9.4
 
 - BillingMachine : add invoice/quotation preview
