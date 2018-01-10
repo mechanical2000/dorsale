@@ -18,7 +18,14 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
   private
 
   def back_url
-    request.referer.presence || url_for(@task)
+    task_path = flyboy_task_path(@task)
+    back_url  = super
+
+    if back_url.to_s.start_with?(task_path)
+      back_url
+    else
+      task_path
+    end
   end
 
   def model
