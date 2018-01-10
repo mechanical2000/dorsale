@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.9.6
+
 - Tasks : add :on_warning_or_alert scope/filter
 - Tasks : fix redirect after create comment
 
