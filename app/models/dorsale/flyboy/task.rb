@@ -48,6 +48,10 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
       .where("#{table_name}.term <= ?", Date.current)
   }
 
+  scope :on_warning_or_alert, -> {
+    undone.where("#{table_name}.reminder_date <= :d OR #{table_name}.term <= :d", d: Date.current)
+  }
+
   scope :delayed,  -> { where(done: false).where("#{table_name}.term < ?", Date.current)  }
   scope :today,    -> { where(done: false).where("#{table_name}.term = ?", Date.current)  }
   scope :tomorrow, -> { where(done: false).where("#{table_name}.term = ?", Date.tomorrow) }
