@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Tasks : add :on_warning_or_alert scope/filter
+
 ## 3.9.5
 
 - Fix BillingMachine preview JS

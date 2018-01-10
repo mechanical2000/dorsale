@@ -62,6 +62,7 @@ fr:
         ontime: "À temps"
         onwarning: "Rappel dépassé"
         onalert: "Échéance dépassée"
+        on_warning_or_alert: "Rappel ou échéance dépassé"
 
       dorsale/flyboy/task_comment:
         progress: "Progression"

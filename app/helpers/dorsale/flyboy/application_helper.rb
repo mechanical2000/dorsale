@@ -26,7 +26,7 @@ module Dorsale::Flyboy::ApplicationHelper
   end
 
   def flyboy_status_for_filters_select
-    Dorsale::Flyboy::Task::STATES.map do |state|
+    Dorsale::Flyboy::SmallData::FilterStrategyByTaskState::STATES.map do |state|
       [Dorsale::Flyboy::Task.t("state.#{state}"), state]
     end
   end

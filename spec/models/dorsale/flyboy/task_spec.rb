@@ -219,6 +219,10 @@ describe Dorsale::Flyboy::Task do
       )
     }
 
+    it "should return on_warning_or_alert" do
+      expect(described_class.on_warning_or_alert).to contain_exactly(task_onwarning, task_onalert)
+    end
+
     it "should return :done" do
       expect(task_done.state).to eq "done"
       expect(described_class.done).to eq [task_done]
