@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.9.7
+
+- Attachments : refactor + sorting
+
 ## 3.9.6
 
 - Tasks : add :on_warning_or_alert scope/filter
