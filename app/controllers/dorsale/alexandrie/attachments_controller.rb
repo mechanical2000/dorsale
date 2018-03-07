@@ -1,7 +1,7 @@
 class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationController
   layout false
 
-  before_action :set_objects, only: [
+  before_action :set_attachment, only: [
     :edit,
     :update,
     :destroy,
@@ -10,12 +10,11 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   before_action :set_attachment_types
 
   def index
-    @attachable = find_attachable
-    skip_policy_scope
+    @attachable = find_attachable_from_params
 
     authorize @attachable, :read?
 
-    @attachment = scope.new(attachment_params_for_create)
+    render_list
   end
 
   def create
@@ -25,20 +24,17 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
     if @attachment.save
       notify_attachable
-      # flash[:notice] = t("messages.attachments.create_ok")
     else
-      flash[:alert] = t("messages.attachments.create_error")
+      flash.now[:alert] = t("messages.attachments.create_error")
     end
 
-    render_or_redirect
+    render_list
   end
 
   def edit
     authorize @attachment, :update?
 
-    @attachable = @attachment.attachable
-
-    render :index
+    render_list
   end
 
   def update
@@ -46,12 +42,11 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
     if @attachment.update(attachment_params_for_update)
       notify_attachable
-      # flash[:notice] = t("messages.attachments.update_ok")
     else
-      flash[:alert] = t("messages.attachments.update_error")
+      flash.now[:alert] = t("messages.attachments.update_error")
     end
 
-    render_or_redirect
+    render_list
   end
 
   def destroy
@@ -59,12 +54,11 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
 
     if @attachment.destroy
       notify_attachable
-      # flash[:notice] = t("messages.attachments.delete_ok")
     else
-      flash[:alert] = t("messages.attachments.delete_error")
+      flash.now[:alert] = t("messages.attachments.delete_error")
     end
 
-    render_or_redirect
+    render_list
   end
 
   private
@@ -73,7 +67,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     ::Dorsale::Alexandrie::Attachment
   end
 
-  def set_objects
+  def set_attachment
     @attachment = scope.find(params[:id])
   end
 
@@ -81,16 +75,8 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     @attachment_types = policy_scope(::Dorsale::Alexandrie::AttachmentType).all
   end
 
-  def attachable_type
-    params[:attachable_type] || @attachment.attachable_type
-  end
-
-  def attachable_id
-    params[:attachable_id] || @attachment.attachable_id
-  end
-
-  def find_attachable
-    attachable_type.to_s.constantize.find(attachable_id)
+  def find_attachable_from_params
+    params[:attachable_type].to_s.constantize.find(params[:attachable_id])
   rescue NameError
     raise ActiveRecord::RecordNotFound
   end
@@ -99,6 +85,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     [
       :name,
       :attachment_type_id,
+      :file,
     ]
   end
 
@@ -106,14 +93,11 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     common_permitted_params + [
       :attachable_id,
       :attachable_type,
-      :file,
     ]
   end
 
   def attachment_params_for_create
-    params
-      .fetch(:attachment, {})
-      .permit(permitted_params_for_create)
+    params.fetch(:attachment, {}).permit(permitted_params_for_create)
       .merge(sender: current_user)
   end
 
@@ -122,17 +106,15 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
   end
 
   def attachment_params_for_update
-    params
-      .fetch(:attachment, {})
-      .permit(permitted_params_for_update)
+    params.fetch(:attachment, {}).permit(permitted_params_for_update)
   end
 
-  def render_or_redirect
-    if request.xhr?
-      head :ok
-    else
-      redirect_to back_url
-    end
+  def render_list
+    @new_attachment = scope.new
+    @attachable = @attachment.attachable if @attachable.nil?
+    @attachments = scope.where(attachable: @attachable).preload(:attachment_type)
+    @attachments = Dorsale::Alexandrie::AttachmentsSorter.call(@attachments, params["sort"])
+    render :index
   end
 
   def notify_attachable

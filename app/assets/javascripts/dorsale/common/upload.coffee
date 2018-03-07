@@ -8,8 +8,6 @@ window.setupUploadInputs = (scope = document) ->
     submit    = form.find("[type=submit]")
     progress  = form.find(".progress")
 
-    progress.hide() if not xhr2_available()
-
     label.map ->
       this.dataset.defaultValue = $(this).html()
 
