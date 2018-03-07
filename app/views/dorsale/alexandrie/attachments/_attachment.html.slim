@@ -8,7 +8,7 @@ tr.attachment
 
   td.attachment-actions
     - if policy(attachment).update?
-      = update_button dorsale.edit_alexandrie_attachment_path(attachment)
+      = update_button dorsale.edit_alexandrie_attachment_path(attachment), remote: true
 
     - if policy(attachment).delete?
       = delete_button dorsale.alexandrie_attachment_path(attachment), remote: true

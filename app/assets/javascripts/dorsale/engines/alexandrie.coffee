@@ -1,59 +1,24 @@
-window.xhr2_available = ->
-  !!window.ProgressEvent && !!window.FormData
-
 window.alexandrie =
-  enable_xhr_upload: true
-
-  load: ->
+  loadList: ->
     $("#dorsale-attachments").map ->
-      container = $(this)
-      url       = this.dataset.url
-
       $.ajax
-        url: url
+        url: this.dataset.url
         success: (data) ->
-          container.html(data)
-          setupUploadInputs(container)
-          alexandrie.setup()
+          alexandrie.replaceHTML(data)
 
-  reload: ->
-    alexandrie.load()
+  replaceHTML: (html) ->
+    $container =  $("#dorsale-attachments")
+    $container.html(html)
+    setupUploadInputs($container)
 
   setup: ->
-    alexandrie.setupForms()
-    alexandrie.setupFormsProgress()
-    alexandrie.setupEditButtons()
-    alexandrie.setupDeleteButtons()
+    $(document).on "ajax:success", "#dorsale-attachments *", (e, data) ->
+      alexandrie.replaceHTML(data)
 
-  setupForms: ->
-    $("#dorsale-attachments form").on("ajax:success", alexandrie.reload)
+    $(document).on "submit", "#dorsale-attachments form", ->
+      # Ignore progress if no file input
+      return unless $(this).find("input[type=file]").length
 
-  setupEditButtons: ->
-    $("#dorsale-attachments [href$=edit]").click ->
-      container = $("#dorsale-attachments")
-      url       = this.href
-
-      $.ajax
-        url: url
-        success: (data) ->
-          container.html(data)
-          setupUploadInputs(container)
-          alexandrie.setup()
-
-      return false
-
-  setupDeleteButtons: ->
-    $("#dorsale-attachments [data-method=delete]").map ->
-      $(this).on("ajax:success", alexandrie.reload)
-
-  setupFormsProgress: ->
-    return unless xhr2_available()
-    return unless alexandrie.enable_xhr_upload
-
-    # Ignore progress if no file input
-    return unless $("#dorsale-attachments form input[type=file]").length
-
-    $("#dorsale-attachments form").submit ->
       form = $(this)
       xhr  = new XMLHttpRequest()
       data = new FormData(this)
@@ -73,10 +38,12 @@ window.alexandrie =
         bar.attr "aria-valuenow": percentComplete
 
       xhr.addEventListener "load", (e) ->
-        alexandrie.reload()
+        alexandrie.replaceHTML(e.target.responseText)
 
       xhr.open("POST", this.action, true)
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
       xhr.send(data)
 
       return false
+
+alexandrie.setup()

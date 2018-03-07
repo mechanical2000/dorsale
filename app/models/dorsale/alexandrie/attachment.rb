@@ -11,12 +11,6 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
 
   mount_uploader :file, ::Dorsale::Alexandrie::FileUploader
 
-  default_scope -> {
-    all
-      .order(created_at: :desc, id: :desc)
-      .preload(:attachment_type)
-  }
-
   def download_filename
     if File.extname(file_identifier) == File.extname(name)
       name
