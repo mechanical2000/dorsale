@@ -17,6 +17,7 @@ gem 'devise-i18n'
 gem 'pg'
 gem 'uglifier'
 gem "puma"
+gem "font-awesome-sass", "~> 4.7.0"
 
 gemspec
 
