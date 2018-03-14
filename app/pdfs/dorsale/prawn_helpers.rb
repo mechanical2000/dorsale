@@ -93,7 +93,7 @@ module Dorsale::PrawnHelpers
     if ApplicationUploader.storage.to_s.end_with?("File") # Local
       obj.path
     elsif ApplicationUploader.storage.to_s.end_with?("Fog") # Amazon S3
-      open(obj.url)
+      URI.parse(obj.url).open
     else
       raise NotImplementedError
     end
