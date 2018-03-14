@@ -11,7 +11,7 @@ data = [
 @tasks_without_pagination.each do |task|
   data << [
     task.taskable.to_s,
-    (task.taskable.class.t if task.taskable),
+    task.taskable&.class&.t,
     task.name,
     percentage(task.progress),
     date(task.term),

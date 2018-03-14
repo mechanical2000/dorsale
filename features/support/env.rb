@@ -1,4 +1,4 @@
-ENV["RAILS_ROOT"] ||= File.expand_path("../../../spec/dummy", __FILE__)
+ENV["RAILS_ROOT"] ||= File.expand_path("../../spec/dummy", __dir__)
 require "cucumber/rails"
 require "agilibox/cucumber_config"
 def Zonebie.set_random_timezone
