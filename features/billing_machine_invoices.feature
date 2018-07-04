@@ -258,4 +258,4 @@ Feature: Invoice Management
   Scenario: Invoices data
     Given existing "100" invoices with "123" amount
     When the user goes to the invoices page
-    Then data total amount is "12 300"
+    Then data total amount is "12 300"

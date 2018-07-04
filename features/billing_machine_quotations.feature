@@ -190,4 +190,4 @@ Feature: Quotation Management
   Scenario: Quotations data
     Given existing "100" quotations with "123" amount
     When the user goes to the quotations page
-    Then data total amount is "12 300"
+    Then data total amount is "12 300"

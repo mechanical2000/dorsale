@@ -65,7 +65,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   def validate_taken_emails
     return if taken_emails.empty?
 
-    if taken_emails.keys.include?(email)
+    if taken_emails.key?(email)
       errors.add(:email, :taken)
     end
 
