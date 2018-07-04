@@ -1,0 +1,10 @@
+= actions_for task
+
+- if policy(task).copy?
+  = copy_button copy_flyboy_task_path(task)
+
+- if policy(task).snooze?
+  = snooze_button snooze_flyboy_task_path(task), method: :patch
+
+- if policy(task).complete?
+  = complete_button complete_flyboy_task_path(task)

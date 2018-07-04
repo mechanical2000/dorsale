@@ -2,6 +2,7 @@
   tr#new_task_comment_tr
     td.task_comment-progress
       = f.input :progress, label: false
+      = render "dorsale/flyboy/task_comments/increment_buttons"
 
     td.task_comment-content
       = f.hidden_field :task_id

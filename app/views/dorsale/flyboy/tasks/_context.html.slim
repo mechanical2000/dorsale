@@ -14,10 +14,4 @@
     = info task, :done
 
   .context-footer
-    = actions_for task
-
-    - if policy(task).copy?
-      = copy_button copy_flyboy_task_path(task), method: :patch
-
-    - if policy(task).snooze?
-      = snooze_button snooze_flyboy_task_path(task), method: :patch
+    = render "dorsale/flyboy/tasks/actions", task: task

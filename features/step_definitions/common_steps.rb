@@ -84,3 +84,7 @@ end
 Then(/^I see "([^"]*)" element$/) do |element_selector|
   expect(page).to have_selector element_selector
 end
+
+When("I click on {string}") do |text|
+  click_on text
+end

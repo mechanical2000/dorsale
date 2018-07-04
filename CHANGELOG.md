@@ -1,5 +1,7 @@
 # Changelog
 
+- Tasks : add increment progress buttons
+
 ## Next version
 
 ## 3.9.7
