@@ -21,7 +21,7 @@ Dorsale::Engine.routes.draw do
       member do
         patch :complete
         patch :snooze
-        patch :copy
+        get :copy
       end
     end
 

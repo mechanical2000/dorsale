@@ -45,7 +45,7 @@ describe ::Dorsale::Flyboy::TasksController, type: :routing do
     end
 
     it "routes to #copy" do
-      expect(patch("flyboy/tasks/1/copy")).to route_to("dorsale/flyboy/tasks#copy", id: "1")
+      expect(get("flyboy/tasks/1/copy")).to route_to("dorsale/flyboy/tasks#copy", id: "1")
     end
   end
 end

@@ -8,6 +8,10 @@
         th.task_comment-description
           = sortable_column Dorsale::Flyboy::TaskComment.t(:description), :description
 
+          - if policy(@task).complete?
+            .pull-right = complete_button complete_flyboy_task_path(task)
+
+
     tbody
       - if params[:sort] != "date"
         = render "dorsale/flyboy/task_comments/form", f: f
