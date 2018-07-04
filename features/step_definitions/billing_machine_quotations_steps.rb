@@ -141,9 +141,7 @@ Then(/^I am on the created quotation$/) do
 end
 
 Then(/^he can see all the quotation informations$/) do
-  expect(page).to have_selector ".quotation-label", @quotation.label
-
-  expect(page).to have_selector ".quotation-expires_at", "21/12/2012"
+  expect(page).to have_selector ".quotation-label", text: @quotation.label
 end
 
 Then(/^the quotation default date is set to today's date\.$/) do
@@ -155,7 +153,7 @@ Then(/^he should see (\d+) quotations?$/) do |arg1|
 end
 
 Then(/^the quotation is displayed correctly$/) do
-  expect(page).to have_selector ".tracking_id", @quotation.tracking_id
+  expect(page).to have_selector ".tracking_id", text: @quotation.tracking_id
 end
 
 Then(/^a message signals the success of the quotation creation$/) do

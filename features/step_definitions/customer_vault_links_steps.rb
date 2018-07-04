@@ -1,4 +1,3 @@
-
 Given(/^an existing corporation$/) do
   @corporation = create(:customer_vault_corporation)
   @person = @corporation

@@ -182,7 +182,7 @@ Then(/^he should see (\d+) invoices?$/) do |count|
 end
 
 Then(/^the invoice is displayed correctly$/) do
-  expect(page).to have_selector ".tracking_id", @invoice.tracking_id
+  expect(page).to have_selector ".tracking_id", text: @invoice.tracking_id
 end
 
 Then(/^the total excluding taxes is "(.*?)"$/) do |total|
@@ -303,7 +303,7 @@ Then(/^a new invoice is displayed with the informations$/) do
 end
 
 Then(/^he can see all the informations$/) do
-  expect(page).to have_selector ".invoice-label", @invoice.label
+  expect(page).to have_selector ".invoice-label", text: @invoice.label
 end
 
 Then(/^only the invoices of this customer do appear$/) do
