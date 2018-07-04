@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.9.8
+
 - Tasks : add increment progress buttons
 - Tasks : small improvements
 
