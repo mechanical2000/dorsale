@@ -1,0 +1,16 @@
+.task_comment-increment-buttons.text-center
+ - Dorsale::Flyboy.progress_increment_buttons.each do |value|
+    button.btn.btn-xs.increment type="button" data-value=value
+      = "+" if value.positive?
+      = "-" if value.negative?
+      = value.abs
+
+coffee:
+  $("button.increment").click ->
+    current   = parseInt $("#task_comment_progress").val()
+    increment = parseInt this.dataset.value
+    newValue  = current + increment
+    newValue  = 0   if newValue < 0
+    newValue  = 100 if newValue > 100
+    $("#task_comment_progress").val(newValue)
+    $(this).blur()
