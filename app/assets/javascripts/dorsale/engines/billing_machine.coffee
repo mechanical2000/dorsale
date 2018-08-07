@@ -1,4 +1,4 @@
-BillingMachine = {}
+@BillingMachine = {}
 
 BillingMachine.settings =
   precision : 2
