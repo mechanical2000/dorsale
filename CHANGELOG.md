@@ -4,6 +4,7 @@
 
 - Billing Machine : fix amounts round
 - Billing Machine : change ::DEFAULT_VAT_RATE to ::default_vat_rate
+- Billing Machine : refactor/improve JS
 
 ## 3.9.8
 
