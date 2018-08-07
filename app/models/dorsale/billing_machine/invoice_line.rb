@@ -14,12 +14,12 @@ class Dorsale::BillingMachine::InvoiceLine < ::Dorsale::ApplicationRecord
   def assign_default_values
     assign_default :quantity,   0
     assign_default :unit_price, 0
-    assign_default :vat_rate,   ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    assign_default :vat_rate,   ::Dorsale::BillingMachine.default_vat_rate
   end
 
   def update_total
     assign_default_values
-    self.total = quantity * unit_price
+    self.total = (quantity * unit_price).round(2)
   end
 
   after_save :update_invoice_total

@@ -76,7 +76,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
 
     lines.each do |line|
       line_total = line.total - (line.total * discount_rate)
-      self.vat_amount += (line_total * line.vat_rate / 100.0)
+      self.vat_amount += (line_total * line.vat_rate / 100.0).round(2)
     end
 
     self.total_including_taxes = total_excluding_taxes + vat_amount
@@ -105,7 +105,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
       raise "Quotation has multiple vat rates"
     end
 
-    vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    vat_rates.first || ::Dorsale::BillingMachine.default_vat_rate
   end
 
   attr_writer :vat_rate

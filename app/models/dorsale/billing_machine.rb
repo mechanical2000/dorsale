@@ -1,6 +1,4 @@
 module Dorsale::BillingMachine
-  DEFAULT_VAT_RATE = 20.00
-
   class << self
     def vat_modes
       [:single, :multiple]
@@ -27,6 +25,12 @@ module Dorsale::BillingMachine
 
     def default_currency
       @default_currency ||= "€"
+    end
+
+    attr_writer :default_vat_rate
+
+    def default_vat_rate
+      @default_vat_rate ||= 20.0
     end
   end
 end

@@ -74,7 +74,7 @@ describe Dorsale::BillingMachine::Quotation do
 
   describe "vat rate" do
     it "default vat rate should be 20" do
-      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine.default_vat_rate
     end
 
     it "it should be specified vat rate" do
@@ -150,6 +150,31 @@ describe Dorsale::BillingMachine::Quotation do
       expect(quotation.total_including_taxes).to eq(92)
       expect(quotation.balance).to eq(92)
       Dorsale::BillingMachine.vat_mode = :single
+    end
+
+    it "should round numbers" do
+      quotation = create(:billing_machine_quotation,
+        :commercial_discount => 0,
+      )
+
+      create(:billing_machine_quotation_line,
+        :quantity   => 12.34,
+        :unit_price => 12.34,
+        :vat_rate   => 20,
+        :quotation  => quotation,
+      ) # total 152.28
+
+      create(:billing_machine_quotation_line,
+        :quantity   => 12.34,
+        :unit_price => 12.34,
+        :vat_rate   => 20,
+        :quotation  => quotation,
+      ) # total 152.28
+
+      expect(quotation.total_excluding_taxes).to eq(304.56)
+      expect(quotation.vat_amount).to eq(60.92)
+      expect(quotation.total_including_taxes).to eq(365.48)
+      expect(quotation.balance).to eq(365.48)
     end
 
     it "should work fine even with empty lines" do
