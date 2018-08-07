@@ -39,7 +39,7 @@ BillingMachine.updateTotals = ->
   total_excluding_taxes = raw_total_excluding_taxes - commercial_discount
   $(".total_excluding_taxes input").val BillingMachine.num2str total_excluding_taxes
 
-  discount_rate = BillingMachine.round2(commercial_discount / raw_total_excluding_taxes)
+  discount_rate = commercial_discount / raw_total_excluding_taxes
 
   # VAT amount based on each line total with discount rate
   vat_amount = 0.0
@@ -54,7 +54,7 @@ BillingMachine.updateTotals = ->
       vat_rate = BillingMachine.str2num $("#totals-table .vat_rate input").val()
 
     line_total = BillingMachine.str2num $(this).find(".line-total input").val()
-    discounted_line_total = BillingMachine.round2(line_total - (line_total * discount_rate))
+    discounted_line_total = line_total - (line_total * discount_rate)
     line_vat_amount = BillingMachine.round2(discounted_line_total * vat_rate / 100)
     vat_amount += line_vat_amount
   $(".vat_amount input").val BillingMachine.num2str vat_amount
