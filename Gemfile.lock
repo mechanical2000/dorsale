@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    dorsale (3.9.8)
+    dorsale (3.10.0)
       aasm
       acts-as-taggable-on (>= 4.0.0)
       agilibox (>= 1.0.6)
@@ -50,7 +50,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.3)
-    aasm (4.12.3)
+    aasm (5.0.0)
       concurrent-ruby (~> 1.0)
     actioncable (5.0.7)
       actionpack (= 5.0.7)
@@ -100,7 +100,7 @@ GEM
       rails-i18n
     arel (7.1.4)
     ast (2.4.0)
-    autoprefixer-rails (8.6.4)
+    autoprefixer-rails (9.1.0)
       execjs
     awesome_print (1.8.0)
     axiom-types (0.1.1)
@@ -155,7 +155,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    combine_pdf (1.0.12)
+    combine_pdf (1.0.14)
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
@@ -326,7 +326,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.11.4)
-    pundit (1.1.0)
+    pundit (2.0.0)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
@@ -547,4 +547,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.16.0
+   1.16.3
