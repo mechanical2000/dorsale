@@ -14,7 +14,7 @@ class Dorsale::BillingMachine::QuotationLine < ::Dorsale::ApplicationRecord
   def assign_default_values
     assign_default :quantity,   0
     assign_default :unit_price, 0
-    assign_default :vat_rate,   ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    assign_default :vat_rate,   ::Dorsale::BillingMachine.default_vat_rate
   end
 
   def update_total

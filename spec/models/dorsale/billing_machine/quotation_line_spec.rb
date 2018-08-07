@@ -25,7 +25,7 @@ describe Dorsale::BillingMachine::QuotationLine do
     end
 
     it "vat_rate should be 0" do
-      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine.default_vat_rate
     end
   end
 

@@ -74,7 +74,7 @@ describe Dorsale::BillingMachine::Quotation do
 
   describe "vat rate" do
     it "default vat rate should be 20" do
-      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+      expect(described_class.new.vat_rate).to eq ::Dorsale::BillingMachine.default_vat_rate
     end
 
     it "it should be specified vat rate" do

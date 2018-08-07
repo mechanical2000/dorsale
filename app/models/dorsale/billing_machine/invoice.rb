@@ -91,7 +91,7 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
       raise "Invoice has multiple vat rates"
     end
 
-    vat_rates.first || ::Dorsale::BillingMachine::DEFAULT_VAT_RATE
+    vat_rates.first || ::Dorsale::BillingMachine.default_vat_rate
   end
 
   attr_writer :vat_rate
