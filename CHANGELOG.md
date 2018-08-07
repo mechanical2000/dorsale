@@ -2,6 +2,9 @@
 
 ## Next version
 
+- Billing Machine : fix amounts round
+- Billing Machine : change ::DEFAULT_VAT_RATE to ::default_vat_rate
+
 ## 3.9.8
 
 - Tasks : add increment progress buttons
