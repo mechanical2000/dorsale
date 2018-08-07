@@ -19,7 +19,7 @@ class Dorsale::BillingMachine::InvoiceLine < ::Dorsale::ApplicationRecord
 
   def update_total
     assign_default_values
-    self.total = quantity * unit_price
+    self.total = (quantity * unit_price).round(2)
   end
 
   after_save :update_invoice_total

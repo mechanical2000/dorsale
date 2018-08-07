@@ -15,6 +15,8 @@ window.num2str = (num) ->
   num = parseFloat(num)
   accounting.formatNumber(num)
 
+window.round2 = (num) -> return +(Math.round(num + "e+2")  + "e-2")
+
 $(document).on "turbolinks:load cocoon:after-insert", ->
   $("#billing_machine-form input.number").keyup ->
     total_excluding_taxes = 0.0
@@ -24,7 +26,7 @@ $(document).on "turbolinks:load cocoon:after-insert", ->
       return if parseInt($(this).find("input[name*=destroy]").val()) == 1
       quantity   = str2num $(this).find(".line-quantity input").val()
       unit_price = str2num $(this).find(".line-unit_price input").val()
-      line_total = unit_price * quantity
+      line_total = round2(unit_price * quantity)
       $(this).find(".line-total input").val num2str line_total
 
       total_excluding_taxes += line_total
@@ -35,7 +37,7 @@ $(document).on "turbolinks:load cocoon:after-insert", ->
     total_excluding_taxes = raw_total_excluding_taxes - commercial_discount
     $(".total_excluding_taxes input").val num2str total_excluding_taxes
 
-    discount_rate = commercial_discount / raw_total_excluding_taxes
+    discount_rate = round2(commercial_discount / raw_total_excluding_taxes)
 
     # VAT amount based on each line total with discount rate
     vat_amount = 0.0
@@ -50,8 +52,8 @@ $(document).on "turbolinks:load cocoon:after-insert", ->
         vat_rate = str2num $("#totals-table .vat_rate input").val()
 
       line_total = str2num $(this).find(".line-total input").val()
-      discounted_line_total = line_total - (line_total * discount_rate)
-      line_vat_amount = discounted_line_total * vat_rate / 100
+      discounted_line_total = round2(line_total - (line_total * discount_rate))
+      line_vat_amount = round2(discounted_line_total * vat_rate / 100)
       vat_amount += line_vat_amount
     $(".vat_amount input").val num2str vat_amount
 

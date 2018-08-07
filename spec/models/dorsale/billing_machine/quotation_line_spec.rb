@@ -40,12 +40,12 @@ describe Dorsale::BillingMachine::QuotationLine do
   end
 
   it "should update the total upon save" do
-    quotation = create(:billing_machine_quotation_line, quantity: 10, unit_price: 10, total: 0)
-    expect(quotation.total).to eq(100)
+    line = create(:billing_machine_quotation_line, quantity: 12.34, unit_price: 12.34, total: 0)
+    expect(line.total).to eq(152.28)
   end
 
   it "should update the total gracefully with invalid data" do
-    quotation = create(:billing_machine_quotation_line, quantity: nil, unit_price: nil, total: 0)
-    expect(quotation.total).to eq(0)
+    line = create(:billing_machine_quotation_line, quantity: nil, unit_price: nil, total: 0)
+    expect(line.total).to eq(0)
   end
 end

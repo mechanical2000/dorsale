@@ -202,6 +202,31 @@ describe Dorsale::BillingMachine::Invoice, type: :model do
       expect(invoice.balance).to eq(108)
     end
 
+    it "should round numbers" do
+      invoice = create(:billing_machine_invoice,
+        :commercial_discount => 0,
+      )
+
+      create(:billing_machine_invoice_line,
+        :quantity   => 12.34,
+        :unit_price => 12.34,
+        :vat_rate   => 20,
+        :invoice    => invoice,
+      ) # total 152.28
+
+      create(:billing_machine_invoice_line,
+        :quantity   => 12.34,
+        :unit_price => 12.34,
+        :vat_rate   => 20,
+        :invoice    => invoice,
+      ) # total 152.28
+
+      expect(invoice.total_excluding_taxes).to eq(304.56)
+      expect(invoice.vat_amount).to eq(60.92)
+      expect(invoice.total_including_taxes).to eq(365.48)
+      expect(invoice.balance).to eq(365.48)
+    end
+
     it "should work fine even with empty lines" do
       invoice = create(:billing_machine_invoice)
 
