@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.10.1
+
 - Email fixes and improvements
 
 ## 3.10.0

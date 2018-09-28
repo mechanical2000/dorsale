@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    dorsale (3.10.0)
+    dorsale (3.10.1)
       aasm
       acts-as-taggable-on (>= 4.0.0)
       agilibox (>= 1.0.6)
@@ -50,7 +50,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.3)
-    aasm (5.0.0)
+    aasm (5.0.1)
       concurrent-ruby (~> 1.0)
     actioncable (5.0.7)
       actionpack (= 5.0.7)
@@ -100,7 +100,7 @@ GEM
       rails-i18n
     arel (7.1.4)
     ast (2.4.0)
-    autoprefixer-rails (9.1.0)
+    autoprefixer-rails (9.1.4)
       execjs
     awesome_print (1.8.0)
     axiom-types (0.1.1)
@@ -141,7 +141,7 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
-    chartkick (2.3.5)
+    chartkick (3.0.1)
     choice (0.2.0)
     cliver (0.3.2)
     cocoon (1.2.11)
@@ -155,7 +155,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    combine_pdf (1.0.14)
+    combine_pdf (1.0.15)
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
@@ -281,7 +281,7 @@ GEM
     method_source (0.9.0)
     mime-types (1.25.1)
     mimemagic (0.3.2)
-    mini_magick (4.8.0)
+    mini_magick (4.9.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -466,9 +466,9 @@ GEM
     tilt (2.0.8)
     timecop (0.9.1)
     ttfunk (1.5.1)
-    turbolinks (5.1.1)
-      turbolinks-source (~> 5.1)
-    turbolinks-source (5.1.0)
+    turbolinks (5.2.0)
+      turbolinks-source (~> 5.2)
+    turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.14)
