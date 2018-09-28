@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Email fixes and improvements
+
 ## 3.10.0
 
 - Billing Machine : fix amounts round

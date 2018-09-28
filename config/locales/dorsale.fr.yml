@@ -46,7 +46,7 @@ fr:
       dorsale/email:
         from: "Expéditeur"
         to: "Destinataire"
-        cc: "Copie cachée"
+        cc: "Copie"
         subject: "Objet"
         body: "Message"
         attachments: "Pièces jointes"

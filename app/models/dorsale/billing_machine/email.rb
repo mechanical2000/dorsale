@@ -13,7 +13,9 @@ class Dorsale::BillingMachine::Email < Dorsale::Email
   end
 
   def default_to
-    "#{document.customer} <#{document.customer.email}>" if document.customer
+    return if document.customer&.email.blank?
+
+    "#{document.customer} <#{document.customer.email}>"
   end
 
   def default_subject
