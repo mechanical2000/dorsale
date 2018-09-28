@@ -1,3 +1,5 @@
+require "mail"
+
 class Dorsale::Email
   include ActiveModel::Model
   include Agilibox::ModelToS
@@ -6,6 +8,8 @@ class Dorsale::Email
   validates :to,      presence: true
   validates :subject, presence: true
   validates :body,    presence: true
+
+  validate :validate_to_and_cc_format
 
   attr_accessor(
     :current_user,
@@ -76,5 +80,18 @@ class Dorsale::Email
 
   def default_attachments
     {}
+  end
+
+  def validate_to_and_cc_format
+    validate_addrs_format(:to)
+    validate_addrs_format(:cc)
+  end
+
+  def validate_addrs_format(attr)
+    string = public_send(attr).to_s
+    return if string.blank?
+    addrs  = Mail.new(to: string).to_addrs
+    return true if addrs.any? && addrs.all? { |addr| URI::MailTo::EMAIL_REGEXP.match?(addr) }
+    errors.add(attr, :invalid)
   end
 end
