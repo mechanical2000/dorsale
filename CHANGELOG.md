@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.10.2
+
 - Update Ruby and Gems
 
 ## 3.10.1
