@@ -18,7 +18,7 @@ class Dorsale::Flyboy::Task::Snoozer < ::Dorsale::Service
       task.reminder_date = task.reminder_date + snooze_reminder_value
     end
 
-    task.save
+    return task.save
   end
 
   def snoozable?

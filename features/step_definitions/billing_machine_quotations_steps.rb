@@ -1,6 +1,6 @@
 Given(/^an existing quotation$/) do
   @quotation = create(:billing_machine_quotation, customer: @customer)
-  @quotation.lines.create(quantity: 1, unit_price: 9.99)
+  @quotation.lines.create!(quantity: 1, unit_price: 9.99)
 end
 
 Given(/^(\d+) existing quotations$/) do |nb|

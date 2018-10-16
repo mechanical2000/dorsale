@@ -107,7 +107,7 @@ describe Dorsale::BillingMachine::Invoice, type: :model do
       invoice = build(:billing_machine_invoice)
       invoice.lines << ::Dorsale::BillingMachine::InvoiceLine.new(quantity: 1, unit_price: 10)
       invoice.lines << ::Dorsale::BillingMachine::InvoiceLine.new(quantity: 1, unit_price: 10)
-      invoice.save
+      invoice.save!
     end
   end
 
