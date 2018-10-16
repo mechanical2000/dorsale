@@ -1,7 +1,7 @@
 Given(/^an existing emtpy invoice$/) do
   @invoice = create(:billing_machine_invoice, label: nil, customer: nil, payment_term_id: nil)
   @invoice.due_date = nil
-  @invoice.save
+  @invoice.save!
 end
 
 Given(/^(\d+) existing invoices$/) do |count|
@@ -10,7 +10,7 @@ end
 
 Given(/^an existing invoice$/) do
   @invoice = create(:billing_machine_invoice, customer: @customer)
-  @invoice.lines.create(quantity: 1, unit_price: 9.99)
+  @invoice.lines.create!(quantity: 1, unit_price: 9.99)
 end
 
 Given(/^an existing invoice with a "(.*?)"% VAT rate$/) do |rate|

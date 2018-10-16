@@ -44,7 +44,7 @@ describe Dorsale::BillingMachine::Quotation do
     quotation = build(:billing_machine_quotation)
     quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
     quotation.lines << ::Dorsale::BillingMachine::QuotationLine.new(quantity: 1, unit_price: 10)
-    quotation.save
+    quotation.save!
   end
 
   describe "unique_index" do

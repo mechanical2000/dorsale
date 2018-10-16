@@ -7,7 +7,7 @@ Then(/^the file is downloaded$/) do
 end
 
 Given(/^a very long comment on this person$/) do
-  text = Faker::Lorem.paragraph(10)
+  text = Faker::Lorem.paragraph(30)
   @comment = create(:customer_vault_event_comment, person: @person, text: text)
 end
 

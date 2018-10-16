@@ -107,11 +107,13 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     a = ::Dorsale::CustomerVault::Link
       .where(alice_id: id)
       .preload(:alice => :taggings, :bob => :taggings)
+      .to_a
       .each { |l| l.person = l.alice; l.other_person = l.bob }
 
     b = ::Dorsale::CustomerVault::Link
       .where(bob_id: id)
       .preload(:alice => :taggings, :bob => :taggings)
+      .to_a
       .each { |l| l.person = l.bob; l.other_person = l.alice }
 
     return a + b

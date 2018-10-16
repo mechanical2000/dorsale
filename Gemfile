@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 ruby_version_file = File.join(__dir__, ".ruby-version")
-if File.exists?(ruby_version_file)
+if File.exist?(ruby_version_file)
   ruby File.read(ruby_version_file).strip
 else
   puts ".ruby-version file not found"
@@ -11,11 +11,11 @@ gem "rails", "~> 5.0.0"
 gem "agilibox", ">= 1.0.9"
 gem "axlsx", github: "randym/axlsx"
 
-gem 'devise'
-gem 'devise-bootstrap-views'
-gem 'devise-i18n'
-gem 'pg'
-gem 'uglifier'
+gem "devise"
+gem "devise-bootstrap-views"
+gem "devise-i18n"
+gem "pg"
+gem "uglifier"
 gem "puma"
 gem "font-awesome-sass", "~> 4.7.0"
 
@@ -28,7 +28,7 @@ group :test do
   gem "rspec-repeat"
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
-  gem "capybara"
+  gem "capybara", "3.4.0" # Problème avec Poltergiest à partir de la 3.4.1
   gem "poltergeist"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
@@ -63,5 +63,5 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "byebug"
   gem "rspec-rails" # must be in both environments for generators
-  gem "rubocop", "0.57.2", require: false
+  gem "rubocop", "0.59.2", require: false
 end
