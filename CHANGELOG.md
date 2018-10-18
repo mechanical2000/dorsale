@@ -2,6 +2,8 @@
 
 ## Next version
 
+## 3.10.3
+
 - Fix BillinMachine JS error
 
 ## 3.10.2

@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    dorsale (3.10.2)
+    dorsale (3.10.3)
       aasm
       acts-as-taggable-on (>= 4.0.0)
       agilibox (>= 1.0.6)
@@ -100,7 +100,7 @@ GEM
       rails-i18n
     arel (7.1.4)
     ast (2.4.0)
-    autoprefixer-rails (9.2.0)
+    autoprefixer-rails (9.2.1)
       execjs
     awesome_print (1.8.0)
     axiom-types (0.1.1)
