@@ -83,7 +83,7 @@ $(document).on "keyup", "#billing_machine-form textarea", ->
 $("#billing_machine-form textarea").keyup()
 
 # Button to delete line
-$(document).on "click", "#billing_machine-form a.delete", ->
+$(document).on "click", "#billing_machine-form a.delete", (e) ->
   e.preventDefault()
   $(this).parents("td").find("input").val(1)
   $(this).parents("tr").hide()

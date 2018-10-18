@@ -2,6 +2,8 @@
 
 ## Next version
 
+- Fix BillinMachine JS error
+
 ## 3.10.2
 
 - Update Ruby and Gems
