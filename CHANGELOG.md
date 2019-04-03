@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.11.0
 - Various updates
 - Remove bh gem dependency
 
