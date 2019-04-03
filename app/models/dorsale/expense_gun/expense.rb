@@ -2,14 +2,14 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_expenses"
   include AASM
 
-  has_many :expense_lines, inverse_of: :expense, dependent: :destroy, class_name: ::Dorsale::ExpenseGun::ExpenseLine
+  has_many :expense_lines, inverse_of: :expense, dependent: :destroy, class_name: "Dorsale::ExpenseGun::ExpenseLine"
 
   has_many :attachments,
     :as         => :attachable,
     :dependent  => :destroy,
-    :class_name => ::Dorsale::Alexandrie::Attachment
+    :class_name => "Dorsale::Alexandrie::Attachment"
 
-  belongs_to :user, class_name: User
+  belongs_to :user
   validates :user, presence: true
 
   validates :name, presence: true

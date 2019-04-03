@@ -2,9 +2,9 @@ class Dorsale::Alexandrie::Attachment < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_alexandrie_attachments"
 
   belongs_to :attachable, polymorphic: true
-  belongs_to :sender, class_name: User
+  belongs_to :sender, class_name: "User"
 
-  belongs_to :attachment_type, required: false
+  belongs_to :attachment_type, optional: true
 
   validates :attachable, presence: true
   validates :file,       presence: true

@@ -2,7 +2,7 @@ class MigratePeopleCommentsToEvents < ActiveRecord::Migration[5.0]
   class Event < ::Dorsale::ApplicationRecord
     self.table_name = :dorsale_customer_vault_events
 
-    belongs_to :comment, class_name: Dorsale::Comment
+    belongs_to :comment, class_name: "Dorsale::Comment"
   end
 
   def change

@@ -9,28 +9,34 @@ html
     = csrf_meta_tags
 
   body data-controller=params[:controller] data-action=params[:action]
-    nav
-      = navbar id: "nav", position: :static, fluid: true do
-        = vertical do
-          = link_to "Dorsale Dummy", main_app.root_path
-        = horizontal do
+    nav.navbar.navbar-default.navbar-fixed-top: .container-fluid
+      .navbar-header
+          button.navbar-toggle data-target="#nav" data-toggle="collapse" type="button"
+            span.sr-only = "Toggle navigation"
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+
+          .navbar-brand = link_to "Dorsale Dummy", main_app.root_path
+
+      #nav.collapse.navbar-collapse
+        - if current_user
+          .nav.navbar-nav.navbar-left
+            li = icon_link_to :book,           "Annuaire",       dorsale.customer_vault_events_path
+            li = icon_link_to :check_square_o, "Tâches",         dorsale.flyboy_tasks_path
+            li = icon_link_to :euro,           "Devis",          dorsale.billing_machine_quotations_path
+            li = icon_link_to :euro,           "Factures",       dorsale.billing_machine_invoices_path
+            li = icon_link_to :users,          "Utilisateurs",   dorsale.users_path
+            li = icon_link_to :euro,           "Notes de frais", dorsale.expense_gun_expenses_path
+
+        .nav.navbar-nav.navbar-right
           - if current_user
-            = nav class: "navbar-left" do
-              = icon_link_to :book,           "Annuaire",       dorsale.customer_vault_events_path
-              = icon_link_to :check_square_o, "Tâches",         dorsale.flyboy_tasks_path
-              = icon_link_to :euro,           "Devis",          dorsale.billing_machine_quotations_path
-              = icon_link_to :euro,           "Factures",       dorsale.billing_machine_invoices_path
-              = icon_link_to :users,          "Utilisateurs",   dorsale.users_path
-              = icon_link_to :euro,           "Notes de frais", dorsale.expense_gun_expenses_path
+            li = link_to current_user.name, dorsale.edit_user_path(current_user)
+            li = link_to "Déconnexion", main_app.destroy_user_session_path, method: :delete
 
-          = nav class: "navbar-right" do
-            - if current_user
-              = link_to current_user.name, dorsale.edit_user_path(current_user)
-              = link_to "Déconnexion", main_app.destroy_user_session_path, method: :delete
-
-            - else
-              = link_to "Connexion", main_app.new_user_session_path
+          - else
+            li = link_to "Connexion", main_app.new_user_session_path
 
     #main.container-fluid
-      #flash = render "dorsale/flash"
+      = render "agilibox/flash"
       == yield

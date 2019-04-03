@@ -9,9 +9,9 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
 
   paginates_per 50
 
-  belongs_to :taskable, polymorphic: true, required: false
-  belongs_to :owner, class_name: User
-  has_many :comments, class_name: ::Dorsale::Flyboy::TaskComment, inverse_of: :task, dependent: :destroy
+  belongs_to :taskable, polymorphic: true, optional: true
+  belongs_to :owner, class_name: "User"
+  has_many :comments, class_name: "Dorsale::Flyboy::TaskComment", inverse_of: :task, dependent: :destroy
 
   polymorphic_id_for :taskable
   polymorphic_id_for :owner

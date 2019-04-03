@@ -9,12 +9,12 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
   has_many :lines,
     :inverse_of => :quotation,
     :dependent  => :destroy,
-    :class_name => ::Dorsale::BillingMachine::QuotationLine
+    :class_name => "Dorsale::BillingMachine::QuotationLine"
 
   has_many :attachments,
     :as         => :attachable,
     :dependent  => :destroy,
-    :class_name => ::Dorsale::Alexandrie::Attachment
+    :class_name => "Dorsale::Alexandrie::Attachment"
 
   accepts_nested_attributes_for :lines, allow_destroy: true
 

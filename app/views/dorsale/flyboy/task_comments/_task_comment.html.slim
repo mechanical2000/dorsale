@@ -1,6 +1,6 @@
 tr.task_comment
   td.task_comment-progress
-    = progress_bar percentage: task_comment.progress, label: true
+    = bs_progress_bar(task_comment.progress)
 
   td.task_comment-content
     p: small

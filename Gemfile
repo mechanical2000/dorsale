@@ -18,6 +18,9 @@ gem "pg"
 gem "uglifier"
 gem "puma"
 gem "font-awesome-sass", "~> 4.7.0"
+gem "sass-rails"
+gem "bootstrap-sass"
+gem "select2-rails"
 
 gemspec
 
@@ -63,5 +66,5 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "byebug"
   gem "rspec-rails" # must be in both environments for generators
-  gem "rubocop", "0.59.2", require: false
+  gem "rubocop", "0.66.0", require: false
 end
