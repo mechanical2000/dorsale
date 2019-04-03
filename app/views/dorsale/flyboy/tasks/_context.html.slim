@@ -6,7 +6,7 @@
 
   .context-body class=task.state
     = info task, :tags, tags(task)
-    = info task, :progress, progress_bar(percentage: task.progress, label: true)
+    = info task, :progress, helper: :bs_progress_bar
     = info task, :owner
     = info task, :created_at
     = info task, :reminder_date

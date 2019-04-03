@@ -51,7 +51,7 @@ table#tasks-list
               = icon(:clock_o)
 
         td.task-progress.hidden-xs
-          = progress_bar percentage: task.progress, label: true
+          = bs_progress_bar(task.progress)
 
         td.task-name
           = link_to_object(task)

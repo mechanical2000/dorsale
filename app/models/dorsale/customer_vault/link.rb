@@ -1,8 +1,8 @@
 class Dorsale::CustomerVault::Link < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_customer_vault_links"
 
-  belongs_to :alice, class_name: ::Dorsale::CustomerVault::Person
-  belongs_to :bob,   class_name: ::Dorsale::CustomerVault::Person
+  belongs_to :alice, class_name: "Dorsale::CustomerVault::Person"
+  belongs_to :bob,   class_name: "Dorsale::CustomerVault::Person"
 
   validates :alice, presence: true
   validates :bob,   presence: true

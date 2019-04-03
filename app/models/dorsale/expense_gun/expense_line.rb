@@ -1,8 +1,8 @@
 class Dorsale::ExpenseGun::ExpenseLine < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_expense_lines"
 
-  belongs_to :expense,  class_name: ::Dorsale::ExpenseGun::Expense
-  belongs_to :category, class_name: ::Dorsale::ExpenseGun::Category
+  belongs_to :expense,  class_name: "Dorsale::ExpenseGun::Expense"
+  belongs_to :category, class_name: "Dorsale::ExpenseGun::Category"
 
   validates :expense,         presence: true
   validates :name,            presence: true

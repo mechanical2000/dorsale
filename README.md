@@ -15,10 +15,6 @@ rails server
 go to http://localhost:3000/
 ```
 
-## Online demo
-
-http://dorsale-dummy.agilidee.com/
-
 ## Requirements
 Hosting application shall define a global current_user method providing the current logged user.
 

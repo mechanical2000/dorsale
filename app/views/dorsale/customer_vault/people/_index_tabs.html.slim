@@ -1,6 +1,9 @@
 .index-tabs-container
-  = nav class: "index-tabs" do
-    = link_to Dorsale::CustomerVault::Event.ts,  dorsale.customer_vault_events_path
-    = link_to Dorsale::CustomerVault::Person.ts, dorsale.customer_vault_people_path
+  ul.nav.nav-tabs.index-tabs
+    li class=("active" if request.path == dorsale.customer_vault_events_path)
+      = link_to Dorsale::CustomerVault::Event.ts, dorsale.customer_vault_events_path
+
+    li class=("active" if request.path == dorsale.customer_vault_people_path)
+      = link_to Dorsale::CustomerVault::Person.ts, dorsale.customer_vault_people_path
 
   = search_form action: dorsale.customer_vault_people_path

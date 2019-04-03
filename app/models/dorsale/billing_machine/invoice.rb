@@ -4,7 +4,7 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
   belongs_to :customer, polymorphic: true
   belongs_to :payment_term
 
-  has_many :lines, inverse_of: :invoice, dependent: :destroy, class_name: ::Dorsale::BillingMachine::InvoiceLine
+  has_many :lines, inverse_of: :invoice, dependent: :destroy, class_name: "Dorsale::BillingMachine::InvoiceLine"
 
   accepts_nested_attributes_for :lines, allow_destroy: true
 
