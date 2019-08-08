@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    dorsale (3.11.0)
+    dorsale (3.12.0)
       aasm
       acts-as-taggable-on (>= 4.0.0)
       agilibox (>= 1.0.6)

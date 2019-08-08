@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.12.0
 - Change attachment observers
 
 ## 3.11.0
