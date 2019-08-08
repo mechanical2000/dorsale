@@ -31,14 +31,10 @@ group :test do
   gem "rspec-repeat"
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
-  gem "capybara", "3.4.0" # Problème avec Poltergiest à partir de la 3.4.1
-  gem "poltergeist"
+  gem "capybara"
+  gem "cuprite"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
-  gem "guard"
-  gem "guard-cucumber"
-  gem "guard-rspec", "4.5.2" # https://github.com/guard/guard-rspec/issues/334
-  gem "guard-rubocop"
   gem "timecop"
   gem "simplecov", require: false
   gem "pundit-matchers"
@@ -49,11 +45,7 @@ end
 group :development do
   gem "desktop_delivery"
   gem "better_errors"
-  gem "meta_request"
   gem "bullet"
-
-  # Please do not use this gem, it create Rails reloader problems
-  # gem "binding_of_caller"
 end
 
 group :development, :test do
@@ -61,10 +53,12 @@ group :development, :test do
   gem "launchy"
   gem "rails-erd"
   gem "thor"
-  gem "faker"
+  gem "faker", "~> 1.9.6"
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "byebug"
   gem "rspec-rails" # must be in both environments for generators
-  gem "rubocop", "0.66.0", require: false
+  gem "rubocop", "0.73.0", require: false
+  gem "rubocop-performance", "1.4.0", require: false
+  gem "rubocop-rails", "2.2.1", require: false
 end

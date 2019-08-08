@@ -23,7 +23,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :create?
 
     if @attachment.save
-      notify_attachable
+      notify_attachable(:create)
     else
       flash.now[:alert] = t("messages.attachments.create_error")
     end
@@ -41,7 +41,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :update?
 
     if @attachment.update(attachment_params_for_update)
-      notify_attachable
+      notify_attachable(:update)
     else
       flash.now[:alert] = t("messages.attachments.update_error")
     end
@@ -53,7 +53,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     authorize @attachment, :delete?
 
     if @attachment.destroy
-      notify_attachable
+      notify_attachable(:delete)
     else
       flash.now[:alert] = t("messages.attachments.delete_error")
     end
@@ -117,7 +117,7 @@ class Dorsale::Alexandrie::AttachmentsController < ::Dorsale::ApplicationControl
     render :index
   end
 
-  def notify_attachable
-    @attachment.attachable.send(:try, :after_attachments_changes)
+  def notify_attachable(action)
+    @attachment.attachable.send(:try, :on_attachment_action, @attachment, action)
   end
 end
