@@ -35,10 +35,6 @@ group :test do
   gem "cuprite"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
-  gem "guard"
-  gem "guard-cucumber"
-  gem "guard-rspec", "4.5.2" # https://github.com/guard/guard-rspec/issues/334
-  gem "guard-rubocop"
   gem "timecop"
   gem "simplecov", require: false
   gem "pundit-matchers"
@@ -49,11 +45,7 @@ end
 group :development do
   gem "desktop_delivery"
   gem "better_errors"
-  gem "meta_request"
   gem "bullet"
-
-  # Please do not use this gem, it create Rails reloader problems
-  # gem "binding_of_caller"
 end
 
 group :development, :test do
