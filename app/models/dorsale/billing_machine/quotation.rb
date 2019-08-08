@@ -118,7 +118,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     end
   end
 
-  def after_attachments_changes
+  def on_attachment_action(_attachment, _action)
     Dorsale::BillingMachine::PdfFileGenerator.(self)
   end
 end
