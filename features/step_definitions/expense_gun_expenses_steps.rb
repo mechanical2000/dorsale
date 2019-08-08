@@ -15,7 +15,7 @@ When(/^I create a new expense$/) do
 
   within all(".nested-fields").first do
     find("input[id$='_name']").set "ExpenseLine1Name"
-    find("input[id$='_date']").set "21/06/2015"
+    find("input[id$='_date']").set "2015-06-21"
     select @category.name
     find("input[id$='_total_all_taxes']").set "100"
     find("input[id$='_vat']").set "20"
@@ -26,7 +26,7 @@ When(/^I create a new expense$/) do
 
   within all(".nested-fields").last do
     find("input[id$='_name']").set "ExpenseLine2Name"
-    find("input[id$='_date']").set "12/06/2015"
+    find("input[id$='_date']").set "2015-06-12"
     select @category.name
     find("input[id$='_total_all_taxes']").set "200"
     find("input[id$='_vat']").set "40"

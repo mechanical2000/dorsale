@@ -31,8 +31,8 @@ group :test do
   gem "rspec-repeat"
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
-  gem "capybara", "3.4.0" # Problème avec Poltergiest à partir de la 3.4.1
-  gem "poltergeist"
+  gem "capybara"
+  gem "cuprite"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
   gem "guard"

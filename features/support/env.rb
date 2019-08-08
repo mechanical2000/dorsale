@@ -5,4 +5,4 @@ def Zonebie.set_random_timezone
   # https://github.com/agilidee/dorsale/issues/273
 end
 Agilibox::CucumberConfig.require_all_helpers!
-Agilibox::CucumberConfig.require_poltergeist!
+Agilibox::CucumberConfig.require_cuprite!
