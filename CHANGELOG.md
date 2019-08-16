@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.13.0
 - Rails 5.2 compatible
 
 ## 3.12.0
