@@ -37,13 +37,15 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   }
 
   scope :order_by_name, -> {
-    order %(
+    sql = %(
       LOWER(
         COALESCE(corporation_name, '') ||
         COALESCE(last_name, '') ||
         COALESCE(first_name, '')
       ) ASC
     )
+
+    order(Arel.sql sql)
   }
 
   scope :having_email, -> (email) { where("email = :e OR :e = ANY (secondary_emails)", e: email) }

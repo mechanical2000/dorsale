@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Rails 5.2 compatible
 
 ## 3.12.0
 - Change attachment observers

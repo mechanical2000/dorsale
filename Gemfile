@@ -7,10 +7,11 @@ else
   puts ".ruby-version file not found"
 end
 
-gem "rails", "~> 5.0.0"
-gem "agilibox", ">= 1.0.9"
+gem "rails", "~> 5.2.3"
+gem "agilibox", ">= 1.5.12"
 gem "axlsx", github: "randym/axlsx"
 
+gem "bootsnap"
 gem "devise"
 gem "devise-bootstrap-views"
 gem "devise-i18n"
@@ -46,6 +47,7 @@ group :development do
   gem "desktop_delivery"
   gem "better_errors"
   gem "bullet"
+  gem "listen"
 end
 
 group :development, :test do

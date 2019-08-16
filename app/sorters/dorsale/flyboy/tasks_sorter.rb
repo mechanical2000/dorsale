@@ -1,10 +1,10 @@
 class Dorsale::Flyboy::TasksSorter < Agilibox::Sorter
   def sort
     case column
-    when :name, :status
-      %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
-    when :progress, :term
-      %(dorsale_flyboy_tasks.#{column} #{direction})
+    when :name
+      Arel.sql %(LOWER(dorsale_flyboy_tasks.#{column}) #{direction})
+    when :progress, :term, :status
+      {column => direction}
     when :taskable
       if direction == :asc
         proc { |a, b| a.taskable.to_s.downcase <=> b.taskable.to_s.downcase }
@@ -12,7 +12,7 @@ class Dorsale::Flyboy::TasksSorter < Agilibox::Sorter
         proc { |a, b| b.taskable.to_s.downcase <=> a.taskable.to_s.downcase }
       end
     when :tags
-      %(
+      Arel.sql %(
         (
           SELECT STRING_AGG(n, ' ' ORDER BY n)
           FROM (

@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.md", "Rakefile", "README.md", "CHANGELOG.md"]
 
   s.add_dependency "rails", ">= 4.0.0"
-  s.add_dependency "agilibox", ">= 1.0.6"
+  s.add_dependency "agilibox", ">= 1.0.10"
   s.add_dependency "virtus"
   s.add_dependency "slim-rails"
   s.add_dependency "simple_form"
