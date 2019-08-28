@@ -202,30 +202,47 @@ describe Dorsale::BillingMachine::Invoice, type: :model do
       expect(invoice.balance).to eq(108)
     end
 
-    it "should round numbers" do
-      invoice = create(:billing_machine_invoice,
-        :commercial_discount => 0,
-      )
+    describe "VAT round" do
+      let(:invoice) {
+        invoice = create(:billing_machine_invoice,
+          :commercial_discount => 0,
+        )
 
-      create(:billing_machine_invoice_line,
-        :quantity   => 12.34,
-        :unit_price => 12.34,
-        :vat_rate   => 20,
-        :invoice    => invoice,
-      ) # total 152.28
+        create(:billing_machine_invoice_line,
+          :quantity   => 12.34,
+          :unit_price => 12.34,
+          :vat_rate   => 20,
+          :invoice    => invoice,
+        ) # vat 30.45512 / total 152.2756
 
-      create(:billing_machine_invoice_line,
-        :quantity   => 12.34,
-        :unit_price => 12.34,
-        :vat_rate   => 20,
-        :invoice    => invoice,
-      ) # total 152.28
+        create(:billing_machine_invoice_line,
+          :quantity   => 12.34,
+          :unit_price => 12.34,
+          :vat_rate   => 20,
+          :invoice    => invoice,
+        ) # vat 30.45512 / total 152.2756
 
-      expect(invoice.total_excluding_taxes).to eq(304.56)
-      expect(invoice.vat_amount).to eq(60.92)
-      expect(invoice.total_including_taxes).to eq(365.48)
-      expect(invoice.balance).to eq(365.48)
-    end
+        invoice
+      }
+
+      after { Dorsale::BillingMachine.vat_round_by_line = nil }
+
+      it "should round VAT by line" do
+        Dorsale::BillingMachine.vat_round_by_line = true
+        expect(invoice.total_excluding_taxes.to_f).to eq(304.56)
+        expect(invoice.vat_amount.to_f).to eq(60.92)
+        expect(invoice.total_including_taxes.to_f).to eq(365.48)
+        expect(invoice.balance.to_f).to eq(365.48)
+      end
+
+      it "should round VAT globally" do
+        Dorsale::BillingMachine.vat_round_by_line = false
+        expect(invoice.total_excluding_taxes.to_f).to eq(304.56)
+        expect(invoice.vat_amount.to_f).to eq(60.91)
+        expect(invoice.total_including_taxes.to_f).to eq(365.47)
+        expect(invoice.balance.to_f).to eq(365.47)
+      end
+    end # describe "VAT round"
 
     it "should work fine even with empty lines" do
       invoice = create(:billing_machine_invoice)
