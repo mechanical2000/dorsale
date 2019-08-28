@@ -76,8 +76,12 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
 
     lines.each do |line|
       line_total = line.total - (line.total * discount_rate)
-      self.vat_amount += (line_total * line.vat_rate / 100.0).round(2)
+      line_vat = (line_total * line.vat_rate / 100.0)
+      line_vat = line_vat.round(2) if Dorsale::BillingMachine.vat_round_by_line
+      self.vat_amount += line_vat
     end
+
+    self.vat_amount = vat_amount.round(2)
 
     self.total_including_taxes = total_excluding_taxes + vat_amount
   end

@@ -13,6 +13,13 @@ module Dorsale::BillingMachine
       @vat_mode = new_mode
     end
 
+    def vat_round_by_line
+      @vat_round_by_line = false if @vat_round_by_line.nil?
+      @vat_round_by_line
+    end
+
+    attr_writer :vat_round_by_line
+
     def invoice_pdf_model
       "::Dorsale::BillingMachine::Invoice#{vat_mode.to_s.capitalize}VatPdf".constantize
     end

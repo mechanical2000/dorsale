@@ -152,30 +152,47 @@ describe Dorsale::BillingMachine::Quotation do
       Dorsale::BillingMachine.vat_mode = :single
     end
 
-    it "should round numbers" do
-      quotation = create(:billing_machine_quotation,
-        :commercial_discount => 0,
-      )
+    describe "VAT round" do
+      let(:quotation) {
+        quotation = create(:billing_machine_quotation,
+          :commercial_discount => 0,
+        )
 
-      create(:billing_machine_quotation_line,
-        :quantity   => 12.34,
-        :unit_price => 12.34,
-        :vat_rate   => 20,
-        :quotation  => quotation,
-      ) # total 152.28
+        create(:billing_machine_quotation_line,
+          :quantity   => 12.34,
+          :unit_price => 12.34,
+          :vat_rate   => 20,
+          :quotation  => quotation,
+        ) # vat 30.45512 / total 152.2756
 
-      create(:billing_machine_quotation_line,
-        :quantity   => 12.34,
-        :unit_price => 12.34,
-        :vat_rate   => 20,
-        :quotation  => quotation,
-      ) # total 152.28
+        create(:billing_machine_quotation_line,
+          :quantity   => 12.34,
+          :unit_price => 12.34,
+          :vat_rate   => 20,
+          :quotation  => quotation,
+        ) # vat 30.45512 / total 152.2756
 
-      expect(quotation.total_excluding_taxes).to eq(304.56)
-      expect(quotation.vat_amount).to eq(60.92)
-      expect(quotation.total_including_taxes).to eq(365.48)
-      expect(quotation.balance).to eq(365.48)
-    end
+        quotation
+      }
+
+      after { Dorsale::BillingMachine.vat_round_by_line = nil }
+
+      it "should round VAT by line" do
+        Dorsale::BillingMachine.vat_round_by_line = true
+        expect(quotation.total_excluding_taxes.to_f).to eq(304.56)
+        expect(quotation.vat_amount.to_f).to eq(60.92)
+        expect(quotation.total_including_taxes.to_f).to eq(365.48)
+        expect(quotation.balance.to_f).to eq(365.48)
+      end
+
+      it "should round VAT globally" do
+        Dorsale::BillingMachine.vat_round_by_line = false
+        expect(quotation.total_excluding_taxes.to_f).to eq(304.56)
+        expect(quotation.vat_amount.to_f).to eq(60.91)
+        expect(quotation.total_including_taxes.to_f).to eq(365.47)
+        expect(quotation.balance.to_f).to eq(365.47)
+      end
+    end # describe "VAT round" do
 
     it "should work fine even with empty lines" do
       quotation = create(:billing_machine_quotation, commercial_discount: nil)

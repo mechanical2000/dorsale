@@ -8,8 +8,8 @@ else
 end
 
 gem "rails", "~> 5.2.3"
-gem "agilibox", ">= 1.5.12"
-gem "axlsx", github: "randym/axlsx"
+gem "agilibox", ">= 1.6.0"
+gem "spreadsheet_architect"
 
 gem "bootsnap"
 gem "devise"

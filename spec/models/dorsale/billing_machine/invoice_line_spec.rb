@@ -42,11 +42,11 @@ describe Dorsale::BillingMachine::InvoiceLine, type: :model do
 
   it "should update the total upon save" do
     line = create(:billing_machine_invoice_line, quantity: 12.34, unit_price: 12.34, total: 0)
-    expect(line.total).to eq(152.28)
+    expect(line.total.to_f).to eq 152.28
   end
 
   it "should update the total gracefully with invalid data" do
     line = create(:billing_machine_invoice_line, quantity: nil, unit_price: nil, total: 0)
-    expect(line.total).to eq(0)
+    expect(line.total.to_f).to eq 0
   end
 end
