@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.0
 - Add `Dorsale::BillingMachine.vat_round_by_line` option
 - Revert default `vat_round_by_line` value introduced in 3.10.0 (it's now false again)
 
