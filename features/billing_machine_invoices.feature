@@ -22,7 +22,7 @@ Feature: Invoice Management
     Given 75 existing invoices
     When the user goes to the invoices page
     Then he should see 50 invoices
-    When he goes to the next page
+    When he goes on the next page
     Then he should see 25 invoices
 
   Scenario: Copy invoice

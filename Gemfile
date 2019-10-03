@@ -8,9 +8,9 @@ else
 end
 
 gem "rails", "~> 5.2.3"
-gem "agilibox", ">= 1.6.0"
-gem "spreadsheet_architect"
+gem "agilibox", ">= 1.7.4"
 
+gem "spreadsheet_architect"
 gem "bootsnap"
 gem "devise"
 gem "devise-bootstrap-views"
@@ -19,7 +19,7 @@ gem "pg"
 gem "uglifier"
 gem "puma"
 gem "font-awesome-sass", "~> 4.7.0"
-gem "sass-rails"
+gem "sass-rails", "< 6"
 gem "bootstrap-sass"
 gem "select2-rails"
 
@@ -33,6 +33,7 @@ group :test do
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
   gem "capybara"
+  gem "ferrum", "0.4"
   gem "cuprite"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"

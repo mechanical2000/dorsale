@@ -41,7 +41,7 @@ Feature: Manage corporations
     Given 40 existing corporations
     When I go on the corporate index
     Then he can see 25 corporate
-    When he go on the next page
+    When he goes on the next page
     Then he can see 15 corporate
 
   Scenario: New person without name

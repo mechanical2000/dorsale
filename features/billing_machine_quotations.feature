@@ -22,7 +22,7 @@ Feature: Quotation Management
     Given 75 existing quotations
     When the user goes to the quotations page
     Then he should see 50 quotations
-    When he goes to the next page
+    When he goes on the next page
     Then he should see 25 quotations
 
   Scenario: Empty quotation
