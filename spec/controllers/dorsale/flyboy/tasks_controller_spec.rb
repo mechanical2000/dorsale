@@ -230,29 +230,31 @@ describe Dorsale::Flyboy::TasksController, type: :controller do
   end
 
   describe "PUT update" do
+    let!(:task) { create(:flyboy_task) }
+
     describe "with valid params" do
       it "assigns the requested task as @task" do
-        task = Dorsale::Flyboy::Task.create! valid_attributes
-        patch :update, params: {:id => task.to_param, :task => valid_attributes}
+        patch :update, params: {id: task, task: valid_attributes}
         expect(assigns(:task)).to eq(task)
       end
 
       it "redirects to the task" do
-        task = Dorsale::Flyboy::Task.create! valid_attributes
-        patch :update, params: {:id => task.to_param, :task => valid_attributes}
+        patch :update, params: {id: task, task: valid_attributes}
         expect(response).to redirect_to(task)
+      end
+
+      it "should create term changed comment" do
+        valid_attributes[:term] = task.term - 3.days
+
+        expect {
+          patch :update, params: {id: task, task: valid_attributes}
+        }.to change(Dorsale::Flyboy::TaskComment, :count).by(1)
       end
     end
 
     describe "with invalid params" do
       it "assigns the task as @task" do
-        task = Dorsale::Flyboy::Task.create! valid_attributes
-
-        patch :update, params: {
-          :id   => task.to_param,
-          :task => {:name => nil},
-        }
-
+        patch :update, params: {id: task, task: {name: nil}}
         expect(assigns(:task)).to eq(task)
       end
     end

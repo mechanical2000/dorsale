@@ -11,6 +11,9 @@ en:
       snooze_eror: "One error occurs, task can't be snoozed"
       complete_ok: "Task completed"
       complete_eror: "One error occurs, task can't be completed"
+      copy_ok: "Task copied "
+      copy_ko: "One error occurs, task can't be copied"
+      snoozed: "Task term changed from %{old_date} to %{new_date}."
 
   task_mailer:
     new_task:

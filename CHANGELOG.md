@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- "Task snoozed" comment improvements
 
 ## 3.14.0
 - Add `Dorsale::BillingMachine.vat_round_by_line` option

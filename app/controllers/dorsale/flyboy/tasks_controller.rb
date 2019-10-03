@@ -65,7 +65,9 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def update
     authorize @task, :update?
 
+    previous_term = @task.term
     if @task.update(task_params)
+      @task.create_term_changed_comment!(previous: previous_term, author: current_user)
       flash[:success] = t("messages.tasks.update_ok")
       redirect_to back_url
     else
@@ -107,14 +109,9 @@ class Dorsale::Flyboy::TasksController < ::Dorsale::Flyboy::ApplicationControlle
   def snooze
     authorize @task, :snooze?
 
+    previous_term = @task.term
     if @task.snoozer.snooze
-      Dorsale::Flyboy::TaskComment.create!(
-        :task        => @task,
-        :progress    => @task.progress,
-        :description => t("messages.tasks.snooze_ok"),
-        :author      => current_user,
-      )
-
+      @task.create_term_changed_comment!(previous: previous_term, author: current_user)
       flash[:success] = t("messages.tasks.snooze_ok")
     else
       flash[:danger] = t("messages.tasks.snooze_error")
