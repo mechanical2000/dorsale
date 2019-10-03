@@ -55,23 +55,23 @@ When(/^the user goes to the quotations page$/) do
 end
 
 When(/^the quotation line shows the right date$/) do
-  page.should have_selector ".date", text: I18n.l(@quotation.date)
+  expect(page).to have_selector ".date", text: I18n.l(@quotation.date)
 end
 
 When(/^the quotation line shows the right traking\-id$/) do
-  page.should have_selector ".tracking_id", text: @quotation.tracking_id
+  expect(page).to have_selector ".tracking_id", text: @quotation.tracking_id
 end
 
 When(/^the quotation line shows the right customer's name$/) do
-  page.should have_selector ".customer_name", text: @customer.name
+  expect(page).to have_selector ".customer_name", text: @customer.name
 end
 
 When(/^the quotation line shows the right total excluding taxes value$/) do
-  page.should have_selector ".total_excluding_taxes", text: "9,99 €"
+  expect(page).to have_selector ".total_excluding_taxes", text: "9,99 €"
 end
 
 When(/^the quotation line shows the right total including taxes value$/) do
-  page.should have_selector ".total_including_taxes", text: "11,99 €"
+  expect(page).to have_selector ".total_including_taxes", text: "11,99 €"
 end
 
 When(/^the user goes to the quotation details$/) do
@@ -119,11 +119,11 @@ end
 
 Then(/^the document is not in the quotation details$/) do
   visit dorsale.billing_machine_quotation_path(@quotation)
-  page.should have_link "pdf.pdf", count: 1
+  expect(page).to have_link "pdf.pdf", count: 1
 end
 
 Then(/^a message signals the success of the quotation update$/) do
-  page.should have_selector ".alert-success"
+  expect(page).to have_selector ".alert-success"
 end
 
 Then(/^he fill the quotation commercial discount with "(.*?)"$/) do |arg1|
@@ -132,7 +132,7 @@ end
 
 Then(/^the quotation's label has changed$/) do
   visit dorsale.edit_billing_machine_quotation_path(@quotation)
-  page.should have_field("quotation_label", with: @new_label)
+  expect(page).to have_field("quotation_label", with: @new_label)
 end
 
 Then(/^I am on the created quotation$/) do
@@ -145,11 +145,11 @@ Then(/^he can see all the quotation informations$/) do
 end
 
 Then(/^the quotation default date is set to today's date\.$/) do
-  page.should have_field("quotation_date", with: I18n.l(Date.current))
+  expect(page).to have_field("quotation_date", with: I18n.l(Date.current))
 end
 
 Then(/^he should see (\d+) quotations?$/) do |arg1|
-  page.should have_selector ".quotation", count: arg1
+  expect(page).to have_selector ".quotation", count: arg1
 end
 
 Then(/^the quotation is displayed correctly$/) do
@@ -157,11 +157,11 @@ Then(/^the quotation is displayed correctly$/) do
 end
 
 Then(/^a message signals the success of the quotation creation$/) do
-  page.should have_selector ".alert-success"
+  expect(page).to have_selector ".alert-success"
 end
 
 Then(/^he will see links to the documents$/) do
-  page.should have_link "pdf.pdf", count: 2
+  expect(page).to have_link "pdf.pdf", count: 2
 end
 
 Then(/^the quotation informations are visible on the quotation details$/) do

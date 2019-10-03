@@ -228,4 +228,27 @@ describe Dorsale::Flyboy::Task do
       expect(described_class.done).to eq [task_done]
     end
   end # describe "states"
+
+  describe "#create_term_changed_comment!" do
+    let!(:task) { create(:flyboy_task, term: "2019-10-02") }
+    let!(:author) { create(:user) }
+
+    it "should create comment" do
+      expect {
+        task.create_term_changed_comment!(previous: Date.new(2019, 10, 1), author: author)
+      }.to change(Dorsale::Flyboy::TaskComment, :count).by(1)
+
+      task_comment = task.comments.last_created
+      expect(task_comment.task).to eq task
+      expect(task_comment.author).to eq author
+      expect(task_comment.description).to eq \
+        "L'échéance de la tâche a été modifiée de 01/10/2019 à 02/10/2019."
+    end
+
+    it "should not create comment if date not changed" do
+      expect {
+        task.create_term_changed_comment!(previous: Date.new(2019, 10, 2), author: author)
+      }.to_not change(Dorsale::Flyboy::TaskComment, :count)
+    end
+  end # describe "#create_term_changed_comment!"
 end

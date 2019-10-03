@@ -7,8 +7,9 @@ When(/^an existing customer$/) do
   @customer = create(:customer_vault_corporation)
 end
 
-When(/^he goes to the next page$/) do
+When(/^he goes on the next page$/) do
   find(".next").click
+  expect(page).to have_selector ".page.active a[href$='2']"
 end
 
 Given(/^an existing payment term$/) do

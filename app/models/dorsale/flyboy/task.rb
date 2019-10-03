@@ -112,6 +112,19 @@ class Dorsale::Flyboy::Task < ::Dorsale::ApplicationRecord
     auto_update_reminder_date
   end
 
+  def create_term_changed_comment!(previous:, author:)
+    return if previous == term
+
+    old_date = H.date(previous)
+    new_date = H.date(term)
+
+    comments.create!(
+      :progress    => progress,
+      :description => I18n.t("messages.tasks.snoozed", old_date: old_date, new_date: new_date),
+      :author      => author,
+    )
+  end
+
   private
 
   def auto_update_reminder_date

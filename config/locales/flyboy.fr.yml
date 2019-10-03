@@ -13,6 +13,7 @@ fr:
       complete_eror: "Impossible de terminer la tâche"
       copy_ok: "La tâche a été copiée"
       copy_ko: "Impossible de copier cette tâche"
+      snoozed: "L'échéance de la tâche a été modifiée de %{old_date} à %{new_date}."
 
   task_mailer:
     new_task:

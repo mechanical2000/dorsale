@@ -42,16 +42,12 @@ When(/^I go on the corporate index$/) do
   visit dorsale.customer_vault_people_path
 end
 
-When(/^he go on the next page$/) do
-  click_link "2"
-end
-
 Then(/^i see an error message for the missing name$/) do
   expect(page).to have_selector ".person_corporation_name.has-error"
 end
 
 Then(/^he can see (\d+) corporate$/) do |count|
-  page.should have_selector ".person", count: count
+  expect(page).to have_selector ".person", count: count
 end
 
 Then(/^the corporation is created$/) do
