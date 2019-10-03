@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.1
 - "Task snoozed" comment improvements
 
 ## 3.14.0
