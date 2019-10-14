@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe ::Dorsale::CustomerVault::Individual, :type => :model do
   it "should have a valid factory" do
-    individual = build(:customer_vault_individual)
+    individual = create(:customer_vault_individual)
     expect(individual).to be_valid
+    expect(Dorsale::Address.count).to eq 1
   end
 
   it { is_expected.to have_one(:address).dependent(:destroy) }

@@ -24,4 +24,10 @@ RSpec.describe ::Dorsale::CustomerVault::Corporation, type: :model do
   it { is_expected.to have_many(:comments).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of :corporation_name }
+
+  it "should have a valid factory" do
+    corporation = create(:customer_vault_corporation)
+    expect(corporation).to be_valid
+    expect(Dorsale::Address.count).to eq 1
+  end
 end
