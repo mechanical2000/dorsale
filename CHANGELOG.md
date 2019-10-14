@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.2
 - Fix CustomerVault factories
 
 ## 3.14.1
