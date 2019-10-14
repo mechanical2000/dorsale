@@ -12,9 +12,6 @@ FactoryBot.define do
     phone      { "01 23 xx xx xx"                                    }
     fax        { "09 xx xx xx xx"                                    }
     mobile     { "06 xx xx xx xx"                                    }
-
-    after(:create) do |individual|
-      create(:dorsale_address, addressable: individual)
-    end
+    address    { build(:dorsale_address)                             }
   end
 end

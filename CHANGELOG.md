@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Fix CustomerVault factories
 
 ## 3.14.1
 - "Task snoozed" comment improvements
