@@ -1,0 +1,15 @@
+image: ci-rails
+
+variables:
+  RBENV_ROOT: /cache/rbenv
+  COVERAGE_CHECK: "false"
+
+before_script:
+  - source rails-setup
+
+tests:
+  script: test-all
+
+  artifacts:
+    paths: ["coverage", "tmp/capybara"]
+    expire_in: 1 hour
