@@ -10,7 +10,7 @@ describe ::Dorsale::UserMailer do
     end
 
     it "should have the right sender" do
-      expect(email.from).to eq(["contact@example.org"])
+      expect(email.from).to eq(["example@example.org"])
     end
 
     it "should contain user_type, login and password" do
