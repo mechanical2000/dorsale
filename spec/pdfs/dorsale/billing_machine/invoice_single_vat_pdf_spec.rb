@@ -27,7 +27,7 @@ describe ::Dorsale::BillingMachine::InvoiceSingleVatPdf, pdfs: true do
   }
 
   it "should display global vat rate" do
-    expect(content).to include "TVA 19,60 %"
+    expect(content).to include "TVA 19,60"
     expect(content).to_not include "MONTANT TVA"
     expect(content).to_not include "TVA %"
   end
