@@ -3,6 +3,7 @@ image: ci-rails
 variables:
   RBENV_ROOT: /cache/rbenv
   COVERAGE_CHECK: "false"
+  POSTGRESQL_DB: dorsale_test
 
 before_script:
   - source rails-setup
