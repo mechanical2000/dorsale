@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- BillingMachine minor fixes
 
 ## 3.14.2
 - Fix CustomerVault factories
