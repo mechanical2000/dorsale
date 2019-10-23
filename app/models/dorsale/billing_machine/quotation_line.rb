@@ -18,8 +18,7 @@ class Dorsale::BillingMachine::QuotationLine < ::Dorsale::ApplicationRecord
   end
 
   def update_total
-    assign_default_values
-    self.total = (quantity * unit_price).round(2)
+    self.total = (quantity.to_f * unit_price.to_f).round(2)
   end
 
   after_save :update_quotation_total
