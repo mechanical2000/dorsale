@@ -42,4 +42,14 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
       end
     end # describe "filters"
   end # describe "#index"
+
+  describe "#show" do
+    render_views
+
+    it "should be ok as PDF" do
+      expense = create(:expense_gun_expense, user: user)
+      get :show, params: {id: expense, format: :pdf}
+      expect(response).to be_ok
+    end
+  end # describe "#show"
 end
