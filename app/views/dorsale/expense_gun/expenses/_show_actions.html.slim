@@ -16,4 +16,6 @@
 - if policy(@expense).cancel?
   = bs_button dorsale.cancel_expense_gun_expense_path(@expense), action: :cancel, method: "patch", confirm: true, icon: :times, class: "btn btn-xs btn-warning"
 
+= download_button url_for(format: :pdf)
+
 = print_button

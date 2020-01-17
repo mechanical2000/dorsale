@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Expenses : add PDF export
 
 ## 3.14.3
 - BillingMachine minor fixes

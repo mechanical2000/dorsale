@@ -18,12 +18,6 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpenseLine, type: :model do
     expect(expense_line).to be_valid
   end
 
-  it "#vat should be decimal" do
-    expense_line = build(:expense_gun_expense_line, vat: 123)
-    expect(expense_line.valid?).to be false
-    expect(expense_line.vat).to eq 123.0
-  end
-
   it "#company_part should be 100 as default" do
     expense_line = described_class.new
     expect(expense_line.company_part).to eq 100.0
