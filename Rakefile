@@ -35,3 +35,5 @@ end
 
 
 task default: :test
+
+task :"assets:precompile" => :"app:assets:precompile"
