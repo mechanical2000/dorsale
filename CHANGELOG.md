@@ -2,6 +2,9 @@
 
 ## Next version
 
+## 3.14.5
+- Restore test files in gemspec
+
 ## 3.14.4
 - Expenses : add PDF export
 

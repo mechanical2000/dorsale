@@ -14,6 +14,9 @@ Gem::Specification.new do |s|
   s.description = "Run your own business."
   s.license     = "Nonstandard"
 
+  # Nécessaire pour les factories
+  s.test_files  = Dir["{spec,features}/**/*"].reject { |f| f.include?("/dummy") }
+
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.md", "Rakefile", "README.md", "CHANGELOG.md"]
 
   s.add_dependency "rails", ">= 4.0.0", "< 99"
