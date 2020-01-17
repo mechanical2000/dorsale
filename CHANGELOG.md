@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.4
 - Expenses : add PDF export
 
 ## 3.14.3
