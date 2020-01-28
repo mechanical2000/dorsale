@@ -75,9 +75,11 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
 
   def update
     # callback in BillingMachine::ApplicationController
+    @invoice.attributes = invoice_params_for_update
+
     authorize @invoice, :update?
 
-    if @invoice.update(invoice_params_for_update)
+    if @invoice.save
       Dorsale::BillingMachine::PdfFileGenerator.(@invoice)
       flash[:notice] = t("messages.invoices.update_ok")
       redirect_to default_back_url

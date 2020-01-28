@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Small changes on BM policy check
 
 ## 3.14.5
 - Restore test files in gemspec
