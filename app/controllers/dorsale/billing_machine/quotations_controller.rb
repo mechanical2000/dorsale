@@ -65,9 +65,11 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
 
   def update
     # callback in BillingMachine::ApplicationController
+    @quotation.attributes = quotation_params_for_update
+
     authorize @quotation, :update?
 
-    if @quotation.update(quotation_params_for_update)
+    if @quotation.save
       Dorsale::BillingMachine::PdfFileGenerator.(@quotation)
       flash[:notice] = t("messages.quotations.update_ok")
       redirect_to default_back_url
