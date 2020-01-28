@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+## 3.14.6
 - Small changes on BM policy check
 
 ## 3.14.5
