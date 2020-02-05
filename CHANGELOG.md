@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.7
 - Freeze ttfunk to <1.6 to fix PDF errors
 
 ## 3.14.6

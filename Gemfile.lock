@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (3.14.6)
+    dorsale (3.14.7)
       aasm (< 99)
       acts-as-taggable-on (>= 4.0.0, < 99)
       agilibox (>= 1.0.10, < 99)
