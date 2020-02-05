@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "pdf-reader", "< 99"
   s.add_dependency "prawn", "< 99"
   s.add_dependency "prawn-table", "< 99"
+  s.add_dependency "ttfunk", "< 1.6.0" # https://github.com/prawnpdf/ttfunk/issues/72
   s.add_dependency "combine_pdf", "< 99"
   s.add_dependency "cocoon", "< 99"
   s.add_dependency "acts-as-taggable-on", ">= 4.0.0", "< 99"

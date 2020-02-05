@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+- Freeze ttfunk to <1.6 to fix PDF errors
+
 ## 3.14.6
 - Small changes on BM policy check
 
