@@ -7,7 +7,7 @@ else
   puts ".ruby-version file not found"
 end
 
-gem "rails", "~> 5.2.4"
+gem "rails", "~> 6.0.3"
 gem "agilibox", ">= 1.7.4"
 
 gem "spreadsheet_architect"

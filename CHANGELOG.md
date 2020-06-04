@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Rails 6
 
 ## 3.14.7
 - Freeze ttfunk to <1.6 to fix PDF errors
