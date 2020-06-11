@@ -48,7 +48,7 @@ module Dorsale
       end
     end
 
-    initializer "check_pundit_policies" do
+    config.after_initialize do
       Dorsale::PolicyChecker.check! if Rails.env.test? || Rails.env.development?
     end
 
