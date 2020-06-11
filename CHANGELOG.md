@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.8
 - Rails 6
 
 ## 3.14.7
