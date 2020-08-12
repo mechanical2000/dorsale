@@ -1,7 +1,7 @@
 class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_billing_machine_quotations"
 
-  STATES = %w(pending accepted refused canceled)
+  STATES = %w(draft pending accepted refused canceled)
 
   belongs_to :customer, polymorphic: true
   belongs_to :payment_term

@@ -66,6 +66,7 @@ fr:
 
       dorsale/billing_machine/quotation/state:
         all: "Tous les états"
+        draft: Brouillon
         pending: "En attente"
         accepted: "Accepté"
         refused: "Refusé"
