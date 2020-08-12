@@ -45,13 +45,19 @@ class Dorsale::CustomerVault::PeopleController < ::Dorsale::CustomerVault::Appli
 
     @person ||= scope.new(person_params_for_create)
 
-    if @person.save
-      generate_event!("create")
-      flash[:notice] = t("messages.#{person_type.to_s.pluralize}.create_ok")
-      redirect_to back_url
-    else
+    unless @person.save
       render :new
+      return
     end
+
+    if request.xhr? && @person.corporation?
+      render :create_corporation_js
+      return
+    end
+
+    generate_event!("create")
+    flash[:notice] = t("messages.#{person_type.to_s.pluralize}.create_ok")
+    redirect_to back_url
   end
 
   def show

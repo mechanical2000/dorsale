@@ -65,3 +65,14 @@ end
 When(/^I go on this individual$/) do
   visit dorsale.customer_vault_individual_path(@individual)
 end
+
+When("I create corporation from individual") do
+  find("a[href*=corporation][href$=new]").click
+  fill_in :person_corporation_name, with: "agilidée"
+  find("#modal [type=submit]").click
+end
+
+Then("the new corporation is associated to individual") do
+  expect(@individual.corporation).to be_present
+  expect(@individual.corporation.name).to eq "agilidée"
+end
