@@ -1,6 +1,9 @@
 # Changelog
 
 ## Next version
+- Create corporation from individual form
+- Quotations: add draft state
+- Fix carrierwave white lists
 
 ## 3.14.8
 - Rails 6

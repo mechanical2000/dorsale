@@ -30,8 +30,16 @@
 
       - if @person.individual?
         = f.input :title
-        = f.association :corporation, collection: policy_scope(Dorsale::CustomerVault::Corporation), input_html: {class: 'select2'}
+        .row.form-group
+          = f.label :corporation, class: "control-label col-sm-3"
+          .col-sm-9
+            div style="display:flex"
+              = f.collection_select :corporation_id, policy_scope(Dorsale::CustomerVault::Corporation), :id, :to_s, {include_blank: true}, {class: "select2", style: "width:100%"}
+              a.btn.btn-success.btn-xs href=new_customer_vault_corporation_path data-modal="nested" style="margin-left:1em;padding-top:5px"
+               = icon(:plus)
+
       = f.input :context, as: :text, input_html: {rows: 4}
+
   .panel.panel-default
     .panel-heading: .panel-title = t("customer_vault.contact_informations")
     .panel-body

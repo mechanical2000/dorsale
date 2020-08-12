@@ -50,6 +50,6 @@ RSpec.describe Dorsale::BillingMachine::Quotation::Copy do
 
   it "should reset state to pending" do
     expect(quotation.reload.state).to eq "canceled"
-    expect(copy.reload.state).to      eq "pending"
+    expect(copy.reload.state).to      eq "draft"
   end
 end

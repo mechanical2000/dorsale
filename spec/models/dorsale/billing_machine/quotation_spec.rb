@@ -36,7 +36,7 @@ describe Dorsale::BillingMachine::Quotation do
     end
 
     it "default state should be pending" do
-      expect(described_class.new.state).to eq "pending"
+      expect(described_class.new.state).to eq "draft"
     end
   end
 

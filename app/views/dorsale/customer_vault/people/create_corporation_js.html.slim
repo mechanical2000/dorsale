@@ -1,0 +1,7 @@
+javascript:
+  option = document.createElement("option")
+  option.value = #{@person.id.to_json.html_safe}
+  option.innerHTML = #{@person.to_s.to_json.html_safe}
+  option.selected = true
+  $("select[id$=corporation_id]").append(option)
+  modal.close()

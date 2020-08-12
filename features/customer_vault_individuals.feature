@@ -14,7 +14,7 @@ Feature: Manage individuals
     And I validate the new individual
     Then the individual is created
 
-  Scenario: New individual without individual
+  Scenario: New individual errors
     When I create an new individual
     And I fill the address
     And I validate the new individual
@@ -33,3 +33,11 @@ Feature: Manage individuals
     And I remove tags to this individual
     And I submit this individual
     Then tags are removed
+
+  Scenario: Create corporation from individual
+    When I create an new individual
+    And I create corporation from individual
+    And I add his first_name, last_name and email
+    And I validate the new individual
+    Then the individual is created
+    And the new corporation is associated to individual
