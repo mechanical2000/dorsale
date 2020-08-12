@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.14.9
 - Create corporation from individual form
 - Quotations: add draft state
 - Fix carrierwave white lists
