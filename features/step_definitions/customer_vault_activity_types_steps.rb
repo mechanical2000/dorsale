@@ -28,7 +28,7 @@ When(/^I edit the activity type$/) do
   find(".link_update").click
 end
 
-Then(/^the current activity type's name should be pre\-filled$/) do
+Then(/^the current activity type's name should be pre-filled$/) do
   expect(page).to have_field("activity_type_name", with: @activity_type.name)
 end
 

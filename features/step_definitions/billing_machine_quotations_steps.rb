@@ -58,7 +58,7 @@ When(/^the quotation line shows the right date$/) do
   expect(page).to have_selector ".date", text: I18n.l(@quotation.date)
 end
 
-When(/^the quotation line shows the right traking\-id$/) do
+When(/^the quotation line shows the right traking-id$/) do
   expect(page).to have_selector ".tracking_id", text: @quotation.tracking_id
 end
 

@@ -28,7 +28,7 @@ When(/^I edit the origin$/) do
   find(".link_update").click
 end
 
-Then(/^the current origin's name should be pre\-filled$/) do
+Then(/^the current origin's name should be pre-filled$/) do
   expect(page).to have_field("origin_name", with: @origin.name)
 end
 

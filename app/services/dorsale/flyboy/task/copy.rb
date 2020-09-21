@@ -2,6 +2,7 @@ class Dorsale::Flyboy::Task::Copy < ::Dorsale::Service
   attr_accessor :task, :copy
 
   def initialize(task)
+    super()
     @task = task
   end
 

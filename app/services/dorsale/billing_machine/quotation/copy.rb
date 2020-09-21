@@ -2,6 +2,7 @@ class Dorsale::BillingMachine::Quotation::Copy < ::Dorsale::Service
   attr_accessor :quotation, :copy
 
   def initialize(quotation)
+    super()
     @quotation = quotation
   end
 

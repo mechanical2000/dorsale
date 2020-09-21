@@ -2,6 +2,7 @@ class Dorsale::BillingMachine::PdfFileGenerator < Dorsale::Service
   attr_reader :document
 
   def initialize(document)
+    super()
     @document = document
 
     # I have no idea why I need to do that,

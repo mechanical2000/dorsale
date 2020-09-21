@@ -28,7 +28,7 @@ When(/^the user edits the payment_term$/) do
   find(".link_update").click
 end
 
-Then(/^the current payment_term's label should be pre\-filled$/) do
+Then(/^the current payment_term's label should be pre-filled$/) do
   expect(page).to have_field("billing_machine_payment_term_label", with: @payment_term.label)
 end
 

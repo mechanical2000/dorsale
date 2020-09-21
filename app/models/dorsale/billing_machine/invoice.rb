@@ -22,6 +22,8 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     :invoice
   end
 
+  after_initialize :assign_default_dates
+  before_save :update_totals
   before_create :assign_unique_index
   before_create :assign_tracking_id
 
@@ -43,14 +45,10 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     assign_default :paid,                  false
   end
 
-  after_initialize :assign_default_dates
-
   def assign_default_dates
     assign_default :date,     Date.current
     assign_default :due_date, Date.current + 30.days
   end
-
-  before_save :update_totals
 
   def update_totals
     assign_default_values

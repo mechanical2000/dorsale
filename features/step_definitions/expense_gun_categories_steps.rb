@@ -28,7 +28,7 @@ When(/^I edit the expense category$/) do
   find(".link_update").click
 end
 
-Then(/^the current expense category's label should be pre\-filled$/) do
+Then(/^the current expense category's label should be pre-filled$/) do
   expect(page).to have_field("category_name", with: @category.name)
 end
 

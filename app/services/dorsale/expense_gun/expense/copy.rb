@@ -2,6 +2,7 @@ class Dorsale::ExpenseGun::Expense::Copy < ::Dorsale::Service
   attr_accessor :expense, :copy
 
   def initialize(expense)
+    super()
     @expense = expense
   end
 
