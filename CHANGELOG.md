@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.14.10
+- Change BillingMachine PDF filenames
+- Fix CustomerVault layout
+
 ## 3.14.9
 - Create corporation from individual form
 - Quotations: add draft state
