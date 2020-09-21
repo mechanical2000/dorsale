@@ -2,6 +2,7 @@ class Dorsale::BillingMachine::Invoice::Copy < ::Dorsale::Service
   attr_accessor :invoice, :copy
 
   def initialize(invoice)
+    super()
     @invoice = invoice
   end
 

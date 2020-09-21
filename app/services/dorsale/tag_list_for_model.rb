@@ -2,6 +2,7 @@ class Dorsale::TagListForModel < ::Dorsale::Service
   attr_reader :model
 
   def initialize(model)
+    super()
     @model = model
   end
 

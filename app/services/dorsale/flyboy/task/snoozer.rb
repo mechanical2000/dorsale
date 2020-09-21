@@ -2,6 +2,7 @@ class Dorsale::Flyboy::Task::Snoozer < ::Dorsale::Service
   attr_reader :task
 
   def initialize(task)
+    super()
     @task = task
   end
 

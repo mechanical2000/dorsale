@@ -177,11 +177,11 @@ class Dorsale::BillingMachine::InvoiceSingleVatPdf < Dorsale::ApplicationPdf
   end
 
   def has_advance
-    main_document.try(:advance) && main_document.advance != 0.0
+    main_document.try(:advance) && main_document.advance.to_d != 0.0.to_d
   end
 
   def has_discount
-    main_document.try(:commercial_discount) && main_document.commercial_discount != 0.0
+    main_document.try(:commercial_discount) && main_document.commercial_discount.to_d != 0.0.to_d
   end
 
   def build_table

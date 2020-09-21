@@ -33,6 +33,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     :quotation
   end
 
+  before_save :update_totals
   before_create :assign_unique_index
   before_create :assign_tracking_id
 
@@ -54,8 +55,6 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     assign_default :vat_amount,             0
     assign_default :total_excluding_taxes,  0
   end
-
-  before_save :update_totals
 
   def update_totals
     assign_default_values

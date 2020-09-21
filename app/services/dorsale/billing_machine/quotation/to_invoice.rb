@@ -2,6 +2,7 @@ class Dorsale::BillingMachine::Quotation::ToInvoice < ::Dorsale::Service
   attr_accessor :quotation, :invoice
 
   def initialize(quotation)
+    super()
     @quotation = quotation
   end
 

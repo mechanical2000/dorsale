@@ -19,6 +19,7 @@ class Dorsale::ApplicationPolicy
   end
 
   def self.inherited(klass)
+    super(klass)
     klass.define_subject_accessor!
   end
 

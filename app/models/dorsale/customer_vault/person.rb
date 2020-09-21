@@ -9,8 +9,6 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     Dorsale::CustomerVault::PersonPolicy
   end
 
-  after_initialize :verify_class
-
   def verify_class
     if self.class == ::Dorsale::CustomerVault::Person
       # self.abstract_class does not work with STI
@@ -29,6 +27,13 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
 
   belongs_to :activity_type, class_name: "Dorsale::CustomerVault::ActivityType"
   belongs_to :origin, class_name: "Dorsale::CustomerVault::Origin"
+
+  validate :validate_taken_emails
+
+  after_initialize :verify_class
+  after_initialize  :build_address, if: proc { new_record? && address.nil? }
+
+  before_validation :build_address, if: proc { address.nil? }
 
   after_destroy :destroy_links
 
@@ -50,9 +55,6 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
 
   scope :having_email, -> (email) { where("email = :e OR :e = ANY (secondary_emails)", e: email) }
 
-  after_initialize  :build_address, if: proc { new_record? && address.nil? }
-  before_validation :build_address, if: proc { address.nil? }
-
   def taken_emails
     taken_emails = {}
     ([email] + secondary_emails).select(&:present?).each do |e|
@@ -61,8 +63,6 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
     end
     taken_emails
   end
-
-  validate :validate_taken_emails
 
   def validate_taken_emails
     return if taken_emails.empty?
