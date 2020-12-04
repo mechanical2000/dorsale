@@ -4,13 +4,6 @@ class Dorsale::BillingMachine::PdfFileGenerator < Dorsale::Service
   def initialize(document)
     super()
     @document = document
-
-    # I have no idea why I need to do that,
-    # if I don't do that, CarrierWare do not stores the file.
-    # The reload() method don't work either.
-    # The problem appears only on server, not in console.
-    # I think CarrierWave do not work anymore after first save.
-    @document = document.class.find(document.id) if document.persisted?
   end
 
   def call
