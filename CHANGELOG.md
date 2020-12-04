@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Fix BM missing PDFs
 
 ## 3.14.10
 - Change BillingMachine PDF filenames
