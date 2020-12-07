@@ -2,6 +2,10 @@
 
 ## Next version
 
+## 3.15.0
+- Fix Ruby 2.7 warnings
+- Faker 2
+
 ## 3.14.11
 - Fix BM missing PDFs
 
