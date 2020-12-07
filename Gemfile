@@ -33,7 +33,7 @@ group :test do
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
   gem "capybara"
-  gem "ferrum", "0.4"
+  gem "ferrum"
   gem "cuprite"
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
@@ -56,7 +56,7 @@ group :development, :test do
   gem "launchy"
   gem "rails-erd"
   gem "thor"
-  gem "faker", "~> 1.9.6"
+  gem "faker"
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "byebug"
