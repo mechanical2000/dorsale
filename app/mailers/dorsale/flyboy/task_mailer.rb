@@ -11,7 +11,7 @@ class Dorsale::Flyboy::TaskMailer < ::Dorsale::ApplicationMailer
 
     mail(
       :to      => task.owner.email,
-      :subject => t("task_mailer.new_task.subject", @locals),
+      :subject => t("task_mailer.new_task.subject", **@locals),
     )
   end
 
@@ -26,7 +26,7 @@ class Dorsale::Flyboy::TaskMailer < ::Dorsale::ApplicationMailer
 
     mail(
       :to      => task.owner.email,
-      :subject => t("task_mailer.term_email.subject", @locals),
+      :subject => t("task_mailer.term_email.subject", **@locals),
     )
   end
 end
