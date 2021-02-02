@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+- Allow to reorder BM lines (require Sorting.js + reimport migrations)
+- Remove unused url.js
 
 ## 3.15.0
 - Fix Ruby 2.7 warnings

@@ -4,11 +4,11 @@
 //= require bootstrap
 //= require cocoon
 //= require accounting
-//= require url.min
 //= require select2
 //= require select2_locale_fr
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
 //= require Chart.bundle
 //= require chartkick
+//= require Sortable
 //= require agilibox/all

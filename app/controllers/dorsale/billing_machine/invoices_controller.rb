@@ -157,15 +157,20 @@ class Dorsale::BillingMachine::InvoicesController < ::Dorsale::BillingMachine::A
       :advance,
       :due_date,
       :comments,
-      :lines_attributes => [
-        :_destroy,
-        :id,
-        :label,
-        :quantity,
-        :unit,
-        :unit_price,
-        :vat_rate,
-      ],
+      :lines_attributes => line_permitted_params,
+    ]
+  end
+
+  def line_permitted_params
+    [
+      :_destroy,
+      :id,
+      :label,
+      :quantity,
+      :unit,
+      :unit_price,
+      :vat_rate,
+      :position,
     ]
   end
 

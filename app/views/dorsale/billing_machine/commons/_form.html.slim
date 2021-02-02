@@ -21,6 +21,7 @@
     table#lines-table
       thead
         tr
+          th.position
           th.actions
           th.line-label      = Dorsale::BillingMachine::InvoiceLine.t(:label)
           th.line-quantity   = Dorsale::BillingMachine::InvoiceLine.t(:quantity)
@@ -32,7 +33,7 @@
 
       tbody
         = f.simple_fields_for :lines do |lf|
-          = render "dorsale/billing_machine/invoices/line_fields", f: lf
+          = render "dorsale/billing_machine/#{document.document_type}s/line_fields", f: lf
 
     .row
       .col-sm-6

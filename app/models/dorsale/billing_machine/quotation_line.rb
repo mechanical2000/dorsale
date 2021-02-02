@@ -6,7 +6,7 @@ class Dorsale::BillingMachine::QuotationLine < ::Dorsale::ApplicationRecord
   validates :quotation, presence: true
 
   default_scope -> {
-    order(:created_at => :asc)
+    order(position: :asc, created_at: :asc, id: :asc)
   }
 
   before_validation :update_total

@@ -1,4 +1,8 @@
 tr.line
+  td.position
+    = icon(:arrows_alt, class: "handle")
+    = f.hidden_field :position
+
   td.actions
     a.delete href="#"
       span.fa.fa-fw.fa-trash

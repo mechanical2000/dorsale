@@ -77,6 +77,10 @@ BillingMachine.formatInputs = ->
     formatted_number = BillingMachine.num2str BillingMachine.str2num $(this).val()
     $(this).val formatted_number
 
+BillingMachine.updatePositions = ->
+  i = 0
+  $("#billing_machine-form input[name*=position]").map -> this.value = (i = i + 1)
+
 # Empty number inputs on focus if value is 0
 $(document).on "focus", "#billing_machine-form input.number", ->
   $(this).val("") if BillingMachine.str2num($(this).val()) == 0
@@ -96,6 +100,7 @@ $(document).on "click", "#billing_machine-form a.delete", (e) ->
 $(document).on "turbolinks:load cocoon:after-insert", ->
   BillingMachine.formatInputs()
   BillingMachine.updateTotals()
+  BillingMachine.updatePositions()
 
   # Fix Cocoon bug
   $("#billing_machine-form .line textarea").map ->
@@ -106,3 +111,12 @@ $(document).on "keyup", "#billing_machine-form input.number", ->
 
 $(document).on "blur", "#billing_machine-form input.number", ->
   BillingMachine.formatInputs()
+
+$(document).on "turbolinks:load", ->
+  $("#billing_machine-form tbody").map ->
+    container = this
+
+    new Sortable container,
+      handle: ".handle"
+      animation: 150
+      onSort: -> BillingMachine.updatePositions()
