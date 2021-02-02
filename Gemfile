@@ -32,7 +32,7 @@ group :test do
   gem "rspec-repeat"
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
-  gem "capybara"
+  gem "capybara", "3.34.0"
   gem "ferrum"
   gem "cuprite"
   gem "spring-commands-rspec"
@@ -41,7 +41,6 @@ group :test do
   gem "simplecov", require: false
   gem "pundit-matchers"
   gem "zonebie"
-  gem "yomu"
 end
 
 group :development do
