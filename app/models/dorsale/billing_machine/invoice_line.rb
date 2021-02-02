@@ -6,7 +6,7 @@ class Dorsale::BillingMachine::InvoiceLine < ::Dorsale::ApplicationRecord
   validates :invoice, presence: true
 
   default_scope -> {
-    order(created_at: :asc)
+    order(position: :asc, created_at: :asc, id: :asc)
   }
 
   before_validation :update_total

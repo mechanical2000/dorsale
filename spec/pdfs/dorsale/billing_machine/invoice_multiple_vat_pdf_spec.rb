@@ -23,7 +23,7 @@ describe ::Dorsale::BillingMachine::InvoiceMultipleVatPdf, pdfs: true do
 
   let(:content) {
     generate!
-    Yomu.new(invoice.pdf_file.path).text
+    PDF::Reader.new(invoice.pdf_file.path).pages.map(&:text).join("\n")
   }
 
   it "should not display global vat rate" do

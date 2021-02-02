@@ -23,7 +23,7 @@ describe ::Dorsale::BillingMachine::QuotationSingleVatPdf, pdfs: true do
 
   let(:content) {
     generate!
-    Yomu.new(quotation.pdf_file.path).text
+    PDF::Reader.new(quotation.pdf_file.path).pages.map(&:text).join("\n")
   }
 
   it "should display global vat rate" do

@@ -165,15 +165,20 @@ class Dorsale::BillingMachine::QuotationsController < ::Dorsale::BillingMachine:
       :comments,
       :vat_rate,
       :commercial_discount,
-      :lines_attributes => [
-        :_destroy,
-        :id,
-        :label,
-        :quantity,
-        :unit,
-        :unit_price,
-        :vat_rate,
-      ],
+      :lines_attributes => line_permitted_params,
+    ]
+  end
+
+  def line_permitted_params
+    [
+      :_destroy,
+      :id,
+      :label,
+      :quantity,
+      :unit,
+      :unit_price,
+      :vat_rate,
+      :position,
     ]
   end
 
