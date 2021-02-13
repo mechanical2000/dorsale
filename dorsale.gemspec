@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 4.0.0", "< 99"
   s.add_dependency "agilibox", ">= 1.0.10", "< 99"
-  s.add_dependency "virtus", "< 99"
   s.add_dependency "slim-rails", "< 99"
   s.add_dependency "simple_form", "< 99"
   s.add_dependency "coffee-rails", "< 99"

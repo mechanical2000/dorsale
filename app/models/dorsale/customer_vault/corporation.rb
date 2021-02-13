@@ -1,6 +1,15 @@
 class Dorsale::CustomerVault::Corporation < Dorsale::CustomerVault::Person
-  serialize      :data,  Dorsale::CustomerVault::CorporationData
-  def_delegators :data, *Dorsale::CustomerVault::CorporationData.methods_to_delegate
+  data_attributes = %i(
+    legal_form
+    immatriculation_number
+    naf
+    european_union_vat_number
+    societe_com
+    capital
+    revenue
+    number_of_employees
+  )
+  store :data, accessors: data_attributes, coder: JSON
 
   validates :corporation_name, presence: true
   has_many :individuals, dependent: :nullify

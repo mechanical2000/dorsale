@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Refactor CV models using stores
 
 ## 3.16.0
 - Allow to reorder BM lines (require Sorting.js + reimport migrations)

@@ -1,6 +1,8 @@
 class Dorsale::CustomerVault::Individual < Dorsale::CustomerVault::Person
-  serialize      :data,  Dorsale::CustomerVault::IndividualData
-  def_delegators :data, *Dorsale::CustomerVault::IndividualData.methods_to_delegate
+  data_attributes = %i(
+    title
+  )
+  store :data, accessors: data_attributes, coder: JSON
 
   validates :first_name, presence: true
   validates :last_name,  presence: true

@@ -32,7 +32,7 @@ group :test do
   gem "rspec-repeat"
   gem "shoulda-matchers"
   gem "cucumber-rails", require: false
-  gem "capybara", "3.34.0"
+  gem "capybara"
   gem "ferrum"
   gem "cuprite"
   gem "spring-commands-rspec"
