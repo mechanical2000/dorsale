@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_100529) do
+ActiveRecord::Schema.define(version: 2021_03_11_131928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_100529) do
     t.index ["customer_type"], name: "index_dorsale_billing_machine_invoices_on_customer_type"
     t.index ["payment_term_id"], name: "index_dorsale_billing_machine_invoices_on_payment_term_id"
     t.index ["tracking_id"], name: "index_dorsale_billing_machine_invoices_on_tracking_id"
+    t.index ["unique_index"], name: "index_dorsale_billing_machine_invoices_on_unique_index", unique: true
   end
 
   create_table "dorsale_billing_machine_payment_terms", id: :serial, force: :cascade do |t|
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_100529) do
     t.index ["customer_type"], name: "index_dorsale_billing_machine_quotations_on_customer_type"
     t.index ["payment_term_id"], name: "index_dorsale_billing_machine_quotations_on_payment_term_id"
     t.index ["tracking_id"], name: "index_dorsale_billing_machine_quotations_on_tracking_id"
+    t.index ["unique_index"], name: "index_dorsale_billing_machine_quotations_on_unique_index", unique: true
   end
 
   create_table "dorsale_comments", id: :serial, force: :cascade do |t|
