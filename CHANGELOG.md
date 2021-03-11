@@ -2,6 +2,7 @@
 
 ## Next version
 - Refactor CV models using stores
+- Fix redirect after task comment create
 
 ## 3.16.0
 - Allow to reorder BM lines (require Sorting.js + reimport migrations)

@@ -19,9 +19,9 @@ class Dorsale::Flyboy::TaskCommentsController < ::Dorsale::Flyboy::ApplicationCo
 
   def back_url
     task_path = flyboy_task_path(@task)
-    back_url  = super
+    back_url  = super.to_s
 
-    if back_url.to_s.start_with?(task_path)
+    if back_url == task_path || back_url.start_with?(task_path + "?")
       back_url
     else
       task_path

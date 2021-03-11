@@ -18,7 +18,7 @@ describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
       expect(assigns(:task_comment).persisted?).to be true
     end
 
-    it "should redirect to referrer if referrer is task" do
+    it "should redirect to referrer if referrer is task show" do
       url = flyboy_task_path(task) + "?sort=xxx"
       request.env["HTTP_REFERER"] = url
       post :create, params: valid_params
@@ -26,7 +26,7 @@ describe Dorsale::Flyboy::TaskCommentsController, type: :controller do
     end
 
     it "should redirect to task if referrer is not task" do
-      url = "/anywhere"
+      url = flyboy_task_path(task) + "/some-action"
       request.env["HTTP_REFERER"] = url
       post :create, params: valid_params
       expect(response).to redirect_to flyboy_task_path(task)
