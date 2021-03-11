@@ -2,6 +2,8 @@
 
 ## Next version
 - Refactor CV models using stores
+- Fix redirect after task comment create
+- Add missing unique indexes on invoices and quotations
 
 ## 3.16.0
 - Allow to reorder BM lines (require Sorting.js + reimport migrations)
