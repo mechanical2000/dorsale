@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+## 3.17.0
 - Refactor CV models using stores
 - Fix redirect after task comment create
 - Add missing unique indexes on invoices and quotations
