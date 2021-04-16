@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Change uploaders `extension_whitelist` to `extension_allowlist`
 
 ## 3.17.0
 - Refactor CV models using stores

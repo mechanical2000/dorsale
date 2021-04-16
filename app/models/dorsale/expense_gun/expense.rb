@@ -29,17 +29,17 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
 
   # Sum of line amounts
   def total_all_taxes
-    expense_lines.map(&:total_all_taxes).sum
+    expense_lines.sum(&:total_all_taxes)
   end
 
   # Sum of line emplee payback
   def total_employee_payback
-    expense_lines.map(&:employee_payback).sum
+    expense_lines.sum(&:employee_payback)
   end
 
   # Sum of deductible deductible vat
   def total_vat_deductible
-    expense_lines.map(&:total_vat_deductible).sum
+    expense_lines.sum(&:total_vat_deductible)
   end
 
   delegate :current_state, to: :aasm

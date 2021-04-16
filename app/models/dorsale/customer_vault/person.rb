@@ -10,7 +10,7 @@ class Dorsale::CustomerVault::Person < ::Dorsale::ApplicationRecord
   end
 
   def verify_class
-    if self.class == ::Dorsale::CustomerVault::Person
+    if instance_of?(Dorsale::CustomerVault::Person)
       # self.abstract_class does not work with STI
       raise "Cannot directly instantiate Person class"
     end

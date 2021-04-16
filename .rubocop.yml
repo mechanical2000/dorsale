@@ -1,4 +1,4 @@
-inherit_from: http://rubocop.agilidee.com/0.91.0.yml
+inherit_from: http://rubocop.agilidee.com/1.6.1.yml
 
 # TODO : remove to enable
 Rails/HelperInstanceVariable:
