@@ -1,5 +1,5 @@
 class Dorsale::PdfUploader < ::Dorsale::ApplicationUploader
-  def extension_whitelist
+  def extension_allowlist
     %w(pdf)
   end
 end

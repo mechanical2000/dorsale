@@ -7,8 +7,8 @@ else
   puts ".ruby-version file not found"
 end
 
-gem "rails", "~> 6.0.3"
-gem "agilibox", ">= 1.7.4"
+gem "rails", "~> 6.1.0"
+gem "agilibox", ">= 1.9.18"
 
 gem "spreadsheet_architect"
 gem "bootsnap"
@@ -60,7 +60,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "byebug"
   gem "rspec-rails" # must be in both environments for generators
-  gem "rubocop", "0.91.0", require: false
-  gem "rubocop-performance", "1.8.0", require: false
-  gem "rubocop-rails", "2.8.1", require: false
+  gem "rubocop", "1.6.1", require: false
+  gem "rubocop-performance", "1.9.1", require: false
+  gem "rubocop-rails", "2.9.1", require: false
 end

@@ -55,7 +55,7 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
     lines.each(&:update_total)
     apply_vat_rate_to_lines
 
-    lines_sum = lines.map(&:total).sum.round(2)
+    lines_sum = lines.sum(&:total).round(2)
 
     self.total_excluding_taxes = lines_sum - commercial_discount
 
@@ -109,9 +109,7 @@ class Dorsale::BillingMachine::Invoice < ::Dorsale::ApplicationRecord
   def payment_status
     if paid?
       :paid
-    elsif due_date.nil?
-      :on_alert
-    elsif Date.current >= due_date + 15
+    elsif due_date.nil? || Date.current >= due_date + 15
       :on_alert
     elsif Date.current > due_date
       :late

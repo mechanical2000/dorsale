@@ -61,7 +61,7 @@ class Dorsale::BillingMachine::Quotation < ::Dorsale::ApplicationRecord
     lines.each(&:update_total)
     apply_vat_rate_to_lines
 
-    lines_sum = lines.map(&:total).sum
+    lines_sum = lines.sum(&:total)
 
     self.total_excluding_taxes = lines_sum - commercial_discount
 

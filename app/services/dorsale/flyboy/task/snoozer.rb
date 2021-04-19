@@ -29,7 +29,7 @@ class Dorsale::Flyboy::Task::Snoozer < ::Dorsale::Service
       task.reminder_date <= current_date
     elsif task.term
       task.term <= current_date
-    else
+    else # rubocop:disable Lint/DuplicateBranch
       false
     end
   end
