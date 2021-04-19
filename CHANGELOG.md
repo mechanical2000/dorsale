@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+# 3.18.0
 - Change uploaders `extension_whitelist` to `extension_allowlist`
 - Rails 6.1 compatibility
 
