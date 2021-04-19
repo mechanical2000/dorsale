@@ -2,6 +2,7 @@
 
 ## Next version
 - Change uploaders `extension_whitelist` to `extension_allowlist`
+- Rails 6.1 compatibility
 
 ## 3.17.0
 - Refactor CV models using stores
