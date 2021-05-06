@@ -28,7 +28,7 @@ table.default
 
   tbody
     - @expenses.each do |expense|
-      tr.expense
+      tr.expense data-state=expense.state
         td.expense-created_at
           = date expense.created_at.to_date
 

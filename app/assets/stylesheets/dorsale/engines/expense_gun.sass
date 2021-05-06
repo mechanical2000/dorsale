@@ -2,6 +2,16 @@
   .pull-right .btn
     margin-left: 0.5em
 
+  tr.expense
+    &[data-state=pending] td
+      background-color: #FCF8E3
+
+    &[data-state=paid] td
+      background-color: #DFF0D8
+
+    &[data-state=canceled] td
+      background-color: #f5f5f5
+
   @media print
     font-size: 11px !important
 
