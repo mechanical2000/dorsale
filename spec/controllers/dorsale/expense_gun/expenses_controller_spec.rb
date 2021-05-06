@@ -51,6 +51,15 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
         expect(assigns :users).to eq [user2]
       end
     end # describe "filters"
+
+    it "should set total_payback" do
+      create(:expense_gun_expense_line, total_all_taxes: 200, company_part: 50)
+        .expense.update!(state: "pending")
+      create(:expense_gun_expense_line, total_all_taxes: 50, company_part: 100)
+        .expense.update!(state: "paid")
+      get :index
+      expect(assigns :total_payback).to eq 150
+    end
   end # describe "#index"
 
   describe "#show" do

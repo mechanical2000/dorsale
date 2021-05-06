@@ -10,6 +10,8 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expenses = @filters.apply(@expenses)
     @expenses = Dorsale::ExpenseGun::ExpensesSorter.call(@expenses, params[:sort] ||= "-created_at")
     @expenses = @expenses.page(params[:page]).per(25)
+
+    @total_payback = @expenses.limit(nil).to_a.sum(&:total_employee_payback)
   end
 
   def new
