@@ -51,7 +51,8 @@ table.default
           = expense.tv(:state)
 
         td.expense-actions.actions
-          = render "expense_actions", expense: expense
+          = read_button dorsale.expense_gun_expense_path(expense)
+          = render "state_actions", expense: expense
 
   tfoot
     tr

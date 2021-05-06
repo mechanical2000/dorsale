@@ -1,4 +1,10 @@
-= render "expense_actions", expense: @expense
+= render "state_actions", expense: @expense
+
+- if policy(@expense).update?
+  = update_button dorsale.edit_expense_gun_expense_path(@expense)
+
+- if policy(@expense).copy?
+  = copy_button dorsale.copy_expense_gun_expense_path(@expense)
 
 = download_button url_for(format: :pdf)
 
