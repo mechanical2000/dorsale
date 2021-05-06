@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Expenses : add colors to list
 
 # 3.19.0
 - Change expenses state machine
