@@ -9,35 +9,45 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
     describe "filters" do
       render_views
 
-      it "should filter by state" do
-        expense1 = create(:expense_gun_expense, state: "pending")
-        expense2 = create(:expense_gun_expense, state: "canceled")
+      let!(:user1) { create(:user) }
+      let!(:user2) { create(:user) }
+      let!(:expense1) {
+        create(:expense_gun_expense, state: "pending", user: user1, date: "2021-05-10")
+      }
+      let!(:expense2) {
+        create(:expense_gun_expense, state: "canceled", user: user2, date: "2021-05-20")
+      }
 
-        cookies[:filters] = {expense_state: "pending"}.to_json
+      def filter_by(**filters)
+        cookies[:filters] = filters.to_json
         get :index
+        assigns :expenses
+      end
 
-        expect(assigns :expenses).to eq [expense1]
+      it "should filter by state" do
+        expect(filter_by expense_state: "pending").to eq [expense1]
       end
 
       it "should filter by user" do
-        user1    = create(:user)
-        user2    = create(:user)
-        expense1 = create(:expense_gun_expense, user: user1)
-        expense2 = create(:expense_gun_expense, user: user2)
+        expect(filter_by expense_user_id: user1.id).to eq [expense1]
+      end
 
-        cookies[:filters] = {expense_user_id: user1.id}.to_json
-        get :index
+      it "should filter by date period" do
+        Timecop.freeze "2021-05-20"
+        expect(filter_by expense_time_period: "this_week").to eq [expense2]
+      end
 
-        expect(assigns :expenses).to eq [expense1]
+      it "should filter by date begin" do
+        expect(filter_by expense_date_begin: "2021-05-15").to eq [expense2]
+      end
+
+      it "should filter by date begin" do
+        expect(filter_by expense_date_end: "2021-05-15").to eq [expense1]
       end
 
       it "should assigns only users having expenses" do
-        user1    = create(:user)
-        user2    = create(:user)
-        expense2 = create(:expense_gun_expense, user: user2)
-
+        expense1.destroy!
         get :index
-
         expect(assigns :users).to eq [user2]
       end
     end # describe "filters"

@@ -1,3 +1,11 @@
 = filters_form do |f|
   = f.input :expense_state, collection: expense_states_for_filters_select, include_blank: t("expense_gun.filters.all_states")
   = f.input :expense_user_id, collection: @users, include_blank: t("expense_gun.filters.all_users")
+
+  = f.input(:expense_time_period,
+    :collection    => agilibox_time_periods_for_select,
+    :include_blank => false,
+  )
+
+  = f.input :expense_date_begin, input_html: {placeholder: t("filters.date_begin")}
+  = f.input :expense_date_end,   input_html: {placeholder: t("filters.date_end")}
