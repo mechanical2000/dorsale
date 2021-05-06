@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+# 3.19.0
 - Change expenses state machine
 - Change expenses list view
 

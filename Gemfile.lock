@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorsale (3.18.0)
+    dorsale (3.19.0)
       acts-as-taggable-on (>= 4.0.0, < 99)
       agilibox (>= 1.0.10, < 99)
       axlsx (< 99)
