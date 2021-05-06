@@ -1,14 +1,30 @@
 table.default
   thead
     tr
-      th.expense-created_at = Dorsale::ExpenseGun::Expense.t(:created_at)
-      th.expense-date = Dorsale::ExpenseGun::Expense.t(:date)
-      th.expense-name = Dorsale::ExpenseGun::Expense.t(:name)
-      th.expense-user = Dorsale::ExpenseGun::Expense.t(:user)
-      th.expense-total_employee_payback = Dorsale::ExpenseGun::Expense.t(:total_employee_payback)
-      th.expense-total_all_taxes = Dorsale::ExpenseGun::Expense.t(:total_all_taxes)
-      th.expense-state = Dorsale::ExpenseGun::Expense.t(:state)
-      th.expense-actions.actions = ta(:actions)
+      th.expense-created_at
+        = sortable_column Dorsale::ExpenseGun::Expense.t(:created_at), :created_at
+
+      th.expense-date
+        = sortable_column Dorsale::ExpenseGun::Expense.t(:date), :date
+
+      th.expense-name
+        = Dorsale::ExpenseGun::Expense.t(:name)
+
+      th.expense-user
+        = Dorsale::ExpenseGun::Expense.t(:user)
+
+      th.expense-total_employee_payback
+        = Dorsale::ExpenseGun::Expense.t(:total_employee_payback)
+
+      th.expense-total_all_taxes
+        = Dorsale::ExpenseGun::Expense.t(:total_all_taxes)
+
+      th.expense-state
+        = Dorsale::ExpenseGun::Expense.t(:state)
+
+      th.expense-actions.actions
+        = ta(:actions)
+
 
   tbody
     - @expenses.each do |expense|

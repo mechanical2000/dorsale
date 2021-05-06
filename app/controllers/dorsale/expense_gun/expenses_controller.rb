@@ -8,6 +8,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expenses ||= scope.all.preload(:user, :expense_lines)
     @filters ||= Dorsale::ExpenseGun::SmallData::FilterForExpenses.new(filters_jar)
     @expenses = @filters.apply(@expenses)
+    @expenses = Dorsale::ExpenseGun::ExpensesSorter.call(@expenses, params[:sort] ||= "-created_at")
     @expenses = @expenses.page(params[:page]).per(25)
   end
 
