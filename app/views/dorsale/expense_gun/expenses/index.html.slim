@@ -13,7 +13,7 @@
   - content_for :filters
     = render "dorsale/expense_gun/expenses/filters"
 
-  - content_for :page_body
+  - content_for :table
     = render "dorsale/expense_gun/expenses/list", expenses: @expenses
 
   = render_dorsale_page

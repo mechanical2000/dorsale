@@ -5,34 +5,23 @@ module Dorsale::ExpenseGun::ExpensePolicyHelper
     :read?,
     :update?,
     :copy?,
-    :submit?,
-    :accept?,
-    :refuse?,
-    :cancel?,
+    :go_to_pending?,
+    :go_to_paid?,
+    :go_to_canceled?,
   ]
 
-  def update?
-    return false unless expense.may_edit?
+  def go_to_pending?
+    return false unless expense.state == "draft"
     super
   end
 
-  def submit?
-    return false unless expense.may_go_to_submitted?
+  def go_to_paid?
+    return false unless expense.state == "pending"
     super
   end
 
-  def accept?
-    return false unless expense.may_go_to_accepted?
-    super
-  end
-
-  def refuse?
-    return false unless expense.may_go_to_refused?
-    super
-  end
-
-  def cancel?
-    return false unless expense.may_go_to_canceled?
+  def go_to_canceled?
+    return false unless expense.state == "draft"
     super
   end
 end

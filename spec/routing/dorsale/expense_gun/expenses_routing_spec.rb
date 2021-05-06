@@ -34,24 +34,19 @@ describe ::Dorsale::ExpenseGun::ExpensesController, type: :routing do
         route_to("dorsale/expense_gun/expenses#update", id: "1")
     end
 
-    it "#submit" do
-      expect(patch "/expense_gun/expenses/1/submit").to \
-        route_to("dorsale/expense_gun/expenses#submit", id: "1")
+    it "#go_to_pending" do
+      expect(post "/expense_gun/expenses/1/go_to_pending").to \
+        route_to("dorsale/expense_gun/expenses#go_to_pending", id: "1")
     end
 
-    it "#accept" do
-      expect(patch "/expense_gun/expenses/1/accept").to \
-        route_to("dorsale/expense_gun/expenses#accept", id: "1")
+    it "#go_to_paid" do
+      expect(post "/expense_gun/expenses/1/go_to_paid").to \
+        route_to("dorsale/expense_gun/expenses#go_to_paid", id: "1")
     end
 
-    it "#refuse" do
-      expect(patch "/expense_gun/expenses/1/refuse").to \
-        route_to("dorsale/expense_gun/expenses#refuse", id: "1")
-    end
-
-    it "#cancel" do
-      expect(patch "/expense_gun/expenses/1/cancel").to \
-        route_to("dorsale/expense_gun/expenses#cancel", id: "1")
+    it "#go_to_canceled" do
+      expect(post "/expense_gun/expenses/1/go_to_canceled").to \
+        route_to("dorsale/expense_gun/expenses#go_to_canceled", id: "1")
     end
 
     it "#copy" do

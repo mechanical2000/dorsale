@@ -96,10 +96,9 @@ Dorsale::Engine.routes.draw do
     resources :expenses, except: [:destroy] do
       member do
         get :copy
-        patch :submit
-        patch :accept
-        patch :refuse
-        patch :cancel
+        post :go_to_pending
+        post :go_to_paid
+        post :go_to_canceled
       end
     end
 

@@ -1,20 +1,10 @@
+= render "state_actions", expense: @expense
+
 - if policy(@expense).update?
   = update_button dorsale.edit_expense_gun_expense_path(@expense)
 
 - if policy(@expense).copy?
   = copy_button dorsale.copy_expense_gun_expense_path(@expense)
-
-- if policy(@expense).submit?
-  = bs_button dorsale.submit_expense_gun_expense_path(@expense), action: :submit, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-primary"
-
-- if policy(@expense).accept?
-  = bs_button dorsale.accept_expense_gun_expense_path(@expense), action: :accept, method: "patch", confirm: true, icon: :check, class: "btn btn-xs btn-success"
-
-- if policy(@expense).refuse?
-  = bs_button dorsale.refuse_expense_gun_expense_path(@expense), action: :refuse, method: "patch", confirm: true, icon: :ban, class: "btn btn-xs btn-danger"
-
-- if policy(@expense).cancel?
-  = bs_button dorsale.cancel_expense_gun_expense_path(@expense), action: :cancel, method: "patch", confirm: true, icon: :times, class: "btn btn-xs btn-warning"
 
 = download_button url_for(format: :pdf)
 

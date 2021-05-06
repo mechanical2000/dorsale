@@ -1,6 +1,7 @@
 class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   self.table_name = "dorsale_expense_gun_expenses"
-  include AASM
+
+  STATES = %w(draft pending paid canceled)
 
   has_many :expense_lines, inverse_of: :expense, dependent: :destroy, class_name: "Dorsale::ExpenseGun::ExpenseLine"
 
@@ -12,6 +13,7 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   belongs_to :user
   validates :user, presence: true
 
+  validates :state, presence: true, inclusion: {in: STATES}
   validates :name, presence: true
   validates :date, presence: true
 
@@ -24,6 +26,7 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   }
 
   def assign_default_values
+    assign_default :state, STATES.first
     assign_default :date, Date.current
   end
 
@@ -40,35 +43,5 @@ class Dorsale::ExpenseGun::Expense < ::Dorsale::ApplicationRecord
   # Sum of deductible deductible vat
   def total_vat_deductible
     expense_lines.sum(&:total_vat_deductible)
-  end
-
-  delegate :current_state, to: :aasm
-
-  aasm(column: :state, whiny_transitions: false) do
-    state :draft, initial: true
-    state :submitted
-    state :accepted
-    state :refused
-    state :canceled
-
-    event :go_to_submitted do
-      transitions from: :draft, to: :submitted
-    end
-
-    event :go_to_accepted do
-      transitions from: :submitted, to: :accepted
-    end
-
-    event :go_to_refused do
-      transitions from: :submitted, to: :refused
-    end
-
-    event :go_to_canceled do
-      transitions from: [:draft, :submitted, :accepted], to: :canceled
-    end
-  end
-
-  def may_edit?
-    current_state == :draft
   end
 end

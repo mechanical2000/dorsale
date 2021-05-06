@@ -33,7 +33,6 @@ Gem::Specification.new do |s|
   s.add_dependency "kaminari-i18n", "< 99"
   s.add_dependency "bootstrap-datepicker-rails", "< 99"
   s.add_dependency "carrierwave", "< 99"
-  s.add_dependency "aasm", "< 99"
   s.add_dependency "pdf-reader", "< 99"
   s.add_dependency "prawn", "< 99"
   s.add_dependency "prawn-table", "< 99"

@@ -14,123 +14,7 @@ RSpec.describe Dorsale::ExpenseGun::Expense, type: :model do
   end
 
   it "new expense should have new state" do
-    expect(described_class.new.current_state).to be :draft
-  end
-
-  describe "new state" do
-    before :each do
-      @expense = build(:expense_gun_expense)
-    end
-
-    it "new expense can be submitted" do
-      expect(@expense.go_to_submitted).to be true
-      expect(@expense.current_state).to be :submitted
-    end
-
-    it "new expense can't be accepted" do
-      expect(@expense.go_to_accepted).to be false
-      expect(@expense.current_state).to be :draft
-    end
-
-    it "new expense can't be refused" do
-      expect(@expense.go_to_refused).to be false
-      expect(@expense.current_state).to be :draft
-    end
-
-    it "new expense can be canceled" do
-      expect(@expense.go_to_canceled).to be true
-      expect(@expense.current_state).to be :canceled
-    end
-  end
-
-  describe "submitted state" do
-    before :each do
-      @expense = build(:expense_gun_expense)
-      @expense.go_to_submitted
-    end
-
-    it "submitted expense can be accepted" do
-      expect(@expense.go_to_accepted).to be true
-      expect(@expense.current_state).to be :accepted
-    end
-
-    it "submitted expense can be refused" do
-      expect(@expense.go_to_refused).to be true
-      expect(@expense.current_state).to be :refused
-    end
-
-    it "submitted expense can be canceled" do
-      expect(@expense.go_to_canceled).to be true
-      expect(@expense.current_state).to be :canceled
-    end
-  end
-
-  describe "acceped state" do
-    before :each do
-      @expense = build(:expense_gun_expense)
-      @expense.go_to_submitted
-      @expense.go_to_accepted
-    end
-
-    it "acceped expense can't be submitted" do
-      expect(@expense.go_to_submitted).to be false
-      expect(@expense.current_state).to be :accepted
-    end
-
-    it "acceped expense can't be refused" do
-      expect(@expense.go_to_refused).to be false
-      expect(@expense.current_state).to be :accepted
-    end
-
-    it "acceped expense can be canceled" do
-      expect(@expense.go_to_canceled).to be true
-      expect(@expense.current_state).to be :canceled
-    end
-  end
-
-  describe "refused state" do
-    before :each do
-      @expense = build(:expense_gun_expense)
-      @expense.go_to_submitted
-      @expense.go_to_refused
-    end
-
-    it "refused expense can't be submitted" do
-      expect(@expense.go_to_submitted).to be false
-      expect(@expense.current_state).to be :refused
-    end
-
-    it "refused expense can't be acceped" do
-      expect(@expense.go_to_accepted).to be false
-      expect(@expense.current_state).to be :refused
-    end
-
-    it "refused expense can't be canceled" do
-      expect(@expense.go_to_canceled).to be false
-      expect(@expense.current_state).to be :refused
-    end
-  end
-
-  describe "canceled state" do
-    before :each do
-      @expense = build(:expense_gun_expense)
-      @expense.go_to_canceled
-    end
-
-    it "canceled expense can't be submitted" do
-      expect(@expense.go_to_submitted).to be false
-      expect(@expense.current_state).to be :canceled
-    end
-
-    it "canceled expense can't be acceped" do
-      expect(@expense.go_to_accepted).to be false
-      expect(@expense.current_state).to be :canceled
-    end
-
-    it "canceled expense can't be refused" do
-      expect(@expense.go_to_refused).to be false
-      expect(@expense.current_state).to be :canceled
-    end
+    expect(described_class.new.state).to eq "draft"
   end
 
   it "#total_all_taxes should return sum of lines" do
@@ -164,13 +48,5 @@ RSpec.describe Dorsale::ExpenseGun::Expense, type: :model do
     expense.expense_lines << line2
 
     expect(expense.total_vat_deductible).to eq 5.0
-  end
-
-  it "#may_edit? should return false unless expense is not submitted" do
-    expect(described_class.new(state: :draft).may_edit?).to be true
-    expect(described_class.new(state: :submitted).may_edit?).to be false
-    expect(described_class.new(state: :acceped).may_edit?).to be false
-    expect(described_class.new(state: :refused).may_edit?).to be false
-    expect(described_class.new(state: :canceled).may_edit?).to be false
   end
 end

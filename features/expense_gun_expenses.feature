@@ -28,33 +28,3 @@ Feature: Expenses
     When I copy the expense
     Then an expense copy is created
     And I am redirected on the expense page
-
-  Scenario: Submit expense
-    Given an existing expense
-    When I go on the expense page
-    And I submit the expense
-    Then I am redirect to the expenses page
-    And the expense state is "submitted"
-
-  Scenario: Cancel expense
-    Given an existing expense
-    When I go on the expense page
-    And I cancel the expense
-    Then I am redirect to the expenses page
-    And the expense state is "canceled"
-
-  Scenario: Accept expense
-    Given an existing expense
-    And the expense is submitted
-    When I go on the expense page
-    And I accept the expense
-    Then I am redirect to the expense page
-    And the expense state is "accepted"
-
-  Scenario: Refuse expense
-    Given an existing expense
-    And the expense is submitted
-    When I go on the expense page
-    And I refuse the expense
-    Then I am redirect to the expenses page
-    And the expense state is "refused"

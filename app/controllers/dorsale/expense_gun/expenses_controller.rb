@@ -1,15 +1,5 @@
 class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::ApplicationController
-  before_action :set_expense, only: [
-    :show,
-    :edit,
-    :update,
-    :copy,
-    :submit,
-    :accept,
-    :refuse,
-    :cancel,
-  ]
-
+  before_action :set_expense
   before_action :set_filters_variables, only: [:index]
 
   def index
@@ -18,7 +8,10 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expenses ||= scope.all.preload(:user, :expense_lines)
     @filters ||= Dorsale::ExpenseGun::SmallData::FilterForExpenses.new(filters_jar)
     @expenses = @filters.apply(@expenses)
+    @expenses = Dorsale::ExpenseGun::ExpensesSorter.call(@expenses, params[:sort] ||= "-created_at")
     @expenses = @expenses.page(params[:page]).per(25)
+
+    @total_payback = @expenses.limit(nil).to_a.sum(&:total_employee_payback)
   end
 
   def new
@@ -34,7 +27,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     @expense ||= scope.new(expense_params_for_create)
 
     if @expense.save
-      flash[:success] = t("expense_gun.expense.messages.created")
+      set_succress_flash
       redirect_to dorsale.expense_gun_expense_path(@expense)
     else
       render :new
@@ -55,7 +48,7 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     authorize @expense, :update?
 
     if @expense.update(expense_params_for_update)
-      flash[:success] = t("expense_gun.expense.messages.updated")
+      set_succress_flash
       redirect_to dorsale.expense_gun_expense_path(@expense)
     else
       render :edit
@@ -71,50 +64,47 @@ class Dorsale::ExpenseGun::ExpensesController < Dorsale::ExpenseGun::Application
     render :new
   end
 
-  def submit
-    authorize @expense, :submit?
+  def go_to_pending
+    authorize @expense, :go_to_pending?
 
-    @expense.go_to_submitted!
-    flash[:success] = t("expense_gun.expense.messages.submitted")
+    @expense.update!(state: "pending")
+    set_succress_flash
     redirect_to dorsale.expense_gun_expenses_path
   end
 
-  def accept
-    authorize @expense, :accept?
+  def go_to_paid
+    authorize @expense, :go_to_paid?
 
-    @expense.go_to_accepted!
-    flash[:success] = t("expense_gun.expense.messages.accepted")
-    redirect_to dorsale.expense_gun_expense_path(@expense)
-  end
-
-  def refuse
-    authorize @expense, :refuse?
-
-    @expense.go_to_refused!
-    flash[:success] = t("expense_gun.expense.messages.refused")
+    @expense.update!(state: "paid")
+    set_succress_flash
     redirect_to dorsale.expense_gun_expenses_path
   end
 
-  def cancel
-    authorize @expense, :cancel?
+  def go_to_canceled
+    authorize @expense, :go_to_canceled?
 
-    @expense.go_to_canceled!
-    flash[:success] = t("expense_gun.expense.messages.canceled")
+    @expense.update!(state: "canceled")
+    set_succress_flash
     redirect_to dorsale.expense_gun_expenses_path
   end
 
   private
+
+  def set_succress_flash
+    flash.notice = t("expense_gun.expense.messages.#{action_name}_ok")
+  end
 
   def model
     ::Dorsale::ExpenseGun::Expense
   end
 
   def set_expense
-    @expense = scope.find(params[:id])
+    @expense = scope.find(params[:id]) if params.key?(:id)
   end
 
   def permitted_params
     [
+      :state,
       :name,
       :date,
       :expense_lines_attributes => [

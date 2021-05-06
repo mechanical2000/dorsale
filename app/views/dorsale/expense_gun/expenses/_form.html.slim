@@ -8,10 +8,9 @@
 
       .panel-body
         .row
-          .col-md-6
-            = f.input :name
-          .col-md-6
-            = f.input :date, as: :string, input_html: {type: :date}
+          .col-md-4 = f.input :name
+          .col-md-4 = f.input :date, as: :string, input_html: {type: :date}
+          .col-md-4 = f.input :state, collection: expense_states_for_filters_select, include_blank: false
 
     #expense-lines
       = f.simple_fields_for :expense_lines do |line_form|
