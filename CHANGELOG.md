@@ -2,6 +2,7 @@
 
 ## Next version
 - Change expenses state machine
+- Change expenses list view
 
 # 3.18.0
 - Change uploaders `extension_whitelist` to `extension_allowlist`

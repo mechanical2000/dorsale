@@ -1,17 +1,4 @@
-- if policy(@expense).update?
-  = update_button dorsale.edit_expense_gun_expense_path(@expense)
-
-- if policy(@expense).copy?
-  = copy_button dorsale.copy_expense_gun_expense_path(@expense)
-
-- if policy(@expense).go_to_pending?
-  = bs_button dorsale.go_to_pending_expense_gun_expense_path(@expense), text: t("expense_gun.actions.go_to_pending"), method: "post", confirm: true, icon: :check, class: "btn btn-xs btn-success"
-
-- if policy(@expense).go_to_paid?
-  = bs_button dorsale.go_to_paid_expense_gun_expense_path(@expense), text: t("expense_gun.actions.go_to_paid"), method: "post", confirm: true, icon: :check, class: "btn btn-xs btn-success"
-
-- if policy(@expense).go_to_canceled?
-  = bs_button dorsale.go_to_canceled_expense_gun_expense_path(@expense), text: t("expense_gun.actions.go_to_canceled"), method: "post", confirm: true, icon: :times, class: "btn btn-xs btn-warning"
+= render "expense_actions", expense: @expense
 
 = download_button url_for(format: :pdf)
 

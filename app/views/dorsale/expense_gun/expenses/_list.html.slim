@@ -1,20 +1,46 @@
-- expenses.each do |expense|
-  .panel.panel-default.expense
-    .panel-heading
-      .pull-right
-        = read_button dorsale.expense_gun_expense_path(expense)
+table.default
+  thead
+    tr
+      th.expense-created_at = Dorsale::ExpenseGun::Expense.t(:created_at)
+      th.expense-date = Dorsale::ExpenseGun::Expense.t(:date)
+      th.expense-name = Dorsale::ExpenseGun::Expense.t(:name)
+      th.expense-user = Dorsale::ExpenseGun::Expense.t(:user)
+      th.expense-total_employee_payback = Dorsale::ExpenseGun::Expense.t(:total_employee_payback)
+      th.expense-total_all_taxes = Dorsale::ExpenseGun::Expense.t(:total_all_taxes)
+      th.expense-state = Dorsale::ExpenseGun::Expense.t(:state)
+      th.expense-actions.actions = ta(:actions)
 
-        - if policy(expense).update?
-          = update_button dorsale.edit_expense_gun_expense_path(expense)
+  tbody
+    - @expenses.each do |expense|
+      tr.expense
+        td.expense-created_at
+          = date expense.created_at.to_date
 
-      .panel-title = expense
+        td.expense-date
+          = date expense.date
 
-    .panel-body
-      .row
-        .col-md-6
-          = info expense, :user
-          = info expense, :total_all_taxes,        helper: :euros
-          = info expense, :total_employee_payback, helper: :euros
-        .col-md-6
-          = info expense, :state
-          = info expense, :date
+        td.expense-name
+          = expense.name
+
+        td.expense-user
+          = expense.user
+
+        td.expense-total_employee_payback
+          = euros expense.total_employee_payback
+
+        td.expense-total_all_taxes
+          = euros expense.total_all_taxes
+
+        td.expense-state
+          = expense.tv(:state)
+
+        td.expense-actions.actions
+          = render "expense_actions", expense: expense
+
+  tfoot
+    tr
+      td.text-right colspan=99
+        strong
+          = "Total à rembourser : "
+          / TODO
+          = euros 0.0
