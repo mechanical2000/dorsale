@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next version
+- Change expenses state machine
 
 # 3.18.0
 - Change uploaders `extension_whitelist` to `extension_allowlist`

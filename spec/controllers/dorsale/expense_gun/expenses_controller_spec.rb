@@ -10,10 +10,10 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
       render_views
 
       it "should filter by state" do
-        expense1 = create(:expense_gun_expense, state: "accepted")
-        expense2 = create(:expense_gun_expense, state: "refused")
+        expense1 = create(:expense_gun_expense, state: "pending")
+        expense2 = create(:expense_gun_expense, state: "canceled")
 
-        cookies[:filters] = {expense_state: "accepted"}.to_json
+        cookies[:filters] = {expense_state: "pending"}.to_json
         get :index
 
         expect(assigns :expenses).to eq [expense1]
@@ -52,4 +52,34 @@ RSpec.describe ::Dorsale::ExpenseGun::ExpensesController, type: :controller do
       expect(response).to be_ok
     end
   end # describe "#show"
+
+  describe "#go_to_pending" do
+    it "should go to pending and redirect" do
+      expense = create(:expense_gun_expense, user: user, state: "draft")
+      post :go_to_pending, params: {id: expense}
+      expect(response).to be_redirect
+      expect(flash.notice).to be_present
+      expect(expense.reload.state).to eq "pending"
+    end
+  end # describe "#go_to_pending"
+
+  describe "#go_to_paid" do
+    it "should go to paid and redirect" do
+      expense = create(:expense_gun_expense, user: user, state: "pending")
+      post :go_to_paid, params: {id: expense}
+      expect(response).to be_redirect
+      expect(flash.notice).to be_present
+      expect(expense.reload.state).to eq "paid"
+    end
+  end # describe "#go_to_pending"
+
+  describe "#go_to_canceled" do
+    it "should go to canceled and redirect" do
+      expense = create(:expense_gun_expense, user: user, state: "draft")
+      post :go_to_canceled, params: {id: expense}
+      expect(response).to be_redirect
+      expect(flash.notice).to be_present
+      expect(expense.reload.state).to eq "canceled"
+    end
+  end # describe "#go_to_pending"
 end

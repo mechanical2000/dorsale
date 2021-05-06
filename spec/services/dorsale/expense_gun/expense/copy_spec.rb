@@ -6,7 +6,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
       :user  => create(:user),
       :name  => "ExpenseName",
       :date  => Date.current,
-      :state => "accepted",
+      :state => "paid",
     )
 
     line = create(:expense_gun_expense_line,
@@ -56,7 +56,7 @@ RSpec.describe ::Dorsale::ExpenseGun::Expense::Copy do
   end
 
   it "should reset expense state" do
-    expect(expense.state).to eq "accepted"
+    expect(expense.state).to eq "paid"
     expect(copy.state).to eq "draft"
   end
 

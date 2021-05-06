@@ -78,10 +78,6 @@ Then(/^the expense is update$/) do
   expect(@expense.name).to eq "NewExpenseName"
 end
 
-When(/^I submit the expense$/) do
-  find("[href$='/submit']").click
-end
-
 Then(/^I am redirect to the expenses page$/) do
   wait_for { current_path }.to eq dorsale.expense_gun_expenses_path
 end
@@ -92,18 +88,6 @@ end
 
 Given(/^the expense is submitted$/) do
   @expense.update_columns(state: "submitted")
-end
-
-When(/^I cancel the expense$/) do
-  find("[href$='/cancel']").click
-end
-
-When(/^I accept the expense$/) do
-  find("[href$='/accept']").click
-end
-
-When(/^I refuse the expense$/) do
-  find("[href$='/refuse']").click
 end
 
 Then(/^I am redirect to the expense page$/) do

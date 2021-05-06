@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     dorsale (3.18.0)
-      aasm (< 99)
       acts-as-taggable-on (>= 4.0.0, < 99)
       agilibox (>= 1.0.10, < 99)
       axlsx (< 99)
@@ -35,8 +34,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.1.0)
-    aasm (5.2.0)
-      concurrent-ruby (~> 1.0)
     actioncable (6.1.3.2)
       actionpack (= 6.1.3.2)
       activesupport (= 6.1.3.2)

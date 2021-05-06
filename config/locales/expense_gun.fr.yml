@@ -2,12 +2,11 @@ fr:
   expense_gun:
     expense:
       messages:
-        created   : "La note de frais a été créée."
-        updated   : "La note de frais a été mise à jour."
-        submitted : "La note de frais a été soumise."
-        accepted  : "La note de frais a été acceptée."
-        refused   : "La note de frais a été refusée."
-        canceled  : "La note de frais a été annulée."
+        create_ok: "La note de frais a été créée."
+        update_ok: "La note de frais a été mise à jour."
+        go_to_pending_ok: "La note de frais a été marquée comme à payer."
+        go_to_paid_ok: "La note de frais a été marquée comme payée."
+        go_to_canceled_ok: "La note de frais a été marquée comme annulée."
 
       actions:
         create : "Nouvelle note de frais"
@@ -25,6 +24,10 @@ fr:
       all_states: "Tous les états"
       all_users: "Tous les utilisateurs"
 
+    actions:
+      go_to_pending: "Marquer comme à payer"
+      go_to_paid: "Marquer comme payée"
+      go_to_canceled: "Marquer comme annulée"
 
   activerecord:
     models:
@@ -63,7 +66,6 @@ fr:
       dorsale/expense_gun/expense/state:
         all       : "Toutes"
         draft     : "Brouillon"
-        submitted : "Soumise"
-        accepted  : "Accepée"
-        refused   : "Refusée"
+        pending   : "À payer"
+        paid      : "Payé"
         canceled  : "Annulée"
