@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next version
+
+# 3.19.1
 - Expenses : add colors to list
 
 # 3.19.0
